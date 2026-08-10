@@ -1,0 +1,44 @@
+<aside class="sidebar">
+  <nav class="sidebar-nav">
+    <!-- Dashboard -->
+    <a
+      routerLink="/dashboard"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="nav-item"
+    >
+      Dashboard
+    </a>
+
+    <!-- Assessments -->
+    <div class="menu-group">
+      <button type="button" class="menu-title" (click)="toggleAssessment()">
+        <span>Assessments</span>
+
+        <span class="arrow">
+          {{ isAssessmentOpen ? '⌃' : '⌄' }}
+        </span>
+      </button>
+
+      @if (isAssessmentOpen) {
+        <div class="submenu">
+          <a
+            routerLink="/assessments"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            Assessments List
+          </a>
+
+          <a routerLink="/assessments/detail" routerLinkActive="active"> Assessments Detail </a>
+
+          <a routerLink="/assessments/create" routerLinkActive="active"> Assessments Create </a>
+
+          <a routerLink="/assessments/review-scoring" routerLinkActive="active"> Review Scoring </a>
+
+          <a routerLink="/assessments/result" routerLinkActive="active"> Assessment Result </a>
+        </div>
+      }
+    </div>
+  </nav>
+</aside>

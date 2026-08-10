@@ -1,0 +1,56 @@
+.header {
+  display: flex;
+  align-items: center;
+
+  height: 68px;
+  width: 100%;
+  padding: 0 28px;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.application-logo {
+  width: 260px;
+
+  font-size: 19px;
+  font-weight: 700;
+
+  color: #1e3a5f;
+}
+
+.page-title {
+  flex: 1;
+
+  font-size: 20px;
+  font-weight: 600;
+
+  color: #1e293b;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  color: #475569;
+  font-size: 14px;
+}
+
+.user-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 34px;
+  height: 34px;
+
+  border-radius: 50%;
+
+  background: #eff6ff;
+  color: #2563eb;
+
+  font-size: 16px;
+}
