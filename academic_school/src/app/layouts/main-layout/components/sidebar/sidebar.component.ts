@@ -8,13 +8,11 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
 })
-
-//********** PUBLIC STATE VARIABLES **********
 export class SidebarComponent {
+  //********** PUBLIC STATE VARIABLES **********
   isAssessmentOpen = false;
 
   //********** ACTION HANDLERS **********
-
   toggleAssessment(): void {
     this.isAssessmentOpen = !this.isAssessmentOpen;
   }

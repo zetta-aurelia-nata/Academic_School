@@ -1,21 +1,14 @@
-//********** ANGULAR APPLICATION CONFIGURATION IMPORT **********
-/**
- * Import ApplicationConfig for configuring the Angular application.
- * Import browser error listeners for global error handling.
- * Import provideRouter to enable Angular routing.
- */
+// **************** Angular Imports ****************
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
-//********** APPLICATION ROUTES IMPORT **********
-//Import the application's route definitions.
+// **************** Application Routes Imports ****************
 import { routes } from './app.routes';
 
-//********** APPLICATION CONFIGURATION **********
+// **************** Application Configuration ****************
 /**
- * Defines global providers used by the Angular application.
- * Enables global browser error listeners.
- * Registers application routes for navigation.
+ * Global application configuration.
+ * Provides browser error listeners and application routing.
  */
 export const appConfig: ApplicationConfig = {
   providers: [provideBrowserGlobalErrorListeners(), provideRouter(routes)],

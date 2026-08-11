@@ -1,8 +1,6 @@
-//********** ANGULAR IMPORT **********
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DashboardComponent } from './dashboard.component';
 
-//********** TEST SUITE **********
 describe('Dashboard', () => {
   let component: DashboardComponent;
   let fixture: ComponentFixture<DashboardComponent>;
