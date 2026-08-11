@@ -6,6 +6,7 @@
   --color-profile: #475569;
   --color-avatar-background: #eff6ff;
   --color-avatar: #2563eb;
+  --color-border:#e0e0e0;
 }
 
 
@@ -18,7 +19,7 @@
   padding: 0 28px;
   box-sizing: border-box;
   background: var(--color-white);
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--color-border);
 }
 
 

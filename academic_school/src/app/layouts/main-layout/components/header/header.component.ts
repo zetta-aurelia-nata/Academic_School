@@ -1,10 +1,5 @@
-
-//********** ANGULAR COMPONENT IMPORT **********
-// Import Component decorator from Angular.
+//********** Angular Imports **********
 import { Component } from '@angular/core';
-
-//********** COMPONENT CONFIGURATION **********
-// Defines the component selector, template, and styling.
 @Component({
   selector: 'app-header',
   imports: [],
@@ -12,6 +7,4 @@ import { Component } from '@angular/core';
   styleUrl: './header.component.scss',
 })
 
-//********** ASSESSMENTS CREATE COMPONENT **********
-// Handles the Assessment Dashboard page.
 export class HeaderComponent {}

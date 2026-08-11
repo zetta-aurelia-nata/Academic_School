@@ -1,13 +1,12 @@
 :root {
-  /* ==================== COLORS ==================== */
-  --color-white: #ffffff;
+  --color-white: #db1f1f;
   --color-text: #666;
+  --color-border: #e0e0e0;
 }
-
 //********** DASHBOARD BLOCKS **************
 .footer {
   padding: 16px 24px;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid var(--color-border);
   background-color: var(--color-white);
   text-align: center;
   color: var(--color-text);

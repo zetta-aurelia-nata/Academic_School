@@ -1,9 +1,6 @@
-//********** ANGULAR COMPONENT IMPORT **********
-// Import Component decorator from Angular.
+//********** Angular imports **********
 import { Component } from '@angular/core';
 
-//********** COMPONENT CONFIGURATION **********
-// Defines the component selector, template, and styling.
 @Component({
   selector: 'app-assessments-detail',
   imports: [],
@@ -11,6 +8,4 @@ import { Component } from '@angular/core';
   styleUrl: './assessments-detail.scss',
 })
 
-//********** ASSESSMENTS CREATE COMPONENT **********
-// Handles the Assessment Detail page.
 export class AssessmentsDetail {}

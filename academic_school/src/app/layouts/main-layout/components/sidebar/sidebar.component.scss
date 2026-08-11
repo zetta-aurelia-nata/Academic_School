@@ -6,6 +6,8 @@
   --color-submenu: #475569;
   --color-avatar-background: #eff6ff;
   --color-hover:#2563eb;
+  --color-border:#d1d5db;
+  --color-hover-active:#2563eb;
 }
 
 //********** SIDEBAR CONTAINER **************
@@ -53,8 +55,8 @@
 //********** SIDEBAR NAVIGATION HOVER STATE **************
 .nav-item:hover,
 .menu-title:hover {
-  background: #eff6ff;
-  color: #2563eb;
+  background: var(--color-avatar-background);
+  color: var(--color-hover-active);
 }
 
 //********** ACTIVE SIDEBAR NAVIGATION STATE **************
@@ -100,7 +102,7 @@
   margin-left: 12px;
   padding-left: 12px;
 
-  border-left: 1px solid #d1d5db;
+  border-left: 1px solid var(--color-border);
 }
 
 //********** ASSESSMENT SUBMENU LINK STYLING **************
@@ -117,13 +119,13 @@
 
 //********** ASSESSMENT SUBMENU HOVER STATE **************
 .submenu a:hover {
-  background: #eef0f2;
-  color: #374151;
+  background: var(--color-white);
+  color: var(--color-border);
 }
 
 //********** ASSESSMENT SUBMENU ACTIVE STATE **************
 .submenu a.active {
   color: var(--color-title);
-  background: #e5e7eb;
+  background: var(--color-white);
   font-weight: 600;
 }
