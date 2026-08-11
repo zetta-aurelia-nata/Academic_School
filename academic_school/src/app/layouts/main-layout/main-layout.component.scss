@@ -1,8 +1,10 @@
+//********** HOST CONTAINER **********
 :host {
   display: block;
   min-height: 100vh;
 }
 
+//********** MAIN APPLICATION LAYOUT **********
 .layout {
   display: grid;
   grid-template-rows: auto 1fr auto;
@@ -10,6 +12,7 @@
   min-height: 100vh;
 }
 
+//********** MAIN BODY LAYOUT : SIDEBAR AND CONTENT **********
 .body {
   display: grid;
   grid-template-columns: 260px 1fr;
@@ -17,12 +20,14 @@
   min-height: 0;
 }
 
+//********** MAIN CONTENT SECTION : ROUTER OUTLET **********
 .content {
   min-width: 0;
   padding: 32px;
   box-sizing: border-box;
 }
 
+//********** HEADER AND FOOTER WIDTH **********
 .header,
 .footer {
   width: 100%;

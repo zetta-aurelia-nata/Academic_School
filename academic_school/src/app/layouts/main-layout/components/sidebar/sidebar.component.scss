@@ -1,25 +1,27 @@
+//********** SIDEBAR CONTAINER **************
 .sidebar {
   width: 100%;
   height: 100%;
-
   padding: 24px 16px;
-
   box-sizing: border-box;
-
   background: #f8fafc;
 }
 
+//********** ACTIVE SIDEBAR NAVIGATION **************
 .nav-item.active {
   background: #2563eb;
   color: #ffffff;
   font-weight: 600;
 }
+
+//********** SIDEBAR NAVIGATION LAYOUT **************
 .sidebar-nav {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
+//********** SIDEBAR NAVIGATION ITEM STYLING **************
 .nav-item,
 .menu-title {
   color: #475569;
@@ -33,27 +35,32 @@
   text-decoration: none;
 }
 
+//********** SIDEBAR NAVIGATION LINK DISPLAY **************
 .nav-item {
   display: block;
 }
 
+//********** SIDEBAR NAVIGATION HOVER STATE **************
 .nav-item:hover,
 .menu-title:hover {
   background: #eff6ff;
   color: #2563eb;
 }
 
+//********** ACTIVE SIDEBAR NAVIGATION STATE **************
 .nav-item.active {
   background: #e5e7eb;
   color: #111827;
   font-weight: 600;
 }
 
+//********** ASSESSMENT MENU GROUP LAYOUT **************
 .menu-group {
   display: flex;
   flex-direction: column;
 }
 
+//********** ASSESSMENT MENU TOGGLE BUTTON **************
 .menu-title {
   display: flex;
   align-items: center;
@@ -68,11 +75,13 @@
   cursor: pointer;
 }
 
+//********** ASSESSMENT MENU ARROW **************
 .arrow {
   font-size: 16px;
   color: #6b7280;
 }
 
+//********** ASSESSMENT SUBMENU LAYOUT **************
 .submenu {
   display: flex;
   flex-direction: column;
@@ -84,6 +93,7 @@
   border-left: 1px solid #d1d5db;
 }
 
+//********** ASSESSMENT SUBMENU LINK STYLING **************
 .submenu a {
   padding: 9px 12px;
 
@@ -95,11 +105,13 @@
   text-decoration: none;
 }
 
+//********** ASSESSMENT SUBMENU HOVER STATE **************
 .submenu a:hover {
   background: #eef0f2;
   color: #374151;
 }
 
+//********** ASSESSMENT SUBMENU ACTIVE STATE **************
 .submenu a.active {
   color: #111827;
   background: #e5e7eb;

@@ -1,18 +1,23 @@
+<!--********** APP MAIN LAYOUT **********-->
 <div class="layout">
+  <!--********** HEADER SECTION **********-->
   <header class="header">
     <app-header></app-header>
   </header>
 
   <div class="body">
+    <!--********** SIDEBAR SECTION **********-->
     <aside class="sidebar">
       <app-sidebar></app-sidebar>
     </aside>
 
+    <!--********** CONTENT SECTION : ROUTER OUTLET **********-->
     <main class="content">
       <router-outlet></router-outlet>
     </main>
   </div>
 
+  <!--********** FOOTER SECTION **********-->
   <footer class="footer">
     <app-footer></app-footer>
   </footer>

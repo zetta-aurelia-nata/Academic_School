@@ -1,6 +1,8 @@
+<!--********** SIDEBAR SECTION : TO VERIFIED SIDEBAR WORKING  **********-->
 <aside class="sidebar">
   <nav class="sidebar-nav">
-    <!-- Dashboard -->
+
+    <!--********** SIDEBAR SECTION : DASHBOARD ROUTING NAVIGATION **********-->
     <a
       routerLink="/dashboard"
       routerLinkActive="active"
@@ -10,16 +12,18 @@
       Dashboard
     </a>
 
-    <!-- Assessments -->
+    <!--********** SIDEBAR SECTION : ASSESSMENTS ROUTING NAVIGATION **********-->
     <div class="menu-group">
       <button type="button" class="menu-title" (click)="toggleAssessment()">
         <span>Assessments</span>
 
+        <!--********** SIDEBAR SECTION : ASSESSMENTS SUBMENU ARROW BUTTON **********-->
         <span class="arrow">
           {{ isAssessmentOpen ? '⌃' : '⌄' }}
         </span>
       </button>
 
+      <!--********** ASSESSMENTS SUBMENU : CONDITIONAL DISPLAY **********-->
       @if (isAssessmentOpen) {
         <div class="submenu">
           <a
@@ -30,12 +34,16 @@
             Assessments List
           </a>
 
+          <!--********** ASSESSMENTS SUBMENU : ASSESSMENTS DETAIL **********-->
           <a routerLink="/assessments/detail" routerLinkActive="active"> Assessments Detail </a>
 
+          <!--********** ASSESSMENTS SUBMENU : ASSESSMENTS CREATE **********-->
           <a routerLink="/assessments/create" routerLinkActive="active"> Assessments Create </a>
 
+          <!--********** ASSESSMENTS SUBMENU : ASSESSMENTS SCORING **********-->
           <a routerLink="/assessments/review-scoring" routerLinkActive="active"> Review Scoring </a>
 
+          <!--********** ASSESSMENTS SUBMENU : ASSESSMENTS RESULT **********-->
           <a routerLink="/assessments/result" routerLinkActive="active"> Assessment Result </a>
         </div>
       }
