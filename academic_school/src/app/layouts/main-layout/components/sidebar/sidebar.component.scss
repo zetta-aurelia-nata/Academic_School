@@ -1,16 +1,26 @@
+:root {
+  /* ==================== COLORS ==================== */
+  --color-white: #ffffff;
+  --color-logo: #1e3a5f;
+  --color-title: #1e293b;
+  --color-submenu: #475569;
+  --color-avatar-background: #eff6ff;
+  --color-hover:#2563eb;
+}
+
 //********** SIDEBAR CONTAINER **************
 .sidebar {
   width: 100%;
   height: 100%;
   padding: 24px 16px;
   box-sizing: border-box;
-  background: #f8fafc;
+  background: var(--color-white);
 }
 
 //********** ACTIVE SIDEBAR NAVIGATION **************
 .nav-item.active {
-  background: #2563eb;
-  color: #ffffff;
+  background: var(--color-hover);
+  color: var(--color-white);
   font-weight: 600;
 }
 
@@ -24,12 +34,12 @@
 //********** SIDEBAR NAVIGATION ITEM STYLING **************
 .nav-item,
 .menu-title {
-  color: #475569;
+  color: var(--color-submenu);
   width: 100%;
   padding: 11px 14px;
   border-radius: 8px;
   box-sizing: border-box;
-  color: #374151;
+  color: var(--color-title);
   font-size: 15px;
   font-weight: 500;
   text-decoration: none;
@@ -49,8 +59,8 @@
 
 //********** ACTIVE SIDEBAR NAVIGATION STATE **************
 .nav-item.active {
-  background: #e5e7eb;
-  color: #111827;
+  background: var(--color-white);
+  color: var(--color-title);
   font-weight: 600;
 }
 
@@ -78,7 +88,7 @@
 //********** ASSESSMENT MENU ARROW **************
 .arrow {
   font-size: 16px;
-  color: #6b7280;
+  color: var(--color-submenu);
 }
 
 //********** ASSESSMENT SUBMENU LAYOUT **************
@@ -99,7 +109,7 @@
 
   border-radius: 6px;
 
-  color: #6b7280;
+  color: var(--color-submenu);
   font-size: 14px;
 
   text-decoration: none;
@@ -113,7 +123,7 @@
 
 //********** ASSESSMENT SUBMENU ACTIVE STATE **************
 .submenu a.active {
-  color: #111827;
+  color: var(--color-title);
   background: #e5e7eb;
   font-weight: 600;
 }

@@ -1,3 +1,14 @@
+:root {
+  /* ==================== COLORS ==================== */
+  --color-white: #ffffff;
+  --color-logo: #1e3a5f;
+  --color-title: #1e293b;
+  --color-profile: #475569;
+  --color-avatar-background: #eff6ff;
+  --color-avatar: #2563eb;
+}
+
+
 //********** HEADER BLOCK **************
 .header {
   display: flex;
@@ -6,35 +17,40 @@
   width: 100%;
   padding: 0 28px;
   box-sizing: border-box;
-  background: #ffffff;
-  border-bottom: 1px solid #e2e8f0;
+  background: var(--color-white);
+  border-bottom: 1px solid #e0e0e0;
 }
+
 
 //********** HEADER ELEMENT: APP LOGO **************
 .application-logo {
   width: 260px;
   font-size: 19px;
   font-weight: 700;
-  color: #1e3a5f;
+  color: var(--color-logo);
 }
+
 
 //********** HEADER ELEMENT: PAGE TITLE **************
 .page-title {
   flex: 1;
   font-size: 20px;
   font-weight: 600;
-  color: #1e293b;
+  color: var(--color-title);
 }
+
 
 //********** HEADER ELEMENT: USER PROFILE DISPLAY **************
 .user-profile {
   display: flex;
   align-items: center;
   gap: 9px;
-  color: #475569;
+  color: var(--color-profile);
   font-size: 14px;
 }
 
+
+//********** HEADER ELEMENT: USER AVATAR **************
 .user-avatar {
   display: flex;
   align-items: center;
@@ -42,7 +58,7 @@
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: #eff6ff;
-  color: #2563eb;
+  background: var(--color-avatar-background);
+  color: var(--color-avatar);
   font-size: 16px;
 }
