@@ -1,7 +1,6 @@
 <!--********** SIDEBAR SECTION : TO VERIFIED SIDEBAR WORKING  **********-->
 <aside class="sidebar">
   <nav class="sidebar-nav">
-
     <!--********** SIDEBAR SECTION : DASHBOARD ROUTING NAVIGATION **********-->
     <a
       routerLink="/dashboard"
@@ -26,6 +25,7 @@
       <!--********** ASSESSMENTS SUBMENU : CONDITIONAL DISPLAY **********-->
       @if (isAssessmentOpen) {
         <div class="submenu">
+          <!--********** ASSESSMENTS SUBMENU : ASSESSMENTS LIST **********-->
           <a
             routerLink="/assessments"
             routerLinkActive="active"
@@ -35,16 +35,40 @@
           </a>
 
           <!--********** ASSESSMENTS SUBMENU : ASSESSMENTS DETAIL **********-->
-          <a routerLink="/assessments/detail" routerLinkActive="active"> Assessments Detail </a>
+          <a
+            routerLink="/assessments/detail"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            Assessments Detail
+          </a>
 
           <!--********** ASSESSMENTS SUBMENU : ASSESSMENTS CREATE **********-->
-          <a routerLink="/assessments/create" routerLinkActive="active"> Assessments Create </a>
+          <a
+            routerLink="/assessments/create"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            Assessments Create
+          </a>
 
           <!--********** ASSESSMENTS SUBMENU : ASSESSMENTS SCORING **********-->
-          <a routerLink="/assessments/review-scoring" routerLinkActive="active"> Review Scoring </a>
+          <a
+            routerLink="/assessments/review-scoring"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            Review Scoring
+          </a>
 
           <!--********** ASSESSMENTS SUBMENU : ASSESSMENTS RESULT **********-->
-          <a routerLink="/assessments/result" routerLinkActive="active"> Assessment Result </a>
+          <a
+            routerLink="/assessments/result"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            Assessment Result
+          </a>
         </div>
       }
     </div>

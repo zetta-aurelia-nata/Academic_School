@@ -1,13 +1,3 @@
-:root {
-  --color-white: #ffffff;
-  --color-logo: #1e3a5f;
-  --color-title: #1e293b;
-  --color-submenu: #475569;
-  --color-avatar-background: #eff6ff;
-  --color-hover:#2563eb;
-  --color-border:#d1d5db;
-  --color-hover-active:#2563eb;
-}
 
 //********** SIDEBAR BLOCKS **************
 .sidebar {
@@ -35,12 +25,11 @@
 //********** SIDEBAR NAVIGATION ITEM STYLING **************
 .nav-item,
 .menu-title {
-  color: var(--color-submenu);
+  color: var(--color-title);
   width: 100%;
   padding: 11px 14px;
   border-radius: 8px;
   box-sizing: border-box;
-  color: var(--color-title);
   font-size: 15px;
   font-weight: 500;
   text-decoration: none;
@@ -56,13 +45,6 @@
 .menu-title:hover {
   background: var(--color-avatar-background);
   color: var(--color-hover-active);
-}
-
-//********** ACTIVE SIDEBAR NAVIGATION STATE **************
-.nav-item.active {
-  background: var(--color-white);
-  color: var(--color-title);
-  font-weight: 600;
 }
 
 //********** ASSESSMENT MENU GROUP LAYOUT **************
@@ -118,13 +100,13 @@
 
 //********** ASSESSMENT SUBMENU HOVER STATE **************
 .submenu a:hover {
-  background: var(--color-white);
-  color: var(--color-border);
+  background: var(--color-avatar-background);
+  color: var(--color-hover-active);
 }
 
 //********** ASSESSMENT SUBMENU ACTIVE STATE **************
 .submenu a.active {
-  color: var(--color-title);
-  background: var(--color-white);
+  color: var(--color-hover-active);
+  background: var(--color-avatar-background);
   font-weight: 600;
 }
