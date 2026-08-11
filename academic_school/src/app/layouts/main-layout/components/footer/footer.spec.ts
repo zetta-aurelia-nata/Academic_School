@@ -1,28 +1,24 @@
 //********** ANGULAR TESTING IMPORT **********
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Footer } from './footer';
+import { FooterComponent } from './footer.component';
 
-
-//********** COMPONENT TEST SUITE **********
-describe('Dashboard', () => {
-  let component: Footer;
-  let fixture: ComponentFixture<Footer>;
+describe('Footer', () => {
+  let component: FooterComponent;
+  let fixture: ComponentFixture<FooterComponent>;
 
 
   //********** TEST ENVIRONMENT SETUP **********
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Footer],
+      imports: [FooterComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Footer);
+    fixture = TestBed.createComponent(FooterComponent);
     component = fixture.componentInstance;
 
     await fixture.whenStable();
   });
 
-
-  //********** COMPONENT CREATION TEST **********
   it('should create', () => {
     expect(component).toBeTruthy();
   });

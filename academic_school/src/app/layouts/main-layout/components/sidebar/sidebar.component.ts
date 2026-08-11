@@ -1,8 +1,7 @@
-//********** ANGULAR COMPONENT IMPORT **********
+//********** ANGULAR IMPORTS **********
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
-//********** COMPONENT CONFIGURATION **********
 @Component({
   selector: 'app-sidebar',
   imports: [RouterLink, RouterLinkActive],
@@ -10,9 +9,11 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './sidebar.component.scss',
 })
 
-//********** ASSESSMENTS CREATE COMPONENT **********
+//********** PUBLIC STATE VARIABLES **********
 export class SidebarComponent {
   isAssessmentOpen = false;
+
+  //********** ACTION HANDLERS **********
 
   toggleAssessment(): void {
     this.isAssessmentOpen = !this.isAssessmentOpen;

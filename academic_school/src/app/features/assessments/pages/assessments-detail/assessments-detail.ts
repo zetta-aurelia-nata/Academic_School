@@ -1,4 +1,4 @@
-//********** Angular imports **********
+//********** ANGULAR IMPORTS **********
 import { Component } from '@angular/core';
 
 @Component({

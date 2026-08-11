@@ -1,9 +1,9 @@
-//********** Angular Imports **********
+//********** ANGULAR IMPORTS **********
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { Footer } from './components/footer/footer';
+import { FooterComponent } from './components/footer/footer.component';
 
 @Component({
   selector: 'app-main-layout',
@@ -11,7 +11,7 @@ import { Footer } from './components/footer/footer';
     RouterOutlet,
     HeaderComponent,
     SidebarComponent,
-    Footer,
+    FooterComponent,
   ],
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.scss',

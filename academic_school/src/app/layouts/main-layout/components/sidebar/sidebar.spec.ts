@@ -2,7 +2,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SidebarComponent } from './sidebar.component';
 
-//********** COMPONENT TEST SUITE **********
 describe('Sidebar', () => {
   let component: SidebarComponent;
   let fixture: ComponentFixture<SidebarComponent>;
@@ -18,7 +17,6 @@ describe('Sidebar', () => {
     await fixture.whenStable();
   });
 
-  //********** COMPONENT CREATION TEST **********
   it('should create', () => {
     expect(component).toBeTruthy();
   });

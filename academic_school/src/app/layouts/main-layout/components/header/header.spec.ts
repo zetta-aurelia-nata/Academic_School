@@ -2,8 +2,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HeaderComponent } from './header.component';
 
-
-//********** COMPONENT TEST SUITE **********
 describe('Header', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
@@ -21,8 +19,6 @@ describe('Header', () => {
     await fixture.whenStable();
   });
 
-
-  //********** COMPONENT CREATION TEST **********
   it('should create', () => {
     expect(component).toBeTruthy();
   });

@@ -1,8 +1,7 @@
-//********** Angular Imports **********
+//********** ANGULAR IMPORTS **********
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MainLayout } from './main-layout.component';
 
-//********** COMPONENT TEST SUITE **********
 describe('MainLayout', () => {
   let component: MainLayout;
   let fixture: ComponentFixture<MainLayout>;
@@ -18,7 +17,6 @@ describe('MainLayout', () => {
     await fixture.whenStable();
   });
 
-  //********** COMPONENT CREATION TEST **********
   it('should create', () => {
     expect(component).toBeTruthy();
   });
