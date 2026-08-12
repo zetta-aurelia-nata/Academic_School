@@ -13,6 +13,9 @@ export class SidebarComponent {
   isAssessmentOpen = false;
 
   //********** ACTION HANDLERS **********
+  /**
+   * Handles logic when sidebar menu is clicked
+   */
   toggleAssessment(): void {
     this.isAssessmentOpen = !this.isAssessmentOpen;
   }
