@@ -2,12 +2,12 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
-// **************** Application Routes Imports ****************
 import { routes } from './app.routes';
 
 // **************** Application Configuration ****************
 /**
  * Global application configuration.
+ * 
  * Provides browser error listeners and application routing.
  */
 export const appConfig: ApplicationConfig = {

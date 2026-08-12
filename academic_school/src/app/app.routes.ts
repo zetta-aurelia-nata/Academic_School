@@ -1,7 +1,6 @@
 //********** ANGULAR IMPORTS **********
 import { Routes } from '@angular/router';
 
-//********** APPLICATION MODULES & COMPONENT IMPORTS **********
 import { MainLayout } from './layouts/main-layout/main-layout.component';
 
 export const routes: Routes = [
