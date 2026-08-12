@@ -1,12 +1,19 @@
 // ******************** MAIN DASHBOARD ********************
+:host {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
 .dashboard {
-  width: auto;
+  width: 100%;
   min-height: 100%;
   padding: 30px 32px 40px;
   box-sizing: border-box;
   font-family: sans-serif;
   letter-spacing: 0.2px;
   background-color: var(--color-background-content);
+  overflow-x: hidden;
 }
 
 // ******************** PAGE HEADER ********************

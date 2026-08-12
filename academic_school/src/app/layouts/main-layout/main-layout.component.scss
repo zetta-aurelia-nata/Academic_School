@@ -1,53 +1,187 @@
 // ******************** BEM BLOCKS ********************
 :host {
   display: block;
+
   width: 100%;
   min-height: 100vh;
 }
 
+
 // ******************** MAIN LAYOUT ********************
 .layout {
+  position: relative;
+
   display: grid;
+
   grid-template-columns: 260px minmax(0, 1fr);
-  grid-template-rows: 68px minmax(0, 1fr) auto;
+  grid-template-rows: minmax(0, 1fr);
+
   width: 100%;
   min-height: 100vh;
+
   background-color: var(--color-background-content);
+}
+
+
+// ******************** SIDEBAR ********************
+.layout-sidebar {
+  grid-column: 1;
+  grid-row: 1;
+
+  width: 260px;
+  height: 100vh;
+
+  min-height: 0;
+
+  overflow: hidden;
+
+  background-color: var(--color-sidebar);
+
+  z-index: 1000;
+}
+
+
+// ******************** MAIN AREA ********************
+.layout-main {
+  grid-column: 2;
+  grid-row: 1;
+
+  display: grid;
+
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: 68px minmax(0, 1fr) auto;
+
+  min-width: 0;
+  min-height: 100vh;
+}
+
+
+// ******************** HEADER ********************
+.layout-header {
+  grid-column: 1;
+  grid-row: 1;
+
+  min-width: 0;
+
+  z-index: 100;
+}
+
+
+// ******************** CONTENT ********************
+.layout-content {
+  grid-column: 1;
+  grid-row: 2;
+
+  min-width: 0;
+  min-height: 0;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  background-color: var(--color-background-content);
+}
+
+
+// ******************** FOOTER ********************
+.layout-footer {
+  grid-column: 1;
+  grid-row: 3;
+
+  min-width: 0;
+}
+
+
+// ******************** OVERLAY ********************
+.layout-overlay {
+  display: none;
+}
+// ******************** MOBILE SIDEBAR ********************
+@media (max-width: 768px) {
+
+  .layout {
+    display: block;
+
+    width: 100%;
+    min-height: 100vh;
+  }
+
 
   // ******************** SIDEBAR ********************
-  &-sidebar {
-    grid-column: 1;
-    grid-row: 1 / 4;
+  .layout-sidebar {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
     width: 260px;
     height: 100vh;
-    min-height: 0;
-    overflow: hidden;
-    background-color: var(--color-sidebar);
+
+    transform: translateX(-100%);
+
+    transition: transform 0.25s ease;
+
+    z-index: 1001;
+
+    box-shadow: 8px 0 30px rgba(0, 0, 0, 0.12);
   }
+
+
+  // ******************** SIDEBAR OPEN ********************
+  .layout-sidebar--open {
+    transform: translateX(0);
+  }
+
+
+  // ******************** MAIN AREA ********************
+  .layout-main {
+    display: grid;
+
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 64px minmax(0, 1fr) auto;
+
+    width: 100%;
+    min-height: 100vh;
+  }
+
 
   // ******************** HEADER ********************
-  &-header {
-    grid-column: 2;
+  .layout-header {
+    grid-column: 1;
     grid-row: 1;
-    min-width: 0;
-    z-index: 100;
+
+    width: 100%;
   }
+
 
   // ******************** CONTENT ********************
-  &-content {
-    grid-column: 2;
+  .layout-content {
+    grid-column: 1;
     grid-row: 2;
+
+    width: 100%;
     min-width: 0;
-    min-height: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
-    background-color: var(--color-background-content);
   }
 
+
   // ******************** FOOTER ********************
-  &-footer {
-    grid-column: 2;
+  .layout-footer {
+    grid-column: 1;
     grid-row: 3;
-    min-width: 0;
+
+    width: 100%;
+  }
+
+
+  // ******************** OVERLAY ********************
+  .layout-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    display: block;
+
+    background-color: rgba(15, 23, 42, 0.35);
+
+    z-index: 1000;
   }
 }

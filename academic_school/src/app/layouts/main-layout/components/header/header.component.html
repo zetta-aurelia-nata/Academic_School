@@ -1,4 +1,9 @@
 <header class="header">
+  <!-- ******************** MOBILE MENU TOGGLE ******************** -->
+  <button type="button" class="header-menu-toggle" aria-label="Toggle sidebar" (click)="toggleSidebar()">
+    <mat-icon>menu</mat-icon>
+  </button>
+
   <!-- ******************** APP LOGO ******************** -->
   <div class="header-logo">
     <div class="header-logo-text">
@@ -21,10 +26,12 @@
       <div class="header-user-avatar">
         <img src="assets/images/placeholder/user-avatar.jpg" alt="user-avatar" />
       </div>
+
       <div class="header-user-info">
         <span class="header-user-name">Ms. Aurelia</span>
         <span class="header-user-role">Teacher</span>
       </div>
+
       <span class="header-user-profile-chevron">&#8964;</span>
     </div>
   </div>

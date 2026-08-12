@@ -1,22 +1,30 @@
 //********** Angular imports **********
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { Output, EventEmitter } from '@angular/core';
 
 //********** Application Modules & Component Imports **********
 import { HeaderComponent } from './components/header/header.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { FooterComponent } from './components/footer/footer.component';
-
 @Component({
   selector: 'app-main-layout',
-  imports: [
-    RouterOutlet,
-    HeaderComponent,
-    SidebarComponent,
-    FooterComponent,
-  ],
+  imports: [RouterOutlet, HeaderComponent, SidebarComponent, FooterComponent],
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.scss',
 })
+export class MainLayout {
+  //********** PUBLIC STATE VARIABLES **********
+  isSidebarOpen = true;
 
-export class MainLayout {}
+  //********** ACTION HANDLERS **********
+  toggleSidebar(): void {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
+  closeSidebar(): void {
+    this.isSidebarOpen = false;
+  }
+  
+  @Output() menuToggle = new EventEmitter<void>();
+}

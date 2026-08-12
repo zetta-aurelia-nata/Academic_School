@@ -1,20 +1,14 @@
 // ******************** MAIN SIDEBAR ********************
-
 .sidebar {
   display: flex;
   flex-direction: column;
-
   width: 100%;
   height: 100%;
   min-height: 0;
-
   padding: 22px 14px 18px;
-
   box-sizing: border-box;
-
   font-family: sans-serif;
   letter-spacing: 0.3px;
-
   background-color: var(--color-sidebar);
   border-right: 1px solid var(--color-sidebar-hover);
 

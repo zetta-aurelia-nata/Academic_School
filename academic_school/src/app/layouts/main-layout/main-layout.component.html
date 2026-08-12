@@ -1,22 +1,30 @@
 <!--********** APP MAIN LAYOUT **********-->
 <div class="layout">
+  <!--********** SIDEBAR OVERLAY **********-->
+  @if (isSidebarOpen) {
+    <div class="layout-overlay" (click)="closeSidebar()"></div>
+  }
+
   <!--********** SIDEBAR SECTION **********-->
-  <div class="layout-sidebar">
+  <div class="layout-sidebar" [class.layout-sidebar--open]="isSidebarOpen">
     <app-sidebar></app-sidebar>
   </div>
 
-  <!--********** HEADER SECTION **********-->
-  <div class="layout-header">
-    <app-header></app-header>
-  </div>
+  <!--********** MAIN AREA **********-->
+  <div class="layout-main">
+    <!--********** HEADER SECTION **********-->
+    <div class="layout-header">
+      <app-header (sidebarToggle)="toggleSidebar()"></app-header>
+    </div>
 
-  <!--********** CONTENT SECTION : ROUTER OUTLET **********-->
-  <main class="layout-content">
-    <router-outlet></router-outlet>
-  </main>
+    <!--********** CONTENT SECTION : ROUTER OUTLET **********-->
+    <main class="layout-content">
+      <router-outlet></router-outlet>
+    </main>
 
-  <!--********** FOOTER SECTION **********-->
-  <div class="layout-footer">
-    <app-footer></app-footer>
+    <!--********** FOOTER SECTION **********-->
+    <div class="layout-footer">
+      <app-footer></app-footer>
+    </div>
   </div>
 </div>
