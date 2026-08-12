@@ -1,19 +1,126 @@
-//********** BEM BLOCKS **************
+//********** DASHBOARD SECTION **************
 .dashboard {
-  max-width: 1000px;
-  padding: 0 30px;
+  padding: 28px 32px;
+}
 
-  //********** DASHBOARD ELEMENT **************
-  &__page-header h1 {
-    margin: 0 0 8px;
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--primary-color);
+//********** PAGE HEADER **************
+.page-header {
+  margin-bottom: 24px;
+}
+
+.page-header-title {
+  margin: 0 0 4px;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-title);
+}
+
+.page-header-subtitle {
+  margin: 0;
+  font-size: 14px;
+  color: var(--secondary-color);
+}
+
+//********** PROGRESS GRID **************
+.progress-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+//********** PROGRESS ITEM (mat-card override) **************
+.progress-item {
+  display: flex;
+  height: 130px;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px !important;
+  border-radius: 12px !important;
+  border: 1.5px solid var(--color-white);
+  background-color: var(--color-white);
+  box-shadow: none !important;
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06) !important;
+    transform: translateY(-2px);
+  }
+}
+
+.progress-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.progress-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  flex-shrink: 0;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
   }
 
-  &__page-header p {
-    margin: 0;
-    font-size: 15px;
+  &--purple {
+    background: var(--color-avatar-background);
+    color: var(--color-hover);
+  }
+  &--blue {
+    background: var(--color-main-background);
+    color: var(--color-logo);
+  }
+  &--amber {
+    background: #fef3e2;
+    color: #b8860b;
+  }
+  &--green {
+    background: #e3f6e9;
+    color: #2e9e5b;
+  }
+  &--gray {
+    background: #f1f2f4;
     color: var(--secondary-color);
+  }
+}
+
+.progress-label {
+  font-size: 22px;
+  color: var(--secondary-color);
+  white-space: nowrap;
+}
+
+.progress-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-title);
+}
+
+//********** PROGRESS INFO **************
+.progress-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+
+  span {
+    font-size: 24px;
+    color: var(--secondary-color);
+    white-space: nowrap;
+  }
+
+  strong {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-title);
   }
 }

@@ -13,7 +13,7 @@
 
     <!--********** SIDEBAR SECTION : ASSESSMENTS ROUTING NAVIGATION **********-->
     <div class="menu-group">
-      <button type="button" class="menu-title" (click)="toggleAssessment()">
+      <button type="button" class="menu-title" [attr.aria-expanded]="isAssessmentOpen", aria-controls="assessment-submenu", (click)="toggleAssessment()">
         <span>Assessments</span>
 
         <!--********** SIDEBAR SECTION : ASSESSMENTS SUBMENU ARROW BUTTON **********-->
@@ -33,32 +33,13 @@
           >
             Assessments List
           </a>
-
-          <!--********** ASSESSMENTS SUBMENU : ASSESSMENTS DETAIL **********-->
-          <a
-            routerLink="/assessments/detail"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            Assessments Detail
-          </a>
-
-          <!--********** ASSESSMENTS SUBMENU : ASSESSMENTS CREATE **********-->
-          <a
-            routerLink="/assessments/create"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            Assessments Create
-          </a>
-
           <!--********** ASSESSMENTS SUBMENU : ASSESSMENTS SCORING **********-->
           <a
             routerLink="/assessments/review-scoring"
             routerLinkActive="active"
             [routerLinkActiveOptions]="{ exact: true }"
           >
-            Review Scoring
+           Assessment Submission
           </a>
 
           <!--********** ASSESSMENTS SUBMENU : ASSESSMENTS RESULT **********-->

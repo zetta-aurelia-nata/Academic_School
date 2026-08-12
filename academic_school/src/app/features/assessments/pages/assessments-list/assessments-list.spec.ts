@@ -1,18 +1,18 @@
 //********** ANGULAR TESTING IMPORT **********
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AssessmentsList } from './assessments-list';
+import { AssessmentList } from './assessments-list';
 
 describe('AssessmentsList', () => {
-  let component: AssessmentsList;
-  let fixture: ComponentFixture<AssessmentsList>;
+  let component: AssessmentList;
+  let fixture: ComponentFixture<AssessmentList>;
 
   //********** TEST ENVIRONMENT SETUP **********
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AssessmentsList],
+      imports: [AssessmentList],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AssessmentsList);
+    fixture = TestBed.createComponent(AssessmentList);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

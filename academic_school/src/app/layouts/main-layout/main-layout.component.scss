@@ -16,17 +16,5 @@
   display: grid;
   grid-template-columns: 260px 1fr;
   min-height: 0;
-
-  //********** MAIN CONTENT SECTION : ROUTER OUTLET **********
-  &__content {
-    min-width: 0;
-    padding: 32px;
-    box-sizing: border-box;
-  }
-
-  //********** HEADER AND FOOTER WIDTH **********
-  &__header,
-  &__footer {
-    width: 100%;
-  }
+  background-color: var(--color-background-content);
 }

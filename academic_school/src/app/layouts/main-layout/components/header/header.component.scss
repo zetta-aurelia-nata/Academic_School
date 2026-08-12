@@ -1,58 +1,207 @@
-//********** BEM BLOCK **************
+//********** MAIN HEADER **************
 .header {
   display: flex;
   align-items: center;
-  height: 68px;
+  justify-content: space-between;
+  height: 72px;
   width: 100%;
-  padding: 0 28px;
+  padding: 0 32px;
   box-sizing: border-box;
   background: var(--color-white);
   border-bottom: 1px solid var(--color-border);
-  gap: 40%;
+  font-size: 15px;
+}
 
-  //********** HEADER ELEMENT **************
-  //********** HEADER LOGO **************
-  &__application-logo {
-    width: 260px;
-    font-size: 19px;
-    font-weight: 700;
-    color: var(--color-logo);
-    align-items: end;
-    white-space: nowrap;
-  }
+//********** LOGO **************
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+}
 
-  //********** HEADER TITLE **************
-  &__page-title {
-    width: 260px;
-    flex: 1;
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--color-title);
-    width: 30%;
-    white-space: nowrap;
-  }
+.header-logo-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--color-main-background);
+  flex-shrink: 0;
 
-  //********** HEADER PROFILE DISPLAY **************
-  &__user-profile {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    color: var(--color-profile);
-    font-size: 14px;
-    white-space: nowrap;
+  img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
   }
+}
 
-  //********** HEADER AVATAR **************
-  &__user-avatar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    background: var(--color-avatar-background);
-    color: var(--color-avatar);
-    font-size: 16px;
-    flex-wrap: 0;
+.header-logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.header-logo-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-logo);
+}
+
+.header-logo-tagline {
+  font-size: 11px;
+  color: var(--secondary-color);
+}
+
+//********** PAGE TITLE **************
+.header-page {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  margin-left: 100px;
+}
+
+.header-menu-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  color: var(--secondary-color);
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: var(--color-main-background);
   }
+}
+
+.header-page-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-title);
+  white-space: nowrap;
+}
+
+//********** RIGHT ACTIONS **************
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  white-space: nowrap;
+}
+
+//********** NOTIFICATION **************
+.header-notification {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--secondary-color);
+  font-size: 17px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: var(--color-main-background);
+  }
+}
+
+.header-notification-badge {
+  position: absolute;
+  top: 2px;
+  right: 4px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 3px;
+  border-radius: 50%;
+  background: var(--color-hover);
+  color: var(--color-white);
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+//********** DIVIDER **************
+.header-divider {
+  width: 1px;
+  height: 28px;
+  background: var(--color-border);
+}
+
+//********** USER PROFILE **************
+.header-user-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px 6px 6px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: var(--color-main-background);
+  }
+}
+
+.header-user-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--color-avatar-background);
+  border: 2px solid var(--color-white);
+  box-shadow: 0 0 0 1px var(--color-border);
+  overflow: hidden;
+  flex-shrink: 0;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.header-user-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.header-user-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-title);
+}
+
+.header-user-role {
+  font-size: 12px;
+  color: var(--secondary-color);
+}
+
+.header-user-profile-chevron {
+  font-size: 12px;
+  color: var(--secondary-color);
+  transition: transform 0.2s ease;
+}
+
+.header-user-profile:hover .header-user-profile-chevron {
+  transform: translateY(1px);
+  color: var(--color-hover);
 }

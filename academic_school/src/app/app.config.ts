@@ -1,8 +1,8 @@
 // **************** Angular Imports ****************
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
-
 import { routes } from './app.routes';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
 // **************** Application Configuration ****************
 /**
@@ -11,5 +11,5 @@ import { routes } from './app.routes';
  * Provides browser error listeners and application routing.
  */
 export const appConfig: ApplicationConfig = {
-  providers: [provideBrowserGlobalErrorListeners(), provideRouter(routes)],
+  providers: [provideBrowserGlobalErrorListeners(), provideRouter(routes), provideHttpClient(withInterceptors([]))],
 };

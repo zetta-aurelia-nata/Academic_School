@@ -1,8 +1,18 @@
 <!--********** VERIFIED: DASHBOARD ROUTE WORKING **********-->
 <section class="dashboard">
   <div class="page-header">
-    <h1>Dashboard</h1>
+    <h1>Assessment Dashboard</h1>
+  </div>
 
-    <p>Welcome to the Assessment Management System.</p>
+  <div class="progress-grid">
+    <mat-card class="progress-item" *ngFor="let stat of stats">
+      <div class="progress-top">
+        <div class="progress-icon" [ngClass]="stat.colorClass">
+          <mat-icon>{{ stat.icon }}</mat-icon>
+        </div>
+        <span class="progress-label">{{ stat.label }}</span>
+      </div>
+      <strong class="progress-value">{{ stat.value }}</strong>
+    </mat-card>
   </div>
 </section>
