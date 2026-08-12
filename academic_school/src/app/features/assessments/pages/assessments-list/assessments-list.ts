@@ -1,11 +1,18 @@
-import { Component } from '@angular/core';
-import { Assessment, AssessmentStatus } from './assessment.list.model';
-import { MatToolbar } from '@angular/material/toolbar';
+//********** ANGULAR IMPORTS **********
+import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
+
+//********** ANGULAR MATERIAL IMPORTS **********
+import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
-import { CommonModule } from '@angular/common';
+import { MatToolbar } from '@angular/material/toolbar';
+
+//********** APPLICATION MODELS AND SETTINGS IMPORTS **********
+import { Assessment, AssessmentStatus } from './assessment.list.model';
+
 @Component({
   selector: 'app-assessment-list',
   imports: [
@@ -20,6 +27,9 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./assessments-list.scss'],
 })
 export class AssessmentList {
+  private readonly router = inject(Router);
+
+  //********** PUBLIC STATE VARIABLES **********
   displayedColumns: string[] = [
     'title',
     'subject',
@@ -78,15 +88,23 @@ export class AssessmentList {
     },
   ];
 
+  //********** ACTION HANDLERS **********
+  onCreateAssessment(): void {
+    this.router.navigate(['/assessments/create']);
+  }
+
+  onView(assessment: Assessment): void {
+    this.router.navigate(['/assessments', assessment.id]);
+  }
+
+  onEdit(assessment: Assessment): void {
+    this.router.navigate(['/assessments', assessment.id]);
+  }
+
+  onDelete(assessment: Assessment): void {}
+
+  //********** UTILITY METHODS **********
   statusClass(status: AssessmentStatus): string {
     return `status-badge status-badge--${status.toLowerCase()}`;
   }
-
-  onCreateAssessment(): void {}
-
-  onView(assessment: Assessment): void {}
-
-  onEdit(assessment: Assessment): void {}
-
-  onDelete(assessment: Assessment): void {}
 }

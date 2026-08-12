@@ -9,16 +9,25 @@ export const routes: Routes = [
     component: MainLayout,
     children: [
       {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full',
+      },
+
+      {
         path: 'dashboard',
         loadComponent: () =>
           import('./features/dashboard/pages/dashboard.component').then(
             (m) => m.DashboardComponent,
           ),
       },
+
       {
         path: 'assessments',
         loadChildren: () =>
-          import('./features/assessments/assessment.routes').then((m) => m.ASSESSMENT_ROUTES),
+          import('./features/assessments/assessment.routes').then(
+            (m) => m.ASSESSMENT_ROUTES,
+          ),
       },
     ],
   },

@@ -1,55 +1,35 @@
-<!--********** SIDEBAR SECTION : TO VERIFIED SIDEBAR WORKING  **********-->
+<!-- ******************** SIDEBAR ******************** -->
 <aside class="sidebar">
   <nav class="sidebar-nav">
-    <!--********** SIDEBAR SECTION : DASHBOARD ROUTING NAVIGATION **********-->
-    <a
-      routerLink="/dashboard"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: true }"
-      class="nav-item"
-    >
-      Dashboard
+
+    <!-- ******************** DASHBOARD ROUTING ******************** -->
+    <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-item">
+      
+      <mat-icon class="nav-item-icon">dashboard</mat-icon>
+      <span class="nav-item-text">Dashboard</span>
     </a>
 
-    <!--********** SIDEBAR SECTION : ASSESSMENTS ROUTING NAVIGATION **********-->
+    <!-- ******************** ASSESSMENTS SUBMENU ******************** -->
     <div class="menu-group">
-      <button type="button" class="menu-title" [attr.aria-expanded]="isAssessmentOpen", aria-controls="assessment-submenu", (click)="toggleAssessment()">
-        <span>Assessments</span>
-
-        <!--********** SIDEBAR SECTION : ASSESSMENTS SUBMENU ARROW BUTTON **********-->
-        <span class="arrow">
-          {{ isAssessmentOpen ? '⌃' : '⌄' }}
+      <button type="button" class="menu-title" [attr.aria-expanded]="isAssessmentOpen" aria-controls="assessment-submenu" (click)="toggleAssessment()">
+        
+        <span class="menu-title-content">
+          <mat-icon class="menu-title-icon">assignment</mat-icon>
+          <span>Assessments</span>
         </span>
+
+        <span class="arrow">{{ assessmentArrowIcon }}</span>
       </button>
 
-      <!--********** ASSESSMENTS SUBMENU : CONDITIONAL DISPLAY **********-->
       @if (isAssessmentOpen) {
-        <div class="submenu">
-          <!--********** ASSESSMENTS SUBMENU : ASSESSMENTS LIST **********-->
-          <a
-            routerLink="/assessments"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            Assessments List
-          </a>
-          <!--********** ASSESSMENTS SUBMENU : ASSESSMENTS SCORING **********-->
-          <a
-            routerLink="/assessments/review-scoring"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-           Assessment Submission
-          </a>
-
-          <!--********** ASSESSMENTS SUBMENU : ASSESSMENTS RESULT **********-->
-          <a
-            routerLink="/assessments/result"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            Assessment Result
-          </a>
+        <div class="submenu" id="assessment-submenu">
+          
+         <!-- ******************** SUBMENU ITEMS LOOP ******************** -->
+          @for (submenu of assessmentSubmenus; track submenu.id) {
+            <a [routerLink]="submenu.link" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+              {{ submenu.label }}
+            </a>
+          }
         </div>
       }
     </div>

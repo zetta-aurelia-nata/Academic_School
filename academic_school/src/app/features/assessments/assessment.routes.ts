@@ -7,16 +7,13 @@ export const ASSESSMENT_ROUTES: Routes = [
     loadComponent: () =>
       import('./pages/assessments-list/assessments-list').then((m) => m.AssessmentList),
   },
-  {
-    path: 'detail',
-    loadComponent: () =>
-      import('./pages/assessments-detail/assessments-detail').then((m) => m.AssessmentsDetail),
-  },
+
   {
     path: 'create',
     loadComponent: () =>
       import('./pages/assessments-create/assessments-create').then((m) => m.AssessmentsCreate),
   },
+
   {
     path: 'review-scoring',
     loadComponent: () =>
@@ -24,9 +21,16 @@ export const ASSESSMENT_ROUTES: Routes = [
         (m) => m.AssessmentsReviewScoring,
       ),
   },
+
   {
     path: 'result',
     loadComponent: () =>
       import('./pages/assessments-result/assessments-result').then((m) => m.AssessmentsResult),
+  },
+
+  {
+    path: ':id',
+    loadComponent: () =>
+      import('./pages/assessments-detail/assessments-detail').then((m) => m.AssessmentsDetail),
   },
 ];

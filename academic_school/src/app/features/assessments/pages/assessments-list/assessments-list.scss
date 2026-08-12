@@ -1,138 +1,378 @@
-//********** SECTION **************
-.assessment-list {
-  padding: 28px 32px;
-}
-
-//********** TOOLBAR **************
+// ***************** BEM BLOCKS *****************
 .list-toolbar {
   background: transparent !important;
   padding: 0 !important;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   height: auto !important;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.list-toolbar-text {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.list-toolbar-title {
-  margin: 0;
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--color-title);
-}
-
-.list-toolbar-subtitle {
-  font-size: 13px;
-  color: var(--secondary-color);
-}
-
-.list-toolbar-spacer {
-  flex: 1 1 auto;
-}
-
-.list-toolbar-btn {
+  min-height: auto !important;
   display: flex;
   align-items: center;
-  gap: 6px;
-  white-space: nowrap;
-  border-radius: 12%;
-  border: none;
-  background-color: var(--color-avatar-background );
+  gap: 12px;
 
-  mat-icon {
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
+  // ***************** Toolbar Text *****************
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 24px;
+    line-height: 1.2;
+    font-weight: 700;
+    color: var(--color-title);
+    letter-spacing: -0.3px;
+  }
+
+  &__subtitle {
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--color-text-secondary);
+  }
+
+  &__spacer {
+    flex: 1 1 auto;
+  }
+
+  // ***************** Toolbar Button *****************
+  &__btn {
+    min-height: 40px;
+    height: 40px;
+    padding: 0 18px !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    border-radius: 10px !important;
+
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+      line-height: 18px;
+    }
+
+    // **************** Export Button Modifier ****************
+    &--export {
+      color: var(--color-primary-dark) !important;
+      background-color: var(--color-white) !important;
+      border: 1px solid var(--color-border-dark) !important;
+      box-shadow: 0 1px 3px rgba(72, 31, 110, 0.04);
+      &:hover {
+        background-color: var(--color-avatar-background) !important;
+      }
+    }
+
+    // **************** Create Button Modifier ****************
+    &--create {
+      color: var(--color-white) !important;
+      background-color: var(--color-primary-dark) !important;
+      border: 1px solid var(--color-primary-dark) !important;
+      box-shadow: 0 3px 8px rgba(72, 31, 110, 0.18);
+
+      &:hover {
+        filter: brightness(0.95);
+        box-shadow: 0 4px 10px rgba(72, 31, 110, 0.22);
+      }
+    }
   }
 }
 
-//********** TABLE CARD **************
+// ***************** list-card *****************
 .list-card {
   padding: 0 !important;
-  border-radius: 12px !important;
+  background-color: var(--color-white) !important;
+  border-radius: 14px !important;
   border: 1px solid var(--color-border);
-  box-shadow: none !important;
+  box-shadow: 0 4px 16px rgba(30, 41, 59, 0.04) !important;
   overflow: hidden;
+
+  &__table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+  }
 }
 
-.table-wrapper {
-  width: 100%;
-  overflow-x: auto;
-}
-
+// ***************** assessment-table *****************
 .assessment-table {
   width: 100%;
-  min-width: 720px;
+  min-width: 850px;
+  background-color: var(--color-white);
+  border-collapse: separate;
+  border-spacing: 0;
 
-  th.mat-header-cell {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--secondary-color);
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    background: var(--color-avatar-background);
+  // ***************** Table Header *****************
+  .mat-mdc-header-row {
+    height: 58px;
+    background-color: var(--color-white);
   }
 
-  td.mat-cell {
-    font-size: 14px;
+  .mat-mdc-header-cell {
+    padding: 0 18px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.45px;
+    border-bottom: 1px solid var(--color-table-border);
+    white-space: nowrap;
+  }
+
+  // ***************** Table Row *****************
+  .mat-mdc-row {
+    height: 68px;
+    transition:
+      background-color 0.2s ease,
+      box-shadow 0.2s ease;
+
+    &:hover {
+      background-color: var(--color-table-hover);
+    }
+
+    &:last-child {
+      .mat-mdc-cell {
+        border-bottom: none;
+      }
+    }
+  }
+
+ // **************** Table Cell ****************
+.mat-mdc-cell {
+  padding: 0 18px;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--color-title);
+  border-bottom: 1px solid var(--color-table-border);
+  white-space: nowrap;
+}
+
+  // ***************** Assessment Name Element *****************
+  &__name {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    font-weight: 600;
     color: var(--color-title);
   }
 
-  th.mat-header-cell,
-  td.mat-cell {
-    padding: 14px 16px;
+  &__name-icon {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background-color: var(--color-primary-light);
+    color: var(--color-primary-dark);
+
+    mat-icon {
+      width: 19px;
+      height: 19px;
+      font-size: 19px;
+      line-height: 19px;
+    }
+  }
+
+  // ***************** Date Element *****************
+  &__date {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-title);
+
+    mat-icon {
+      width: 16px;
+      height: 16px;
+      font-size: 16px;
+      line-height: 16px;
+      color: var(--color-text-secondary);
+    }
+  }
+
+  // ***************** Actions Element *****************
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__action {
+    width: 38px !important;
+    height: 38px !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px !important;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-action-border);
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      transform 0.2s ease;
+
+    mat-icon {
+      width: 17px;
+      height: 17px;
+      font-size: 17px;
+      line-height: 17px;
+    }
+
+    &:hover {
+      transform: translateY(-1px);
+    }
+
+    // **************** View Action Modifier ****************
+    &--view {
+      color: var(--color-primary-dark);
+
+      &:hover {
+        background-color: var(--color-avatar-background);
+        border-color: var(--color-action-border-hover);
+      }
+    }
+
+    // **************** Edit Action Modifier ****************
+    &--edit {
+      color: var(--color-primary-dark);
+
+      &:hover {
+        background-color: var(--color-avatar-background);
+        border-color: var(--color-action-border-hover);
+      }
+    }
+
+    // **************** Delete Action Modifier ****************
+    &--delete {
+      color: var(--color-danger);
+      border-color: var(--color-danger-soft-border);
+
+      &:hover {
+        background-color: var(--color-danger-background);
+        border-color: var(--color-danger-border);
+      }
+    }
   }
 }
 
-//********** STATUS BADGE **************
+// ***************** status-badge *****************
 .status-badge {
   display: inline-flex;
   align-items: center;
-  padding: 4px 12px;
+  justify-content: center;
+  gap: 7px;
+  min-width: 76px;
+  padding: 5px 10px;
   border-radius: 999px;
-  font-size: 12px;
+  font-size: 11px;
+  line-height: 1.2;
   font-weight: 600;
   white-space: nowrap;
 
-  &--completed { background: #e3f6e9; color: #2e9e5b; }
-  &--pending   { background: #fef3e2; color: #b8860b; }
-  &--failed    { background: #fdeaea; color: #c0392b; }
-  &--draft     { background: #f1f2f4; color: var(--secondary-color); }
+  &__dot {
+    width: 6px;
+    height: 6px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background-color: currentColor;
+  }
+
+  // ***************** Status Modifier *****************
+  &--completed {
+    background-color: var(--color-status-completed-background);
+    color: var(--color-status-completed);
+    border: 1px solid var(--color-status-completed-border);
+  }
+
+  &--pending {
+    background-color: var(--color-status-pending-background);
+    color: var(--color-status-pending);
+    border: 1px solid var(--color-status-pending-border);
+  }
+
+  &--failed {
+    background-color: var(--color-status-failed-background);
+    color: var(--color-status-failed);
+    border: 1px solid var(--color-status-failed-border);
+  }
+
+  &--draft {
+    background-color: var(--color-status-draft-background);
+    color: var(--color-status-draft);
+    border: 1px solid var(--color-status-draft-border);
+  }
 }
 
-//********** RESPONSIVE: TABLET **************
+// ***************** assessment-list *****************
+.assessment-list {
+  width: 100%;
+  min-height: 100%;
+  box-sizing: border-box;
+  padding: 30px 32px 40px;
+  font-family: sans-serif;
+  background-color: var(--color-background-content);
+}
+
+// ***************** MEDIA QUERIES *****************
 @media (max-width: 1024px) {
   .assessment-list {
-    padding: 20px;
+    padding: 24px 20px 32px;
   }
 
   .list-toolbar {
-    align-items: flex-start;
+    &__title {
+      font-size: 22px;
+    }
+
+    &__btn {
+      padding: 0 14px !important;
+    }
   }
 
-  .list-toolbar-btn span {
-    display: none; // icon-only buttons pada tablet, hemat ruang
+  .assessment-table {
+    .mat-mdc-header-cell {
+      padding: 0 14px;
+    }
+
+    .mat-mdc-cell {
+      padding: 0 14px;
+    }
   }
 }
 
-//********** RESPONSIVE: SMALL TABLET / LARGE MOBILE **************
+// ***************** MEDIA QUERIES *****************
 @media (max-width: 768px) {
+  .assessment-list {
+    padding: 20px 16px 28px;
+  }
+
   .list-toolbar {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
+
+    &__spacer {
+      display: none;
+    }
+
+    &__text {
+      margin-bottom: 4px;
+    }
+
+    &__btn {
+      width: 100%;
+    }
   }
 
-  .list-toolbar-spacer {
-    display: none;
+  .list-card {
+    border-radius: 12px !important;
   }
 
-  .list-toolbar-btn {
-    width: 100%;
-    justify-content: center;
+  .assessment-table {
+    min-width: 780px;
   }
 }

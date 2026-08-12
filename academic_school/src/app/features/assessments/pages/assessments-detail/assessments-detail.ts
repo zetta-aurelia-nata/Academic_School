@@ -1,5 +1,6 @@
 //********** ANGULAR IMPORTS **********
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-assessments-detail',
@@ -7,5 +8,9 @@ import { Component } from '@angular/core';
   templateUrl: './assessments-detail.html',
   styleUrl: './assessments-detail.scss',
 })
+export class AssessmentsDetail {
+  private readonly route = inject(ActivatedRoute);
 
-export class AssessmentsDetail {}
+  //********** ASSESSMENT ID **********
+  assessmentId = this.route.snapshot.paramMap.get('id');
+}

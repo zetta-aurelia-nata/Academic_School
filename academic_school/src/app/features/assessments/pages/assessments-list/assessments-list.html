@@ -1,84 +1,150 @@
-<!--********** VERIFIED: ASSESSMENT LIST ROUTE WORKING **********-->
+<!--********** ASSESSMENT LIST SECTION **********-->
 <section class="assessment-list">
-  <!--********** PAGE TOOLBAR **********-->
   <mat-toolbar class="list-toolbar">
-    <div class="list-toolbar-text">
-      <h1 class="list-toolbar-title">Assessments List</h1>
-      <span class="list-toolbar-subtitle">{{ assessments.length }} total assessments</span>
+
+    <!--********** TOOLBAR TEXT **********-->
+    <div class="list-toolbar__text">
+      <h1 class="list-toolbar__title">Assessments List</h1>
+
+      <span class="list-toolbar__subtitle"> {{ assessments.length }} total assessments </span>
     </div>
 
-    <span class="list-toolbar-spacer"></span>
+    <!--********** TOOLBAR ACTIONS **********-->
+    <span class="list-toolbar__spacer"></span>
 
-    <button mat-stroked-button class="list-toolbar-btn">
+    <button mat-stroked-button class="list-toolbar__btn list-toolbar__btn--export">
       <mat-icon>download</mat-icon>
-      Export
+      <span>Export</span>
     </button>
 
-    <button mat-flat-button color="primary" class="list-toolbar-btn" (click)="onCreateAssessment()">
+    <button
+      mat-flat-button
+      color="primary"
+      class="list-toolbar__btn list-toolbar__btn--create"
+      (click)="onCreateAssessment()"
+    >
       <mat-icon>add</mat-icon>
-      Create Assessment
+      <span>Create Assessment</span>
     </button>
   </mat-toolbar>
 
-  <!--********** TABLE CARD **********-->
+  <!--********** ASSESSMENT TABLE CARD **********-->
   <mat-card class="list-card">
-    <div class="table-wrapper">
+    <div class="list-card__table-wrapper">
+
+      <!--********** ASSESSMENT TABLE **********-->
       <table mat-table [dataSource]="assessments" class="assessment-table">
-        <!-- Title -->
+
+        <!--********** TITLE COLUMN **********-->
         <ng-container matColumnDef="title">
           <th mat-header-cell *matHeaderCellDef>Assessment Name</th>
-          <td mat-cell *matCellDef="let row">{{ row.title }}</td>
+
+          <td mat-cell *matCellDef="let row">
+            <div class="assessment-table__name">
+              <div class="assessment-table__name-icon">
+                <mat-icon>assignment</mat-icon>
+              </div>
+
+              <span>
+                {{ row.title }}
+              </span>
+            </div>
+          </td>
         </ng-container>
 
-        <!-- Subject -->
+        <!--********** SUBJECT COLUMN **********-->
         <ng-container matColumnDef="subject">
           <th mat-header-cell *matHeaderCellDef>Subject</th>
-          <td mat-cell *matCellDef="let row">{{ row.subject }}</td>
+
+          <td mat-cell *matCellDef="let row">
+            {{ row.subject }}
+          </td>
         </ng-container>
 
-        <!-- Grade -->
+        <!--********** GRADE COLUMN **********-->
         <ng-container matColumnDef="grade">
           <th mat-header-cell *matHeaderCellDef>Grade</th>
-          <td mat-cell *matCellDef="let row">{{ row.grade }}</td>
+
+          <td mat-cell *matCellDef="let row">
+            {{ row.grade }}
+          </td>
         </ng-container>
 
-        <!-- Total Students -->
+        <!--********** STUDENTS COLUMN **********-->
         <ng-container matColumnDef="totalStudents">
           <th mat-header-cell *matHeaderCellDef>Students</th>
-          <td mat-cell *matCellDef="let row">{{ row.totalStudents }}</td>
+
+          <td mat-cell *matCellDef="let row">
+            {{ row.totalStudents }}
+          </td>
         </ng-container>
 
-        <!-- Status -->
+        <!--********** STATUS COLUMN **********-->
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef>Status</th>
+
           <td mat-cell *matCellDef="let row">
-            <span [ngClass]="statusClass(row.status)">{{ row.status }}</span>
+            <span [ngClass]="statusClass(row.status)">
+              <span class="status-badge__dot"></span>
+              {{ row.status }}
+            </span>
           </td>
         </ng-container>
 
-        <!-- Date -->
+        <!--********** DATE COLUMN **********-->
         <ng-container matColumnDef="date">
           <th mat-header-cell *matHeaderCellDef>Date</th>
-          <td mat-cell *matCellDef="let row">{{ row.date | date: 'MMM d, y' }}</td>
-        </ng-container>
 
-        <!-- Actions -->
-        <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef>Actions</th>
           <td mat-cell *matCellDef="let row">
-            <button mat-icon-button aria-label="View" (click)="onView(row)">
-              <mat-icon>visibility</mat-icon>
-            </button>
-            <button mat-icon-button aria-label="Edit" (click)="onEdit(row)">
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button mat-icon-button aria-label="Delete" (click)="onDelete(row)">
-              <mat-icon>delete</mat-icon>
-            </button>
+            <div class="assessment-table__date">
+              <mat-icon>calendar_today</mat-icon>
+
+              <span>
+                {{ row.date | date: 'MMM d, y' }}
+              </span>
+            </div>
           </td>
         </ng-container>
 
+        <!--********** ACTIONS COLUMN (view / edit / delete buttons) **********-->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+
+          <td mat-cell *matCellDef="let row">
+            <div class="assessment-table__actions">
+              <button
+                mat-icon-button
+                class="assessment-table__action assessment-table__action--view"
+                aria-label="View"
+                (click)="onView(row)"
+              >
+                <mat-icon>visibility</mat-icon>
+              </button>
+
+              <button
+                mat-icon-button
+                class="assessment-table__action assessment-table__action--edit"
+                aria-label="Edit"
+                (click)="onEdit(row)"
+              >
+                <mat-icon>edit</mat-icon>
+              </button>
+
+              <button
+                mat-icon-button
+                class="assessment-table__action assessment-table__action--delete"
+                aria-label="Delete"
+                (click)="onDelete(row)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <!--********** TABLE ROW DEFINITIONS **********-->
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
     </div>

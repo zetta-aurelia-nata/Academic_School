@@ -1,17 +1,78 @@
 :root {
   --color-white: #ffffff;
-  --color-logo: #1e3a5f;
-  --color-title: #1e293b;
-  --color-submenu: #475569;
-  --color-avatar-background: #ebdef6;
-  --color-hover: #481f6e;
-  --color-border: #d1d5db;
-  --color-hover-active: #481f6e;
-  --primary-color: #111827;
-  --secondary-color: #51545b;
-  --color-main-background: #f8f1fd;
-  --color-small-text: #898b8f;
-  --color-profile:#475569;
-    --color-background-content: #fdfaff;
+  --color-sidebar: #24153f;
+  --color-sidebar-hover: #342052;
+  --color-sidebar-active: #4b2a72;
+  --color-sidebar-text: #e7ddf2;
+  --color-sidebar-muted: #b9aaca;
+  --color-primary: #7651a8;
+  --color-primary-dark: #5b347f;
+  --color-primary-light: #ede5f7;
+  --color-logo: #4b2a72;
+  --color-logo-light: #8b5cc7;
+  --color-title: #25233a;
+  --color-text-secondary: #747287;
+  --color-text-muted: #9693a3;
+  --color-main-background: #f4f0f8;
+  --color-background-content: #f8f6fb;
+  --color-header: var(--color-white);
+  --color-border: #e3ddea;
+  --color-border-light: #e9e3f0;
+  --color-border-dark: #d4c9e1;
+  --color-success: #3c9b6a;
+  --color-success-background: #e5f4eb;
+  --color-warning: #d99a32;
+  --color-warning-background: #fff3dd;
+  --color-danger: #d84c4c;
+  --color-danger-background: #fff0f0;
+  --color-info: #4c82c3;
+  --color-info-background: #e8f0fa;
+  --color-progress-purple: #7042b8;
+  --color-progress-blue: #416d9f;
+  --color-progress-amber: #b48628;
+  --color-progress-green: #3d9460;
+  --color-progress-gray: #667085;
+  --color-banner-start: #f8f4ff;
+  --color-banner-middle: #f1e9ff;
+  --color-banner-end: #ebe0ff;
+  --color-table-hover: #fcfaff;
+  --color-shadow-light: rgba(30, 41, 59, 0.035);
+  --color-shadow-primary: rgba(72, 31, 110, 0.08);
+  --color-sidebar-status-background: #302046;
+  --color-sidebar-status-border: #49365d;
+  --color-sidebar-status-icon-background: #49316a;
+  --color-sidebar-status-icon: #c9a6e8;
+  --color-table-border: #e5deee;
+
+// ASSESSMENT STATUS
+--color-status-completed: #21a45a;
+--color-status-completed-background: #e8f8ee;
+--color-status-completed-border: #ccefd9;
+--color-status-pending: #c58a19;
+--color-status-pending-background: #fff7e7;
+--color-status-pending-border: #f7e5bd;
+--color-status-failed: #d84c4c;
+--color-status-failed-background: #fff0f0;
+--color-status-failed-border: #f5d5d5;
+--color-status-draft: #667085;
+--color-status-draft-background: #f2f3f5;
+--color-status-draft-border: #e4e6e9;
 }
- 
+
+html,
+body {
+  width: auto;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+}
+
+app-root {
+  display: block;
+  width: auto;
+  min-height: 100vh;
+}

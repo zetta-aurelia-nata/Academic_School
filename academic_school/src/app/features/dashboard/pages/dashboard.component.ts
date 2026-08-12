@@ -1,8 +1,11 @@
-//********** Angular Imports **********
-import { Component } from '@angular/core';
+//********** ANGULAR IMPORTS **********
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+
+//********** ANGULAR MATERIAL IMPORTS **********
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+
 interface AssessmentStat {
   label: string;
   value: number;
@@ -17,12 +20,19 @@ interface AssessmentStat {
   styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent {
+  //********** PUBLIC STATE VARIABLES **********
   stats: AssessmentStat[] = [
     {
       label: 'Total Assessments',
       value: 24,
       icon: 'assignment',
       colorClass: 'progress-icon--purple',
+    },
+    {
+      label: 'Done',
+      value: 7,
+      icon: 'check_circle',
+      colorClass: 'progress-icon--green',
     },
     {
       label: 'Active Assessments',
@@ -36,7 +46,11 @@ export class DashboardComponent {
       icon: 'hourglass_empty',
       colorClass: 'progress-icon--amber',
     },
-    { label: 'Done', value: 7, icon: 'check_circle', colorClass: 'progress-icon--green' },
-    { label: 'Draft Assessments', value: 3, icon: 'edit_note', colorClass: 'progress-icon--gray' },
+    {
+      label: 'Draft Assessments',
+      value: 3,
+      icon: 'edit_note',
+      colorClass: 'progress-icon--gray',
+    },
   ];
 }
