@@ -1,4 +1,4 @@
-//********** HEADER BLOCK **************
+//********** BEM BLOCK **************
 .header {
   display: flex;
   align-items: center;
@@ -8,46 +8,51 @@
   box-sizing: border-box;
   background: var(--color-white);
   border-bottom: 1px solid var(--color-border);
-}
+  gap: 40%;
 
+  //********** HEADER ELEMENT **************
+  //********** HEADER LOGO **************
+  &__application-logo {
+    width: 260px;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--color-logo);
+    align-items: end;
+    white-space: nowrap;
+  }
 
-//********** HEADER ELEMENT: APP LOGO **************
-.application-logo {
-  width: 260px;
-  font-size: 19px;
-  font-weight: 700;
-  color: var(--color-logo);
-}
+  //********** HEADER TITLE **************
+  &__page-title {
+    width: 260px;
+    flex: 1;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--color-title);
+    width: 30%;
+    white-space: nowrap;
+  }
 
+  //********** HEADER PROFILE DISPLAY **************
+  &__user-profile {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: var(--color-profile);
+    font-size: 14px;
+    white-space: nowrap;
+  }
 
-//********** HEADER ELEMENT: PAGE TITLE **************
-.page-title {
-  flex: 1;
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--color-title);
-}
-
-
-//********** HEADER ELEMENT: USER PROFILE DISPLAY **************
-.user-profile {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  color: var(--color-profile);
-  font-size: 14px;
-}
-
-
-//********** HEADER ELEMENT: USER AVATAR **************
-.user-avatar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background: var(--color-avatar-background);
-  color: var(--color-avatar);
-  font-size: 16px;
+  //********** HEADER AVATAR **************
+  &__user-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--color-avatar-background);
+    color: var(--color-avatar);
+    font-size: 16px;
+    flex-wrap: 0;
+  }
 }
