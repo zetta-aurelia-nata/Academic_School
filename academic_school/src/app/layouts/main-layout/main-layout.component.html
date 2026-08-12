@@ -1,5 +1,6 @@
 <!--********** APP MAIN LAYOUT **********-->
 <div class="layout">
+  
   <!--********** SIDEBAR OVERLAY **********-->
   @if (isSidebarOpen) {
     <div class="layout-overlay" (click)="closeSidebar()"></div>
@@ -14,7 +15,7 @@
   <div class="layout-main">
     <!--********** HEADER SECTION **********-->
     <div class="layout-header">
-      <app-header (sidebarToggle)="toggleSidebar()"></app-header>
+      <app-header (sidebarToggle)="toggleSidebar()"> </app-header>
     </div>
 
     <!--********** CONTENT SECTION : ROUTER OUTLET **********-->

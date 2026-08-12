@@ -1,6 +1,7 @@
 //********** ANGULAR IMPORTS **********
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -8,7 +9,11 @@ import { MatIcon } from '@angular/material/icon';
   imports: [MatIcon],
 })
 export class HeaderComponent {
-  toggleSidebar() {
-    throw new Error('Method not implemented.');
+  //********** SIDEBAR TOGGLE EVENT **********
+  @Output() sidebarToggle = new EventEmitter<void>();
+
+  //********** ACTION HANDLERS **********
+  toggleSidebar(): void {
+    this.sidebarToggle.emit();
   }
 }

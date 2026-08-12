@@ -1,32 +1,41 @@
-<!-- ******************** SIDEBAR ******************** -->
 <aside class="sidebar">
-  <nav class="sidebar-nav">
-
+  <nav class="sidebar__nav">
     <!-- ******************** DASHBOARD ROUTING ******************** -->
-    <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-item">
-      
-      <mat-icon class="nav-item-icon">dashboard</mat-icon>
-      <span class="nav-item-text">Dashboard</span>
+    <a
+      routerLink="/dashboard"
+      routerLinkActive="sidebar__item--active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="sidebar__item"
+    >
+      <mat-icon class="sidebar__item-icon">dashboard</mat-icon>
+      <span class="sidebar__item-text">Dashboard</span>
     </a>
 
     <!-- ******************** ASSESSMENTS SUBMENU ******************** -->
-    <div class="menu-group">
-      <button type="button" class="menu-title" [attr.aria-expanded]="isAssessmentOpen" aria-controls="assessment-submenu" (click)="toggleAssessment()">
-        
-        <span class="menu-title-content">
-          <mat-icon class="menu-title-icon">assignment</mat-icon>
-          <span>Assessments</span>
+    <div class="sidebar__group">
+      <button
+        type="button"
+        class="sidebar__menu"
+        [attr.aria-expanded]="isAssessmentOpen"
+        aria-controls="assessment-submenu"
+        (click)="toggleAssessment()"
+      >
+        <span class="sidebar__menu-content">
+          <mat-icon class="sidebar__menu-icon">assignment</mat-icon>
+          <span class="sidebar__menu-text">Assessments</span>
         </span>
-
-        <span class="arrow">{{ assessmentArrowIcon }}</span>
+        <span class="sidebar__menu-arrow">{{ assessmentArrowIcon }}</span>
       </button>
-
       @if (isAssessmentOpen) {
-        <div class="submenu" id="assessment-submenu">
-          
-         <!-- ******************** SUBMENU ITEMS LOOP ******************** -->
+        <div class="sidebar__submenu" id="assessment-submenu">
+          <!-- ******************** SUBMENU ITEMS LOOP ******************** -->
           @for (submenu of assessmentSubmenus; track submenu.id) {
-            <a [routerLink]="submenu.link" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <a
+              [routerLink]="submenu.link"
+              routerLinkActive="sidebar__submenu-item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="sidebar__submenu-item"
+            >
               {{ submenu.label }}
             </a>
           }

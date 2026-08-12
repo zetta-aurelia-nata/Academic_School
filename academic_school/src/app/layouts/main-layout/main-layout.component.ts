@@ -25,6 +25,6 @@ export class MainLayout {
   closeSidebar(): void {
     this.isSidebarOpen = false;
   }
-  
+
   @Output() menuToggle = new EventEmitter<void>();
 }
