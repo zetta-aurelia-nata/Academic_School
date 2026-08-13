@@ -1,0 +1,69 @@
+<section class="dashboard">
+
+  <!-- *************** PAGE HEADER *************** -->
+  <div class="page-header">
+    <div class="page-header__content">
+<h1 class="page-header__title">
+  Welcome back! <span class="page-header__wave">👋</span>
+</h1>
+
+<p class="page-header__subtitle">
+  Let's see your assessment progress here.
+</p>
+    </div>
+  </div>
+
+  <!-- *************** WELCOME BANNER *************** -->
+  <div class="welcome-banner">
+    <div class="welcome-banner__content">
+      <span class="welcome-banner__eyebrow"> Assessment Management </span>
+
+      <h2 class="welcome-banner__title">Keep your assessments on track</h2>
+
+      <p class="welcome-banner__description">
+        Monitor assessment activities, review submissions, and keep track of your results from one
+        place.
+      </p>
+    </div>
+
+    <div class="welcome-banner__decoration">
+      <div class="welcome-banner__circle welcome-banner__circle--large"></div>
+
+      <div class="welcome-banner__circle welcome-banner__circle--small"></div>
+
+      <mat-icon class="welcome-banner__icon"> school </mat-icon>
+    </div>
+  </div>
+
+  <!-- *************** PROGRESS CARDS *************** -->
+  <div class="progress-grid">
+    <mat-card class="progress-item" *ngFor="let stat of stats">
+      <div class="progress-icon" [ngClass]="stat.colorClass">
+        <mat-icon>{{ stat.icon }}</mat-icon>
+      </div>
+
+      <div class="progress-info">
+        <strong class="progress-info__value">{{ stat.value }}</strong>
+        <span class="progress-info__label">{{ stat.label }}
+        </span>
+      </div>
+
+      <div class="progress-item__accent"></div>
+    </mat-card>
+  </div>
+
+  <!-- *************** DASHBOARD NOTE *************** -->
+  <div class="dashboard-note">
+    <div class="dashboard-note__icon">
+      <mat-icon> insights </mat-icon>
+    </div>
+
+    <div class="dashboard-note__content">
+      <strong class="dashboard-note__title"> Assessment Overview </strong>
+
+      <p class="dashboard-note__text">
+        Use the statistics above to quickly monitor your assessment activities.
+      </p>
+    </div>
+  </div>
+</section>

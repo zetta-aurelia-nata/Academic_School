@@ -1,0 +1,519 @@
+// ******************** MAIN DASHBOARD ********************
+:host {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+.dashboard {
+  width: 100%;
+  min-height: 100%;
+  padding: 30px 32px 40px;
+  box-sizing: border-box;
+  font-family: sans-serif;
+  letter-spacing: 0.2px;
+  background-color: var(--color-background-content);
+  overflow-x: hidden;
+}
+
+// ******************** PAGE HEADER ********************
+.page-header {
+  margin-bottom: 24px;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__title {
+    margin: 0 0 7px;
+    font-size: 27px;
+    line-height: 1.2;
+    font-weight: 700;
+    color: var(--color-title);
+    letter-spacing: -0.5px;
+  }
+
+  &__wave {
+    display: inline-block;
+    margin-left: 4px;
+    font-size: 25px;
+    transform-origin: 70% 70%;
+    animation: wave 1.8s ease-in-out infinite;
+  }
+
+  &__subtitle {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+  }
+}
+
+// ******************** WELCOME BANNER ********************
+.welcome-banner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 155px;
+  padding: 28px 32px;
+  margin-bottom: 22px;
+  box-sizing: border-box;
+  overflow: hidden;
+  border: 1px solid var(--color-banner-border);
+  border-radius: 18px;
+  background: linear-gradient(
+    135deg,
+    var(--color-banner-start) 0%,
+    var(--color-banner-middle) 55%,
+    var(--color-banner-end) 100%
+  );
+  box-shadow: 0 3px 12px var(--color-shadow-primary);
+
+  &__content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    max-width: 620px;
+  }
+
+  &__eyebrow {
+    margin-bottom: 6px;
+    font-size: 11px;
+    line-height: 1.4;
+    font-weight: 600;
+    color: var(--color-primary-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  &__title {
+    margin: 0 0 7px;
+    font-size: 22px;
+    line-height: 1.25;
+    font-weight: 700;
+    color: var(--color-title);
+    letter-spacing: -0.3px;
+  }
+
+  &__description {
+    max-width: 550px;
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+  }
+
+  &__decoration {
+    position: relative;
+    width: 190px;
+    height: 120px;
+    flex-shrink: 0;
+  }
+
+  &__circle {
+    position: absolute;
+    border-radius: 50%;
+    background-color: var(--color-decoration-white);
+
+    &--large {
+      top: 0;
+      right: 5px;
+      width: 120px;
+      height: 120px;
+    }
+
+    &--small {
+      top: 10px;
+      right: 115px;
+      width: 45px;
+      height: 45px;
+      background-color: var(--color-decoration-primary);
+    }
+  }
+
+  &__icon {
+    position: absolute;
+    z-index: 2;
+    top: 30px;
+    right: 42px;
+    width: 58px;
+    height: 58px;
+    font-size: 58px;
+    line-height: 58px;
+    color: var(--color-primary-dark);
+  }
+}
+
+// ******************** PROGRESS GRID & CARDS ********************
+.progress-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.progress-item {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-width: 0;
+  height: 142px;
+  padding: 20px !important;
+  box-sizing: border-box;
+  overflow: hidden;
+  border: 1px solid var(--color-dashboard-border);
+  border-radius: 16px !important;
+  background-color: var(--color-white);
+  box-shadow: 0 2px 8px var(--color-shadow-light) !important;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    border-color: var(--color-dashboard-border-hover);
+    box-shadow: 0 8px 24px var(--color-shadow-primary) !important;
+
+    .progress-item__accent {
+      opacity: 1;
+    }
+  }
+
+  &__accent {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 3px;
+    opacity: 0;
+    background: linear-gradient(
+      180deg,
+      var(--color-primary-dark),
+      var(--color-primary)
+    );
+    transition: opacity 0.2s ease;
+  }
+}
+
+.progress-icon {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  flex-shrink: 0;
+  border-radius: 15px;
+
+  mat-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 28px;
+    line-height: 28px;
+  }
+
+  &--purple {
+    background-color: var(--color-progress-purple-background);
+    color: var(--color-progress-purple);
+    box-shadow: inset 0 0 0 1px rgba(112, 66, 184, 0.05);
+  }
+
+  &--blue {
+    background-color: var(--color-progress-blue-background);
+    color: var(--color-progress-blue);
+    box-shadow: inset 0 0 0 1px rgba(65, 109, 159, 0.05);
+  }
+
+  &--amber {
+    background-color: var(--color-progress-amber-background);
+    color: var(--color-progress-amber);
+    box-shadow: inset 0 0 0 1px rgba(180, 134, 40, 0.05);
+  }
+
+  &--green {
+    background-color: var(--color-progress-green-background);
+    color: var(--color-progress-green);
+    box-shadow: inset 0 0 0 1px rgba(61, 148, 96, 0.05);
+  }
+
+  &--gray {
+    background-color: var(--color-progress-gray-background);
+    color: var(--color-progress-gray);
+    box-shadow: inset 0 0 0 1px rgba(71, 85, 105, 0.04);
+  }
+}
+
+.progress-info {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-width: 0;
+
+  &__value {
+    font-size: 27px;
+    line-height: 1.1;
+    font-weight: 700;
+    color: var(--color-title);
+    letter-spacing: -0.5px;
+  }
+
+  &__label {
+    max-width: 100%;
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 1.4;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+
+// ******************** DASHBOARD NOTE ********************
+.dashboard-note {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 72px;
+  padding: 16px 20px;
+  box-sizing: border-box;
+  border: 1px solid var(--color-dashboard-border);
+  border-radius: 14px;
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 2px 7px var(--color-shadow-note);
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 11px;
+    background-color: var(--color-progress-purple-background);
+    color: var(--color-primary-dark);
+
+    mat-icon {
+      width: 21px;
+      height: 21px;
+      font-size: 21px;
+      line-height: 21px;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+
+  &__title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-title);
+  }
+
+  &__text {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+  }
+}
+
+// ******************** ANIMATIONS ********************
+@keyframes wave {
+  0%,
+  60%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  10%,
+  30% {
+    transform: rotate(14deg);
+  }
+
+  20%,
+  40% {
+    transform: rotate(-8deg);
+  }
+}
+
+// ******************** MEDIA QUERIES ********************
+@media (max-width: 1100px) {
+  .dashboard {
+    padding: 26px 24px 36px;
+  }
+
+  .progress-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .progress-item {
+    height: 140px;
+  }
+}
+
+// ******************** MEDIA QUERIES ********************
+@media (max-width: 768px) {
+  .dashboard {
+    padding: 20px 16px 28px;
+  }
+
+  .page-header {
+    margin-bottom: 20px;
+
+    &__title {
+      font-size: 23px;
+    }
+
+    &__subtitle {
+      font-size: 13px;
+    }
+  }
+
+  .welcome-banner {
+    min-height: 145px;
+    padding: 22px;
+
+    &__title {
+      font-size: 19px;
+    }
+
+    &__description {
+      font-size: 12px;
+    }
+
+    &__decoration {
+      width: 100px;
+    }
+
+    &__icon {
+      top: 30px;
+      right: 15px;
+      width: 45px;
+      height: 45px;
+      font-size: 45px;
+      line-height: 45px;
+    }
+
+    &__circle {
+      &--large {
+        width: 90px;
+        height: 90px;
+      }
+
+      &--small {
+        display: none;
+      }
+    }
+  }
+
+  .progress-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+
+  .progress-item {
+    height: 125px;
+    gap: 12px;
+    padding: 18px !important;
+  }
+
+  .progress-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 13px;
+
+    mat-icon {
+      width: 24px;
+      height: 24px;
+      font-size: 24px;
+      line-height: 24px;
+    }
+  }
+
+  .progress-info {
+    &__value {
+      font-size: 23px;
+    }
+
+    &__label {
+      font-size: 12px;
+    }
+  }
+
+  .dashboard-note {
+    align-items: flex-start;
+    padding: 14px 16px;
+  }
+}
+
+// ******************** MEDIA QUERIES ********************
+@media (max-width: 480px) {
+  .welcome-banner {
+    min-height: auto;
+
+    &__description {
+      margin-top: 2px;
+    }
+
+    &__decoration {
+      display: none;
+    }
+
+    &__title {
+      font-size: 18px;
+    }
+  }
+
+  .progress-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .progress-item {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    height: 105px;
+    padding: 18px !important;
+  }
+
+  .progress-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .progress-info {
+    align-items: flex-start;
+
+    &__value {
+      font-size: 23px;
+    }
+
+    &__label {
+      font-size: 11px;
+    }
+  }
+
+  .dashboard-note {
+    &__text {
+      font-size: 11px;
+    }
+  }
+}
