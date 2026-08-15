@@ -1,2 +1,169 @@
-<!--********** TEXT TO VERIFIED REVIEW ROUTING WORKING **********-->
-<p>assessments-review-scoring works!</p>
+<section
+  class="submission-page min-h-full w-full bg-[var(--color-main-background)] p-4 sm:p-5 md:p-6"
+>
+  <div class="submission-page__container mx-auto w-full max-w-[1200px]">
+    <div class="grid grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-2 lg:gap-6">
+      <!-- LEFT COLUMN -->
+      <div class="flex flex-col gap-4 sm:gap-5 md:gap-6">
+        <section class="submission-card">
+          <div class="submission-card__header">
+            <div class="min-w-0">
+              <h2 class="submission-card__title">Student Information</h2>
+              <p class="submission-card__subtitle">
+                Information about the student who submitted this assessment.
+              </p>
+            </div>
+          </div>
+
+          <div class="submission-card__body grid grid-cols-1 gap-5 sm:grid-cols-2">
+            <div class="student-info">
+              <span class="student-info__label">Student Name</span>
+              <div class="student-info__value-wrapper">
+                <div class="student-info__avatar">AN</div>
+                <span class="student-info__value">Aurelia Nata</span>
+              </div>
+            </div>
+
+            <div class="student-info">
+              <span class="student-info__label">Student ID</span>
+              <span class="student-info__value">STD-2026-001</span>
+            </div>
+
+            <div class="student-info">
+              <span class="student-info__label">Class</span>
+              <span class="student-info__value">Informatics A</span>
+            </div>
+
+            <div class="student-info">
+              <span class="student-info__label">Email</span>
+              <span class="student-info__value student-info__value--email"
+                >aurelia@example.com</span
+              >
+            </div>
+          </div>
+        </section>
+
+        <section class="submission-card">
+          <div class="submission-card__header">
+            <div class="min-w-0">
+              <h2 class="submission-card__title">Submission Details</h2>
+              <p class="submission-card__subtitle">
+                Details about when and how the assessment was submitted.
+              </p>
+            </div>
+          </div>
+
+          <div class="submission-card__body grid grid-cols-1 gap-5 sm:grid-cols-2">
+            <div class="submission-info">
+              <span class="submission-info__label">Submission Time</span>
+              <span class="submission-info__value">August 13, 2026 at 10:32 AM</span>
+            </div>
+
+            <div class="submission-info">
+              <span class="submission-info__label">Status</span>
+              <span class="submission-info__status">
+                <span class="submission-info__status-dot"></span>
+                Completed
+              </span>
+            </div>
+
+            <div class="submission-info">
+              <span class="submission-info__label">Time Taken</span>
+              <span class="submission-info__value">42 minutes</span>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div class="flex flex-col gap-4 sm:gap-5 md:gap-6">
+        <section class="submission-card">
+          <div
+            class="submission-card__header flex-col sm:flex-row sm:items-start sm:justify-between"
+          >
+            <div class="min-w-0">
+              <h2 class="submission-card__title">Answer</h2>
+              <p class="submission-card__subtitle">
+                Student's submitted answer for this assessment.
+              </p>
+            </div>
+            <span class="answer-section__question">Question 1 of 1</span>
+          </div>
+
+          <div class="submission-card__body">
+            <div class="answer-section">
+              <div class="answer-section__question-block">
+                <span class="answer-section__question-label">Question</span>
+                <p class="answer-section__question-text">
+                  Explain the difference between supervised learning and unsupervised learning in
+                  machine learning.
+                </p>
+              </div>
+
+              <div class="answer-section__answer-block">
+                <span class="answer-section__answer-label">Student Answer</span>
+                <div class="answer-section__answer">
+                  <p>
+                    Supervised learning is a machine learning approach where the model learns from
+                    labeled data. The model receives input data together with the expected output
+                    and learns to predict the correct result.
+                  </p>
+                  <p>
+                    On the other hand, unsupervised learning works with unlabeled data. The model
+                    attempts to identify hidden patterns, structures, or relationships within the
+                    data without having predefined answers.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="submission-card submission-card--score">
+          <div class="submission-card__body flex flex-col gap-6">
+            <div class="final-score min-w-0">
+              <span class="final-score__label">Final Score</span>
+              <div class="final-score__value-wrapper">
+                <span class="final-score__value">85</span>
+                <span class="final-score__max">/ 100</span>
+              </div>
+              <p class="final-score__message">
+                Great job! The student has successfully completed this assessment.
+              </p>
+            </div>
+
+            <div class="final-score__breakdown grid w-full grid-cols-3 gap-2 sm:gap-4">
+              <div class="score-item">
+                <span class="score-item__label">Correct</span>
+                <span class="score-item__value score-item__value--success">8</span>
+              </div>
+              <div class="score-item">
+                <span class="score-item__label">Incorrect</span>
+                <span class="score-item__value score-item__value--danger">2</span>
+              </div>
+              <div class="score-item">
+                <span class="score-item__label">Percentage</span>
+                <span class="score-item__value">85%</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="submission-page__actions flex flex-col gap-3 pb-4 sm:flex-row sm:justify-end">
+      <button
+        type="button"
+        class="submission-page__button submission-page__button--secondary w-full sm:w-auto"
+      >
+        Back
+      </button>
+      <button
+        type="button"
+        class="submission-page__button submission-page__button--primary w-full sm:w-auto"
+      >
+        Review & Grade
+      </button>
+    </div>
+  </div>
+</section>

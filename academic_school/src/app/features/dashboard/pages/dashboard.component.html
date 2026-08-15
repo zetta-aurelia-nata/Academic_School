@@ -1,67 +1,118 @@
-<section class="dashboard">
-
+<section
+  class="dashboard w-full min-w-0 overflow-x-hidden px-8 pt-[30px] pb-10 box-border max-[1100px]:px-6 max-[1100px]:pt-[26px] max-[1100px]:pb-9 max-[768px]:px-4 max-[768px]:pt-5 max-[768px]:pb-7"
+>
   <!-- *************** PAGE HEADER *************** -->
-  <div class="page-header">
-    <div class="page-header__content">
-<h1 class="page-header__title">
-  Welcome back! <span class="page-header__wave">👋</span>
-</h1>
+  <div class="page-header mb-6 max-[768px]:mb-5">
+    <div class="page-header__content flex flex-col">
+      <h1
+        class="page-header__title m-0 mb-[7px] text-[27px] leading-[1.2] font-bold tracking-[-0.5px] max-[768px]:text-[23px]"
+      >
+        Welcome back! <span class="page-header__wave">👋</span>
+      </h1>
 
-<p class="page-header__subtitle">
-  Let's see your assessment progress here.
-</p>
+      <p class="page-header__subtitle m-0 text-sm leading-[1.5] max-[768px]:text-[13px]">
+        Let's see your assessment progress here.
+      </p>
     </div>
   </div>
 
   <!-- *************** WELCOME BANNER *************** -->
-  <div class="welcome-banner">
-    <div class="welcome-banner__content">
-      <span class="welcome-banner__eyebrow"> Assessment Management </span>
+  <div
+    class="welcome-banner relative flex min-h-[155px] items-center justify-between overflow-hidden box-border mb-[22px] rounded-[18px] px-8 py-7 max-[768px]:min-h-[145px] max-[768px]:p-[22px] max-[480px]:min-h-0"
+  >
+    <div class="welcome-banner__content relative z-[2] flex max-w-[620px] flex-col">
+      <span
+        class="welcome-banner__eyebrow mb-1.5 text-[11px] leading-[1.4] font-semibold uppercase tracking-[0.5px]"
+      >
+        Assessment Management
+      </span>
 
-      <h2 class="welcome-banner__title">Keep your assessments on track</h2>
+      <h2
+        class="welcome-banner__title m-0 mb-[7px] text-[22px] leading-[1.25] font-bold tracking-[-0.3px] max-[768px]:text-[19px] max-[480px]:text-[18px]"
+      >
+        Keep your assessments on track
+      </h2>
 
-      <p class="welcome-banner__description">
+      <p
+        class="welcome-banner__description m-0 max-w-[550px] text-[13px] leading-[1.6] max-[768px]:text-xs max-[480px]:mt-0.5"
+      >
         Monitor assessment activities, review submissions, and keep track of your results from one
         place.
       </p>
     </div>
 
-    <div class="welcome-banner__decoration">
-      <div class="welcome-banner__circle welcome-banner__circle--large"></div>
+    <div
+      class="welcome-banner__decoration relative h-[120px] w-[190px] shrink-0 max-[768px]:w-[100px] max-[480px]:hidden"
+    >
+      <div
+        class="welcome-banner__circle welcome-banner__circle--large absolute right-[5px] top-0 h-[120px] w-[120px] rounded-full max-[768px]:h-[90px] max-[768px]:w-[90px]"
+      ></div>
 
-      <div class="welcome-banner__circle welcome-banner__circle--small"></div>
+      <div
+        class="welcome-banner__circle welcome-banner__circle--small absolute right-[115px] top-[10px] h-[45px] w-[45px] rounded-full max-[768px]:hidden"
+      ></div>
 
-      <mat-icon class="welcome-banner__icon"> school </mat-icon>
+      <mat-icon
+        class="welcome-banner__icon absolute right-[42px] top-[30px] z-[2] h-[58px] w-[58px] text-[58px] leading-[58px] max-[768px]:right-[15px] max-[768px]:top-[30px] max-[768px]:h-[45px] max-[768px]:w-[45px] max-[768px]:text-[45px] max-[768px]:leading-[45px]"
+      >
+        school
+      </mat-icon>
     </div>
   </div>
 
   <!-- *************** PROGRESS CARDS *************** -->
-  <div class="progress-grid">
-    <mat-card class="progress-item" *ngFor="let stat of stats">
-      <div class="progress-icon" [ngClass]="stat.colorClass">
+  <div
+    class="progress-grid mb-[22px] grid grid-cols-5 gap-4 max-[1100px]:grid-cols-3 max-[768px]:mb-[18px] max-[768px]:grid-cols-2 max-[768px]:gap-3.5 max-[480px]:grid-cols-1 max-[480px]:gap-3"
+  >
+    <mat-card
+      class="progress-item relative h-[142px] min-w-0 gap-4 overflow-hidden box-border !rounded-2xl !p-5 max-[1100px]:h-[140px] max-[768px]:h-[125px] max-[768px]:gap-3 max-[768px]:!p-[18px] max-[480px]:h-[105px]"
+      *ngFor="let stat of stats"
+    >
+      <!-- *************** ICON *************** -->
+      <div
+        class="progress-icon relative z-[1] flex h-[58px] w-[58px] shrink-0 items-center justify-center rounded-[15px] max-[768px]:h-[50px] max-[768px]:w-[50px] max-[768px]:rounded-[13px]"
+        [ngClass]="stat.colorClass"
+      >
         <mat-icon>{{ stat.icon }}</mat-icon>
       </div>
 
-      <div class="progress-info">
-        <strong class="progress-info__value">{{ stat.value }}</strong>
-        <span class="progress-info__label">{{ stat.label }}
+      <!-- *************** VALUE *************** -->
+      <div class="progress-info relative z-[1] flex shrink-0 items-center">
+        <strong
+          class="progress-info__value text-[27px] leading-[1.1] font-bold tracking-[-0.5px] max-[768px]:text-[23px]"
+        >
+          {{ stat.value }}
+        </strong>
+      </div>
+
+      <!-- *************** LABEL *************** -->
+      <div class="progress-label relative z-[1] flex min-w-0 shrink-0 items-center">
+        <span
+          class="progress-label__text block whitespace-nowrap text-[10px] leading-[1.4] font-light"
+        >
+          {{ stat.label }}
         </span>
       </div>
 
-      <div class="progress-item__accent"></div>
+      <!-- *************** ACCENT *************** -->
+      <div class="progress-item__accent absolute top-0 bottom-0 left-0 w-[3px]"></div>
     </mat-card>
   </div>
 
   <!-- *************** DASHBOARD NOTE *************** -->
-  <div class="dashboard-note">
-    <div class="dashboard-note__icon">
-      <mat-icon> insights </mat-icon>
+  <div
+    class="dashboard-note flex min-h-[72px] items-center gap-3.5 box-border rounded-[14px] px-5 py-4 max-[768px]:items-start max-[768px]:px-4 max-[768px]:py-3.5"
+  >
+    <div
+      class="dashboard-note__icon flex h-10 w-10 shrink-0 items-center justify-center rounded-[11px]"
+    >
+      <mat-icon>insights</mat-icon>
     </div>
 
-    <div class="dashboard-note__content">
-      <strong class="dashboard-note__title"> Assessment Overview </strong>
+    <div class="dashboard-note__content flex min-w-0 flex-col gap-[3px]">
+      <strong class="dashboard-note__title text-[13px] font-bold"> Assessment Overview </strong>
 
-      <p class="dashboard-note__text">
+      <p class="dashboard-note__text m-0 text-xs leading-[1.5] max-[480px]:text-[11px]">
         Use the statistics above to quickly monitor your assessment activities.
       </p>
     </div>

@@ -1,6 +1,9 @@
+@use "tailwindcss";
+
 :root {
   --color-white: #ffffff;
-  --color-sidebar: #24153f;
+  --color-black: #292828;
+  --color-sidebar-new: #24153f;
   --color-sidebar-hover: #342052;
   --color-sidebar-active: #4b2a72;
   --color-sidebar-text: #e7ddf2;
@@ -44,35 +47,30 @@
   --color-sidebar-status-icon: #c9a6e8;
   --color-table-border: #e5deee;
 
-// ASSESSMENT STATUS
---color-status-completed: #21a45a;
---color-status-completed-background: #e8f8ee;
---color-status-completed-border: #ccefd9;
---color-status-pending: #c58a19;
---color-status-pending-background: #fff7e7;
---color-status-pending-border: #f7e5bd;
---color-status-failed: #d84c4c;
---color-status-failed-background: #fff0f0;
---color-status-failed-border: #f5d5d5;
---color-status-draft: #667085;
---color-status-draft-background: #f2f3f5;
---color-status-draft-border: #e4e6e9;
+  // ASSESSMENT STATUS
+  --color-status-completed: #21a45a;
+  --color-status-completed-background: #e8f8ee;
+  --color-status-completed-border: #ccefd9;
+  --color-status-pending: #c58a19;
+  --color-status-pending-background: #fff7e7;
+  --color-status-pending-border: #f7e5bd;
+  --color-status-failed: #d84c4c;
+  --color-status-failed-background: #fff0f0;
+  --color-status-failed-border: #f5d5d5;
+  --color-status-draft: #667085;
+  --color-status-draft-background: #f2f3f5;
+  --color-status-draft-border: #e4e6e9;
 }
 
 html,
 body {
-  width: auto;
   min-height: 100%;
   margin: 0;
   padding: 0;
+  width: auto;
 }
 
 body {
   min-height: 100vh;
-}
-
-app-root {
-  display: block;
   width: auto;
-  min-height: 100vh;
 }

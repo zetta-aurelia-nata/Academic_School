@@ -43,49 +43,6 @@
     }
   }
 
-  // ******************** APP LOGO ********************
-  &__logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-shrink: 0;
-    white-space: nowrap;
-  }
-
-  &__logo-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    background: var(--color-main-background);
-    flex-shrink: 0;
-
-    img {
-      width: 20px;
-      height: 20px;
-      object-fit: contain;
-    }
-  }
-
-  &__logo-text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.2;
-  }
-
-  &__logo-title {
-    font-size: 17px;
-    font-weight: 700;
-    color: var(--color-logo);
-  }
-
-  &__logo-tagline {
-    font-size: 11px;
-    color: var(--secondary-color);
-  }
-
   // ******************** PAGE TITLE ********************
   &__page {
     display: flex;
@@ -93,7 +50,6 @@
     gap: 16px;
     flex: 1;
     min-width: 0;
-    margin-left: 100px;
   }
 
   &__page-title {
