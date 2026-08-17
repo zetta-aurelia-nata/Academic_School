@@ -167,25 +167,23 @@
       <!--********** STUDENT RESULT ITEM **********-->
       <div
         *ngFor="let student of students"
-        class="result-student border-b border-[var(--color-border)] px-5 py-4 last:border-b-0"
+        class="result-student border-b border-[var(--color-border)] px-5 py-4"
       >
-        <div class="flex items-center justify-between gap-4 max-md:flex-col max-md:items-stretch">
+        <div class="result-student__content">
           <!--********** STUDENT INFORMATION **********-->
-          <div class="flex min-w-0 items-center gap-3">
+          <div class="result-student__information">
             <!--********** STUDENT AVATAR **********-->
-            <div
-              class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--color-primary-light)] text-[12px] font-bold text-[var(--color-primary-dark)]"
-            >
+            <div class="result-student__avatar">
               {{ student.initials }}
             </div>
 
             <!--********** STUDENT DETAILS **********-->
-            <div class="min-w-0">
-              <h3 class="m-0 truncate text-[13px] font-bold text-[var(--color-title)]">
+            <div class="result-student__details">
+              <h3 class="result-student__name">
                 {{ student.studentName }}
               </h3>
 
-              <p class="m-0 mt-1 text-[11px] text-[var(--color-text-secondary)]">
+              <p class="result-student__meta">
                 {{ student.studentId }}
                 ·
                 {{ student.className }}
@@ -193,34 +191,29 @@
             </div>
           </div>
 
-          <!--********** STUDENT RESULT INFORMATION **********-->
-          <div class="flex items-center gap-5">
-            <!--********** STUDENT SCORE **********-->
-            <div class="text-right">
-              <span
-                class="block text-[10px] uppercase tracking-wide text-[var(--color-text-secondary)]"
-              >
-                Score
-              </span>
+          <!--********** STUDENT SCORE **********-->
+          <div class="result-student__score">
+            <span class="result-student__score-label"> Score </span>
 
-              <span class="text-[16px] font-bold text-[var(--color-primary-dark)]">
-                {{ student.score }}/{{ student.maxScore }}
-              </span>
-            </div>
+            <span class="result-student__score-value">
+              {{ student.score }}/{{ student.maxScore }}
+            </span>
+          </div>
 
-            <!--********** STUDENT STATUS **********-->
-            <span
-              [ngClass]="statusClass(student.status)"
-              class="result-status hidden sm:inline-flex"
-            >
+          <!--********** STUDENT STATUS **********-->
+          <div class="result-student__status">
+            <span [ngClass]="statusClass(student.status)" class="result-status">
               <span class="result-status__dot"></span>
+
               {{ student.status }}
             </span>
+          </div>
 
-            <!--********** REVIEW ANSWERS ACTION **********-->
+          <!--********** REVIEW ANSWERS ACTION **********-->
+          <div class="result-student__action">
             <button
               mat-stroked-button
-              class="!h-9 !rounded-[9px] !px-3 !text-[11px] !font-semibold"
+              class="!h-9 !rounded-[9px] !px-4 !text-[11px] !font-semibold"
               [disabled]="currentResultState.locked || student.answers.length === 0"
               (click)="onReviewAnswers(student)"
             >
@@ -230,6 +223,7 @@
         </div>
       </div>
 
+      <!--********** EMPTY STUDENT RESULTS **********-->
       <div
         *ngIf="students.length === 0"
         class="flex flex-col items-center justify-center px-5 py-12 text-center"
