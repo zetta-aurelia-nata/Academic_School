@@ -40,7 +40,7 @@ export class AssessmentList {
     'actions',
   ];
 
-assessments: Assessment[] = ASSESSMENTS;
+  assessments: Assessment[] = ASSESSMENTS;
 
   //********** ACTION HANDLERS **********
   onCreateAssessment(): void {
@@ -52,15 +52,11 @@ assessments: Assessment[] = ASSESSMENTS;
   }
 
   onEdit(assessment: Assessment): void {
-    this.router.navigate(['/assessments', assessment.id]);
+    this.router.navigate(['/assessments/edit', assessment.id]);
   }
 
-    onReviewAssessment(assessment: Assessment): void {
-    this.router.navigate([
-      '/assessments',
-      assessment.id,
-      'submissions',
-    ]);
+  onReviewAssessment(assessment: Assessment): void {
+    this.router.navigate(['/assessments', assessment.id, 'submissions']);
   }
 
   onDelete(assessment: Assessment): void {}

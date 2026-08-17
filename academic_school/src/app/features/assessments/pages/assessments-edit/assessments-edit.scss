@@ -1,0 +1,54 @@
+.edit-assessment {
+  box-sizing: border-box;
+}
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+::ng-deep {
+  .mdc-text-field--outlined .mat-mdc-form-field-infix,
+  .mdc-text-field--no-label .mat-mdc-form-field-infix {
+    padding: 16px;
+  }
+}
+
+::ng-deep {
+  .assessment-select-panel {
+    background-color: var(--color-white) !important;
+  }
+}
+
+::ng-deep {
+  .edit-assessment {
+    .mat-mdc-form-field {
+      width: 100%;
+    }
+
+    .mat-mdc-text-field-wrapper {
+      border-radius: 10px !important;
+    }
+
+    .mat-mdc-form-field-subscript-wrapper {
+      min-height: 18px;
+    }
+
+    .mat-mdc-form-field-error {
+      font-size: 12px;
+    }
+
+    .mat-mdc-card {
+      box-shadow: none !important;
+    }
+
+    .mat-mdc-button,
+    .mat-mdc-unelevated-button,
+    .mat-mdc-outlined-button {
+      transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+    }
+  }
+}
