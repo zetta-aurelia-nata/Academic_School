@@ -29,7 +29,7 @@ export class DashboardComponent {
       colorClass: 'progress-icon--purple',
     },
     {
-      label: 'Done',
+      label: 'Assessment Done',
       value: 7,
       icon: 'check_circle',
       colorClass: 'progress-icon--green',

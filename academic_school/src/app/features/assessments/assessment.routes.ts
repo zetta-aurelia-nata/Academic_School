@@ -22,6 +22,20 @@ export const ASSESSMENT_ROUTES: Routes = [
       ),
   },
 
+  // ********** STUDENT SUBMISSIONS **********
+  {
+    path: ':id/submissions',
+    loadComponent: () =>
+      import('./pages/assessments-detail/assessments-detail').then((m) => m.AssessmentsDetail),
+  },
+
+  // ********** STUDENT SUBMISSION DETAIL **********
+  {
+    path: ':id/submissions/:studentId',
+    loadComponent: () =>
+      import('./pages/assessments-detail/assessments-detail').then((m) => m.AssessmentsDetail),
+  },
+
   {
     path: 'result',
     loadComponent: () =>

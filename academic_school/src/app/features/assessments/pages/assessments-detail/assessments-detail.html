@@ -1,2 +1,196 @@
-<!--********** TEXT TO VERIFIED DETAIL ROUTING WORKING **********-->
-<p>assessments-detail works!</p>
+<section
+  class="assessment-detail w-full min-h-full box-border bg-[var(--color-background-content)] px-8 pt-[30px] pb-10 font-sans max-lg:px-5 max-lg:pt-6 max-md:px-4 max-md:pt-5"
+>
+  <!-- ================================================= -->
+  <!-- HEADER -->
+  <!-- ================================================= -->
+
+  <div class="mb-6 flex items-center gap-3">
+    <button
+      mat-icon-button
+      class="!flex !h-10 !w-10 !items-center !justify-center !rounded-[10px]"
+      (click)="onBack()"
+    >
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+
+    <div class="min-w-0">
+      <h1 class="m-0 truncate text-2xl font-bold text-[var(--color-title)]">
+        {{ student?.studentName }}
+      </h1>
+
+      <p class="m-0 mt-1 text-[13px] text-[var(--color-text-secondary)]">
+        {{ assessment?.title }}
+      </p>
+    </div>
+  </div>
+
+  <!-- ================================================= -->
+  <!-- STUDENT INFORMATION -->
+  <!-- ================================================= -->
+
+  <mat-card
+    class="detail-card !mb-4 !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-0"
+  >
+    <div class="border-b border-[var(--color-border)] px-5 py-4">
+      <h2 class="m-0 text-[14px] font-bold text-[var(--color-title)]">Student Information</h2>
+    </div>
+
+    <div class="flex items-center gap-4 p-5">
+      <!-- AVATAR -->
+
+      <div
+        class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[var(--color-primary-light)] text-[13px] font-bold text-[var(--color-primary-dark)]"
+      >
+        {{ student?.initials }}
+      </div>
+
+      <!-- INFO -->
+
+      <div class="min-w-0">
+        <h3 class="m-0 text-[15px] font-bold text-[var(--color-title)]">
+          {{ student?.studentName }}
+        </h3>
+
+        <p class="m-0 mt-1 text-[12px] text-[var(--color-text-secondary)]">
+          {{ student?.studentId }}
+          ·
+          {{ student?.className }}
+        </p>
+
+        <p class="m-0 mt-1 text-[12px] text-[var(--color-text-secondary)]">
+          {{ student?.email }}
+        </p>
+      </div>
+    </div>
+  </mat-card>
+
+  <!-- ================================================= -->
+  <!-- SUBMISSION INFORMATION -->
+  <!-- ================================================= -->
+
+  <mat-card
+    class="detail-card !mb-4 !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-0"
+  >
+    <div class="border-b border-[var(--color-border)] px-5 py-4">
+      <h2 class="m-0 text-[14px] font-bold text-[var(--color-title)]">Submission Information</h2>
+    </div>
+
+    <div class="grid grid-cols-1 gap-4 p-5 sm:grid-cols-3">
+      <!-- SUBMITTED -->
+
+      <div class="flex items-start gap-3">
+        <mat-icon class="!text-[20px] !text-[var(--color-primary-dark)]"> schedule </mat-icon>
+
+        <div>
+          <span class="block text-[11px] text-[var(--color-text-secondary)]"> Submitted </span>
+
+          <span class="block mt-1 text-[12px] font-semibold text-[var(--color-title)]">
+            {{ student?.submittedAt ?? '-' }}
+          </span>
+        </div>
+      </div>
+
+      <!-- STATUS -->
+
+      <div class="flex items-start gap-3">
+        <mat-icon class="!text-[20px] !text-[var(--color-primary-dark)]"> check_circle </mat-icon>
+
+        <div>
+          <span class="block text-[11px] text-[var(--color-text-secondary)]"> Status </span>
+
+          <span *ngIf="student" [ngClass]="statusClass(student.status)" class="review-status mt-1">
+            <span class="review-status__dot"></span>
+
+            {{ student.status }}
+          </span>
+        </div>
+      </div>
+
+      <!-- TIME TAKEN -->
+
+      <div class="flex items-start gap-3">
+        <mat-icon class="!text-[20px] !text-[var(--color-primary-dark)]"> timer </mat-icon>
+
+        <div>
+          <span class="block text-[11px] text-[var(--color-text-secondary)]"> Time Taken </span>
+
+          <span class="block mt-1 text-[12px] font-semibold text-[var(--color-title)]">
+            {{ student?.timeTaken ?? '-' }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+
+  <!-- ================================================= -->
+  <!-- SUBMITTED ANSWERS -->
+  <!-- ================================================= -->
+
+  <mat-card
+    class="detail-card !mb-4 !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-0"
+  >
+    <div class="border-b border-[var(--color-border)] px-5 py-4">
+      <h2 class="m-0 text-[14px] font-bold text-[var(--color-title)]">Submitted Answers</h2>
+    </div>
+
+    <div class="flex flex-col">
+      <div
+        *ngFor="let item of answers; let i = index"
+        class="answer-item border-b border-[var(--color-border)] p-5 last:border-b-0"
+      >
+        <div class="flex items-start justify-between gap-4">
+          <div class="min-w-0">
+            <span
+              class="text-[11px] font-bold uppercase tracking-wide text-[var(--color-text-secondary)]"
+            >
+              Question {{ i + 1 }}
+            </span>
+
+            <h3 class="m-0 mt-2 text-[13px] font-semibold text-[var(--color-title)]">
+              {{ item.question }}
+            </h3>
+
+            <p class="m-0 mt-2 text-[12px] text-[var(--color-text-secondary)]">
+              Answer:
+              <span class="font-semibold text-[var(--color-title)]">
+                {{ item.answer }}
+              </span>
+            </p>
+          </div>
+
+          <span class="shrink-0 text-[12px] font-bold text-[var(--color-primary-dark)]">
+            {{ item.score }}/{{ item.maxScore }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+
+  <!-- ================================================= -->
+  <!-- FINAL SCORE -->
+  <!-- ================================================= -->
+
+  <mat-card
+    class="detail-card !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-5"
+  >
+    <div class="flex items-center justify-between gap-4">
+      <div>
+        <span
+          class="block text-[11px] font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]"
+        >
+          Final Score
+        </span>
+
+        <span class="mt-1 block text-[12px] text-[var(--color-text-secondary)]">
+          Total assessment score
+        </span>
+      </div>
+
+      <div class="text-3xl font-bold text-[var(--color-primary-dark)]">
+        {{ student?.score ?? '-' }}
+        <span class="text-lg text-[var(--color-text-secondary)]"> / 100 </span>
+      </div>
+    </div>
+  </mat-card>
+</section>

@@ -1,151 +1,263 @@
-<section class="create-assessment">
-  <div class="create-assessment__layout">
+<section class="create-assessment px-6 py-10 max-[560px]:px-[14px] max-[560px]:py-5">
+  <div class="create-assessment__layout mx-auto flex items-start gap-8 max-[900px]:flex-col">
     <!-- ******************** LEFT: TYPE SELECTION ******************** -->
-    <aside class="type-panel">
-      <h2 class="type-panel__title">Assessment Type</h2>
-      <p class="type-panel__subtitle">Choose the type of assessment</p>
+    <aside class="type-panel sticky top-6 w-[340px] shrink-0 max-[900px]:static max-[900px]:w-full">
+      <h2 class="type-panel__title m-0 mb-1 text-lg font-bold text-[var(--color-title)]">
+        Assessment Type
+      </h2>
 
-      <div class="type-panel__list">
+      <p class="type-panel__subtitle m-0 mb-5 text-[13px] text-[var(--color-text-secondary)]">
+        Choose the type of assessment
+      </p>
+
+      <div
+        class="type-panel__list flex flex-col gap-3 max-[900px]:flex-row max-[900px]:overflow-x-auto max-[560px]:flex-col max-[560px]:overflow-x-visible"
+      >
+        <!-- ******************** ESSAY ******************** -->
         <button
-          class="type-card"
+          type="button"
+          class="type-card flex w-full min-w-0 items-center gap-3 rounded-xl border bg-[var(--color-white)] px-4 py-[14px] text-left max-[900px]:min-w-[280px] max-[900px]:flex-1"
           [class.type-card--active]="selectedType === 'essay'"
           (click)="selectType('essay')"
         >
-          <div class="type-card__icon type-card__icon--amber">
-            <mat-icon>edit_note</mat-icon>
-          </div>
-          <div class="type-card__text">
-            <span class="type-card__label">Essay</span>
-            <span class="type-card__desc">Open-ended written answer</span>
-          </div>
-          <mat-icon class="type-card__check" *ngIf="selectedType === 'essay'"
-            >check_circle</mat-icon
+          <!-- ICON -->
+          <div
+            class="type-card__icon type-card__icon--amber flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px]"
           >
+            <mat-icon class="!h-5 !w-5 !text-xl"> edit_note </mat-icon>
+          </div>
+
+          <!-- TEXT -->
+          <div class="type-card__text flex min-w-0 flex-1 flex-col gap-px">
+            <span class="type-card__label truncate text-sm font-semibold"> Essay </span>
+
+            <span class="type-card__desc truncate text-[11.5px]"> Open-ended written answer </span>
+          </div>
+
+          <!-- CHECK -->
+          @if (selectedType === 'essay') {
+            <mat-icon class="type-card__check shrink-0"> check_circle </mat-icon>
+          }
         </button>
 
+        <!-- ******************** MULTIPLE CHOICE ******************** -->
         <button
-          class="type-card"
+          type="button"
+          class="type-card flex w-full min-w-0 items-center gap-3 rounded-xl border bg-[var(--color-white)] px-4 py-[14px] text-left max-[900px]:min-w-[280px] max-[900px]:flex-1"
           [class.type-card--active]="selectedType === 'multiple_choice'"
           (click)="selectType('multiple_choice')"
         >
-          <div class="type-card__icon type-card__icon--blue">
-            <mat-icon>checklist</mat-icon>
-          </div>
-          <div class="type-card__text">
-            <span class="type-card__label">Multiple Choice</span>
-            <span class="type-card__desc">Select one correct answer</span>
-          </div>
-          <mat-icon class="type-card__check" *ngIf="selectedType === 'multiple_choice'"
-            >check_circle</mat-icon
+          <!-- ICON -->
+          <div
+            class="type-card__icon type-card__icon--blue flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px]"
           >
+            <mat-icon class="!h-5 !w-5 !text-xl"> checklist </mat-icon>
+          </div>
+
+          <!-- TEXT -->
+          <div class="type-card__text flex min-w-0 flex-1 flex-col gap-px">
+            <span class="type-card__label truncate text-sm font-semibold"> Multiple Choice </span>
+
+            <span class="type-card__desc truncate text-[11.5px]"> Select one correct answer </span>
+          </div>
+
+          <!-- CHECK -->
+          @if (selectedType === 'multiple_choice') {
+            <mat-icon class="type-card__check shrink-0"> check_circle </mat-icon>
+          }
         </button>
       </div>
     </aside>
 
     <!-- ******************** DIVIDER ******************** -->
-    <div class="layout-divider"></div>
+    <div
+      class="layout-divider h-auto w-px shrink-0 self-stretch bg-[var(--color-sidebar-muted)] max-[900px]:my-5 max-[900px]:h-px max-[900px]:w-full"
+    ></div>
 
     <!-- ******************** RIGHT: FORM AREA ******************** -->
-    <div class="form-panel">
-      <!-- EMPTY STATE -->
-      <div class="empty-state" *ngIf="!selectedType">
-        <div class="empty-state__icon">
-          <mat-icon>arrow_back</mat-icon>
+    <div class="form-panel min-w-0 flex-1">
+      <!-- ******************** EMPTY STATE ******************** -->
+      @if (!selectedType) {
+        <div
+          class="empty-state flex h-[600px] flex-col items-center justify-center gap-2.5 px-7 py-7 text-center"
+        >
+          <div
+            class="empty-state__icon flex h-20 w-20 items-center justify-center rounded-full bg-[var(--color-primary-light)] text-[var(--color-primary)]"
+          >
+            <mat-icon class="!h-[30px] !w-[30px] !text-[30px]"> arrow_back </mat-icon>
+          </div>
+
+          <p
+            class="empty-state__text m-0 max-w-[280px] text-lg leading-[1.5] text-[var(--color-text-muted)]"
+          >
+            Choose one of the type to start create a new assessment
+          </p>
         </div>
-        <p class="empty-state__text">Choose one of the type to start create a new assessment</p>
-      </div>
+      }
 
-      <!-- ESSAY FORM -->
-      <mat-card class="form-card" *ngIf="selectedType === 'essay'">
-        <div class="form-card__header">
-          <div class="form-card__header-icon form-card__header-icon--amber">
-            <mat-icon>edit_note</mat-icon>
-          </div>
-          <div>
-            <h2 class="form-card__title">Essay Assessment</h2>
-            <p class="form-card__subtitle">Open-ended written answer</p>
-          </div>
-        </div>
-
-        <form class="assessment-form">
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Question Text</mat-label>
-            <textarea matInput rows="4" placeholder="Write your essay question here"></textarea>
-          </mat-form-field>
-
-          <div class="form-row">
-            <mat-form-field appearance="outline">
-              <mat-label>Max Word Count</mat-label>
-              <input matInput type="number" placeholder="e.g. 300" />
-            </mat-form-field>
-
-            <mat-form-field appearance="outline">
-              <mat-label>Points</mat-label>
-              <input matInput type="number" placeholder="e.g. 10" />
-            </mat-form-field>
-          </div>
-        </form>
-
-        <div class="form-card__actions">
-          <button mat-stroked-button (click)="cancelSelection()">Cancel</button>
-          <button mat-flat-button color="primary">
-            <mat-icon>check</mat-icon>
-            <span>Save Question</span>
-          </button>
-        </div>
-      </mat-card>
-
-      <!-- MULTIPLE CHOICE FORM -->
-      <mat-card class="form-card" *ngIf="selectedType === 'multiple_choice'">
-        <div class="form-card__header">
-          <div class="form-card__header-icon form-card__header-icon--blue">
-            <mat-icon>checklist</mat-icon>
-          </div>
-          <div>
-            <h2 class="form-card__title">Multiple Choice Question</h2>
-            <p class="form-card__subtitle">Select one correct answer from options</p>
-          </div>
-        </div>
-
-        <form class="assessment-form">
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Question Text</mat-label>
-            <textarea matInput rows="3" placeholder="Write your question here"></textarea>
-          </mat-form-field>
-
-          <div class="options-list">
-            <span class="options-list__label">Answer Options</span>
-
-            <div class="option-row" *ngFor="let opt of [1, 2, 3, 4]; let i = index">
-              <span class="option-row__index">{{ i + 1 }}</span>
-
-              <mat-form-field appearance="outline" class="option-row__field">
-                <input matInput placeholder="Option {{ opt }}" />
-              </mat-form-field>
-
-              <mat-checkbox class="option-row__check">Correct</mat-checkbox>
+      <!-- ******************** ESSAY FORM ******************** -->
+      @if (selectedType === 'essay') {
+        <mat-card
+          class="form-card !rounded-xl !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-7"
+        >
+          <!-- HEADER -->
+          <div
+            class="form-card__header mb-6 flex items-center gap-[14px] border-b border-[var(--color-border)] pb-5"
+          >
+            <div
+              class="form-card__header-icon form-card__header-icon--amber flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-xl"
+            >
+              <mat-icon class="!h-[22px] !w-[22px] !text-[22px]"> edit_note </mat-icon>
             </div>
 
-            <button mat-stroked-button type="button" class="add-option-btn">
-              <mat-icon>add</mat-icon>
-              <span>Add Option</span>
-            </button>
+            <div class="min-w-0">
+              <h2 class="form-card__title m-0 text-[17px] font-bold text-[var(--color-title)]">
+                Essay Assessment
+              </h2>
+
+              <p
+                class="form-card__subtitle mt-0.5 mb-0 text-[12.5px] text-[var(--color-text-secondary)]"
+              >
+                Open-ended written answer
+              </p>
+            </div>
           </div>
 
-          <mat-form-field appearance="outline" class="points-field">
-            <mat-label>Points</mat-label>
-            <input matInput type="number" placeholder="e.g. 10" />
-          </mat-form-field>
-        </form>
+          <!-- FORM -->
+          <form class="assessment-form flex flex-col gap-[18px]">
+            <mat-form-field appearance="outline" class="w-full">
+              <mat-label>Question Text</mat-label>
 
-        <div class="form-card__actions">
-          <button mat-stroked-button (click)="cancelSelection()">Cancel</button>
-          <button mat-flat-button color="primary">
-            <mat-icon>check</mat-icon>
-            <span>Save Question</span>
-          </button>
-        </div>
-      </mat-card>
+              <textarea matInput rows="4" placeholder="Write your essay question here"></textarea>
+            </mat-form-field>
+
+            <div class="form-row grid grid-cols-2 gap-4 max-[560px]:grid-cols-1">
+              <mat-form-field class="w-full" appearance="outline">
+                <mat-label>Max Word Count</mat-label>
+
+                <input matInput type="number" placeholder="e.g. 300" />
+              </mat-form-field>
+
+              <mat-form-field class="w-full" appearance="outline">
+                <mat-label>Points</mat-label>
+
+                <input matInput type="number" placeholder="e.g. 10" />
+              </mat-form-field>
+            </div>
+          </form>
+
+          <!-- ACTIONS -->
+          <div
+            class="form-card__actions mt-6 flex justify-end gap-3 border-t border-[var(--color-border)] pt-5 max-[560px]:flex-col-reverse"
+          >
+            <button mat-stroked-button class="max-[560px]:w-full" (click)="cancelSelection()">
+              Cancel
+            </button>
+
+            <button mat-flat-button color="primary" class="max-[560px]:w-full">
+              <mat-icon>check</mat-icon>
+              <span>Save Question</span>
+            </button>
+          </div>
+        </mat-card>
+      }
+
+      <!-- ******************** MULTIPLE CHOICE FORM ******************** -->
+      @if (selectedType === 'multiple_choice') {
+        <mat-card
+          class="form-card !rounded-xl !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-7"
+        >
+          <!-- HEADER -->
+          <div
+            class="form-card__header mb-6 flex items-center gap-[14px] border-b border-[var(--color-border)] pb-5"
+          >
+            <div
+              class="form-card__header-icon form-card__header-icon--blue flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-xl"
+            >
+              <mat-icon class="!h-[22px] !w-[22px] !text-[22px]"> checklist </mat-icon>
+            </div>
+
+            <div class="min-w-0">
+              <h2 class="form-card__title m-0 text-[17px] font-bold text-[var(--color-title)]">
+                Multiple Choice Question
+              </h2>
+
+              <p
+                class="form-card__subtitle mt-0.5 mb-0 text-[12.5px] text-[var(--color-text-secondary)]"
+              >
+                Select one correct answer from options
+              </p>
+            </div>
+          </div>
+
+          <!-- FORM -->
+          <form class="assessment-form flex flex-col gap-[18px]">
+            <mat-form-field appearance="outline" class="w-full">
+              <mat-label>Question Text</mat-label>
+
+              <textarea matInput rows="3" placeholder="Write your question here"></textarea>
+            </mat-form-field>
+
+            <!-- OPTIONS -->
+            <div class="options-list flex flex-col gap-2.5">
+              <span
+                class="options-list__label text-[12.5px] font-semibold uppercase tracking-[0.4px]"
+              >
+                Answer Options
+              </span>
+
+              <div
+                class="option-row flex items-center gap-2.5"
+                *ngFor="let opt of [1, 2, 3, 4]; let i = index"
+              >
+                <span
+                  class="option-row__index flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-xs font-bold"
+                >
+                  {{ i + 1 }}
+                </span>
+
+                <mat-form-field appearance="outline" class="option-row__field min-w-0 flex-1">
+                  <input matInput placeholder="Option {{ opt }}" />
+                </mat-form-field>
+
+                <mat-checkbox class="option-row__check shrink-0 whitespace-nowrap">
+                  Correct
+                </mat-checkbox>
+              </div>
+
+              <button
+                mat-stroked-button
+                type="button"
+                class="add-option-btn mt-1 !flex !w-fit !items-center !gap-1.5"
+              >
+                <mat-icon>add</mat-icon>
+                <span>Add Option</span>
+              </button>
+            </div>
+
+            <!-- POINTS -->
+            <mat-form-field appearance="outline" class="max-w-[200px] max-[560px]:max-w-full">
+              <mat-label>Points</mat-label>
+
+              <input matInput type="number" placeholder="e.g. 10" />
+            </mat-form-field>
+          </form>
+
+          <!-- ACTIONS -->
+          <div
+            class="form-card__actions mt-6 flex justify-end gap-3 border-t border-[var(--color-border)] pt-5 max-[560px]:flex-col-reverse"
+          >
+            <button mat-stroked-button class="max-[560px]:w-full" (click)="cancelSelection()">
+              Cancel
+            </button>
+
+            <button mat-flat-button color="primary" class="max-[560px]:w-full">
+              <mat-icon>check</mat-icon>
+              <span>Save Question</span>
+            </button>
+          </div>
+        </mat-card>
+      }
     </div>
   </div>
 </section>

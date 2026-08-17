@@ -1,0 +1,87 @@
+// =====================================================
+// ASSESSMENT DETAIL
+// =====================================================
+
+.assessment-detail {
+  box-sizing: border-box;
+}
+
+// =====================================================
+// DETAIL CARD
+// =====================================================
+
+.detail-card {
+  box-shadow: 0 4px 16px rgba(30, 41, 59, 0.04) !important;
+}
+
+// =====================================================
+// ANSWER ITEM
+// =====================================================
+
+.answer-item {
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: var(--color-background-content);
+  }
+}
+
+// =====================================================
+// REVIEW STATUS
+// =====================================================
+
+.review-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  padding: 5px 10px;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+  line-height: 1.2;
+  font-weight: 600;
+
+  white-space: nowrap;
+
+  &__dot {
+    width: 6px;
+    height: 6px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background-color: currentColor;
+  }
+
+  &--completed {
+    color: var(--color-status-completed);
+    background-color: var(--color-status-completed-background);
+    border: 1px solid var(--color-status-completed-border);
+  }
+
+  &--in-progress {
+    color: var(--color-status-pending);
+    background-color: var(--color-status-pending-background);
+    border: 1px solid var(--color-status-pending-border);
+  }
+
+  &--not-submitted {
+    color: var(--color-status-failed);
+    background-color: var(--color-status-failed-background);
+    border: 1px solid var(--color-status-failed-border);
+  }
+}
+
+// =====================================================
+// MOBILE
+// =====================================================
+
+@media (max-width: 768px) {
+  .detail-card {
+    border-radius: 12px !important;
+  }
+}
