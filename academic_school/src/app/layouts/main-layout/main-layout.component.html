@@ -1,31 +1,49 @@
-<!--********** APP MAIN LAYOUT **********-->
-<div class="layout">
-  
-  <!--********** SIDEBAR OVERLAY **********-->
-  @if (isSidebarOpen) {
-    <div class="layout-overlay" (click)="closeSidebar()"></div>
-  }
+<div class="main-layout h-screen w-full overflow-hidden">
+  <!-- ================================================= -->
+  <!-- SIDEBAR -->
+  <!-- ================================================= -->
 
-  <!--********** SIDEBAR SECTION **********-->
-  <div class="layout-sidebar" [class.layout-sidebar--open]="isSidebarOpen">
+  <aside
+    class="main-layout__sidebar fixed top-0 bottom-0 left-0 z-[100] w-[252px] overflow-y-auto overflow-x-hidden max-[1100px]:w-[230px]"
+  >
     <app-sidebar></app-sidebar>
-  </div>
+  </aside>
 
-  <!--********** MAIN AREA **********-->
-  <div class="layout-main">
-    <!--********** HEADER SECTION **********-->
-    <div class="layout-header">
-      <app-header (sidebarToggle)="toggleSidebar()"> </app-header>
-    </div>
+  <!-- ================================================= -->
+  <!-- RIGHT SIDE -->
+  <!-- ================================================= -->
 
-    <!--********** CONTENT SECTION : ROUTER OUTLET **********-->
-    <main class="layout-content">
-      <router-outlet></router-outlet>
+  <div
+    class="main-layout__right ml-[252px] flex h-screen min-h-0 min-w-0 flex-col max-[1100px]:ml-[230px]"
+  >
+    <!-- ================================================= -->
+    <!-- HEADER -->
+    <!-- ================================================= -->
+
+    <header class="main-layout__header sticky top-0 z-[90] h-[68px] min-h-[68px] shrink-0">
+      <app-header></app-header>
+    </header>
+
+    <!-- ================================================= -->
+    <!-- SCROLLABLE MAIN -->
+    <!-- ================================================= -->
+
+    <main class="main-layout__main min-h-0 min-w-0 flex-1 overflow-y-auto overflow-x-hidden">
+      <!-- PAGE CONTENT -->
+
+      <div class="main-layout__content flex min-h-full min-w-0 flex-col">
+        <!-- ROUTER -->
+
+        <div class="main-layout__page min-w-0 flex-1">
+          <router-outlet></router-outlet>
+        </div>
+
+        <!-- FOOTER -->
+
+        <footer class="main-layout__footer shrink-0">
+          <app-footer></app-footer>
+        </footer>
+      </div>
     </main>
-
-    <!--********** FOOTER SECTION **********-->
-    <div class="layout-footer">
-      <app-footer></app-footer>
-    </div>
   </div>
 </div>

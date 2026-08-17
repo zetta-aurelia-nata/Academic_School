@@ -1,13 +1,14 @@
 <section
-  class="dashboard w-full min-w-0 overflow-x-hidden px-8 pt-[30px] pb-10 box-border max-[1100px]:px-6 max-[1100px]:pt-[26px] max-[1100px]:pb-9 max-[768px]:px-4 max-[768px]:pt-5 max-[768px]:pb-7"
+  class="dashboard w-full min-w-0 overflow-x-hidden box-border bg-[var(--color-background-content)] px-8 pt-[30px] pb-10 max-[1100px]:px-6 max-[1100px]:pt-[26px] max-[1100px]:pb-9 max-[768px]:px-4 max-[768px]:pt-5 max-[768px]:pb-7"
 >
-  <!-- *************** PAGE HEADER *************** -->
+
   <div class="page-header mb-6 max-[768px]:mb-5">
     <div class="page-header__content flex flex-col">
       <h1
-        class="page-header__title m-0 mb-[7px] text-[27px] leading-[1.2] font-bold tracking-[-0.5px] max-[768px]:text-[23px]"
+        class="page-header__title m-0 mb-[7px] text-[27px] font-bold leading-[1.2] tracking-[-0.5px] max-[768px]:text-[23px]"
       >
-        Welcome back! <span class="page-header__wave">👋</span>
+        Welcome back!
+        <span class="page-header__wave">👋</span>
       </h1>
 
       <p class="page-header__subtitle m-0 text-sm leading-[1.5] max-[768px]:text-[13px]">
@@ -16,19 +17,19 @@
     </div>
   </div>
 
-  <!-- *************** WELCOME BANNER *************** -->
   <div
-    class="welcome-banner relative flex min-h-[155px] items-center justify-between overflow-hidden box-border mb-[22px] rounded-[18px] px-8 py-7 max-[768px]:min-h-[145px] max-[768px]:p-[22px] max-[480px]:min-h-0"
+    class="welcome-banner relative mb-[22px] flex min-h-[155px] items-center justify-between overflow-hidden box-border rounded-[18px] px-8 py-7 max-[768px]:min-h-[145px] max-[768px]:p-[22px] max-[480px]:min-h-0"
   >
+
     <div class="welcome-banner__content relative z-[2] flex max-w-[620px] flex-col">
       <span
-        class="welcome-banner__eyebrow mb-1.5 text-[11px] leading-[1.4] font-semibold uppercase tracking-[0.5px]"
+        class="welcome-banner__eyebrow mb-1.5 text-[11px] font-semibold uppercase leading-[1.4] tracking-[0.5px]"
       >
         Assessment Management
       </span>
 
       <h2
-        class="welcome-banner__title m-0 mb-[7px] text-[22px] leading-[1.25] font-bold tracking-[-0.3px] max-[768px]:text-[19px] max-[480px]:text-[18px]"
+        class="welcome-banner__title m-0 mb-[7px] text-[22px] font-bold leading-[1.25] tracking-[-0.3px] max-[768px]:text-[19px] max-[480px]:text-[18px]"
       >
         Keep your assessments on track
       </h2>
@@ -60,57 +61,70 @@
     </div>
   </div>
 
-  <!-- *************** PROGRESS CARDS *************** -->
   <div
     class="progress-grid mb-[22px] grid grid-cols-5 gap-4 max-[1100px]:grid-cols-3 max-[768px]:mb-[18px] max-[768px]:grid-cols-2 max-[768px]:gap-3.5 max-[480px]:grid-cols-1 max-[480px]:gap-3"
   >
     <mat-card
-      class="progress-item relative h-[142px] min-w-0 gap-4 overflow-hidden box-border !rounded-2xl !p-5 max-[1100px]:h-[140px] max-[768px]:h-[125px] max-[768px]:gap-3 max-[768px]:!p-[18px] max-[480px]:h-[105px]"
       *ngFor="let stat of stats"
+      [ngClass]="stat.colorClass"
+      class="progress-item relative min-w-0 overflow-hidden box-border !rounded-2xl !p-5 max-[768px]:!p-[18px]"
     >
-      <!-- *************** ICON *************** -->
+
       <div
-        class="progress-icon relative z-[1] flex h-[58px] w-[58px] shrink-0 items-center justify-center rounded-[15px] max-[768px]:h-[50px] max-[768px]:w-[50px] max-[768px]:rounded-[13px]"
-        [ngClass]="stat.colorClass"
+        class="progress-item__content flex min-w-0 items-center gap-4 max-[1100px]:gap-3 max-[768px]:gap-3"
       >
-        <mat-icon>{{ stat.icon }}</mat-icon>
-      </div>
 
-      <!-- *************** VALUE *************** -->
-      <div class="progress-info relative z-[1] flex shrink-0 items-center">
-        <strong
-          class="progress-info__value text-[27px] leading-[1.1] font-bold tracking-[-0.5px] max-[768px]:text-[23px]"
+        <div
+          class="progress-icon relative z-[1] flex h-[58px] w-[58px] shrink-0 items-center justify-center rounded-[15px] max-[768px]:h-[50px] max-[768px]:w-[50px] max-[768px]:rounded-[13px]"
         >
-          {{ stat.value }}
-        </strong>
+          <mat-icon
+            class="!h-7 !w-7 !text-[28px] !leading-7 max-[768px]:!h-6 max-[768px]:!w-6 max-[768px]:!text-2xl max-[768px]:!leading-6"
+          >
+            {{ stat.icon }}
+          </mat-icon>
+        </div>
+
+        <div class="progress-item__information relative z-[1] min-w-0">
+
+          <span
+            class="progress-label__text block truncate text-[11px] font-semibold leading-[1.35] max-[768px]:text-[10px]"
+          >
+            {{ stat.label }}
+          </span>
+
+          <strong
+            class="progress-info__value mt-1 block text-[27px] font-bold leading-[1.1] tracking-[-0.5px] max-[768px]:text-[23px]"
+          >
+            {{ stat.value }}
+          </strong>
+
+          <span
+            *ngIf="stat.description"
+            class="progress-item__description mt-1 block truncate text-[11px] leading-[1.35] max-[768px]:text-[10px]"
+          >
+            {{ stat.description }}
+          </span>
+        </div>
       </div>
 
-      <!-- *************** LABEL *************** -->
-      <div class="progress-label relative z-[1] flex min-w-0 shrink-0 items-center">
-        <span
-          class="progress-label__text block whitespace-nowrap text-[10px] leading-[1.4] font-light"
-        >
-          {{ stat.label }}
-        </span>
-      </div>
-
-      <!-- *************** ACCENT *************** -->
-      <div class="progress-item__accent absolute top-0 bottom-0 left-0 w-[3px]"></div>
+      <div class="progress-item__accent absolute bottom-0 left-0 top-0 w-[3px]"></div>
     </mat-card>
   </div>
 
-  <!-- *************** DASHBOARD NOTE *************** -->
   <div
     class="dashboard-note flex min-h-[72px] items-center gap-3.5 box-border rounded-[14px] px-5 py-4 max-[768px]:items-start max-[768px]:px-4 max-[768px]:py-3.5"
   >
+
     <div
       class="dashboard-note__icon flex h-10 w-10 shrink-0 items-center justify-center rounded-[11px]"
     >
-      <mat-icon>insights</mat-icon>
+      <mat-icon class="!h-[21px] !w-[21px] !text-[21px] !leading-[21px]"> insights </mat-icon>
     </div>
 
     <div class="dashboard-note__content flex min-w-0 flex-col gap-[3px]">
-      <strong class="dashboard-note__title text-[13px] font-bold"> Assessment Overview </strong>
+      <strong class="dashboard-note__title text-[13px] font-bold leading-[1.3]">
+        Assessment Overview
+      </strong>
 
       <p class="dashboard-note__text m-0 text-xs leading-[1.5] max-[480px]:text-[11px]">
         Use the statistics above to quickly monitor your assessment activities.

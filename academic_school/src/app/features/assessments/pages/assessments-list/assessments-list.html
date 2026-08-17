@@ -3,7 +3,7 @@
 >
   <!-- ********** TOOLBAR ********** -->
   <mat-toolbar
-    class="list-toolbar !flex !h-auto !min-h-0 !items-center !gap-3 !bg-transparent !p-0 !mb-6 max-md:!flex-col max-md:!items-stretch"
+    class="list-toolbar !mb-6 !flex !h-auto !min-h-0 !items-center !gap-3 !bg-transparent !p-0 max-md:!flex-col max-md:!items-stretch"
   >
     <!-- TOOLBAR TEXT -->
     <div class="flex flex-col gap-1">
@@ -130,15 +130,7 @@
 
           <td mat-cell *matCellDef="let row">
             <div class="flex items-center gap-2">
-              <button
-                mat-icon-button
-                class="assessment-table__action assessment-table__action--view"
-                aria-label="View assessment"
-                (click)="onView(row)"
-              >
-                <mat-icon>visibility</mat-icon>
-              </button>
-
+              <!-- EDIT -->
               <button
                 mat-icon-button
                 class="assessment-table__action assessment-table__action--edit"
@@ -148,6 +140,7 @@
                 <mat-icon>edit</mat-icon>
               </button>
 
+              <!-- DELETE -->
               <button
                 mat-icon-button
                 class="assessment-table__action assessment-table__action--delete"
@@ -167,4 +160,57 @@
       </table>
     </div>
   </mat-card>
+
+  <!-- ********** DELETE CONFIRMATION MODAL ********** -->
+  @if (showDeleteDialog) {
+    <div
+      class="fixed inset-0 z-[1000] flex items-center justify-center bg-black/40 p-4"
+      (click)="onCancelDelete()"
+    >
+      <div
+        class="w-full max-w-[420px] rounded-[16px] border border-[var(--color-border)] bg-[var(--color-white)] p-6 shadow-2xl"
+        (click)="$event.stopPropagation()"
+      >
+        <div class="mb-5 flex items-center justify-center gap-2">
+          <div
+            class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-red-50 text-red-500"
+          >
+            <mat-icon>delete_outline</mat-icon>
+          </div>
+          <div>
+            <h2 class="m-0 text-lg font-bold text-[var(--color-title)]">Delete Assessment?</h2>
+          </div>
+        </div>
+
+        <p class="mb-6 text-center text-[13px] leading-5 text-[var(--color-text-secondary)]">
+          Are you sure you want to delete
+          <strong class="font-semibold text-[var(--color-title)]">
+            {{ selectedAssessment?.title }}
+          </strong>
+          ?
+        </p>
+
+        <!-- DIALOG ACTIONS -->
+        <div class="flex justify-center gap-3 max-sm:flex-col-reverse">
+          <button
+            type="button"
+            mat-stroked-button
+            class="!h-10 !rounded-[10px] !border-[var(--color-border)] !px-5 !text-[13px] !font-semibold !text-[var(--color-title)] max-sm:!w-full"
+            (click)="onCancelDelete()"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="button"
+            mat-flat-button
+            class="!h-10 !rounded-[10px] !bg-red-500 !px-5 !text-[13px] !font-semibold !text-white max-sm:!w-full"
+            (click)="onConfirmDelete()"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  }
 </section>

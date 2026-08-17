@@ -9,6 +9,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
+
 //********** APPLICATION MODELS AND SETTINGS IMPORTS **********
 import { Assessment, AssessmentStatus } from './assessment.list.model';
 import { ASSESSMENTS } from '../../assessment.data';
@@ -42,6 +43,9 @@ export class AssessmentList {
 
   assessments: Assessment[] = ASSESSMENTS;
 
+  showDeleteDialog = false;
+  selectedAssessment: Assessment | null = null;
+
   //********** ACTION HANDLERS **********
   onCreateAssessment(): void {
     this.router.navigate(['/assessments/create']);
@@ -59,7 +63,26 @@ export class AssessmentList {
     this.router.navigate(['/assessments', assessment.id, 'submissions']);
   }
 
-  onDelete(assessment: Assessment): void {}
+  onDelete(assessment: Assessment): void {
+    this.selectedAssessment = assessment;
+    this.showDeleteDialog = true;
+  }
+
+  onCancelDelete(): void {
+    this.showDeleteDialog = false;
+    this.selectedAssessment = null;
+  }
+
+  onConfirmDelete(): void {
+    if (!this.selectedAssessment) {
+      return;
+    }
+
+    this.assessments = this.assessments.filter((item) => item.id !== this.selectedAssessment?.id);
+
+    this.showDeleteDialog = false;
+    this.selectedAssessment = null;
+  }
 
   //********** UTILITY METHODS **********
   statusClass(status: AssessmentStatus): string {

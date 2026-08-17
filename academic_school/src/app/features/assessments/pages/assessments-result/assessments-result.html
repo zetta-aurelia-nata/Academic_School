@@ -1,13 +1,6 @@
-<!-- ===================================================== -->
-<!-- ASSESSMENT RESULT -->
-<!-- ===================================================== -->
-
 <section
   class="assessment-result w-full min-h-full box-border bg-[var(--color-background-content)] px-8 pt-[30px] pb-10 font-sans max-lg:px-5 max-lg:pt-6 max-md:px-4 max-md:pt-5"
 >
-  <!-- ================================================= -->
-  <!-- PAGE HEADER -->
-  <!-- ================================================= -->
 
   <div class="mb-6 flex items-start justify-between gap-4 max-md:flex-col">
     <div>
@@ -19,8 +12,6 @@
         Review, score, and publish student results
       </p>
     </div>
-
-    <!-- RESULT STATUS -->
 
     <div class="flex items-center gap-2">
       <span *ngIf="currentResultState.published" class="result-badge result-badge--published">
@@ -39,10 +30,6 @@
       </span>
     </div>
   </div>
-
-  <!-- ================================================= -->
-  <!-- ASSESSMENT SELECTOR -->
-  <!-- ================================================= -->
 
   <mat-card
     class="result-card !mb-4 !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-5"
@@ -82,10 +69,6 @@
     </div>
   </mat-card>
 
-  <!-- ================================================= -->
-  <!-- ACTION BAR -->
-  <!-- ================================================= -->
-
   <mat-card
     class="result-card !mb-4 !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-4"
   >
@@ -110,10 +93,7 @@
         </div>
       </div>
 
-      <!-- ACTIONS -->
-
       <div class="flex items-center gap-2 max-sm:flex-col max-sm:items-stretch">
-        <!-- PUBLISH / UNPUBLISH -->
 
         <button
           mat-stroked-button
@@ -121,14 +101,8 @@
           [disabled]="currentResultState.locked"
           (click)="onPublish()"
         >
-          <mat-icon class="!mr-1 !h-4 !w-4 !text-base">
-            {{ currentResultState.published ? 'visibility_off' : 'publish' }}
-          </mat-icon>
-
           {{ currentResultState.published ? 'Unpublish' : 'Publish Result' }}
         </button>
-
-        <!-- LOCK -->
 
         <button
           mat-flat-button
@@ -136,17 +110,11 @@
           [disabled]="currentResultState.locked || !currentResultState.published"
           (click)="lockResult()"
         >
-          <mat-icon class="!mr-1 !h-4 !w-4 !text-base"> lock </mat-icon>
-
           {{ currentResultState.locked ? 'Result Locked' : 'Lock Result' }}
         </button>
       </div>
     </div>
   </mat-card>
-
-  <!-- ================================================= -->
-  <!-- SUCCESS MESSAGE -->
-  <!-- ================================================= -->
 
   <div
     *ngIf="successMessage"
@@ -157,14 +125,9 @@
     {{ successMessage }}
   </div>
 
-  <!-- ================================================= -->
-  <!-- STUDENT RESULTS -->
-  <!-- ================================================= -->
-
   <mat-card
     class="result-card !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-0"
   >
-    <!-- HEADER -->
 
     <div class="border-b border-[var(--color-border)] px-5 py-4">
       <div class="flex items-center justify-between gap-4">
@@ -182,15 +145,12 @@
       </div>
     </div>
 
-    <!-- STUDENT LIST -->
-
     <div>
       <div
         *ngFor="let student of students"
         class="result-student border-b border-[var(--color-border)] px-5 py-4 last:border-b-0"
       >
         <div class="flex items-center justify-between gap-4 max-md:flex-col max-md:items-stretch">
-          <!-- STUDENT INFORMATION -->
 
           <div class="flex min-w-0 items-center gap-3">
             <div
@@ -211,8 +171,6 @@
               </p>
             </div>
           </div>
-
-          <!-- SCORE -->
 
           <div class="flex items-center gap-5">
             <div class="text-right">
@@ -235,23 +193,17 @@
               {{ student.status }}
             </span>
 
-            <!-- REVIEW -->
-
             <button
               mat-stroked-button
               class="!h-9 !rounded-[9px] !px-3 !text-[11px] !font-semibold"
               [disabled]="currentResultState.locked || student.answers.length === 0"
               (click)="onReviewAnswers(student)"
             >
-              <mat-icon class="!mr-1 !h-4 !w-4 !text-base"> rate_review </mat-icon>
-
               Review Answers
             </button>
           </div>
         </div>
       </div>
-
-      <!-- EMPTY -->
 
       <div
         *ngIf="students.length === 0"
@@ -266,15 +218,10 @@
     </div>
   </mat-card>
 
-  <!-- ================================================= -->
-  <!-- MANUAL SCORING PANEL -->
-  <!-- ================================================= -->
-
   <mat-card
     *ngIf="selectedStudent"
     class="result-card !mt-4 !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-0"
   >
-    <!-- HEADER -->
 
     <div
       class="flex items-center justify-between gap-4 border-b border-[var(--color-border)] px-5 py-4"
@@ -301,15 +248,12 @@
       </button>
     </div>
 
-    <!-- ANSWERS -->
-
     <div>
       <div
         *ngFor="let answer of selectedStudent.answers; let i = index"
         class="score-question border-b border-[var(--color-border)] px-5 py-5 last:border-b-0"
       >
         <div class="flex items-start justify-between gap-5 max-md:flex-col">
-          <!-- QUESTION -->
 
           <div class="min-w-0 flex-1">
             <span
@@ -334,8 +278,6 @@
               </p>
             </div>
           </div>
-
-          <!-- SCORE INPUT -->
 
           <div class="w-[130px] shrink-0 max-md:w-full">
             <label
@@ -368,8 +310,6 @@
       </div>
     </div>
 
-    <!-- FOOTER -->
-
     <div
       class="flex items-center justify-between gap-4 border-t border-[var(--color-border)] bg-[var(--color-background-content)] px-5 py-4 max-sm:flex-col max-sm:items-stretch"
     >
@@ -401,10 +341,6 @@
     </div>
   </mat-card>
 
-  <!-- ================================================= -->
-  <!-- PUBLISH CONFIRMATION DIALOG -->
-  <!-- ================================================= -->
-
   <div
     *ngIf="showPublishDialog"
     class="publish-dialog__overlay fixed inset-0 z-[1000] flex items-center justify-center bg-black/30 px-4"
@@ -412,7 +348,6 @@
     <div
       class="publish-dialog w-full max-w-[430px] rounded-[14px] border border-[var(--color-border)] bg-[var(--color-white)] p-6 shadow-xl"
     >
-      <!-- ICON -->
 
       <div
         class="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-primary-light)] text-[var(--color-primary-dark)]"
@@ -428,8 +363,6 @@
         Once published, the results will become visible to students. Make sure all scores have been
         reviewed before publishing.
       </p>
-
-      <!-- ACTIONS -->
 
       <div class="mt-6 flex justify-end gap-2">
         <button

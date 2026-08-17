@@ -1,5 +1,5 @@
 <section class="create-assessment px-6 py-10 max-[560px]:px-[14px] max-[560px]:py-5">
-  <div class="create-assessment__layout mx-auto flex items-start gap-8 max-[900px]:flex-col">
+  <div class="create-assessment__layout mx-auto flex items-start gap-8 max-[900px]:items-center flex-col">
     <!-- ******************** LEFT: TYPE SELECTION ******************** -->
     <aside class="type-panel sticky top-6 w-[340px] shrink-0 max-[900px]:static max-[900px]:w-full">
       <h2 class="type-panel__title m-0 mb-1 text-lg font-bold text-[var(--color-title)]">
@@ -75,7 +75,7 @@
     ></div>
 
     <!-- ******************** RIGHT: FORM AREA ******************** -->
-    <div class="form-panel min-w-0 flex-1">
+    <div class="form-panel min-w-0 flex-1 max-[900px]:w-[90%]">
       <!-- ******************** EMPTY STATE ******************** -->
       @if (!selectedType) {
         <div

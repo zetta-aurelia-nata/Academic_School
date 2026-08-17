@@ -1,88 +1,66 @@
 <aside
-  class="sidebar flex h-full min-h-0 w-full flex-col box-border overflow-hidden px-[14px] pt-[22px] pb-[18px] bg-[var(--color-sidebar-new)] border-r border-[var(--color-sidebar-hover)] font-sans tracking-[0.3px] max-lg:px-3 max-lg:pt-5 max-lg:pb-4 max-md:px-2.5 max-md:py-4"
+  class="sidebar flex h-full min-h-0 w-full flex-col overflow-y-auto bg-[var(--color-sidebar-new)] px-3 py-5 md:px-3 lg:px-4"
 >
-  <nav class="sidebar__nav flex flex-col gap-[5px]">
-    <!-- ******************** APP LOGO ******************** -->
+  <div class="sidebar__logo mb-6 flex min-w-0 items-center gap-2.5 px-1">
     <div
-      class="sidebar__logo-text flex flex-col justify-center mb-5 -mt-[2%] text-center leading-[1.2] text-[var(--color-white)]"
+      class="flex h-9 w-9 shrink-0 items-center justify-center rounded-[9px] bg-[var(--color-sidebar-active)] text-white"
     >
-      <div class="sidebar-text">
-        <mat-icon class="welcome-banner__icon"> school </mat-icon>
-
-        <span class="sidebar__logo-title text-[17px] font-bold text-[var(--color-white)]">
-          EduAssess
-        </span>
-
-        <div class="sidebar-tagline">
-          <span class="sidebar__logo-tagline text-[11px] text-[var(--secondary-color)]">
-            Learn. Assess. Grow.
-          </span>
-        </div>
-      </div>
+      <mat-icon class="!text-[20px]"> school </mat-icon>
     </div>
 
-    <!-- ******************** DASHBOARD ROUTING ******************** -->
+    <div class="min-w-0">
+      <div class="truncate text-[15px] font-bold leading-tight text-white">EduAssess</div>
+
+      <div class="mt-0.5 truncate text-[10px] text-[var(--color-sidebar-muted)]">
+        Learn. Assess. Grow.
+      </div>
+    </div>
+  </div>
+
+  <nav class="flex w-full flex-col gap-1">
     <a
       routerLink="/dashboard"
       routerLinkActive="sidebar__item--active"
       [routerLinkActiveOptions]="{ exact: true }"
-      class="sidebar__item relative flex w-full min-h-[43px] items-center gap-[11px] box-border rounded-[10px] px-3 py-2.5 text-sm font-medium text-[var(--color-sidebar-text)] no-underline max-lg:text-[13px] max-md:justify-center max-md:p-2.5"
+      (click)="onNavigationSelected()"
+      class="sidebar__item flex min-h-[43px] items-center gap-2.5 rounded-[10px] px-3 py-2.5 text-[14px] font-medium text-[var(--color-sidebar-text)]"
     >
-      <mat-icon
-        class="sidebar__item-icon h-[19px] w-[19px] shrink-0 text-[19px] leading-[19px] text-[var(--color-sidebar-muted)]"
-      >
-        dashboard
-      </mat-icon>
+      <mat-icon class="shrink-0 !text-[19px]"> dashboard </mat-icon>
 
-      <span
-        class="sidebar__item-text min-w-0 overflow-hidden text-ellipsis whitespace-nowrap max-md:hidden"
-      >
-        Dashboard
-      </span>
+      <span class="truncate"> Dashboard </span>
     </a>
 
-    <!-- ******************** ASSESSMENTS SUBMENU ******************** -->
-    <div class="sidebar__group flex flex-col">
+    <div class="sidebar__group">
       <button
         type="button"
-        class="sidebar__menu flex w-full min-h-[43px] items-center justify-between box-border rounded-[10px] border-0 bg-transparent px-3 py-2.5 text-left font-sans text-sm font-medium text-[var(--color-sidebar-text)] max-lg:text-[13px] max-md:justify-center max-md:p-2.5"
+        class="sidebar__menu flex min-h-[43px] w-full items-center justify-between rounded-[10px] border-0 bg-transparent px-3 py-2.5 text-left text-[14px] font-medium text-[var(--color-sidebar-text)]"
         [attr.aria-expanded]="isAssessmentOpen"
         aria-controls="assessment-submenu"
         (click)="toggleAssessment()"
       >
-        <span class="sidebar__menu-content flex items-center gap-[11px] max-md:justify-center">
-          <mat-icon
-            class="sidebar__menu-icon h-[19px] w-[19px] shrink-0 text-[19px] leading-[19px] text-[var(--color-sidebar-muted)]"
-          >
-            assignment
-          </mat-icon>
+        <span class="flex min-w-0 items-center gap-2.5">
+          <mat-icon class="shrink-0 !text-[19px]"> assignment </mat-icon>
 
-          <span
-            class="sidebar__menu-text min-w-0 overflow-hidden text-ellipsis whitespace-nowrap max-md:hidden"
-          >
-            Assessments
-          </span>
+          <span class="truncate"> Assessments </span>
         </span>
 
-        <span
-          class="sidebar__menu-arrow text-[15px] text-[var(--color-sidebar-muted)] max-md:hidden"
-        >
-          {{ assessmentArrowIcon }}
-        </span>
+        <mat-icon class="shrink-0 !text-[18px]">
+          {{ isAssessmentOpen ? 'expand_less' : 'expand_more' }}
+        </mat-icon>
       </button>
 
       @if (isAssessmentOpen) {
         <div
-          class="sidebar__submenu mt-1 ml-5 flex flex-col gap-0.5 border-l border-[var(--color-sidebar-active)] pl-[17px] max-md:ml-0 max-md:border-l-0 max-md:pl-0"
           id="assessment-submenu"
+          class="sidebar__submenu ml-5 mt-1 flex flex-col gap-0.5 border-l border-[var(--color-sidebar-active)] pl-4"
         >
-          <!-- ******************** SUBMENU ITEMS LOOP ******************** -->
           @for (submenu of assessmentSubmenus; track submenu.id) {
             <a
               [routerLink]="submenu.link"
               routerLinkActive="sidebar__submenu-item--active"
               [routerLinkActiveOptions]="{ exact: true }"
-              class="sidebar__submenu-item relative rounded-[7px] px-[11px] py-2 text-[13px] font-normal text-[var(--color-sidebar-muted)] no-underline max-md:text-center"
+              (click)="onNavigationSelected()"
+              class="sidebar__submenu-item flex min-h-[36px] items-center rounded-[7px] px-2.5 py-2 text-[13px] text-[var(--color-sidebar-muted)]"
             >
               {{ submenu.label }}
             </a>

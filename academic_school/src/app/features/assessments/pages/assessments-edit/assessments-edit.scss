@@ -1,10 +1,34 @@
-.edit-assessment {
-  box-sizing: border-box;
-}
-
 :host {
   display: block;
   width: 100%;
+}
+
+.edit-assessment {
+  .save-button {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark)) !important;
+
+    color: var(--color-white) !important;
+    box-shadow: 0 4px 10px rgba(118, 81, 168, 0.18);
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease,
+      background 0.2s ease;
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(118, 81, 168, 0.25);
+      background: linear-gradient(
+        135deg,
+        var(--color-primary-dark),
+        var(--color-primary)
+      ) !important;
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: 0 3px 8px rgba(118, 81, 168, 0.18);
+    }
+  }
 }
 
 ::ng-deep {
@@ -12,15 +36,11 @@
   .mdc-text-field--no-label .mat-mdc-form-field-infix {
     padding: 16px;
   }
-}
 
-::ng-deep {
   .assessment-select-panel {
     background-color: var(--color-white) !important;
   }
-}
 
-::ng-deep {
   .edit-assessment {
     .mat-mdc-form-field {
       width: 100%;

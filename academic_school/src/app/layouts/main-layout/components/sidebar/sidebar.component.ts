@@ -20,6 +20,9 @@ export interface SubmenuItem {
 })
 
 export class SidebarComponent {
+onNavigationSelected() {
+throw new Error('Method not implemented.');
+}
   // *************** PUBLIC STATE VARIABLES ***************
   isAssessmentOpen = false;
   readonly assessmentSubmenus: SubmenuItem[] = [

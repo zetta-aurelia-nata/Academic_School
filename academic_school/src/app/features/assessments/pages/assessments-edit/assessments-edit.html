@@ -1,41 +1,32 @@
 <section
   class="edit-assessment w-full min-h-full bg-[var(--color-background-content)] px-8 py-8 max-lg:px-5 max-md:px-4 max-md:py-5"
 >
-  <!-- HEADER -->
   <div class="mb-6 flex items-start justify-between gap-4 max-md:flex-col">
     <div>
-      <div class="mb-2 flex items-center gap-2">
+      <div class="flex items-center gap-3">
         <button
           mat-icon-button
-          class="!h-9 !w-9"
+          class="!h-9 !w-9 !shrink-0"
           aria-label="Back to assessments"
           (click)="onCancel()"
         >
           <mat-icon>arrow_back</mat-icon>
         </button>
 
-        <span class="text-[13px] text-[var(--color-text-secondary)]"> Assessments </span>
-
-        <mat-icon class="!h-4 !w-4 !text-base !text-[var(--color-text-secondary)]">
-          chevron_right
-        </mat-icon>
-
-        <span class="text-[13px] font-medium text-[var(--color-title)]"> Edit </span>
+        <h1
+          class="m-0 text-2xl font-bold leading-[1.2] text-[var(--color-title)] max-md:text-[22px]"
+        >
+          Edit Assessment
+        </h1>
       </div>
 
-      <h1 class="m-0 text-2xl font-bold leading-[1.2] text-[var(--color-title)] max-md:text-[22px]">
-        Edit Assessment
-      </h1>
-
-      <p class="mt-2 text-[13px] leading-5 text-[var(--color-text-secondary)]">
+      <p class="mt-2 ml-12 text-[13px] leading-5 text-[var(--color-text-secondary)] max-md:ml-12">
         Update the assessment information and settings below.
       </p>
     </div>
   </div>
 
-  <!-- FORM -->
   <form [formGroup]="assessmentForm" (ngSubmit)="onSave()" class="mx-auto w-full max-w-[1100px]">
-    <!-- BASIC INFORMATION -->
     <mat-card
       class="mb-5 !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-0 !shadow-none"
     >
@@ -48,8 +39,11 @@
       </div>
 
       <div class="grid grid-cols-2 gap-5 p-6 max-md:grid-cols-1 max-md:p-4">
-        <!-- TITLE -->
-        <mat-form-field appearance="outline" class="col-span-2 w-full max-md:col-span-1">
+        <mat-form-field
+          appearance="outline"
+          hideRequiredMarker
+          class="col-span-2 w-full max-md:col-span-1"
+        >
           <mat-label>Assessment Name</mat-label>
 
           <input matInput formControlName="title" placeholder="Enter assessment name" />
@@ -59,8 +53,7 @@
           </mat-error>
         </mat-form-field>
 
-        <!-- SUBJECT -->
-        <mat-form-field appearance="outline" class="w-full">
+        <mat-form-field appearance="outline" hideRequiredMarker class="w-full">
           <mat-label>Subject</mat-label>
 
           <mat-select formControlName="subject">
@@ -76,8 +69,7 @@
           </mat-error>
         </mat-form-field>
 
-        <!-- GRADE -->
-        <mat-form-field appearance="outline" class="w-full">
+        <mat-form-field appearance="outline" hideRequiredMarker class="w-full">
           <mat-label>Grade</mat-label>
 
           <mat-select formControlName="grade">
@@ -94,8 +86,11 @@
           </mat-error>
         </mat-form-field>
 
-        <!-- DESCRIPTION -->
-        <mat-form-field appearance="outline" class="col-span-2 w-full max-md:col-span-1">
+        <mat-form-field
+          appearance="outline"
+          hideRequiredMarker
+          class="col-span-2 w-full max-md:col-span-1"
+        >
           <mat-label>Description</mat-label>
 
           <textarea
@@ -106,8 +101,11 @@
           ></textarea>
         </mat-form-field>
 
-        <!-- INSTRUCTIONS -->
-        <mat-form-field appearance="outline" class="col-span-2 w-full max-md:col-span-1">
+        <mat-form-field
+          appearance="outline"
+          hideRequiredMarker
+          class="col-span-2 w-full max-md:col-span-1"
+        >
           <mat-label>Instructions</mat-label>
 
           <textarea
@@ -120,7 +118,6 @@
       </div>
     </mat-card>
 
-    <!-- ASSESSMENT SETTINGS -->
     <mat-card
       class="mb-5 !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-0 !shadow-none"
     >
@@ -133,8 +130,7 @@
       </div>
 
       <div class="grid grid-cols-3 gap-5 p-6 max-md:grid-cols-1 max-md:p-4">
-        <!-- DURATION -->
-        <mat-form-field appearance="outline" class="w-full">
+        <mat-form-field appearance="outline" hideRequiredMarker class="w-full">
           <mat-label>Duration</mat-label>
 
           <input matInput type="number" formControlName="duration" min="1" />
@@ -146,8 +142,7 @@
           </mat-error>
         </mat-form-field>
 
-        <!-- POINTS -->
-        <mat-form-field appearance="outline" class="w-full">
+        <mat-form-field appearance="outline" hideRequiredMarker class="w-full">
           <mat-label>Total Points</mat-label>
 
           <input matInput type="number" formControlName="totalPoints" min="1" />
@@ -157,8 +152,7 @@
           </mat-error>
         </mat-form-field>
 
-        <!-- STATUS -->
-        <mat-form-field appearance="outline" class="w-full">
+        <mat-form-field appearance="outline" hideRequiredMarker class="w-full">
           <mat-label>Status</mat-label>
 
           <mat-select formControlName="status" panelClass="assessment-select-panel">
@@ -170,14 +164,13 @@
       </div>
     </mat-card>
 
-    <!-- ACTIONS -->
     <div
       class="flex items-center justify-end gap-3 border-t border-[var(--color-border)] pt-5 max-md:flex-col-reverse"
     >
       <button
         type="button"
         mat-stroked-button
-        class="!h-10 !rounded-[10px] !px-5 !text-[13px] !font-semibold max-md:!w-full"
+        class="!h-11 !rounded-[10px] !border-[var(--color-border)] !bg-[var(--color-white)] !px-6 !text-[13px] !font-semibold !text-[var(--color-title)] hover:!border-[var(--color-primary)] hover:!bg-[var(--color-primary-light)] hover:!text-[var(--color-primary)] max-md:!w-full"
         (click)="onCancel()"
       >
         Cancel
@@ -187,11 +180,9 @@
         type="submit"
         mat-flat-button
         color="primary"
-        class="!h-10 !rounded-[10px] !px-6 !text-[13px] !font-semibold max-md:!w-full"
+        class="save-button !h-11 !rounded-[10px] !border-0 !px-7 !text-[13px] !font-semibold max-md:!w-full"
       >
-        <mat-icon class="mr-1 !h-[18px] !w-[18px] !text-[18px]"> save </mat-icon>
-
-        Save Changes
+        Save
       </button>
     </div>
   </form>
