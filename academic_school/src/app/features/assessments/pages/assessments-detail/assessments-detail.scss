@@ -15,6 +15,43 @@
 }
 
 // =====================================================
+// STUDENT CARD
+// =====================================================
+
+.student-card {
+  cursor: pointer;
+
+  box-shadow: 0 4px 16px rgba(30, 41, 59, 0.04) !important;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+
+    border-color: var(--color-action-border-hover) !important;
+
+    box-shadow: 0 8px 24px rgba(30, 41, 59, 0.07) !important;
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &__avatar {
+    transition:
+      transform 0.2s ease,
+      background-color 0.2s ease;
+  }
+
+  &:hover &__avatar {
+    transform: scale(1.04);
+  }
+}
+
+// =====================================================
 // ANSWER ITEM
 // =====================================================
 
@@ -32,8 +69,10 @@
 
 .review-status {
   display: inline-flex;
+
   align-items: center;
   justify-content: center;
+
   gap: 7px;
 
   padding: 5px 10px;
@@ -57,22 +96,45 @@
     background-color: currentColor;
   }
 
+  // ********** COMPLETED **********
+
   &--completed {
     color: var(--color-status-completed);
+
     background-color: var(--color-status-completed-background);
+
     border: 1px solid var(--color-status-completed-border);
   }
 
+  // ********** IN PROGRESS **********
+
   &--in-progress {
     color: var(--color-status-pending);
+
     background-color: var(--color-status-pending-background);
+
     border: 1px solid var(--color-status-pending-border);
   }
 
+  // ********** NOT SUBMITTED **********
+
   &--not-submitted {
     color: var(--color-status-failed);
+
     background-color: var(--color-status-failed-background);
+
     border: 1px solid var(--color-status-failed-border);
+  }
+}
+
+// =====================================================
+// TABLET
+// =====================================================
+
+@media (max-width: 768px) {
+  .detail-card,
+  .student-card {
+    border-radius: 12px !important;
   }
 }
 
@@ -80,8 +142,11 @@
 // MOBILE
 // =====================================================
 
-@media (max-width: 768px) {
-  .detail-card {
-    border-radius: 12px !important;
+@media (max-width: 640px) {
+  .student-card {
+    &__avatar {
+      width: 40px;
+      height: 40px;
+    }
   }
 }

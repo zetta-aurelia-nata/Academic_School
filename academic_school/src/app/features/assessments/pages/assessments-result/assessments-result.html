@@ -1,0 +1,453 @@
+<!-- ===================================================== -->
+<!-- ASSESSMENT RESULT -->
+<!-- ===================================================== -->
+
+<section
+  class="assessment-result w-full min-h-full box-border bg-[var(--color-background-content)] px-8 pt-[30px] pb-10 font-sans max-lg:px-5 max-lg:pt-6 max-md:px-4 max-md:pt-5"
+>
+  <!-- ================================================= -->
+  <!-- PAGE HEADER -->
+  <!-- ================================================= -->
+
+  <div class="mb-6 flex items-start justify-between gap-4 max-md:flex-col">
+    <div>
+      <h1 class="m-0 text-2xl font-bold leading-[1.2] tracking-[-0.3px] text-[var(--color-title)]">
+        Assessment Result
+      </h1>
+
+      <p class="m-0 mt-1 text-[13px] text-[var(--color-text-secondary)]">
+        Review, score, and publish student results
+      </p>
+    </div>
+
+    <!-- RESULT STATUS -->
+
+    <div class="flex items-center gap-2">
+      <span *ngIf="currentResultState.published" class="result-badge result-badge--published">
+        <span class="result-badge__dot"></span>
+        Published
+      </span>
+
+      <span *ngIf="currentResultState.locked" class="result-badge result-badge--locked">
+        <mat-icon>lock</mat-icon>
+        Locked
+      </span>
+
+      <span *ngIf="!currentResultState.published" class="result-badge result-badge--draft">
+        <span class="result-badge__dot"></span>
+        Draft
+      </span>
+    </div>
+  </div>
+
+  <!-- ================================================= -->
+  <!-- ASSESSMENT SELECTOR -->
+  <!-- ================================================= -->
+
+  <mat-card
+    class="result-card !mb-4 !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-5"
+  >
+    <div class="flex items-center justify-between gap-4 max-md:flex-col max-md:items-stretch">
+      <div>
+        <span
+          class="block text-[11px] font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]"
+        >
+          Assessment
+        </span>
+
+        <span class="mt-1 block text-[14px] font-bold text-[var(--color-title)]">
+          Select assessment to manage results
+        </span>
+      </div>
+
+      <mat-form-field appearance="outline" class="result-select">
+        <mat-label>Assessment</mat-label>
+
+        <mat-select [(ngModel)]="selectedAssessmentId" (selectionChange)="onAssessmentChange()">
+          <mat-select-trigger>
+            <span class="assessment-select__value">
+              {{ selectedAssessment?.title }}
+            </span>
+          </mat-select-trigger>
+
+          <mat-option *ngFor="let assessment of assessments" [value]="assessment.id">
+            <div class="assessment-option">
+              <span class="assessment-option__title">
+                {{ assessment.title }}
+              </span>
+            </div>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </mat-card>
+
+  <!-- ================================================= -->
+  <!-- ACTION BAR -->
+  <!-- ================================================= -->
+
+  <mat-card
+    class="result-card !mb-4 !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-4"
+  >
+    <div class="flex items-center justify-between gap-4 max-md:flex-col max-md:items-stretch">
+      <div class="flex items-center gap-3">
+        <div
+          class="flex h-10 w-10 items-center justify-center rounded-[10px] bg-[var(--color-primary-light)] text-[var(--color-primary-dark)]"
+        >
+          <mat-icon>grading</mat-icon>
+        </div>
+
+        <div>
+          <h2 class="m-0 text-[14px] font-bold text-[var(--color-title)]">
+            {{ selectedAssessment?.title }}
+          </h2>
+
+          <p class="m-0 mt-1 text-[11px] text-[var(--color-text-secondary)]">
+            {{ selectedAssessment?.subject }}
+            ·
+            {{ selectedAssessment?.grade }}
+          </p>
+        </div>
+      </div>
+
+      <!-- ACTIONS -->
+
+      <div class="flex items-center gap-2 max-sm:flex-col max-sm:items-stretch">
+        <!-- PUBLISH / UNPUBLISH -->
+
+        <button
+          mat-stroked-button
+          class="!h-9 !rounded-[9px] !px-4 !text-[12px] !font-semibold"
+          [disabled]="currentResultState.locked"
+          (click)="onPublish()"
+        >
+          <mat-icon class="!mr-1 !h-4 !w-4 !text-base">
+            {{ currentResultState.published ? 'visibility_off' : 'publish' }}
+          </mat-icon>
+
+          {{ currentResultState.published ? 'Unpublish' : 'Publish Result' }}
+        </button>
+
+        <!-- LOCK -->
+
+        <button
+          mat-flat-button
+          class="!h-9 !rounded-[9px] !bg-[var(--color-primary-dark)] !px-4 !text-[12px] !font-semibold !text-white"
+          [disabled]="currentResultState.locked || !currentResultState.published"
+          (click)="lockResult()"
+        >
+          <mat-icon class="!mr-1 !h-4 !w-4 !text-base"> lock </mat-icon>
+
+          {{ currentResultState.locked ? 'Result Locked' : 'Lock Result' }}
+        </button>
+      </div>
+    </div>
+  </mat-card>
+
+  <!-- ================================================= -->
+  <!-- SUCCESS MESSAGE -->
+  <!-- ================================================= -->
+
+  <div
+    *ngIf="successMessage"
+    class="mb-4 flex items-center gap-2 rounded-[10px] border border-[var(--color-status-completed-border)] bg-[var(--color-status-completed-background)] px-4 py-3 text-[12px] font-semibold text-[var(--color-status-completed)]"
+  >
+    <mat-icon class="!h-5 !w-5 !text-[20px]"> check_circle </mat-icon>
+
+    {{ successMessage }}
+  </div>
+
+  <!-- ================================================= -->
+  <!-- STUDENT RESULTS -->
+  <!-- ================================================= -->
+
+  <mat-card
+    class="result-card !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-0"
+  >
+    <!-- HEADER -->
+
+    <div class="border-b border-[var(--color-border)] px-5 py-4">
+      <div class="flex items-center justify-between gap-4">
+        <div>
+          <h2 class="m-0 text-[14px] font-bold text-[var(--color-title)]">Student Results</h2>
+
+          <p class="m-0 mt-1 text-[11px] text-[var(--color-text-secondary)]">
+            Review essay answers and manage student scores
+          </p>
+        </div>
+
+        <span class="text-[12px] font-semibold text-[var(--color-text-secondary)]">
+          {{ students.length }} Students
+        </span>
+      </div>
+    </div>
+
+    <!-- STUDENT LIST -->
+
+    <div>
+      <div
+        *ngFor="let student of students"
+        class="result-student border-b border-[var(--color-border)] px-5 py-4 last:border-b-0"
+      >
+        <div class="flex items-center justify-between gap-4 max-md:flex-col max-md:items-stretch">
+          <!-- STUDENT INFORMATION -->
+
+          <div class="flex min-w-0 items-center gap-3">
+            <div
+              class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--color-primary-light)] text-[12px] font-bold text-[var(--color-primary-dark)]"
+            >
+              {{ student.initials }}
+            </div>
+
+            <div class="min-w-0">
+              <h3 class="m-0 truncate text-[13px] font-bold text-[var(--color-title)]">
+                {{ student.studentName }}
+              </h3>
+
+              <p class="m-0 mt-1 text-[11px] text-[var(--color-text-secondary)]">
+                {{ student.studentId }}
+                ·
+                {{ student.className }}
+              </p>
+            </div>
+          </div>
+
+          <!-- SCORE -->
+
+          <div class="flex items-center gap-5">
+            <div class="text-right">
+              <span
+                class="block text-[10px] uppercase tracking-wide text-[var(--color-text-secondary)]"
+              >
+                Score
+              </span>
+
+              <span class="text-[16px] font-bold text-[var(--color-primary-dark)]">
+                {{ student.score }}/{{ student.maxScore }}
+              </span>
+            </div>
+
+            <span
+              [ngClass]="statusClass(student.status)"
+              class="result-status hidden sm:inline-flex"
+            >
+              <span class="result-status__dot"></span>
+              {{ student.status }}
+            </span>
+
+            <!-- REVIEW -->
+
+            <button
+              mat-stroked-button
+              class="!h-9 !rounded-[9px] !px-3 !text-[11px] !font-semibold"
+              [disabled]="currentResultState.locked || student.answers.length === 0"
+              (click)="onReviewAnswers(student)"
+            >
+              <mat-icon class="!mr-1 !h-4 !w-4 !text-base"> rate_review </mat-icon>
+
+              Review Answers
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- EMPTY -->
+
+      <div
+        *ngIf="students.length === 0"
+        class="flex flex-col items-center justify-center px-5 py-12 text-center"
+      >
+        <mat-icon class="mb-3 !h-10 !w-10 !text-[40px] !text-[var(--color-text-secondary)]">
+          assignment_late
+        </mat-icon>
+
+        <h3 class="m-0 text-[14px] font-bold text-[var(--color-title)]">No student results</h3>
+      </div>
+    </div>
+  </mat-card>
+
+  <!-- ================================================= -->
+  <!-- MANUAL SCORING PANEL -->
+  <!-- ================================================= -->
+
+  <mat-card
+    *ngIf="selectedStudent"
+    class="result-card !mt-4 !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-0"
+  >
+    <!-- HEADER -->
+
+    <div
+      class="flex items-center justify-between gap-4 border-b border-[var(--color-border)] px-5 py-4"
+    >
+      <div class="flex items-center gap-3">
+        <div
+          class="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-primary-light)] text-[12px] font-bold text-[var(--color-primary-dark)]"
+        >
+          {{ selectedStudent.initials }}
+        </div>
+
+        <div>
+          <h2 class="m-0 text-[14px] font-bold text-[var(--color-title)]">Manual Scoring</h2>
+
+          <p class="m-0 mt-1 text-[11px] text-[var(--color-text-secondary)]">
+            {{ selectedStudent.studentName }}
+            · Review essay answers and input score
+          </p>
+        </div>
+      </div>
+
+      <button mat-icon-button (click)="onCloseReview()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <!-- ANSWERS -->
+
+    <div>
+      <div
+        *ngFor="let answer of selectedStudent.answers; let i = index"
+        class="score-question border-b border-[var(--color-border)] px-5 py-5 last:border-b-0"
+      >
+        <div class="flex items-start justify-between gap-5 max-md:flex-col">
+          <!-- QUESTION -->
+
+          <div class="min-w-0 flex-1">
+            <span
+              class="text-[10px] font-bold uppercase tracking-wide text-[var(--color-text-secondary)]"
+            >
+              Question {{ i + 1 }}
+            </span>
+
+            <h3 class="m-0 mt-2 text-[13px] font-bold text-[var(--color-title)]">
+              {{ answer.question }}
+            </h3>
+
+            <div class="mt-3 rounded-[9px] bg-[var(--color-background-content)] px-4 py-3">
+              <span
+                class="block text-[10px] font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]"
+              >
+                Student Answer
+              </span>
+
+              <p class="m-0 mt-1 text-[12px] leading-[1.5] text-[var(--color-title)]">
+                {{ answer.answer }}
+              </p>
+            </div>
+          </div>
+
+          <!-- SCORE INPUT -->
+
+          <div class="w-[130px] shrink-0 max-md:w-full">
+            <label
+              class="mb-1.5 block text-[10px] font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]"
+            >
+              Score
+            </label>
+
+            <div class="flex items-center gap-2">
+              <input
+                type="number"
+                min="0"
+                [max]="answer.maxScore"
+                [ngModel]="answer.score"
+                (ngModelChange)="onScoreChange(answer, $event)"
+                [disabled]="currentResultState.locked"
+                class="score-input w-full rounded-[8px] border border-[var(--color-border)] bg-[var(--color-white)] px-3 py-2 text-[13px] font-semibold text-[var(--color-title)] outline-none"
+              />
+
+              <span class="shrink-0 text-[11px] font-semibold text-[var(--color-text-secondary)]">
+                / {{ answer.maxScore }}
+              </span>
+            </div>
+
+            <span class="mt-1 block text-[10px] text-[var(--color-text-secondary)]">
+              Maximum {{ answer.maxScore }} points
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+
+    <div
+      class="flex items-center justify-between gap-4 border-t border-[var(--color-border)] bg-[var(--color-background-content)] px-5 py-4 max-sm:flex-col max-sm:items-stretch"
+    >
+      <div>
+        <span
+          class="block text-[10px] font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]"
+        >
+          Total Score
+        </span>
+
+        <span class="text-[24px] font-bold text-[var(--color-primary-dark)]">
+          {{ selectedStudent.score }}
+          <span class="text-[14px] text-[var(--color-text-secondary)]">
+            / {{ selectedStudent.maxScore }}
+          </span>
+        </span>
+      </div>
+
+      <button
+        mat-flat-button
+        class="!h-9 !rounded-[9px] !bg-[var(--color-primary-dark)] !px-5 !text-[12px] !font-semibold !text-white"
+        [disabled]="currentResultState.locked"
+        (click)="onSaveScore()"
+      >
+        <mat-icon class="!mr-1 !h-4 !w-4 !text-base"> save </mat-icon>
+
+        Save Score
+      </button>
+    </div>
+  </mat-card>
+
+  <!-- ================================================= -->
+  <!-- PUBLISH CONFIRMATION DIALOG -->
+  <!-- ================================================= -->
+
+  <div
+    *ngIf="showPublishDialog"
+    class="publish-dialog__overlay fixed inset-0 z-[1000] flex items-center justify-center bg-black/30 px-4"
+  >
+    <div
+      class="publish-dialog w-full max-w-[430px] rounded-[14px] border border-[var(--color-border)] bg-[var(--color-white)] p-6 shadow-xl"
+    >
+      <!-- ICON -->
+
+      <div
+        class="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-primary-light)] text-[var(--color-primary-dark)]"
+      >
+        <mat-icon>publish</mat-icon>
+      </div>
+
+      <h2 class="m-0 text-[16px] font-bold text-[var(--color-title)]">
+        Publish Assessment Result?
+      </h2>
+
+      <p class="m-0 mt-2 text-[12px] leading-[1.5] text-[var(--color-text-secondary)]">
+        Once published, the results will become visible to students. Make sure all scores have been
+        reviewed before publishing.
+      </p>
+
+      <!-- ACTIONS -->
+
+      <div class="mt-6 flex justify-end gap-2">
+        <button
+          mat-button
+          class="!rounded-[8px] !text-[12px] !font-semibold"
+          (click)="cancelPublish()"
+        >
+          Cancel
+        </button>
+
+        <button
+          mat-flat-button
+          class="!rounded-[8px] !bg-[var(--color-primary-dark)] !px-4 !text-[12px] !font-semibold !text-white"
+          (click)="confirmPublish()"
+        >
+          Publish Result
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

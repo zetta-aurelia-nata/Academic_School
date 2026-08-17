@@ -110,7 +110,7 @@
               <mat-icon class="!h-[22px] !w-[22px] !text-[22px]"> edit_note </mat-icon>
             </div>
 
-            <div class="min-w-0">
+            <div class="min-w-0 flex-1">
               <h2 class="form-card__title m-0 text-[17px] font-bold text-[var(--color-title)]">
                 Essay Assessment
               </h2>
@@ -124,37 +124,80 @@
           </div>
 
           <!-- FORM -->
-          <form class="assessment-form flex flex-col gap-[18px]">
-            <mat-form-field appearance="outline" class="w-full">
-              <mat-label>Question Text</mat-label>
+          <form class="assessment-form flex flex-col gap-5">
+            <!-- QUESTION -->
+            <div class="form-section">
+              <div class="form-section__header">
+                <span class="form-section__number">1</span>
 
-              <textarea matInput rows="4" placeholder="Write your essay question here"></textarea>
-            </mat-form-field>
+                <div>
+                  <span class="form-section__title"> Question </span>
 
-            <div class="form-row grid grid-cols-2 gap-4 max-[560px]:grid-cols-1">
-              <mat-form-field class="w-full" appearance="outline">
-                <mat-label>Max Word Count</mat-label>
+                  <span class="form-section__description">
+                    Write the question students need to answer
+                  </span>
+                </div>
+              </div>
 
-                <input matInput type="number" placeholder="e.g. 300" />
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Question Text</mat-label>
+
+                <textarea
+                  matInput
+                  rows="5"
+                  placeholder="Write your essay question here..."
+                ></textarea>
               </mat-form-field>
+            </div>
 
-              <mat-form-field class="w-full" appearance="outline">
-                <mat-label>Points</mat-label>
+            <!-- SETTINGS -->
+            <div class="form-section">
+              <div class="form-section__header">
+                <span class="form-section__number">2</span>
 
-                <input matInput type="number" placeholder="e.g. 10" />
-              </mat-form-field>
+                <div>
+                  <span class="form-section__title"> Assessment Settings </span>
+
+                  <span class="form-section__description">
+                    Configure the answer requirements and score
+                  </span>
+                </div>
+              </div>
+
+              <div class="form-row grid grid-cols-2 gap-4 max-[560px]:grid-cols-1">
+                <mat-form-field class="w-full" appearance="outline">
+                  <mat-label>Max Word Count</mat-label>
+
+                  <input matInput type="number" placeholder="e.g. 300" />
+
+                  <mat-hint>Maximum number of words</mat-hint>
+                </mat-form-field>
+
+                <mat-form-field class="w-full" appearance="outline">
+                  <mat-label>Points</mat-label>
+
+                  <input matInput type="number" placeholder="e.g. 10" />
+
+                  <mat-hint>Total score for this question</mat-hint>
+                </mat-form-field>
+              </div>
             </div>
           </form>
 
           <!-- ACTIONS -->
           <div
-            class="form-card__actions mt-6 flex justify-end gap-3 border-t border-[var(--color-border)] pt-5 max-[560px]:flex-col-reverse"
+            class="form-card__actions mt-7 flex justify-end gap-3 border-t border-[var(--color-border)] pt-5 max-[560px]:flex-col-reverse"
           >
-            <button mat-stroked-button class="max-[560px]:w-full" (click)="cancelSelection()">
+            <button
+              mat-stroked-button
+              type="button"
+              class="max-[560px]:w-full"
+              (click)="cancelSelection()"
+            >
               Cancel
             </button>
 
-            <button mat-flat-button color="primary" class="max-[560px]:w-full">
+            <button mat-flat-button color="primary" type="button" class="max-[560px]:w-full">
               <mat-icon>check</mat-icon>
               <span>Save Question</span>
             </button>
@@ -177,7 +220,7 @@
               <mat-icon class="!h-[22px] !w-[22px] !text-[22px]"> checklist </mat-icon>
             </div>
 
-            <div class="min-w-0">
+            <div class="min-w-0 flex-1">
               <h2 class="form-card__title m-0 text-[17px] font-bold text-[var(--color-title)]">
                 Multiple Choice Question
               </h2>
@@ -191,67 +234,111 @@
           </div>
 
           <!-- FORM -->
-          <form class="assessment-form flex flex-col gap-[18px]">
-            <mat-form-field appearance="outline" class="w-full">
-              <mat-label>Question Text</mat-label>
+          <form class="assessment-form flex flex-col gap-5">
+            <!-- QUESTION -->
+            <div class="form-section">
+              <div class="form-section__header">
+                <span class="form-section__number">1</span>
 
-              <textarea matInput rows="3" placeholder="Write your question here"></textarea>
-            </mat-form-field>
+                <div>
+                  <span class="form-section__title"> Question </span>
 
-            <!-- OPTIONS -->
-            <div class="options-list flex flex-col gap-2.5">
-              <span
-                class="options-list__label text-[12.5px] font-semibold uppercase tracking-[0.4px]"
-              >
-                Answer Options
-              </span>
-
-              <div
-                class="option-row flex items-center gap-2.5"
-                *ngFor="let opt of [1, 2, 3, 4]; let i = index"
-              >
-                <span
-                  class="option-row__index flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-xs font-bold"
-                >
-                  {{ i + 1 }}
-                </span>
-
-                <mat-form-field appearance="outline" class="option-row__field min-w-0 flex-1">
-                  <input matInput placeholder="Option {{ opt }}" />
-                </mat-form-field>
-
-                <mat-checkbox class="option-row__check shrink-0 whitespace-nowrap">
-                  Correct
-                </mat-checkbox>
+                  <span class="form-section__description">
+                    Write the question and provide possible answers
+                  </span>
+                </div>
               </div>
 
-              <button
-                mat-stroked-button
-                type="button"
-                class="add-option-btn mt-1 !flex !w-fit !items-center !gap-1.5"
-              >
-                <mat-icon>add</mat-icon>
-                <span>Add Option</span>
-              </button>
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Question Text</mat-label>
+
+                <textarea matInput rows="4" placeholder="Write your question here..."></textarea>
+              </mat-form-field>
+            </div>
+
+            <!-- ANSWER OPTIONS -->
+            <div class="form-section">
+              <div class="form-section__header">
+                <span class="form-section__number">2</span>
+
+                <div>
+                  <span class="form-section__title"> Answer Options </span>
+
+                  <span class="form-section__description">
+                    Add the possible answers and mark one as correct
+                  </span>
+                </div>
+              </div>
+
+              <div class="options-editor">
+                <div class="option-row" *ngFor="let opt of [1, 2, 3, 4]; let i = index">
+                  <!-- NUMBER -->
+                  <span class="option-row__index">
+                    {{ i + 1 }}
+                  </span>
+
+                  <!-- INPUT -->
+                  <mat-form-field appearance="outline" class="option-row__field">
+                    <mat-label> Option {{ opt }} </mat-label>
+
+                    <input matInput placeholder="Write answer option..." />
+                  </mat-form-field>
+
+                  <!-- CORRECT -->
+                  <mat-checkbox
+                    class="option-row__check"
+                    [aria-label]="'Mark option ' + (i + 1) + ' as correct'"
+                  >
+                  </mat-checkbox>
+                </div>
+
+                <!-- ADD OPTION -->
+                <button mat-stroked-button type="button" class="add-option-btn">
+                  <mat-icon>add</mat-icon>
+                  <span>Add Option</span>
+                </button>
+              </div>
             </div>
 
             <!-- POINTS -->
-            <mat-form-field appearance="outline" class="max-w-[200px] max-[560px]:max-w-full">
-              <mat-label>Points</mat-label>
+            <div class="form-section form-section--points">
+              <div class="form-section__header">
+                <span class="form-section__number">3</span>
 
-              <input matInput type="number" placeholder="e.g. 10" />
-            </mat-form-field>
+                <div>
+                  <span class="form-section__title"> Scoring </span>
+
+                  <span class="form-section__description"> Set the score for this question </span>
+                </div>
+              </div>
+
+              <mat-form-field
+                appearance="outline"
+                class="w-full max-w-[220px] max-[560px]:max-w-full"
+              >
+                <mat-label>Points</mat-label>
+
+                <input matInput type="number" placeholder="e.g. 10" />
+
+                <mat-hint>Maximum points</mat-hint>
+              </mat-form-field>
+            </div>
           </form>
 
           <!-- ACTIONS -->
           <div
-            class="form-card__actions mt-6 flex justify-end gap-3 border-t border-[var(--color-border)] pt-5 max-[560px]:flex-col-reverse"
+            class="form-card__actions mt-7 flex justify-end gap-3 border-t border-[var(--color-border)] pt-5 max-[560px]:flex-col-reverse"
           >
-            <button mat-stroked-button class="max-[560px]:w-full" (click)="cancelSelection()">
+            <button
+              mat-stroked-button
+              type="button"
+              class="max-[560px]:w-full"
+              (click)="cancelSelection()"
+            >
               Cancel
             </button>
 
-            <button mat-flat-button color="primary" class="max-[560px]:w-full">
+            <button mat-flat-button color="primary" type="button" class="max-[560px]:w-full">
               <mat-icon>check</mat-icon>
               <span>Save Question</span>
             </button>
