@@ -1,15 +1,19 @@
+// *************** BEM BLOCKS ***************
+// *************** HOST ***************
 :host {
   display: block;
   width: 100%;
   min-width: 0;
 }
 
+// *************** DASHBOARD ***************
 .dashboard {
   font-family: sans-serif;
   letter-spacing: 0.2px;
   background-color: var(--color-background-content);
 }
 
+// *************** PAGE HEADER ***************
 .page-header {
   &__title {
     color: var(--color-title);
@@ -28,6 +32,7 @@
   }
 }
 
+// *************** WELCOME BANNER ***************
 .welcome-banner {
   border: 1px solid var(--color-banner-border);
   background: linear-gradient(
@@ -65,6 +70,7 @@
   }
 }
 
+// *************** PROGRESS ITEM ***************
 .progress-item {
   --card-color: var(--color-primary);
   position: relative;
@@ -139,6 +145,7 @@
   }
 }
 
+// *************** PROGRESS ICON ***************
 .progress-icon {
   position: relative;
   z-index: 1;
@@ -160,23 +167,16 @@
     font-size: 28px;
     line-height: 28px;
   }
-
-  @media (max-width: 768px) {
-    mat-icon {
-      width: 24px;
-      height: 24px;
-      font-size: 24px;
-      line-height: 24px;
-    }
-  }
 }
 
+// *************** PROGRESS INFO ***************
 .progress-info {
   &__value {
     color: var(--color-title);
   }
 }
 
+// *************** PROGRESS LABEL ***************
 .progress-label {
   &__text {
     display: block;
@@ -189,6 +189,7 @@
   }
 }
 
+// *************** DASHBOARD NOTE ***************
 .dashboard-note {
   border: 1px solid var(--color-border);
   background-color: var(--color-white);
@@ -215,6 +216,19 @@
   }
 }
 
+// *************** MEDIA QUERIES ***************
+@media (max-width: 768px) {
+  .progress-icon {
+    mat-icon {
+      width: 24px;
+      height: 24px;
+      font-size: 24px;
+      line-height: 24px;
+    }
+  }
+}
+
+// *************** ANIMATIONS ***************
 @keyframes wave {
   0%,
   60%,

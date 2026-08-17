@@ -1,5 +1,7 @@
 <section class="create-assessment px-6 py-10 max-[560px]:px-[14px] max-[560px]:py-5">
-  <div class="create-assessment__layout mx-auto flex items-start gap-8 max-[900px]:items-center flex-col">
+  <div
+    class="create-assessment__layout mx-auto flex items-start gap-8 max-[900px]:flex-col max-[900px]:items-center"
+  >
     <!-- ******************** LEFT: TYPE SELECTION ******************** -->
     <aside class="type-panel sticky top-6 w-[340px] shrink-0 max-[900px]:static max-[900px]:w-full">
       <h2 class="type-panel__title m-0 mb-1 text-lg font-bold text-[var(--color-title)]">
@@ -13,55 +15,49 @@
       <div
         class="type-panel__list flex flex-col gap-3 max-[900px]:flex-row max-[900px]:overflow-x-auto max-[560px]:flex-col max-[560px]:overflow-x-visible"
       >
-        <!-- ******************** ESSAY ******************** -->
+        <!-- ******************** ESSAY FORM ******************** -->
         <button
           type="button"
           class="type-card flex w-full min-w-0 items-center gap-3 rounded-xl border bg-[var(--color-white)] px-4 py-[14px] text-left max-[900px]:min-w-[280px] max-[900px]:flex-1"
           [class.type-card--active]="selectedType === 'essay'"
           (click)="selectType('essay')"
         >
-          <!-- ICON -->
           <div
             class="type-card__icon type-card__icon--amber flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px]"
           >
             <mat-icon class="!h-5 !w-5 !text-xl"> edit_note </mat-icon>
           </div>
 
-          <!-- TEXT -->
           <div class="type-card__text flex min-w-0 flex-1 flex-col gap-px">
             <span class="type-card__label truncate text-sm font-semibold"> Essay </span>
 
             <span class="type-card__desc truncate text-[11.5px]"> Open-ended written answer </span>
           </div>
 
-          <!-- CHECK -->
           @if (selectedType === 'essay') {
             <mat-icon class="type-card__check shrink-0"> check_circle </mat-icon>
           }
         </button>
 
-        <!-- ******************** MULTIPLE CHOICE ******************** -->
+        <!-- ******************** MULTIPLE CHOICE FORM ******************** -->
         <button
           type="button"
           class="type-card flex w-full min-w-0 items-center gap-3 rounded-xl border bg-[var(--color-white)] px-4 py-[14px] text-left max-[900px]:min-w-[280px] max-[900px]:flex-1"
           [class.type-card--active]="selectedType === 'multiple_choice'"
           (click)="selectType('multiple_choice')"
         >
-          <!-- ICON -->
           <div
             class="type-card__icon type-card__icon--blue flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px]"
           >
             <mat-icon class="!h-5 !w-5 !text-xl"> checklist </mat-icon>
           </div>
 
-          <!-- TEXT -->
           <div class="type-card__text flex min-w-0 flex-1 flex-col gap-px">
             <span class="type-card__label truncate text-sm font-semibold"> Multiple Choice </span>
 
             <span class="type-card__desc truncate text-[11.5px]"> Select one correct answer </span>
           </div>
 
-          <!-- CHECK -->
           @if (selectedType === 'multiple_choice') {
             <mat-icon class="type-card__check shrink-0"> check_circle </mat-icon>
           }
@@ -69,14 +65,14 @@
       </div>
     </aside>
 
-    <!-- ******************** DIVIDER ******************** -->
+    <!-- ******************** DIVIDER LINE ******************** -->
     <div
       class="layout-divider h-auto w-px shrink-0 self-stretch bg-[var(--color-sidebar-muted)] max-[900px]:my-5 max-[900px]:h-px max-[900px]:w-full"
     ></div>
 
     <!-- ******************** RIGHT: FORM AREA ******************** -->
     <div class="form-panel min-w-0 flex-1 max-[900px]:w-[90%]">
-      <!-- ******************** EMPTY STATE ******************** -->
+
       @if (!selectedType) {
         <div
           class="empty-state flex h-[600px] flex-col items-center justify-center gap-2.5 px-7 py-7 text-center"
@@ -100,7 +96,6 @@
         <mat-card
           class="form-card !rounded-xl !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-7"
         >
-          <!-- HEADER -->
           <div
             class="form-card__header mb-6 flex items-center gap-[14px] border-b border-[var(--color-border)] pb-5"
           >
@@ -123,9 +118,7 @@
             </div>
           </div>
 
-          <!-- FORM -->
           <form class="assessment-form flex flex-col gap-5">
-            <!-- QUESTION -->
             <div class="form-section">
               <div class="form-section__header">
                 <span class="form-section__number">1</span>
@@ -150,7 +143,6 @@
               </mat-form-field>
             </div>
 
-            <!-- SETTINGS -->
             <div class="form-section">
               <div class="form-section__header">
                 <span class="form-section__number">2</span>
@@ -164,29 +156,24 @@
                 </div>
               </div>
 
-              <div class="form-row grid grid-cols-2 gap-4 max-[560px]:grid-cols-1">
+              <div class="form-row grid grid-cols-2 mt-5 gap-4 max-[560px]:grid-cols-1">
                 <mat-form-field class="w-full" appearance="outline">
-                  <mat-label>Max Word Count</mat-label>
+                  <mat-label>Max Word</mat-label>
 
                   <input matInput type="number" placeholder="e.g. 300" />
-
-                  <mat-hint>Maximum number of words</mat-hint>
                 </mat-form-field>
 
                 <mat-form-field class="w-full" appearance="outline">
-                  <mat-label>Points</mat-label>
+                  <mat-label>Total Score</mat-label>
 
                   <input matInput type="number" placeholder="e.g. 10" />
-
-                  <mat-hint>Total score for this question</mat-hint>
                 </mat-form-field>
               </div>
             </div>
           </form>
 
-          <!-- ACTIONS -->
           <div
-            class="form-card__actions mt-7 flex justify-end gap-3 border-t border-[var(--color-border)] pt-5 max-[560px]:flex-col-reverse"
+            class="form-card__actions mt-5 flex justify-end gap-3 border-t border-[var(--color-border)] pt-5 max-[560px]:flex-col-reverse"
           >
             <button
               mat-stroked-button
@@ -210,7 +197,6 @@
         <mat-card
           class="form-card !rounded-xl !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-7"
         >
-          <!-- HEADER -->
           <div
             class="form-card__header mb-6 flex items-center gap-[14px] border-b border-[var(--color-border)] pb-5"
           >
@@ -233,9 +219,7 @@
             </div>
           </div>
 
-          <!-- FORM -->
           <form class="assessment-form flex flex-col gap-5">
-            <!-- QUESTION -->
             <div class="form-section">
               <div class="form-section__header">
                 <span class="form-section__number">1</span>
@@ -256,7 +240,6 @@
               </mat-form-field>
             </div>
 
-            <!-- ANSWER OPTIONS -->
             <div class="form-section">
               <div class="form-section__header">
                 <span class="form-section__number">2</span>
@@ -272,19 +255,16 @@
 
               <div class="options-editor">
                 <div class="option-row" *ngFor="let opt of [1, 2, 3, 4]; let i = index">
-                  <!-- NUMBER -->
                   <span class="option-row__index">
                     {{ i + 1 }}
                   </span>
 
-                  <!-- INPUT -->
                   <mat-form-field appearance="outline" class="option-row__field">
                     <mat-label> Option {{ opt }} </mat-label>
 
                     <input matInput placeholder="Write answer option..." />
                   </mat-form-field>
 
-                  <!-- CORRECT -->
                   <mat-checkbox
                     class="option-row__check"
                     [aria-label]="'Mark option ' + (i + 1) + ' as correct'"
@@ -292,7 +272,6 @@
                   </mat-checkbox>
                 </div>
 
-                <!-- ADD OPTION -->
                 <button mat-stroked-button type="button" class="add-option-btn">
                   <mat-icon>add</mat-icon>
                   <span>Add Option</span>
@@ -300,7 +279,6 @@
               </div>
             </div>
 
-            <!-- POINTS -->
             <div class="form-section form-section--points">
               <div class="form-section__header">
                 <span class="form-section__number">3</span>
@@ -325,7 +303,6 @@
             </div>
           </form>
 
-          <!-- ACTIONS -->
           <div
             class="form-card__actions mt-7 flex justify-end gap-3 border-t border-[var(--color-border)] pt-5 max-[560px]:flex-col-reverse"
           >

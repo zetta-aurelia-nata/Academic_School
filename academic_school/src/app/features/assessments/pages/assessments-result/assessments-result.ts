@@ -1,22 +1,17 @@
-// ********** ANGULAR IMPORTS **********
+//********** ANGULAR IMPORTS **********
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-// ********** ANGULAR MATERIAL IMPORTS **********
+//********** ANGULAR MATERIAL IMPORTS **********
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 
-// ********** APPLICATION IMPORTS **********
+//********** APPLICATION MODELS AND SETTINGS IMPORTS **********
 import { ASSESSMENTS } from '../../assessment.data';
 import { Assessment } from '../assessments-list/assessment.list.model';
-
-
-// =====================================================
-// ESSAY ANSWER MODEL
-// =====================================================
 
 interface EssayAnswer {
   question: string;
@@ -24,11 +19,6 @@ interface EssayAnswer {
   maxScore: number;
   score: number;
 }
-
-
-// =====================================================
-// RESULT STUDENT MODEL
-// =====================================================
 
 interface ResultStudent {
   id: number;
@@ -42,21 +32,11 @@ interface ResultStudent {
   answers: EssayAnswer[];
 }
 
-
-// =====================================================
-// ASSESSMENT RESULT MODEL
-// =====================================================
-
 interface AssessmentResult {
   assessmentId: number;
   published: boolean;
   locked: boolean;
 }
-
-
-// =====================================================
-// COMPONENT
-// =====================================================
 
 @Component({
   selector: 'app-assessments-result',
@@ -72,27 +52,11 @@ interface AssessmentResult {
   styleUrl: './assessments-result.scss',
 })
 export class AssessmentsResult {
-
-  // =====================================================
-  // ASSESSMENTS
-  // =====================================================
-
+  //********** PUBLIC STATE VARIABLES **********
   assessments: Assessment[] = ASSESSMENTS;
-
-  // =====================================================
-  // SELECTED ASSESSMENT
-  // =====================================================
-
   selectedAssessmentId = 1;
 
-  // =====================================================
-  // STUDENTS
-  // =====================================================
-
   studentsByAssessment: Record<number, ResultStudent[]> = {
-
-    // ********** MATHEMATICS QUIZ **********
-
     1: [
       {
         id: 1,
@@ -136,7 +100,6 @@ export class AssessmentsResult {
           },
         ],
       },
-
       {
         id: 2,
         studentName: 'Bob Smith',
@@ -179,7 +142,6 @@ export class AssessmentsResult {
           },
         ],
       },
-
       {
         id: 3,
         studentName: 'Charlie Brown',
@@ -222,7 +184,6 @@ export class AssessmentsResult {
           },
         ],
       },
-
       {
         id: 4,
         studentName: 'Diana Wilson',
@@ -235,9 +196,6 @@ export class AssessmentsResult {
         answers: [],
       },
     ],
-
-
-    // ********** ENGLISH ESSAY **********
 
     2: [
       {
@@ -280,7 +238,6 @@ export class AssessmentsResult {
           },
         ],
       },
-
       {
         id: 2,
         studentName: 'Liam Wilson',
@@ -319,9 +276,6 @@ export class AssessmentsResult {
       },
     ],
 
-
-    // ********** SCIENCE **********
-
     3: [
       {
         id: 1,
@@ -334,7 +288,6 @@ export class AssessmentsResult {
         maxScore: 100,
         answers: [],
       },
-
       {
         id: 2,
         studentName: 'James Anderson',
@@ -348,9 +301,6 @@ export class AssessmentsResult {
       },
     ],
 
-
-    // ********** HISTORY **********
-
     4: [
       {
         id: 1,
@@ -363,7 +313,6 @@ export class AssessmentsResult {
         maxScore: 100,
         answers: [],
       },
-
       {
         id: 2,
         studentName: 'Isabella White',
@@ -377,9 +326,6 @@ export class AssessmentsResult {
       },
     ],
 
-
-    // ********** BIOLOGY **********
-
     5: [
       {
         id: 1,
@@ -392,7 +338,6 @@ export class AssessmentsResult {
         maxScore: 100,
         answers: [],
       },
-
       {
         id: 2,
         studentName: 'Charlotte Martin',
@@ -406,11 +351,6 @@ export class AssessmentsResult {
       },
     ],
   };
-
-
-  // =====================================================
-  // RESULT STATUS
-  // =====================================================
 
   resultStates: AssessmentResult[] = [
     {
@@ -440,58 +380,24 @@ export class AssessmentsResult {
     },
   ];
 
-
-  // =====================================================
-  // SELECTED STUDENT
-  // =====================================================
-
   selectedStudent?: ResultStudent;
-
-
-  // =====================================================
-  // DIALOG STATE
-  // =====================================================
 
   showPublishDialog = false;
 
-
-  // =====================================================
-  // SUCCESS MESSAGE
-  // =====================================================
-
   successMessage = '';
 
-
-  // =====================================================
-  // GET CURRENT STUDENTS
-  // =====================================================
-
+  //********** SETTERS & GETTERS **********
   get students(): ResultStudent[] {
     return this.studentsByAssessment[this.selectedAssessmentId] ?? [];
   }
 
-
-  // =====================================================
-  // GET CURRENT ASSESSMENT
-  // =====================================================
-
   get selectedAssessment(): Assessment | undefined {
-    return this.assessments.find(
-      (assessment) => assessment.id === this.selectedAssessmentId,
-    );
+    return this.assessments.find((assessment) => assessment.id === this.selectedAssessmentId);
   }
-
-
-  // =====================================================
-  // GET CURRENT RESULT STATE
-  // =====================================================
 
   get currentResultState(): AssessmentResult {
     return (
-      this.resultStates.find(
-        (result) =>
-          result.assessmentId === this.selectedAssessmentId,
-      ) ?? {
+      this.resultStates.find((result) => result.assessmentId === this.selectedAssessmentId) ?? {
         assessmentId: this.selectedAssessmentId,
         published: false,
         locked: false,
@@ -499,45 +405,22 @@ export class AssessmentsResult {
     );
   }
 
-
-  // =====================================================
-  // CHANGE ASSESSMENT
-  // =====================================================
-
+  //********** ACTION HANDLERS **********
   onAssessmentChange(): void {
     this.selectedStudent = undefined;
     this.successMessage = '';
   }
-
-
-  // =====================================================
-  // REVIEW ESSAY ANSWERS
-  // =====================================================
 
   onReviewAnswers(student: ResultStudent): void {
     this.selectedStudent = student;
     this.successMessage = '';
   }
 
-
-  // =====================================================
-  // CLOSE REVIEW
-  // =====================================================
-
   onCloseReview(): void {
     this.selectedStudent = undefined;
   }
 
-
-  // =====================================================
-  // INPUT SCORE
-  // =====================================================
-
-  onScoreChange(
-    answer: EssayAnswer,
-    value: number,
-  ): void {
-
+  onScoreChange(answer: EssayAnswer, value: number): void {
     if (this.currentResultState.locked) {
       return;
     }
@@ -547,8 +430,6 @@ export class AssessmentsResult {
     if (Number.isNaN(score)) {
       score = 0;
     }
-
-    // ********** SCORE VALIDATION **********
 
     if (score < 0) {
       score = 0;
@@ -563,13 +444,7 @@ export class AssessmentsResult {
     this.calculateTotalScore();
   }
 
-
-  // =====================================================
-  // AUTOMATIC TOTAL SCORE
-  // =====================================================
-
   calculateTotalScore(): void {
-
     if (!this.selectedStudent) {
       return;
     }
@@ -582,13 +457,7 @@ export class AssessmentsResult {
     this.selectedStudent.score = total;
   }
 
-
-  // =====================================================
-  // SAVE SCORE
-  // =====================================================
-
   onSaveScore(): void {
-
     if (!this.selectedStudent) {
       return;
     }
@@ -599,21 +468,14 @@ export class AssessmentsResult {
 
     this.calculateTotalScore();
 
-    this.successMessage =
-      `Score for ${this.selectedStudent.studentName} has been saved.`;
+    this.successMessage = `Score for ${this.selectedStudent.studentName} has been saved.`;
 
     setTimeout(() => {
       this.successMessage = '';
     }, 3000);
   }
 
-
-  // =====================================================
-  // OPEN PUBLISH CONFIRMATION
-  // =====================================================
-
   onPublish(): void {
-
     if (this.currentResultState.locked) {
       return;
     }
@@ -626,67 +488,41 @@ export class AssessmentsResult {
     this.showPublishDialog = true;
   }
 
-
-  // =====================================================
-  // CONFIRM PUBLISH
-  // =====================================================
-
   confirmPublish(): void {
-
     const state = this.currentResultState;
 
     state.published = true;
 
     this.showPublishDialog = false;
 
-    this.successMessage =
-      'Assessment results have been published successfully.';
+    this.successMessage = 'Assessment results have been published successfully.';
 
     setTimeout(() => {
       this.successMessage = '';
     }, 3000);
   }
 
-
-  // =====================================================
-  // CANCEL PUBLISH
-  // =====================================================
-
   cancelPublish(): void {
     this.showPublishDialog = false;
   }
 
-
-  // =====================================================
-  // UNPUBLISH
-  // =====================================================
-
   unpublishResult(): void {
-
     if (this.currentResultState.locked) {
       return;
     }
 
     this.currentResultState.published = false;
 
-    this.successMessage =
-      'Assessment results have been unpublished.';
+    this.successMessage = 'Assessment results have been unpublished.';
 
     setTimeout(() => {
       this.successMessage = '';
     }, 3000);
   }
 
-
-  // =====================================================
-  // LOCK RESULT
-  // =====================================================
-
   lockResult(): void {
-
     if (!this.currentResultState.published) {
-      this.successMessage =
-        'Publish the result before locking it.';
+      this.successMessage = 'Publish the result before locking it.';
 
       setTimeout(() => {
         this.successMessage = '';
@@ -697,23 +533,15 @@ export class AssessmentsResult {
 
     this.currentResultState.locked = true;
 
-    this.successMessage =
-      'Assessment result is now locked.';
+    this.successMessage = 'Assessment result is now locked.';
 
     setTimeout(() => {
       this.successMessage = '';
     }, 3000);
   }
 
-
-  // =====================================================
-  // STATUS CLASS
-  // =====================================================
-
+  //********** UTILITY  **********
   statusClass(status: string): string {
-
-    return `result-status result-status--${status
-      .toLowerCase()
-      .replaceAll(' ', '-')}`;
+    return `result-status result-status--${status.toLowerCase().replaceAll(' ', '-')}`;
   }
 }

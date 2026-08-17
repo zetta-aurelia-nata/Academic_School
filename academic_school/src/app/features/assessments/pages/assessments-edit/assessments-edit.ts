@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+// ********** ANGULAR IMPORTS **********
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
+// ********** ANGULAR MATERIAL IMPORTS **********
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-assessments-edit',
@@ -27,15 +29,18 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './assessments-edit.scss',
 })
 export class EditAssessment implements OnInit {
-  assessmentForm!: FormGroup;
-  assessmentId!: string;
-
+  // ********** PRIVATE VARIABLES **********
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
   ) {}
 
+  // ********** PUBLIC STATE VARIABLES **********
+  assessmentForm!: FormGroup;
+  assessmentId!: string;
+
+  // ********** LIFECYCLE HOOKS **********
   ngOnInit(): void {
     this.assessmentId = this.route.snapshot.paramMap.get('id') || '';
 
@@ -53,6 +58,7 @@ export class EditAssessment implements OnInit {
     this.loadAssessment();
   }
 
+  // ********** INIT / LOAD DATA **********
   loadAssessment(): void {
     const assessment = {
       id: this.assessmentId,
@@ -69,6 +75,7 @@ export class EditAssessment implements OnInit {
     this.assessmentForm.patchValue(assessment);
   }
 
+  // ********** ACTION HANDLERS **********
   onSave(): void {
     if (this.assessmentForm.invalid) {
       this.assessmentForm.markAllAsTouched();

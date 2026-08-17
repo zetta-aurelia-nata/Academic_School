@@ -8,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 
-// ********** APPLICATION IMPORTS **********
+// ********** APPLICATION MODELS AND SETTINGS IMPORTS **********
 import { ASSESSMENTS } from '../../assessment.data';
 import { StudentReview } from '../assessments-review-scoring/assessment-review-scoring.model';
 
@@ -19,27 +19,16 @@ import { StudentReview } from '../assessments-review-scoring/assessment-review-s
   styleUrls: ['./assessments-detail.scss'],
 })
 export class AssessmentsDetail {
+  // ********** PRIVATE VARIABLES **********
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
 
-  // =====================================================
-  // ASSESSMENT
-  // =====================================================
-
+  // ********** PUBLIC STATE VARIABLES **********
   assessment?: (typeof ASSESSMENTS)[number];
-
-  // =====================================================
-  // PAGE MODE
-  // =====================================================
 
   isStudentDetail = false;
 
-  // =====================================================
-  // STUDENT DATA BY ASSESSMENT
-  // =====================================================
-
   studentsByAssessment: Record<number, StudentReview[]> = {
-    // ********** MATHEMATICS QUIZ **********
     1: [
       {
         id: 1,
@@ -98,7 +87,6 @@ export class AssessmentsDetail {
       },
     ],
 
-    // ********** ENGLISH LITERATURE ESSAY **********
     2: [
       {
         id: 1,
@@ -148,7 +136,6 @@ export class AssessmentsDetail {
       },
     ],
 
-    // ********** SCIENCE CHAPTER 5 TEST **********
     3: [
       {
         id: 1,
@@ -188,7 +175,6 @@ export class AssessmentsDetail {
       },
     ],
 
-    // ********** HISTORY MIDTERM **********
     4: [
       {
         id: 1,
@@ -216,7 +202,6 @@ export class AssessmentsDetail {
       },
     ],
 
-    // ********** BIOLOGY CHAPTER 3 QUIZ **********
     5: [
       {
         id: 1,
@@ -243,21 +228,9 @@ export class AssessmentsDetail {
     ],
   };
 
-  // =====================================================
-  // CURRENT STUDENTS
-  // =====================================================
-
   students: StudentReview[] = [];
 
-  // =====================================================
-  // SELECTED STUDENT
-  // =====================================================
-
   student?: StudentReview;
-
-  // =====================================================
-  // SUBMITTED ANSWERS
-  // =====================================================
 
   answers = [
     {
@@ -292,71 +265,60 @@ export class AssessmentsDetail {
     },
   ];
 
-  // =====================================================
-  // INITIALIZE
-  // =====================================================
-
   ngOnInit(): void {
     const assessmentId = Number(this.route.snapshot.paramMap.get('id'));
-
     const studentIdParam = this.route.snapshot.paramMap.get('studentId');
 
-    // ********** FIND ASSESSMENT **********
-
-    this.assessment = ASSESSMENTS.find((assessment) => assessment.id === assessmentId);
-
-    // ********** GET STUDENTS FOR CURRENT ASSESSMENT **********
+    // ********** INIT / LOAD DATA **********
+    this.assessment = ASSESSMENTS.find(
+      (assessment) => assessment.id === assessmentId,
+    );
 
     this.students = this.studentsByAssessment[assessmentId] ?? [];
 
-    // ********** CHECK STUDENT DETAIL MODE **********
-
     this.isStudentDetail = studentIdParam !== null;
-
-    // ********** FIND SELECTED STUDENT **********
 
     if (studentIdParam !== null) {
       const studentId = Number(studentIdParam);
 
-      this.student = this.students.find((student) => student.id === studentId);
+      this.student = this.students.find(
+        (student) => student.id === studentId,
+      );
     }
   }
 
-  // =====================================================
-  // OPEN STUDENT DETAIL
-  // =====================================================
-
+  // ********** ACTION HANDLERS **********
   onStudentClick(student: StudentReview): void {
     const assessmentId = this.route.snapshot.paramMap.get('id');
 
-    this.router.navigate(['/assessments', assessmentId, 'submissions', student.id]);
+    this.router.navigate([
+      '/assessments',
+      assessmentId,
+      'submissions',
+      student.id,
+    ]);
   }
-
-  // =====================================================
-  // BACK
-  // =====================================================
 
   onBack(): void {
     const assessmentId = this.route.snapshot.paramMap.get('id');
 
-    // ********** STUDENT DETAIL → STUDENT LIST **********
-
     if (this.isStudentDetail) {
-      this.router.navigate(['/assessments', assessmentId, 'submissions']);
+      this.router.navigate([
+        '/assessments',
+        assessmentId,
+        'submissions',
+      ]);
 
       return;
     }
 
-    // ********** STUDENT LIST → REVIEW & SCORING **********
-
     this.router.navigate(['/assessments/review-scoring']);
   }
 
-  // =====================================================
-  // STATUS CLASS
-  // =====================================================
-
+  // ********** UTILITY METHODS **********
   statusClass(status: string): string {
-    return `review-status review-status--${status.toLowerCase().replaceAll(' ', '-')}`;
+    return `review-status review-status--${status
+      .toLowerCase()
+      .replaceAll(' ', '-')}`;
   }
 }

@@ -1,8 +1,11 @@
+<!--********** EDIT ASSESSMENT SECTION **********-->
 <section
   class="edit-assessment w-full min-h-full bg-[var(--color-background-content)] px-8 py-8 max-lg:px-5 max-md:px-4 max-md:py-5"
 >
+  <!--********** PAGE HEADER **********-->
   <div class="mb-6 flex items-start justify-between gap-4 max-md:flex-col">
     <div>
+      <!--********** BACK BUTTON AND PAGE TITLE **********-->
       <div class="flex items-center gap-3">
         <button
           mat-icon-button
@@ -20,16 +23,20 @@
         </h1>
       </div>
 
+      <!--********** PAGE DESCRIPTION **********-->
       <p class="mt-2 ml-12 text-[13px] leading-5 text-[var(--color-text-secondary)] max-md:ml-12">
         Update the assessment information and settings below.
       </p>
     </div>
   </div>
 
+  <!--********** EDIT ASSESSMENT FORM **********-->
   <form [formGroup]="assessmentForm" (ngSubmit)="onSave()" class="mx-auto w-full max-w-[1100px]">
+    <!--********** ASSESSMENT INFORMATION CARD **********-->
     <mat-card
       class="mb-5 !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-0 !shadow-none"
     >
+      <!--********** CARD HEADER **********-->
       <div class="border-b border-[var(--color-border)] px-6 py-5 max-md:px-4">
         <h2 class="m-0 text-base font-bold text-[var(--color-title)]">Assessment Information</h2>
 
@@ -38,7 +45,9 @@
         </p>
       </div>
 
+      <!--********** ASSESSMENT INFORMATION FIELDS **********-->
       <div class="grid grid-cols-2 gap-5 p-6 max-md:grid-cols-1 max-md:p-4">
+        <!--********** ASSESSMENT NAME FIELD **********-->
         <mat-form-field
           appearance="outline"
           hideRequiredMarker
@@ -53,6 +62,7 @@
           </mat-error>
         </mat-form-field>
 
+        <!--********** SUBJECT FIELD **********-->
         <mat-form-field appearance="outline" hideRequiredMarker class="w-full">
           <mat-label>Subject</mat-label>
 
@@ -69,6 +79,7 @@
           </mat-error>
         </mat-form-field>
 
+        <!--********** GRADE FIELD **********-->
         <mat-form-field appearance="outline" hideRequiredMarker class="w-full">
           <mat-label>Grade</mat-label>
 
@@ -86,6 +97,7 @@
           </mat-error>
         </mat-form-field>
 
+        <!--********** DESCRIPTION FIELD **********-->
         <mat-form-field
           appearance="outline"
           hideRequiredMarker
@@ -101,6 +113,7 @@
           ></textarea>
         </mat-form-field>
 
+        <!--********** INSTRUCTIONS FIELD **********-->
         <mat-form-field
           appearance="outline"
           hideRequiredMarker
@@ -118,9 +131,11 @@
       </div>
     </mat-card>
 
+    <!--********** ASSESSMENT SETTINGS CARD **********-->
     <mat-card
       class="mb-5 !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-0 !shadow-none"
     >
+      <!--********** CARD HEADER **********-->
       <div class="border-b border-[var(--color-border)] px-6 py-5 max-md:px-4">
         <h2 class="m-0 text-base font-bold text-[var(--color-title)]">Assessment Settings</h2>
 
@@ -129,19 +144,22 @@
         </p>
       </div>
 
+      <!--********** ASSESSMENT SETTINGS FIELDS **********-->
       <div class="grid grid-cols-3 gap-5 p-6 max-md:grid-cols-1 max-md:p-4">
+        <!--********** DURATION FIELD **********-->
         <mat-form-field appearance="outline" hideRequiredMarker class="w-full">
           <mat-label>Duration</mat-label>
 
           <input matInput type="number" formControlName="duration" min="1" />
 
-          <span matSuffix class="mr-2 text-[13px]"> minutes </span>
+          <span matSuffix class="mr-2 text-[13px]">minutes</span>
 
           <mat-error *ngIf="assessmentForm.get('duration')?.hasError('required')">
             Duration is required
           </mat-error>
         </mat-form-field>
 
+        <!--********** TOTAL POINTS FIELD **********-->
         <mat-form-field appearance="outline" hideRequiredMarker class="w-full">
           <mat-label>Total Points</mat-label>
 
@@ -152,6 +170,7 @@
           </mat-error>
         </mat-form-field>
 
+        <!--********** STATUS FIELD **********-->
         <mat-form-field appearance="outline" hideRequiredMarker class="w-full">
           <mat-label>Status</mat-label>
 
@@ -164,24 +183,28 @@
       </div>
     </mat-card>
 
+    <!--********** FORM ACTIONS **********-->
     <div
       class="flex items-center justify-end gap-3 border-t border-[var(--color-border)] pt-5 max-md:flex-col-reverse"
     >
+      <!--********** CANCEL BUTTON **********-->
       <button
         type="button"
         mat-stroked-button
-        class="!h-11 !rounded-[10px] !border-[var(--color-border)] !bg-[var(--color-white)] !px-6 !text-[13px] !font-semibold !text-[var(--color-title)] hover:!border-[var(--color-primary)] hover:!bg-[var(--color-primary-light)] hover:!text-[var(--color-primary)] max-md:!w-full"
+        class="edit-assessment__button !h-11 !rounded-[10px] !border-[var(--color-border)] !bg-[var(--color-white)] !px-6 !text-[13px] !font-semibold !text-[var(--color-title)] hover:!border-[var(--color-primary)] hover:!bg-[var(--color-primary-light)] hover:!text-[var(--color-primary)] max-md:!w-full"
         (click)="onCancel()"
       >
         Cancel
       </button>
 
+      <!--********** SAVE BUTTON **********-->
       <button
         type="submit"
         mat-flat-button
         color="primary"
-        class="save-button !h-11 !rounded-[10px] !border-0 !px-7 !text-[13px] !font-semibold max-md:!w-full"
+        class="edit-assessment__save-button !h-11 !rounded-[10px] !border-0 !px-7 !text-[13px] !font-semibold max-md:!w-full"
       >
+        <mat-icon class="!mr-1 !text-[18px]">save</mat-icon>
         Save
       </button>
     </div>

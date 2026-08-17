@@ -1,12 +1,14 @@
 //********** ANGULAR IMPORTS **********
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
+import { Component } from '@angular/core';
+
+//********** ANGULAR MATERIAL IMPORTS **********
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 
 export type QuestionType = 'essay' | 'multiple_choice';
 
@@ -15,7 +17,7 @@ export type QuestionType = 'essay' | 'multiple_choice';
   templateUrl: './assessments-create.html',
   styleUrl: './assessments-create.scss',
   imports: [
-    CommonModule, // handle *ngIf, *ngFor, dll
+    CommonModule,
     MatIconModule,
     MatButtonModule,
     MatCardModule,
@@ -25,14 +27,14 @@ export type QuestionType = 'essay' | 'multiple_choice';
   ],
 })
 export class AssessmentsCreate {
+  //********** PUBLIC STATE VARIABLES **********
   selectedType: QuestionType | null = null;
 
-  // toggle: klik card yang sama lagi -> form ikut nutup
+  //********** ACTION HANDLERS **********
   selectType(type: QuestionType): void {
     this.selectedType = this.selectedType === type ? null : type;
   }
 
-  // dipanggil dari tombol "Cancel" di dalam form
   cancelSelection(): void {
     this.selectedType = null;
   }

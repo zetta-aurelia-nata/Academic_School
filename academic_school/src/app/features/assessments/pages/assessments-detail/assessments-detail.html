@@ -1,13 +1,11 @@
+<!--********** ASSESSMENT DETAIL PAGE **********-->
 <section
   class="assessment-detail w-full min-h-full box-border bg-[var(--color-background-content)] px-8 pt-[30px] pb-10 font-sans max-lg:px-5 max-lg:pt-6 max-md:px-4 max-md:pt-5"
 >
-  <!-- ================================================= -->
-  <!-- STUDENT SUBMISSIONS -->
-  <!-- ================================================= -->
-
+  <!--********** STUDENT SUBMISSIONS **********-->
   <ng-container *ngIf="!isStudentDetail">
-    <!-- HEADER -->
 
+    <!--********** PAGE HEADER **********-->
     <div class="mb-6 flex items-center gap-3">
       <button
         mat-icon-button
@@ -28,28 +26,25 @@
       </div>
     </div>
 
-    <!-- STUDENT LIST -->
-
+    <!--********** STUDENT LIST **********-->
     <div class="student-list">
+      <!--********** STUDENT CARD **********-->
       <mat-card
         *ngFor="let student of students"
         class="student-card !mb-3 !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-0"
         (click)="onStudentClick(student)"
       >
         <div class="flex items-center justify-between gap-4 p-5">
-          <!-- STUDENT -->
-
+          <!--********** STUDENT INFORMATION **********-->
           <div class="flex min-w-0 items-center gap-4">
-            <!-- AVATAR -->
-
+            <!--********** STUDENT AVATAR **********-->
             <div
               class="student-card__avatar flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[var(--color-primary-light)] text-[13px] font-bold text-[var(--color-primary-dark)]"
             >
               {{ student.initials }}
             </div>
 
-            <!-- INFORMATION -->
-
+            <!--********** STUDENT DETAILS **********-->
             <div class="min-w-0">
               <h2 class="m-0 truncate text-[14px] font-bold text-[var(--color-title)]">
                 {{ student.studentName }}
@@ -63,22 +58,18 @@
             </div>
           </div>
 
-          <!-- STATUS + SCORE + ARROW -->
-
+          <!--********** STUDENT STATUS AND SCORE **********-->
           <div class="flex shrink-0 items-center gap-4">
-            <!-- STATUS -->
-
+            <!--********** STATUS **********-->
             <span
               [ngClass]="statusClass(student.status)"
               class="review-status hidden sm:inline-flex"
             >
               <span class="review-status__dot"></span>
-
               {{ student.status }}
             </span>
 
-            <!-- SCORE -->
-
+            <!--********** SCORE **********-->
             <span
               *ngIf="student.score !== undefined"
               class="hidden text-[13px] font-bold text-[var(--color-primary-dark)] md:block"
@@ -86,14 +77,11 @@
               {{ student.score }}/100
             </span>
 
-            <!-- ARROW -->
-
+            <!--********** NAVIGATION ARROW **********-->
             <mat-icon class="text-[var(--color-text-secondary)]"> chevron_right </mat-icon>
           </div>
         </div>
       </mat-card>
-
-      <!-- EMPTY STATE -->
 
       <mat-card
         *ngIf="students.length === 0"
@@ -114,13 +102,9 @@
     </div>
   </ng-container>
 
-  <!-- ================================================= -->
-  <!-- STUDENT DETAIL -->
-  <!-- ================================================= -->
-
+  <!--********** STUDENT DETAIL **********-->
   <ng-container *ngIf="isStudentDetail && student">
-    <!-- HEADER -->
-
+    <!--********** PAGE HEADER **********-->
     <div class="mb-6 flex items-center gap-3">
       <button
         mat-icon-button
@@ -141,10 +125,7 @@
       </div>
     </div>
 
-    <!-- ================================================= -->
-    <!-- STUDENT INFORMATION -->
-    <!-- ================================================= -->
-
+    <!--********** STUDENT INFORMATION **********-->
     <mat-card
       class="detail-card !mb-4 !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-0"
     >
@@ -153,16 +134,13 @@
       </div>
 
       <div class="flex items-center gap-4 p-5">
-        <!-- AVATAR -->
-
         <div
           class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[var(--color-primary-light)] text-[13px] font-bold text-[var(--color-primary-dark)]"
         >
           {{ student.initials }}
         </div>
 
-        <!-- INFO -->
-
+        <!--********** STUDENT DETAILS **********-->
         <div class="min-w-0">
           <h3 class="m-0 text-[15px] font-bold text-[var(--color-title)]">
             {{ student.studentName }}
@@ -181,10 +159,7 @@
       </div>
     </mat-card>
 
-    <!-- ================================================= -->
-    <!-- SUBMISSION INFORMATION -->
-    <!-- ================================================= -->
-
+    <!--********** SUBMISSION INFORMATION **********-->
     <mat-card
       class="detail-card !mb-4 !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-0"
     >
@@ -193,8 +168,7 @@
       </div>
 
       <div class="grid grid-cols-1 gap-4 p-5 sm:grid-cols-3">
-        <!-- SUBMITTED -->
-
+        <!--********** SUBMITTED TIME **********-->
         <div class="flex items-start gap-3">
           <mat-icon class="!text-[20px] !text-[var(--color-primary-dark)]"> schedule </mat-icon>
 
@@ -207,8 +181,7 @@
           </div>
         </div>
 
-        <!-- STATUS -->
-
+        <!--********** SUBMISSION STATUS **********-->
         <div class="flex items-start gap-3">
           <mat-icon class="!text-[20px] !text-[var(--color-primary-dark)]"> check_circle </mat-icon>
 
@@ -217,14 +190,12 @@
 
             <span [ngClass]="statusClass(student.status)" class="review-status mt-1">
               <span class="review-status__dot"></span>
-
               {{ student.status }}
             </span>
           </div>
         </div>
 
-        <!-- TIME TAKEN -->
-
+        <!--********** TIME TAKEN **********-->
         <div class="flex items-start gap-3">
           <mat-icon class="!text-[20px] !text-[var(--color-primary-dark)]"> timer </mat-icon>
 
@@ -239,10 +210,7 @@
       </div>
     </mat-card>
 
-    <!-- ================================================= -->
-    <!-- SUBMITTED ANSWERS -->
-    <!-- ================================================= -->
-
+    <!--********** SUBMITTED ANSWERS **********-->
     <mat-card
       class="detail-card !mb-4 !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-0"
     >
@@ -251,11 +219,13 @@
       </div>
 
       <div class="flex flex-col">
+        <!--********** ANSWER ITEM **********-->
         <div
           *ngFor="let item of answers; let i = index"
           class="answer-item border-b border-[var(--color-border)] p-5 last:border-b-0"
         >
           <div class="flex items-start justify-between gap-4">
+            <!--********** QUESTION AND ANSWER **********-->
             <div class="min-w-0">
               <span
                 class="text-[11px] font-bold uppercase tracking-wide text-[var(--color-text-secondary)]"
@@ -276,6 +246,7 @@
               </p>
             </div>
 
+            <!--********** ANSWER SCORE **********-->
             <span class="shrink-0 text-[12px] font-bold text-[var(--color-primary-dark)]">
               {{ item.score }}/{{ item.maxScore }}
             </span>
@@ -284,14 +255,12 @@
       </div>
     </mat-card>
 
-    <!-- ================================================= -->
-    <!-- FINAL SCORE -->
-    <!-- ================================================= -->
-
+    <!--********** FINAL SCORE **********-->
     <mat-card
       class="detail-card !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-5"
     >
       <div class="flex items-center justify-between gap-4">
+        <!--********** FINAL SCORE INFORMATION **********-->
         <div>
           <span
             class="block text-[11px] font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]"
@@ -304,6 +273,7 @@
           </span>
         </div>
 
+        <!--********** FINAL SCORE VALUE **********-->
         <div class="text-3xl font-bold text-[var(--color-primary-dark)]">
           {{ student.score ?? '-' }}
 
@@ -313,10 +283,7 @@
     </mat-card>
   </ng-container>
 
-  <!-- ================================================= -->
-  <!-- INVALID STUDENT -->
-  <!-- ================================================= -->
-
+  <!--********** INVALID STUDENT **********-->
   <ng-container *ngIf="isStudentDetail && !student">
     <div class="flex min-h-[400px] flex-col items-center justify-center text-center">
       <mat-icon class="mb-3 !h-10 !w-10 !text-[40px] !text-[var(--color-text-secondary)]">

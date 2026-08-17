@@ -1,15 +1,20 @@
-// ******************** BEM BLOCKS ********************
-// ******************** MAIN HEADER ********************
+// *************** BEM BLOCKS ***************
+// *************** HEADER ***************
 .header {
-  // ******************** MENU TOGGLE ********************
+  // *************** MENU TOGGLE ***************
   &__menu-toggle {
     transition:
       background-color 0.2s ease,
-      color 0.2s ease;
+      color 0.2s ease,
+      transform 0.15s ease;
 
     &:hover {
       background-color: var(--color-main-background);
       color: var(--color-hover);
+    }
+
+    &:active {
+      transform: scale(0.94);
     }
 
     mat-icon {
@@ -17,7 +22,7 @@
     }
   }
 
-  // ******************** USER PROFILE ********************
+  // *************** USER PROFILE ***************
   &__user-profile {
     transition: background-color 0.2s ease;
 
@@ -31,12 +36,39 @@
     }
   }
 
-  // ******************** USER PROFILE CHEVRON ********************
+  // *************** USER PROFILE CHEVRON ***************
   &__user-profile-chevron {
     transition:
       transform 0.2s ease,
       color 0.2s ease;
+  }
+}
 
-    // Hidden on mobile through Tailwind.
+// *************** MEDIA QUERIES ***************
+@media (max-width: 768px) {
+  .header__menu-toggle {
+    display: flex;
+  }
+
+  .header__page {
+    margin-left: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header__menu-toggle {
+    width: 34px;
+    height: 34px;
+  }
+
+  .header__menu-toggle mat-icon {
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    line-height: 20px;
+  }
+
+  .header__page {
+    margin-left: 4px;
   }
 }

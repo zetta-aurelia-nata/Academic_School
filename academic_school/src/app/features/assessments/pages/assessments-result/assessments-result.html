@@ -1,8 +1,10 @@
+<!--********** ASSESSMENT RESULT SECTION **********-->
 <section
   class="assessment-result w-full min-h-full box-border bg-[var(--color-background-content)] px-8 pt-[30px] pb-10 font-sans max-lg:px-5 max-lg:pt-6 max-md:px-4 max-md:pt-5"
 >
-
+  <!--********** PAGE HEADER **********-->
   <div class="mb-6 flex items-start justify-between gap-4 max-md:flex-col">
+    <!--********** PAGE TITLE AND DESCRIPTION **********-->
     <div>
       <h1 class="m-0 text-2xl font-bold leading-[1.2] tracking-[-0.3px] text-[var(--color-title)]">
         Assessment Result
@@ -13,6 +15,7 @@
       </p>
     </div>
 
+    <!--********** RESULT STATUS BADGES **********-->
     <div class="flex items-center gap-2">
       <span *ngIf="currentResultState.published" class="result-badge result-badge--published">
         <span class="result-badge__dot"></span>
@@ -31,10 +34,13 @@
     </div>
   </div>
 
+  <!--********** ASSESSMENT SELECTION CARD **********-->
   <mat-card
     class="result-card !mb-4 !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-5"
   >
+    <!--********** ASSESSMENT SELECTION **********-->
     <div class="flex items-center justify-between gap-4 max-md:flex-col max-md:items-stretch">
+      <!--********** SELECTION DESCRIPTION **********-->
       <div>
         <span
           class="block text-[11px] font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]"
@@ -47,6 +53,7 @@
         </span>
       </div>
 
+      <!--********** ASSESSMENT SELECT **********-->
       <mat-form-field appearance="outline" class="result-select">
         <mat-label>Assessment</mat-label>
 
@@ -69,17 +76,21 @@
     </div>
   </mat-card>
 
+  <!--********** ASSESSMENT RESULT CONTROL CARD **********-->
   <mat-card
     class="result-card !mb-4 !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-4"
   >
     <div class="flex items-center justify-between gap-4 max-md:flex-col max-md:items-stretch">
+      <!--********** SELECTED ASSESSMENT INFORMATION **********-->
       <div class="flex items-center gap-3">
+        <!--********** ASSESSMENT ICON **********-->
         <div
           class="flex h-10 w-10 items-center justify-center rounded-[10px] bg-[var(--color-primary-light)] text-[var(--color-primary-dark)]"
         >
           <mat-icon>grading</mat-icon>
         </div>
 
+        <!--********** ASSESSMENT DETAILS **********-->
         <div>
           <h2 class="m-0 text-[14px] font-bold text-[var(--color-title)]">
             {{ selectedAssessment?.title }}
@@ -93,8 +104,9 @@
         </div>
       </div>
 
+      <!--********** RESULT ACTIONS **********-->
       <div class="flex items-center gap-2 max-sm:flex-col max-sm:items-stretch">
-
+        <!--********** PUBLISH / UNPUBLISH ACTION **********-->
         <button
           mat-stroked-button
           class="!h-9 !rounded-[9px] !px-4 !text-[12px] !font-semibold"
@@ -104,6 +116,7 @@
           {{ currentResultState.published ? 'Unpublish' : 'Publish Result' }}
         </button>
 
+        <!--********** LOCK RESULT ACTION **********-->
         <button
           mat-flat-button
           class="!h-9 !rounded-[9px] !bg-[var(--color-primary-dark)] !px-4 !text-[12px] !font-semibold !text-white"
@@ -116,6 +129,7 @@
     </div>
   </mat-card>
 
+  <!--********** SUCCESS MESSAGE **********-->
   <div
     *ngIf="successMessage"
     class="mb-4 flex items-center gap-2 rounded-[10px] border border-[var(--color-status-completed-border)] bg-[var(--color-status-completed-background)] px-4 py-3 text-[12px] font-semibold text-[var(--color-status-completed)]"
@@ -125,12 +139,14 @@
     {{ successMessage }}
   </div>
 
+  <!--********** STUDENT RESULTS CARD **********-->
   <mat-card
     class="result-card !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-0"
   >
-
+    <!--********** STUDENT RESULTS HEADER **********-->
     <div class="border-b border-[var(--color-border)] px-5 py-4">
       <div class="flex items-center justify-between gap-4">
+        <!--********** RESULTS TITLE **********-->
         <div>
           <h2 class="m-0 text-[14px] font-bold text-[var(--color-title)]">Student Results</h2>
 
@@ -139,26 +155,31 @@
           </p>
         </div>
 
+        <!--********** STUDENT COUNT **********-->
         <span class="text-[12px] font-semibold text-[var(--color-text-secondary)]">
           {{ students.length }} Students
         </span>
       </div>
     </div>
 
+    <!--********** STUDENT RESULTS LIST **********-->
     <div>
+      <!--********** STUDENT RESULT ITEM **********-->
       <div
         *ngFor="let student of students"
         class="result-student border-b border-[var(--color-border)] px-5 py-4 last:border-b-0"
       >
         <div class="flex items-center justify-between gap-4 max-md:flex-col max-md:items-stretch">
-
+          <!--********** STUDENT INFORMATION **********-->
           <div class="flex min-w-0 items-center gap-3">
+            <!--********** STUDENT AVATAR **********-->
             <div
               class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--color-primary-light)] text-[12px] font-bold text-[var(--color-primary-dark)]"
             >
               {{ student.initials }}
             </div>
 
+            <!--********** STUDENT DETAILS **********-->
             <div class="min-w-0">
               <h3 class="m-0 truncate text-[13px] font-bold text-[var(--color-title)]">
                 {{ student.studentName }}
@@ -172,7 +193,9 @@
             </div>
           </div>
 
+          <!--********** STUDENT RESULT INFORMATION **********-->
           <div class="flex items-center gap-5">
+            <!--********** STUDENT SCORE **********-->
             <div class="text-right">
               <span
                 class="block text-[10px] uppercase tracking-wide text-[var(--color-text-secondary)]"
@@ -185,6 +208,7 @@
               </span>
             </div>
 
+            <!--********** STUDENT STATUS **********-->
             <span
               [ngClass]="statusClass(student.status)"
               class="result-status hidden sm:inline-flex"
@@ -193,6 +217,7 @@
               {{ student.status }}
             </span>
 
+            <!--********** REVIEW ANSWERS ACTION **********-->
             <button
               mat-stroked-button
               class="!h-9 !rounded-[9px] !px-3 !text-[11px] !font-semibold"
@@ -218,21 +243,25 @@
     </div>
   </mat-card>
 
+  <!--********** MANUAL SCORING CARD **********-->
   <mat-card
     *ngIf="selectedStudent"
     class="result-card !mt-4 !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-0"
   >
-
+    <!--********** MANUAL SCORING HEADER **********-->
     <div
       class="flex items-center justify-between gap-4 border-b border-[var(--color-border)] px-5 py-4"
     >
+      <!--********** SELECTED STUDENT INFORMATION **********-->
       <div class="flex items-center gap-3">
+        <!--********** STUDENT AVATAR **********-->
         <div
           class="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-primary-light)] text-[12px] font-bold text-[var(--color-primary-dark)]"
         >
           {{ selectedStudent.initials }}
         </div>
 
+        <!--********** MANUAL SCORING TITLE **********-->
         <div>
           <h2 class="m-0 text-[14px] font-bold text-[var(--color-title)]">Manual Scoring</h2>
 
@@ -243,29 +272,35 @@
         </div>
       </div>
 
+      <!--********** CLOSE REVIEW ACTION **********-->
       <button mat-icon-button (click)="onCloseReview()">
         <mat-icon>close</mat-icon>
       </button>
     </div>
 
+    <!--********** SCORE QUESTIONS **********-->
     <div>
+      <!--********** SCORE QUESTION ITEM **********-->
       <div
         *ngFor="let answer of selectedStudent.answers; let i = index"
         class="score-question border-b border-[var(--color-border)] px-5 py-5 last:border-b-0"
       >
         <div class="flex items-start justify-between gap-5 max-md:flex-col">
-
+          <!--********** QUESTION AND STUDENT ANSWER **********-->
           <div class="min-w-0 flex-1">
+            <!--********** QUESTION NUMBER **********-->
             <span
               class="text-[10px] font-bold uppercase tracking-wide text-[var(--color-text-secondary)]"
             >
               Question {{ i + 1 }}
             </span>
 
+            <!--********** QUESTION TEXT **********-->
             <h3 class="m-0 mt-2 text-[13px] font-bold text-[var(--color-title)]">
               {{ answer.question }}
             </h3>
 
+            <!--********** STUDENT ANSWER **********-->
             <div class="mt-3 rounded-[9px] bg-[var(--color-background-content)] px-4 py-3">
               <span
                 class="block text-[10px] font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]"
@@ -279,6 +314,7 @@
             </div>
           </div>
 
+          <!--********** SCORE INPUT **********-->
           <div class="w-[130px] shrink-0 max-md:w-full">
             <label
               class="mb-1.5 block text-[10px] font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]"
@@ -310,9 +346,11 @@
       </div>
     </div>
 
+    <!--********** MANUAL SCORING FOOTER **********-->
     <div
       class="flex items-center justify-between gap-4 border-t border-[var(--color-border)] bg-[var(--color-background-content)] px-5 py-4 max-sm:flex-col max-sm:items-stretch"
     >
+      <!--********** TOTAL SCORE **********-->
       <div>
         <span
           class="block text-[10px] font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]"
@@ -322,12 +360,14 @@
 
         <span class="text-[24px] font-bold text-[var(--color-primary-dark)]">
           {{ selectedStudent.score }}
+
           <span class="text-[14px] text-[var(--color-text-secondary)]">
             / {{ selectedStudent.maxScore }}
           </span>
         </span>
       </div>
 
+      <!--********** SAVE SCORE ACTION **********-->
       <button
         mat-flat-button
         class="!h-9 !rounded-[9px] !bg-[var(--color-primary-dark)] !px-5 !text-[12px] !font-semibold !text-white"
@@ -341,30 +381,36 @@
     </div>
   </mat-card>
 
+  <!--********** PUBLISH RESULT DIALOG **********-->
   <div
     *ngIf="showPublishDialog"
     class="publish-dialog__overlay fixed inset-0 z-[1000] flex items-center justify-center bg-black/30 px-4"
   >
+    <!--********** PUBLISH DIALOG **********-->
     <div
       class="publish-dialog w-full max-w-[430px] rounded-[14px] border border-[var(--color-border)] bg-[var(--color-white)] p-6 shadow-xl"
     >
-
+      <!--********** PUBLISH ICON **********-->
       <div
         class="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-primary-light)] text-[var(--color-primary-dark)]"
       >
         <mat-icon>publish</mat-icon>
       </div>
 
+      <!--********** DIALOG TITLE **********-->
       <h2 class="m-0 text-[16px] font-bold text-[var(--color-title)]">
         Publish Assessment Result?
       </h2>
 
+      <!--********** DIALOG DESCRIPTION **********-->
       <p class="m-0 mt-2 text-[12px] leading-[1.5] text-[var(--color-text-secondary)]">
         Once published, the results will become visible to students. Make sure all scores have been
         reviewed before publishing.
       </p>
 
+      <!--********** DIALOG ACTIONS **********-->
       <div class="mt-6 flex justify-end gap-2">
+        <!--********** CANCEL PUBLISH **********-->
         <button
           mat-button
           class="!rounded-[8px] !text-[12px] !font-semibold"
@@ -373,6 +419,7 @@
           Cancel
         </button>
 
+        <!--********** CONFIRM PUBLISH **********-->
         <button
           mat-flat-button
           class="!rounded-[8px] !bg-[var(--color-primary-dark)] !px-4 !text-[12px] !font-semibold !text-white"

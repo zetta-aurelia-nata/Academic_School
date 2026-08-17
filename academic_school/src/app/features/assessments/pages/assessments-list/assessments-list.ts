@@ -11,8 +11,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 //********** APPLICATION MODELS AND SETTINGS IMPORTS **********
-import { Assessment, AssessmentStatus } from './assessment.list.model';
 import { ASSESSMENTS } from '../../assessment.data';
+import { Assessment, AssessmentStatus } from './assessment.list.model';
 
 @Component({
   selector: 'app-assessment-list',
@@ -28,6 +28,7 @@ import { ASSESSMENTS } from '../../assessment.data';
   styleUrls: ['./assessments-list.scss'],
 })
 export class AssessmentList {
+  //********** PRIVATE VARIABLES **********
   private readonly router = inject(Router);
 
   //********** PUBLIC STATE VARIABLES **********

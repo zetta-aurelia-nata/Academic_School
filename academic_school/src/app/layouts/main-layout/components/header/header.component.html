@@ -1,7 +1,8 @@
+<!--********** HEADER SECTION **********-->
 <header
-  class="header flex w-full items-center justify-between box-border h-[72px] px-8 bg-white border-b border-[var(--color-border)] text-[15px] max-lg:px-6 max-md:h-16 max-md:px-4 max-md:gap-2.5 max-[480px]:h-[60px] max-[480px]:px-3 max-[480px]:gap-1.5"
+  class="header flex w-full items-center box-border h-[72px] px-8 bg-white border-b border-[var(--color-border)] text-[15px] max-lg:px-6 max-md:h-16 max-md:px-4 max-md:gap-2.5 max-[480px]:h-[60px] max-[480px]:px-3"
 >
-  <!-- ******************** MENU TOGGLE ******************** -->
+  <!--********** SIDEBAR TOGGLE BUTTON **********-->
   <button
     type="button"
     class="header__menu-toggle hidden items-center justify-center w-[38px] h-[38px] shrink-0 p-0 border-0 rounded-lg bg-transparent text-[var(--color-title)] cursor-pointer max-md:flex max-[480px]:w-[34px] max-[480px]:h-[34px]"
@@ -15,10 +16,8 @@
     </mat-icon>
   </button>
 
-  <!-- ******************** PAGE TITLE ******************** -->
-  <div
-    class="header__page flex items-center gap-4 flex-1 min-w-0 max-lg:ml-[50px] max-md:ml-2 max-md:min-w-0 max-md:overflow-hidden max-[480px]:ml-1"
-  >
+  <!--********** PAGE TITLE **********-->
+  <div class="header__page flex items-center gap-4 flex-1 min-w-0 overflow-hidden max-md:gap-2">
     <h1
       class="header__page-title m-0 min-w-0 text-lg font-bold text-[var(--color-title)] whitespace-nowrap overflow-hidden text-ellipsis max-lg:text-[17px] max-md:text-[15px] max-[480px]:text-[13px]"
     >
@@ -26,16 +25,18 @@
     </h1>
   </div>
 
-  <!-- ******************** RIGHT ACTIONS ******************** -->
+  <!--********** HEADER ACTIONS **********-->
   <div
     class="header__actions flex items-center gap-[18px] shrink-0 whitespace-nowrap max-lg:gap-3 max-md:gap-2 max-[480px]:gap-1"
   >
+    <!--********** HEADER DIVIDER **********-->
     <div class="header__divider w-px h-7 shrink-0 bg-[var(--color-border)] max-md:hidden"></div>
 
-    <!-- ******************** USER PROFILE ******************** -->
+    <!--********** USER PROFILE **********-->
     <div
       class="header__user-profile flex items-center gap-2.5 px-2.5 py-1.5 pl-1.5 rounded-full cursor-pointer max-md:p-1 max-[480px]:p-1"
     >
+      <!--********** USER AVATAR **********-->
       <div
         class="header__user-avatar flex items-center justify-center w-[38px] h-[38px] shrink-0 rounded-full bg-[var(--color-avatar-background)] border-2 border-white shadow-[0_0_0_1px_var(--color-border)] overflow-hidden max-md:w-[34px] max-md:h-[34px] max-[480px]:w-8 max-[480px]:h-8"
       >
@@ -46,6 +47,7 @@
         />
       </div>
 
+      <!--********** USER INFORMATION **********-->
       <div class="header__user-info flex flex-col min-w-0 leading-[1.25] max-md:hidden">
         <span class="header__user-name text-sm font-semibold text-[var(--color-title)]">
           Ms. Aurelia
@@ -54,7 +56,9 @@
         <span class="header__user-role text-xs text-[var(--secondary-color)]"> Teacher </span>
       </div>
 
-      <span class="header__user-profile-chevron text-xs text-[var(--secondary-color)]">
+<span
+        class="header__user-profile-chevron text-xs text-[var(--secondary-color)] max-md:hidden"
+      >
         &#8964;
       </span>
     </div>

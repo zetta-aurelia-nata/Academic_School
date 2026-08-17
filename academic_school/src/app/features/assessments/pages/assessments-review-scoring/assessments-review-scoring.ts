@@ -8,10 +8,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 
-// ********** APPLICATION IMPORTS **********
-import { Assessment, AssessmentStatus } from '../assessments-list/assessment.list.model';
-
+// ********** APPLICATION MODELS AND SETTINGS IMPORTS **********
 import { ASSESSMENTS } from '../../assessment.data';
+import { Assessment, AssessmentStatus } from '../assessments-list/assessment.list.model';
 
 @Component({
   selector: 'app-review-scoring',
@@ -20,17 +19,18 @@ import { ASSESSMENTS } from '../../assessment.data';
   styleUrls: ['./assessments-review-scoring.scss'],
 })
 export class AssessmentsReviewScoring {
+  // ********** PRIVATE VARIABLES **********
   private readonly router = inject(Router);
 
-  // ********** STATIC ASSESSMENT DATA **********
+  // ********** PUBLIC STATE VARIABLES **********
   assessments: Assessment[] = ASSESSMENTS;
 
-  // ********** REVIEW ASSESSMENT **********
+  // ********** ACTION HANDLERS **********
   onReview(assessment: Assessment): void {
     this.router.navigate(['/assessments', assessment.id, 'submissions']);
   }
 
-  // ********** STATUS CLASS **********
+  // ********** UTILITY METHODS **********
   statusClass(status: AssessmentStatus): string {
     return `status-badge status-badge--${status.toLowerCase()}`;
   }

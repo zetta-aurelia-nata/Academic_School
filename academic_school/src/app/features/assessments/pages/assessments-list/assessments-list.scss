@@ -1,9 +1,8 @@
 // ***************** BEM BLOCKS *****************
-.list-toolbar {
 
-  // ***************** Toolbar Button *****************
+// ***************** LIST TOOLBAR *****************
+.list-toolbar {
   &__btn {
-    // **************** Export Button Modifier ****************
     &--export {
       color: var(--color-primary-dark) !important;
       background-color: var(--color-white) !important;
@@ -15,7 +14,7 @@
       }
     }
 
-    // **************** Create Button Modifier ****************
+    // ***************** CREATE BUTTON MODIFIER ****************
     &--create {
       color: var(--color-white) !important;
       background-color: var(--color-primary-dark) !important;
@@ -40,7 +39,7 @@
   border-collapse: separate;
   border-spacing: 0;
 
-  // ***************** Table Header *****************
+  // ***************** TABLE HEADER *****************
   .mat-mdc-header-row {
     height: 58px;
     background-color: var(--color-white);
@@ -57,10 +56,9 @@
     white-space: nowrap;
   }
 
-  // ***************** Table Row *****************
+  // ***************** TABLE ROW *****************
   .mat-mdc-row {
     height: 68px;
-
     transition:
       background-color 0.2s ease,
       box-shadow 0.2s ease;
@@ -76,7 +74,7 @@
     }
   }
 
-  // ***************** Table Cell *****************
+  // ***************** TABLE CELL *****************
   .mat-mdc-cell {
     padding: 0 18px;
     font-size: 13px;
@@ -86,10 +84,10 @@
     white-space: nowrap;
   }
 
+  // ***************** TABLE ACTION *****************
   &__action {
     background-color: var(--color-white);
     border: 1px solid var(--color-action-border);
-
     transition:
       background-color 0.2s ease,
       border-color 0.2s ease,
@@ -99,7 +97,7 @@
       transform: translateY(-1px);
     }
 
-    // **************** View Action Modifier ****************
+    // ***************** VIEW ACTION MODIFIER ****************
     &--view {
       color: var(--color-primary-dark);
 
@@ -109,7 +107,7 @@
       }
     }
 
-    // **************** Edit Action Modifier ****************
+    // ***************** EDIT ACTION MODIFIER ****************
     &--edit {
       color: var(--color-primary-dark);
 
@@ -119,7 +117,7 @@
       }
     }
 
-    // **************** Delete Action Modifier ****************
+    // ***************** DELETE ACTION MODIFIER ****************
     &--delete {
       color: var(--color-danger);
       border-color: var(--color-danger-soft-border);
@@ -146,6 +144,7 @@
   font-weight: 600;
   white-space: nowrap;
 
+  // ***************** STATUS DOT *****************
   &__dot {
     width: 6px;
     height: 6px;
@@ -154,25 +153,28 @@
     background-color: currentColor;
   }
 
-  // ***************** Status Modifier *****************
+  // ***************** COMPLETED STATUS MODIFIER ****************
   &--completed {
     background-color: var(--color-status-completed-background);
     color: var(--color-status-completed);
     border: 1px solid var(--color-status-completed-border);
   }
 
+  // ***************** PENDING STATUS MODIFIER ****************
   &--pending {
     background-color: var(--color-status-pending-background);
     color: var(--color-status-pending);
     border: 1px solid var(--color-status-pending-border);
   }
 
+  // ***************** FAILED STATUS MODIFIER ****************
   &--failed {
     background-color: var(--color-status-failed-background);
     color: var(--color-status-failed);
     border: 1px solid var(--color-status-failed-border);
   }
 
+  // ***************** DRAFT STATUS MODIFIER ****************
   &--draft {
     background-color: var(--color-status-draft-background);
     color: var(--color-status-draft);
@@ -193,7 +195,6 @@
   }
 }
 
-// ***************** MOBILE *****************
 @media (max-width: 768px) {
   .list-card {
     border-radius: 12px !important;

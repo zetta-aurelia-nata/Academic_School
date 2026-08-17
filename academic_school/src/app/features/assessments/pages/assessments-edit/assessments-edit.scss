@@ -1,74 +1,119 @@
+// ********** HOST **********
 :host {
   display: block;
   width: 100%;
 }
 
+// ********** BEM BLOCKS **********
 .edit-assessment {
-  .save-button {
+  // ********** SAVE BUTTON **********
+  &__save-button {
+    position: relative;
+    overflow: hidden;
+    border: 0 !important;
+    border-radius: 10px !important;
     background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark)) !important;
-
     color: var(--color-white) !important;
-    box-shadow: 0 4px 10px rgba(118, 81, 168, 0.18);
+    box-shadow:
+      0 4px 10px rgba(118, 81, 168, 0.18),
+      0 1px 2px rgba(0, 0, 0, 0.08);
     transition:
       transform 0.2s ease,
       box-shadow 0.2s ease,
       background 0.2s ease;
 
+    // ********** BUTTON SHINE EFFECT **********
+    &::before {
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      content: '';
+      transform: skewX(-20deg);
+      transition: left 0.5s ease;
+    }
+
+    // ********** HOVER STATE **********
     &:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 6px 16px rgba(118, 81, 168, 0.25);
+      transform: translateY(-2px);
       background: linear-gradient(
         135deg,
         var(--color-primary-dark),
         var(--color-primary)
       ) !important;
+      box-shadow:
+        0 8px 20px rgba(118, 81, 168, 0.28),
+        0 2px 5px rgba(0, 0, 0, 0.1);
+
+      &::before {
+        left: 130%;
+      }
     }
+
+    // ********** ACTIVE STATE **********
+    &:active {
+      transform: translateY(0);
+      box-shadow:
+        0 3px 8px rgba(118, 81, 168, 0.2),
+        0 1px 2px rgba(0, 0, 0, 0.08);
+    }
+
+    // ********** FOCUS STATE **********
+    &:focus-visible {
+      outline: 3px solid rgba(118, 81, 168, 0.2);
+      outline-offset: 2px;
+    }
+  }
+
+  // ********** FORM FIELD **********
+  &__form-field {
+    width: 100%;
+  }
+
+  // ********** CARD **********
+  &__card {
+    box-shadow: none !important;
+  }
+
+  // ********** MATERIAL BUTTON **********
+  &__button {
+    border-radius: 10px !important;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease,
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+
+    // ********** HOVER STATE **********
+    &:hover {
+      transform: translateY(-1px);
+    }
+
+    // ********** ACTIVE STATE **********
 
     &:active {
       transform: translateY(0);
-      box-shadow: 0 3px 8px rgba(118, 81, 168, 0.18);
+    }
+
+    // ********** FOCUS STATE **********
+    &:focus-visible {
+      outline: 3px solid rgba(118, 81, 168, 0.15);
+      outline-offset: 2px;
     }
   }
 }
 
+// ********** MATERIAL OVERRIDES **********
 ::ng-deep {
-  .mdc-text-field--outlined .mat-mdc-form-field-infix,
-  .mdc-text-field--no-label .mat-mdc-form-field-infix {
-    padding: 16px;
-  }
-
-  .assessment-select-panel {
-    background-color: var(--color-white) !important;
-  }
-
+  // Required to override the internal Angular Material form field padding,
+  // which is not directly accessible from the component stylesheet.
   .edit-assessment {
-    .mat-mdc-form-field {
-      width: 100%;
-    }
-
-    .mat-mdc-text-field-wrapper {
-      border-radius: 10px !important;
-    }
-
-    .mat-mdc-form-field-subscript-wrapper {
-      min-height: 18px;
-    }
-
-    .mat-mdc-form-field-error {
-      font-size: 12px;
-    }
-
-    .mat-mdc-card {
-      box-shadow: none !important;
-    }
-
-    .mat-mdc-button,
-    .mat-mdc-unelevated-button,
-    .mat-mdc-outlined-button {
-      transition:
-        background-color 0.2s ease,
-        border-color 0.2s ease,
-        color 0.2s ease;
+    .mdc-text-field--outlined .mat-mdc-form-field-infix,
+    .mdc-text-field--no-label .mat-mdc-form-field-infix {
+      padding: 16px;
     }
   }
 }

@@ -1,28 +1,19 @@
-// =====================================================
-// ASSESSMENT DETAIL
-// =====================================================
+// ***************** BEM BLOCKS *****************
 
+// ***************** ASSESSMENT DETAIL *****************
 .assessment-detail {
   box-sizing: border-box;
 }
 
-// =====================================================
-// DETAIL CARD
-// =====================================================
-
+// ***************** DETAIL CARD *****************
 .detail-card {
   box-shadow: 0 4px 16px rgba(30, 41, 59, 0.04) !important;
 }
 
-// =====================================================
-// STUDENT CARD
-// =====================================================
-
+// ***************** STUDENT CARD *****************
 .student-card {
   cursor: pointer;
-
   box-shadow: 0 4px 16px rgba(30, 41, 59, 0.04) !important;
-
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease,
@@ -30,9 +21,7 @@
 
   &:hover {
     transform: translateY(-2px);
-
     border-color: var(--color-action-border-hover) !important;
-
     box-shadow: 0 8px 24px rgba(30, 41, 59, 0.07) !important;
   }
 
@@ -40,6 +29,7 @@
     transform: translateY(0);
   }
 
+  // ***************** STUDENT CARD AVATAR *****************
   &__avatar {
     transition:
       transform 0.2s ease,
@@ -51,10 +41,7 @@
   }
 }
 
-// =====================================================
-// ANSWER ITEM
-// =====================================================
-
+// ***************** ANSWER ITEM *****************
 .answer-item {
   transition: background-color 0.2s ease;
 
@@ -63,84 +50,57 @@
   }
 }
 
-// =====================================================
-// REVIEW STATUS
-// =====================================================
-
+// ***************** REVIEW STATUS *****************
 .review-status {
   display: inline-flex;
-
   align-items: center;
   justify-content: center;
-
   gap: 7px;
-
   padding: 5px 10px;
-
   border-radius: 999px;
-
   font-size: 11px;
   line-height: 1.2;
   font-weight: 600;
-
   white-space: nowrap;
 
+  // ***************** REVIEW STATUS DOT *****************
   &__dot {
     width: 6px;
     height: 6px;
-
     flex-shrink: 0;
-
     border-radius: 50%;
-
     background-color: currentColor;
   }
 
-  // ********** COMPLETED **********
-
+  // ***************** COMPLETED STATUS MODIFIER *****************
   &--completed {
     color: var(--color-status-completed);
-
     background-color: var(--color-status-completed-background);
-
     border: 1px solid var(--color-status-completed-border);
   }
 
-  // ********** IN PROGRESS **********
-
+  // ***************** IN PROGRESS STATUS MODIFIER *****************
   &--in-progress {
     color: var(--color-status-pending);
-
     background-color: var(--color-status-pending-background);
-
     border: 1px solid var(--color-status-pending-border);
   }
 
-  // ********** NOT SUBMITTED **********
-
+  // ***************** NOT SUBMITTED STATUS MODIFIER *****************
   &--not-submitted {
     color: var(--color-status-failed);
-
     background-color: var(--color-status-failed-background);
-
     border: 1px solid var(--color-status-failed-border);
   }
 }
 
-// =====================================================
-// TABLET
-// =====================================================
-
+// ***************** MEDIA QUERIES *****************
 @media (max-width: 768px) {
   .detail-card,
   .student-card {
     border-radius: 12px !important;
   }
 }
-
-// =====================================================
-// MOBILE
-// =====================================================
 
 @media (max-width: 640px) {
   .student-card {
