@@ -32,10 +32,6 @@ export class SidebarComponent {
     { id: 'result', label: 'Assessment Result', link: '/assessments/result' },
   ];
 
-  trackBySubmenuId(index: number, submenu: SubmenuItem): string {
-  return submenu.id;
-}
-
   // *************** ACTION HANDLERS ***************
   /**
    * Toggles the expanded/collapsed state of the assessment menu
