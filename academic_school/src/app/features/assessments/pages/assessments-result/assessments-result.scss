@@ -1,0 +1,518 @@
+// ********** BEM BLOCKS **********
+
+// ********** ASSESSMENT RESULT **********
+.assessment-result {
+  box-sizing: border-box;
+  color: var(--color-title);
+}
+
+// ********** RESULT CARD **********
+.result-card {
+  border-color: var(--color-border) !important;
+  background-color: var(--color-white) !important;
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.02),
+    0 4px 16px rgba(15, 23, 42, 0.04) !important;
+}
+
+// ********** RESULT BADGE **********
+.result-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 26px;
+  padding: 0 10px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+
+  &__dot {
+    width: 6px;
+    height: 6px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  &--published {
+    color: var(--color-primary-dark);
+    border-color: color-mix(in srgb, var(--color-primary) 20%, transparent);
+    background-color: var(--color-primary-light);
+  }
+
+  &--locked {
+    color: #b42318;
+    border-color: #fecdca;
+    background-color: #fef3f2;
+
+    mat-icon {
+      width: 14px;
+      height: 14px;
+      margin: 0;
+      font-size: 14px;
+    }
+  }
+
+  &--draft {
+    color: var(--color-text-secondary);
+    border-color: var(--color-border);
+    background-color: var(--color-background-content);
+  }
+}
+
+// ********** RESULT SELECT **********
+.result-select {
+  width: 320px;
+  margin: 0;
+}
+
+// ********** ASSESSMENT SELECT VALUE **********
+.assessment-select__value {
+  display: block;
+  max-width: 260px;
+  overflow: hidden;
+  color: var(--color-title);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 20px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// ********** ASSESSMENT OPTION **********
+.assessment-option {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+
+  &__title {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    color: var(--color-title);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: color 0.15s ease;
+
+    &:hover {
+      color: var(--color-primary-dark);
+    }
+  }
+}
+
+// ********** ASSESSMENT INFORMATION **********
+.assessment-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    color: var(--color-primary-dark);
+    background-color: var(--color-primary-light);
+
+    mat-icon {
+      width: 20px;
+      height: 20px;
+      font-size: 20px;
+    }
+  }
+
+  &__content {
+    min-width: 0;
+  }
+
+  &__title {
+    margin: 0;
+    overflow: hidden;
+    color: var(--color-title);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__meta {
+    margin: 4px 0 0;
+    color: var(--color-text-secondary);
+    font-size: 11px;
+    line-height: 16px;
+  }
+}
+
+// ********** RESULT ACTIONS **********
+.result-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+// *************** MATERIAL SELECT OVERRIDES ***************
+::ng-deep .result-select .mat-mdc-select-trigger {
+  padding: 0 16px !important;
+}
+
+::ng-deep .mat-mdc-select-panel {
+  min-width: 270px !important;
+  padding: 6px 0 !important;
+  border-radius: 10px !important;
+  background: var(--color-white) !important;
+  box-shadow:
+    0 12px 30px rgba(15, 23, 42, 0.08),
+    0 4px 10px rgba(15, 23, 42, 0.04) !important;
+}
+
+
+// ********** RESULT STUDENT **********
+.result-student {
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background-color: rgba(248, 250, 252, 0.7);
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &__content {
+    display: grid;
+    grid-template-columns: minmax(220px, 1.6fr) 110px 150px 140px;
+    align-items: center;
+    gap: 24px;
+  }
+
+  &__information {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    gap: 12px;
+  }
+
+  &__avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    color: var(--color-primary-dark);
+    background-color: var(--color-primary-light);
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  &__details {
+    min-width: 0;
+  }
+
+  &__name {
+    margin: 0;
+    overflow: hidden;
+    color: var(--color-title);
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 18px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__meta {
+    margin: 4px 0 0;
+    color: var(--color-text-secondary);
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  &__score {
+    text-align: left;
+  }
+
+  &__score-label {
+    display: block;
+    margin-bottom: 2px;
+    color: var(--color-text-secondary);
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  &__score-value {
+    color: var(--color-primary-dark);
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 22px;
+  }
+
+  &__action {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+// ********** RESULT STATUS **********
+.result-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 7px;
+  width: fit-content;
+  min-height: 28px;
+  padding: 0 10px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+
+  &__dot {
+    width: 6px;
+    height: 6px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  &--completed {
+    color: #027a48;
+    border-color: #abefc6;
+    background-color: #ecfdf3;
+  }
+
+  &--in-progress {
+    color: #b54708;
+    border-color: #fedf89;
+    background-color: #fffaeb;
+  }
+
+  &--pending {
+    color: var(--color-text-secondary);
+    border-color: var(--color-border);
+    background-color: var(--color-background-content);
+  }
+}
+
+// ********** SCORE INPUT **********
+.score-input {
+  box-sizing: border-box;
+  height: 36px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+
+  &:hover:not(:disabled) {
+    border-color: var(--color-primary) !important;
+  }
+
+  &:focus {
+    border-color: var(--color-primary) !important;
+    box-shadow: 0 0 0 3px var(--color-primary-light);
+    outline: none;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    background-color: var(--color-background-content) !important;
+  }
+}
+
+// ********** SCORE QUESTION **********
+.score-question {
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background-color: rgba(248, 250, 252, 0.6);
+  }
+
+  &__content {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  &__answer {
+    min-width: 0;
+    flex: 1;
+  }
+
+  &__input {
+    width: 130px;
+    flex-shrink: 0;
+  }
+}
+
+// ********** STUDENT ANSWER **********
+.student-answer {
+  margin-top: 12px;
+  padding: 12px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 9px;
+  background-color: var(--color-background-content);
+
+  &__label {
+    display: block;
+    color: var(--color-text-secondary);
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  &__text {
+    margin: 4px 0 0;
+    color: var(--color-title);
+    font-size: 12px;
+    line-height: 18px;
+  }
+}
+
+// ********** MANUAL SCORING **********
+.manual-scoring__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+// ********** TOTAL SCORE **********
+.total-score {
+  &__label {
+    display: block;
+    color: var(--color-text-secondary);
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  &__value {
+    color: var(--color-primary-dark);
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 30px;
+  }
+
+  &__max {
+    color: var(--color-text-secondary);
+    font-size: 14px;
+    font-weight: 500;
+  }
+}
+.publish-dialog__overlay {
+  backdrop-filter: blur(3px);
+  background-color: rgba(15, 23, 42, 0.3);
+}
+
+.publish-dialog {
+  animation: publish-dialog-enter 0.2s ease-out;
+}
+
+// ********** ANIMATIONS **********
+@keyframes publish-dialog-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+// ********** MEDIA QUERIES **********
+@media (max-width: 1024px) {
+  .result-student__content {
+    grid-template-columns: minmax(200px, 1.5fr) 100px 130px 120px;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .result-select {
+    width: 100%;
+  }
+
+  .assessment-select__value {
+    max-width: 100%;
+  }
+
+  .result-student__content {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 16px;
+  }
+
+  .result-student__score {
+    text-align: right;
+  }
+
+  .result-student__status {
+    grid-column: 1;
+  }
+
+  .result-student__action {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .score-question__content {
+    flex-direction: column;
+  }
+
+  .score-question__input {
+    width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .result-student__content {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .result-student__score {
+    text-align: left;
+  }
+
+  .result-student__status,
+  .result-student__action {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .result-student__action {
+    justify-content: flex-start;
+  }
+
+  .result-status {
+    display: inline-flex !important;
+  }
+
+  .manual-scoring__header {
+    align-items: flex-start;
+  }
+}

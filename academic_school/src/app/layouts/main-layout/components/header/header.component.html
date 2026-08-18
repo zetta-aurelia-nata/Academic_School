@@ -1,45 +1,43 @@
+<!--********** HEADER SECTION **********-->
 <header class="header">
-  <!-- ******************** MENU TOGGLE ******************** -->
+  <!--********** SIDEBAR TOGGLE BUTTON **********-->
   <button
     type="button"
     class="header__menu-toggle"
     aria-label="Toggle sidebar"
     (click)="toggleSidebar()"
   >
-    <mat-icon>menu</mat-icon>
+    <mat-icon class="header__menu-toggle-icon">menu</mat-icon>
   </button>
 
-  <!-- ******************** APP LOGO ******************** -->
-  <div class="header__logo">
-    <div class="header__logo-text">
-      <span class="header__logo-title"> EduAssess </span>
-
-      <span class="header__logo-tagline"> Learn. Assess. Grow. </span>
-    </div>
-  </div>
-
-  <!-- ******************** PAGE TITLE ******************** -->
+  <!--********** PAGE TITLE **********-->
   <div class="header__page">
     <h1 class="header__page-title">Assessment Management</h1>
   </div>
 
-  <!-- ******************** RIGHT ACTIONS ******************** -->
+  <!--********** HEADER ACTIONS **********-->
   <div class="header__actions">
+    <!--********** HEADER DIVIDER **********-->
     <div class="header__divider"></div>
 
-    <!-- ******************** USER PROFILE ******************** -->
+    <!--********** USER PROFILE **********-->
     <div class="header__user-profile">
+      <!--********** USER AVATAR **********-->
       <div class="header__user-avatar">
-        <img src="assets/images/placeholder/user-avatar.jpg" alt="user-avatar" />
+        <img
+          class="header__user-avatar-img"
+          src="assets/images/placeholder/user-avatar.jpg"
+          alt="user-avatar"
+        />
       </div>
 
+      <!--********** USER INFORMATION **********-->
       <div class="header__user-info">
-        <span class="header__user-name"> Ms. Aurelia </span>
-
-        <span class="header__user-role"> Teacher </span>
+        <span class="header__user-name">Ms. Aurelia</span>
+        <span class="header__user-role">Teacher</span>
       </div>
 
-      <span class="header__user-profile-chevron"> &#8964; </span>
+      <span class="header__user-profile-chevron">&#8964;</span>
     </div>
   </div>
 </header>

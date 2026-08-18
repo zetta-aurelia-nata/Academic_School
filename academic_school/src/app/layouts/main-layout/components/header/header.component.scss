@@ -1,185 +1,63 @@
-// ******************** BEM BLOCKS ********************
-// ******************** MAIN HEADER ********************
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  height: 72px;
-  padding: 0 32px;
-  box-sizing: border-box;
-  background: var(--color-white);
-  border-bottom: 1px solid var(--color-border);
-  font-size: 15px;
+@reference "tailwindcss";
 
-  // ******************** MENU TOGGLE ********************
+// *************** BEM BLOCKS ***************
+// *************** HEADER ***************
+.header {
+  @apply flex w-full items-center box-border h-[72px] px-8 bg-white border-b border-[var(--color-border)] text-[15px]
+    max-lg:px-6 max-md:h-16 max-md:px-4 max-md:gap-2.5 max-[480px]:h-[60px] max-[480px]:px-3;
+
+  // *************** MENU TOGGLE ***************
   &__menu-toggle {
-    display: none;
-    align-items: center;
-    justify-content: center;
-    width: 38px;
-    height: 38px;
-    flex-shrink: 0;
-    padding: 0;
-    border: none;
-    border-radius: 8px;
-    background: transparent;
-    color: var(--color-title);
-    cursor: pointer;
+    @apply hidden items-center justify-center w-[38px] h-[38px] shrink-0 p-0 border-0 rounded-lg bg-transparent
+      text-[var(--color-title)] cursor-pointer max-md:flex max-[480px]:w-[34px] max-[480px]:h-[34px];
+
     transition:
       background-color 0.2s ease,
-      color 0.2s ease;
-
-    mat-icon {
-      width: 22px;
-      height: 22px;
-      font-size: 22px;
-      line-height: 22px;
-    }
+      color 0.2s ease,
+      transform 0.15s ease;
 
     &:hover {
       background-color: var(--color-main-background);
       color: var(--color-hover);
     }
-  }
 
-  // ******************** APP LOGO ********************
-  &__logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-shrink: 0;
-    white-space: nowrap;
-  }
-
-  &__logo-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    background: var(--color-main-background);
-    flex-shrink: 0;
-
-    img {
-      width: 20px;
-      height: 20px;
-      object-fit: contain;
+    &:active {
+      transform: scale(0.94);
     }
   }
 
-  &__logo-text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.2;
+  &__menu-toggle-icon {
+    @apply w-[22px] h-[22px] text-[22px] leading-[22px] shrink-0
+      max-[480px]:w-5 max-[480px]:h-5 max-[480px]:text-xl max-[480px]:leading-5;
   }
 
-  &__logo-title {
-    font-size: 17px;
-    font-weight: 700;
-    color: var(--color-logo);
-  }
-
-  &__logo-tagline {
-    font-size: 11px;
-    color: var(--secondary-color);
-  }
-
-  // ******************** PAGE TITLE ********************
+  // *************** PAGE TITLE ***************
   &__page {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    flex: 1;
-    min-width: 0;
-    margin-left: 100px;
+    @apply flex items-center gap-4 flex-1 min-w-0 overflow-hidden max-md:gap-2;
   }
 
   &__page-title {
-    margin: 0;
-    min-width: 0;
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--color-title);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    @apply m-0 min-w-0 text-lg font-bold text-[var(--color-title)] whitespace-nowrap overflow-hidden text-ellipsis
+      max-lg:text-[17px] max-md:text-[15px] max-[480px]:text-[13px];
   }
 
-  // ******************** RIGHT ACTIONS ********************
+  // *************** HEADER ACTIONS ***************
   &__actions {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    flex-shrink: 0;
-    white-space: nowrap;
+    @apply flex items-center gap-[18px] shrink-0 whitespace-nowrap max-lg:gap-3 max-md:gap-2 max-[480px]:gap-1;
   }
 
-  // ******************** NOTIFICATION ********************
-  &__notification {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 38px;
-    height: 38px;
-    flex-shrink: 0;
-    padding: 0;
-    border: none;
-    border-radius: 50%;
-    background: transparent;
-    color: var(--secondary-color);
-    font-size: 17px;
-    cursor: pointer;
-    transition:
-      background-color 0.2s ease,
-      color 0.2s ease;
-
-    &:hover {
-      background: var(--color-main-background);
-      color: var(--color-hover);
-    }
-  }
-
-  &__notification-badge {
-    position: absolute;
-    top: 2px;
-    right: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 16px;
-    height: 16px;
-    padding: 0 3px;
-    box-sizing: border-box;
-    border-radius: 50%;
-    background: var(--color-hover);
-    color: var(--color-white);
-    font-size: 10px;
-    font-weight: 700;
-  }
-
-  // ******************** DIVIDER ********************
   &__divider {
-    width: 1px;
-    height: 28px;
-    flex-shrink: 0;
-    background: var(--color-border);
+    @apply w-px h-7 shrink-0 bg-[var(--color-border)] max-md:hidden;
   }
 
-  // ******************** USER PROFILE ********************
+  // *************** USER PROFILE ***************
   &__user-profile {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 6px 10px 6px 6px;
-    border-radius: 999px;
-    cursor: pointer;
+    @apply flex items-center gap-2.5 px-2.5 py-1.5 pl-1.5 rounded-full cursor-pointer max-md:p-1 max-[480px]:p-1;
+
     transition: background-color 0.2s ease;
 
     &:hover {
-      background: var(--color-main-background);
+      background-color: var(--color-main-background);
 
       .header__user-profile-chevron {
         transform: translateY(1px);
@@ -189,184 +67,32 @@
   }
 
   &__user-avatar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 38px;
-    height: 38px;
-    flex-shrink: 0;
-    border-radius: 50%;
-    background: var(--color-avatar-background);
-    border: 2px solid var(--color-white);
-    box-shadow: 0 0 0 1px var(--color-border);
-    overflow: hidden;
+    @apply flex items-center justify-center w-[38px] h-[38px] shrink-0 rounded-full bg-[var(--color-avatar-background)]
+      border-2 border-white shadow-[0_0_0_1px_var(--color-border)] overflow-hidden
+      max-md:w-[34px] max-md:h-[34px] max-[480px]:w-8 max-[480px]:h-8;
+  }
 
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+  &__user-avatar-img {
+    @apply w-full h-full object-cover;
   }
 
   &__user-info {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-    line-height: 1.25;
+    @apply flex flex-col min-w-0 leading-[1.25] max-md:hidden;
   }
 
   &__user-name {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--color-title);
+    @apply text-sm font-semibold text-[var(--color-title)];
   }
 
   &__user-role {
-    font-size: 12px;
-    color: var(--secondary-color);
+    @apply text-xs text-[var(--secondary-color)];
   }
 
   &__user-profile-chevron {
-    font-size: 12px;
-    color: var(--secondary-color);
+    @apply text-xs text-[var(--secondary-color)] max-md:hidden;
+
     transition:
       transform 0.2s ease,
       color 0.2s ease;
-  }
-
-  // ******************** RESPONSIVE ********************
-  @media (max-width: 1024px) {
-    padding: 0 24px;
-
-    &__page {
-      margin-left: 50px;
-    }
-
-    &__page-title {
-      font-size: 17px;
-    }
-
-    &__actions {
-      gap: 12px;
-    }
-  }
-
-  // ******************** MOBILE ********************
-  @media (max-width: 768px) {
-    height: 64px;
-    padding: 0 16px;
-    gap: 10px;
-
-    &__menu-toggle {
-      display: flex;
-    }
-
-    &__logo {
-      gap: 6px;
-    }
-
-    &__logo-title {
-      font-size: 15px;
-    }
-
-    &__logo-tagline {
-      font-size: 9px;
-    }
-
-    &__page {
-      margin-left: 8px;
-      min-width: 0;
-      overflow: hidden;
-    }
-
-    &__page-title {
-      font-size: 15px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    &__actions {
-      gap: 8px;
-    }
-
-    &__divider {
-      display: none;
-    }
-
-    &__user-info {
-      display: none;
-    }
-
-    &__user-profile {
-      padding: 4px;
-    }
-
-    &__user-profile-chevron {
-      display: none;
-    }
-
-    &__user-avatar {
-      width: 34px;
-      height: 34px;
-    }
-
-    &__notification {
-      width: 34px;
-      height: 34px;
-    }
-  }
-
-  // ******************** SMALL MOBILE ********************
-  @media (max-width: 480px) {
-    height: 60px;
-    padding: 0 12px;
-    gap: 6px;
-
-    &__menu-toggle {
-      width: 34px;
-      height: 34px;
-
-      mat-icon {
-        width: 20px;
-        height: 20px;
-        font-size: 20px;
-        line-height: 20px;
-      }
-    }
-
-    &__logo {
-      gap: 5px;
-    }
-
-    &__logo-title {
-      font-size: 14px;
-    }
-
-    &__logo-tagline {
-      font-size: 8px;
-    }
-
-    &__page {
-      margin-left: 4px;
-    }
-
-    &__page-title {
-      font-size: 13px;
-    }
-
-    &__actions {
-      gap: 4px;
-    }
-
-    &__notification {
-      width: 32px;
-      height: 32px;
-    }
-
-    &__user-avatar {
-      width: 32px;
-      height: 32px;
-    }
   }
 }

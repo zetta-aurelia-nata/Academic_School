@@ -1,48 +1,68 @@
 <!--********** ASSESSMENT LIST SECTION **********-->
-<section class="assessment-list">
-  <mat-toolbar class="list-toolbar">
-
+<section
+  class="assessment-list w-full min-h-full bg-[var(--color-background-content)] px-8 pt-[30px] pb-10 max-lg:px-5 max-lg:pt-6 max-md:px-4 max-md:pt-5"
+>
+  <!--********** TOOLBAR **********-->
+  <mat-toolbar
+    class="list-toolbar !mb-6 !flex !h-auto !min-h-0 !items-center !gap-3 !bg-transparent !p-0 max-md:!flex-col max-md:!items-stretch"
+  >
     <!--********** TOOLBAR TEXT **********-->
-    <div class="list-toolbar__text">
-      <h1 class="list-toolbar__title">Assessments List</h1>
+    <div class="flex flex-col gap-1">
+      <h1 class="m-0 text-2xl font-bold leading-[1.2] text-[var(--color-title)] max-lg:text-[22px]">
+        Assessments List
+      </h1>
 
-      <span class="list-toolbar__subtitle"> {{ assessments.length }} total assessments </span>
+      <span class="text-[13px] text-[var(--color-text-secondary)]">
+        {{ assessments.length }} total assessments
+      </span>
     </div>
 
-    <!--********** TOOLBAR ACTIONS **********-->
-    <span class="list-toolbar__spacer"></span>
+    <span class="flex-1 max-md:hidden"></span>
 
-    <button mat-stroked-button class="list-toolbar__btn list-toolbar__btn--export">
-      <mat-icon>download</mat-icon>
+    <!--********** EXPORT ACTION **********-->
+    <button
+      mat-stroked-button
+      class="list-toolbar__btn list-toolbar__btn--export !inline-flex !h-10 !items-center !justify-center !gap-2 !rounded-[10px] !px-[18px] !text-[13px] !font-semibold max-md:!w-full"
+    >
+      <mat-icon class="!h-[18px] !w-[18px] !text-[18px]"> download </mat-icon>
+
       <span>Export</span>
     </button>
 
+    <!--********** CREATE ACTION **********-->
     <button
       mat-flat-button
       color="primary"
-      class="list-toolbar__btn list-toolbar__btn--create"
+      class="list-toolbar__btn list-toolbar__btn--create !inline-flex !h-10 !items-center !justify-center !gap-2 !rounded-[10px] !px-[18px] !text-[13px] !font-semibold max-md:!w-full"
       (click)="onCreateAssessment()"
     >
-      <mat-icon>add</mat-icon>
+      <mat-icon class="!h-[18px] !w-[18px] !text-[18px]"> add </mat-icon>
+
       <span>Create Assessment</span>
     </button>
   </mat-toolbar>
 
-  <!--********** ASSESSMENT TABLE CARD **********-->
-  <mat-card class="list-card">
-    <div class="list-card__table-wrapper">
-
-      <!--********** ASSESSMENT TABLE **********-->
-      <table mat-table [dataSource]="assessments" class="assessment-table">
-
+  <!--********** TABLE CARD **********-->
+  <mat-card
+    class="list-card !overflow-hidden !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-0"
+  >
+    <!--********** TABLE CONTAINER **********-->
+    <div class="w-full overflow-x-auto">
+      <table mat-table [dataSource]="assessments" class="assessment-table w-full min-w-[850px]">
         <!--********** TITLE COLUMN **********-->
         <ng-container matColumnDef="title">
           <th mat-header-cell *matHeaderCellDef>Assessment Name</th>
 
           <td mat-cell *matCellDef="let row">
-            <div class="assessment-table__name">
-              <div class="assessment-table__name-icon">
-                <mat-icon>assignment</mat-icon>
+            <!--********** ASSESSMENT TITLE **********-->
+            <div
+              class="flex items-center gap-3 text-[13px] font-semibold text-[var(--color-title)]"
+            >
+              <!--********** ASSESSMENT ICON **********-->
+              <div
+                class="flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-[10px] bg-[var(--color-primary-light)] text-[var(--color-primary-dark)]"
+              >
+                <mat-icon class="!h-[19px] !w-[19px] !text-[19px]"> assignment </mat-icon>
               </div>
 
               <span>
@@ -96,8 +116,10 @@
           <th mat-header-cell *matHeaderCellDef>Date</th>
 
           <td mat-cell *matCellDef="let row">
-            <div class="assessment-table__date">
-              <mat-icon>calendar_today</mat-icon>
+            <div class="inline-flex items-center gap-2 text-[var(--color-title)]">
+              <mat-icon class="!text-base !text-[var(--color-text-secondary)]">
+                calendar_today
+              </mat-icon>
 
               <span>
                 {{ row.date | date: 'MMM d, y' }}
@@ -106,34 +128,28 @@
           </td>
         </ng-container>
 
-        <!--********** ACTIONS COLUMN (view / edit / delete buttons) **********-->
+        <!--********** ACTIONS COLUMN **********-->
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef>Actions</th>
 
           <td mat-cell *matCellDef="let row">
-            <div class="assessment-table__actions">
-              <button
-                mat-icon-button
-                class="assessment-table__action assessment-table__action--view"
-                aria-label="View"
-                (click)="onView(row)"
-              >
-                <mat-icon>visibility</mat-icon>
-              </button>
-
+            <!--********** TABLE ACTIONS **********-->
+            <div class="flex items-center gap-2">
+              <!--********** EDIT ACTION **********-->
               <button
                 mat-icon-button
                 class="assessment-table__action assessment-table__action--edit"
-                aria-label="Edit"
+                aria-label="Edit assessment"
                 (click)="onEdit(row)"
               >
                 <mat-icon>edit</mat-icon>
               </button>
 
+              <!--********** DELETE ACTION **********-->
               <button
                 mat-icon-button
                 class="assessment-table__action assessment-table__action--delete"
-                aria-label="Delete"
+                aria-label="Delete assessment"
                 (click)="onDelete(row)"
               >
                 <mat-icon>delete</mat-icon>
@@ -142,11 +158,74 @@
           </td>
         </ng-container>
 
-        <!--********** TABLE ROW DEFINITIONS **********-->
+        <!--********** TABLE ROWS **********-->
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
     </div>
   </mat-card>
+
+  <!--********** DELETE CONFIRMATION MODAL **********-->
+  @if (showDeleteDialog) {
+    <!--********** MODAL BACKDROP **********-->
+    <div
+      class="fixed inset-0 z-[1000] flex items-center justify-center bg-black/40 p-4"
+      (click)="onCancelDelete()"
+    >
+      <!--********** DELETE DIALOG **********-->
+      <div
+        class="w-full max-w-[420px] rounded-[16px] border border-[var(--color-border)] bg-[var(--color-white)] p-6 shadow-2xl"
+        (click)="$event.stopPropagation()"
+      >
+        <!--********** DIALOG HEADER **********-->
+        <div class="mb-5 flex items-center justify-center gap-2">
+          <!--********** DELETE ICON **********-->
+          <div
+            class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-red-50 text-red-500"
+          >
+            <mat-icon> delete_outline </mat-icon>
+          </div>
+
+          <!--********** DIALOG TITLE **********-->
+          <div>
+            <h2 class="m-0 text-lg font-bold text-[var(--color-title)]">Delete Assessment?</h2>
+          </div>
+        </div>
+
+        <!--********** DELETE CONFIRMATION MESSAGE **********-->
+        <p class="mb-6 text-center text-[13px] leading-5 text-[var(--color-text-secondary)]">
+          Are you sure you want to delete
+
+          <strong class="font-semibold text-[var(--color-title)]">
+            {{ selectedAssessment?.title }}
+          </strong>
+          ?
+        </p>
+
+        <!--********** DIALOG ACTIONS **********-->
+        <div class="flex justify-center gap-3 max-sm:flex-col-reverse">
+          <!--********** CANCEL DELETE **********-->
+          <button
+            type="button"
+            mat-stroked-button
+            class="!h-10 !rounded-[10px] !border-[var(--color-border)] !px-5 !text-[13px] !font-semibold !text-[var(--color-title)] max-sm:!w-full"
+            (click)="onCancelDelete()"
+          >
+            Cancel
+          </button>
+
+          <!--********** CONFIRM DELETE **********-->
+          <button
+            type="button"
+            mat-flat-button
+            class="!h-10 !rounded-[10px] !bg-red-500 !px-5 !text-[13px] !font-semibold !text-white max-sm:!w-full"
+            (click)="onConfirmDelete()"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  }
 </section>

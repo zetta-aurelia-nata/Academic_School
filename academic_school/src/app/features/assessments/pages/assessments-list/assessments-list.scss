@@ -1,73 +1,20 @@
 // ***************** BEM BLOCKS *****************
+
+// ***************** LIST TOOLBAR *****************
 .list-toolbar {
-  background: transparent !important;
-  padding: 0 !important;
-  margin-bottom: 24px;
-  height: auto !important;
-  min-height: auto !important;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-
-  // ***************** Toolbar Text *****************
-  &__text {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  &__title {
-    margin: 0;
-    font-size: 24px;
-    line-height: 1.2;
-    font-weight: 700;
-    color: var(--color-title);
-    letter-spacing: -0.3px;
-  }
-
-  &__subtitle {
-    font-size: 13px;
-    line-height: 1.4;
-    color: var(--color-text-secondary);
-  }
-
-  &__spacer {
-    flex: 1 1 auto;
-  }
-
-  // ***************** Toolbar Button *****************
   &__btn {
-    min-height: 40px;
-    height: 40px;
-    padding: 0 18px !important;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 7px;
-    font-size: 13px;
-    font-weight: 600;
-    white-space: nowrap;
-    border-radius: 10px !important;
-
-    mat-icon {
-      font-size: 18px;
-      width: 18px;
-      height: 18px;
-      line-height: 18px;
-    }
-
-    // **************** Export Button Modifier ****************
     &--export {
       color: var(--color-primary-dark) !important;
       background-color: var(--color-white) !important;
       border: 1px solid var(--color-border-dark) !important;
       box-shadow: 0 1px 3px rgba(72, 31, 110, 0.04);
+
       &:hover {
         background-color: var(--color-avatar-background) !important;
       }
     }
 
-    // **************** Create Button Modifier ****************
+    // ***************** CREATE BUTTON MODIFIER ****************
     &--create {
       color: var(--color-white) !important;
       background-color: var(--color-primary-dark) !important;
@@ -82,30 +29,17 @@
   }
 }
 
-// ***************** list-card *****************
+// ***************** LIST CARD *****************
 .list-card {
-  padding: 0 !important;
-  background-color: var(--color-white) !important;
-  border-radius: 14px !important;
-  border: 1px solid var(--color-border);
   box-shadow: 0 4px 16px rgba(30, 41, 59, 0.04) !important;
-  overflow: hidden;
-
-  &__table-wrapper {
-    width: 100%;
-    overflow-x: auto;
-  }
 }
 
-// ***************** assessment-table *****************
+// ***************** ASSESSMENT TABLE *****************
 .assessment-table {
-  width: 100%;
-  min-width: 850px;
-  background-color: var(--color-white);
   border-collapse: separate;
   border-spacing: 0;
 
-  // ***************** Table Header *****************
+  // ***************** TABLE HEADER *****************
   .mat-mdc-header-row {
     height: 58px;
     background-color: var(--color-white);
@@ -122,7 +56,7 @@
     white-space: nowrap;
   }
 
-  // ***************** Table Row *****************
+  // ***************** TABLE ROW *****************
   .mat-mdc-row {
     height: 68px;
     transition:
@@ -140,75 +74,18 @@
     }
   }
 
- // **************** Table Cell ****************
-.mat-mdc-cell {
-  padding: 0 18px;
-  font-size: 13px;
-  font-weight: 400;
-  color: var(--color-title);
-  border-bottom: 1px solid var(--color-table-border);
-  white-space: nowrap;
-}
-
-  // ***************** Assessment Name Element *****************
-  &__name {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+  // ***************** TABLE CELL *****************
+  .mat-mdc-cell {
+    padding: 0 18px;
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 400;
     color: var(--color-title);
+    border-bottom: 1px solid var(--color-table-border);
+    white-space: nowrap;
   }
 
-  &__name-icon {
-    width: 38px;
-    height: 38px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    border-radius: 10px;
-    background-color: var(--color-primary-light);
-    color: var(--color-primary-dark);
-
-    mat-icon {
-      width: 19px;
-      height: 19px;
-      font-size: 19px;
-      line-height: 19px;
-    }
-  }
-
-  // ***************** Date Element *****************
-  &__date {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--color-title);
-
-    mat-icon {
-      width: 16px;
-      height: 16px;
-      font-size: 16px;
-      line-height: 16px;
-      color: var(--color-text-secondary);
-    }
-  }
-
-  // ***************** Actions Element *****************
-  &__actions {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
+  // ***************** TABLE ACTION *****************
   &__action {
-    width: 38px !important;
-    height: 38px !important;
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px !important;
     background-color: var(--color-white);
     border: 1px solid var(--color-action-border);
     transition:
@@ -216,18 +93,11 @@
       border-color 0.2s ease,
       transform 0.2s ease;
 
-    mat-icon {
-      width: 17px;
-      height: 17px;
-      font-size: 17px;
-      line-height: 17px;
-    }
-
     &:hover {
       transform: translateY(-1px);
     }
 
-    // **************** View Action Modifier ****************
+    // ***************** VIEW ACTION MODIFIER ****************
     &--view {
       color: var(--color-primary-dark);
 
@@ -237,7 +107,7 @@
       }
     }
 
-    // **************** Edit Action Modifier ****************
+    // ***************** EDIT ACTION MODIFIER ****************
     &--edit {
       color: var(--color-primary-dark);
 
@@ -247,7 +117,7 @@
       }
     }
 
-    // **************** Delete Action Modifier ****************
+    // ***************** DELETE ACTION MODIFIER ****************
     &--delete {
       color: var(--color-danger);
       border-color: var(--color-danger-soft-border);
@@ -260,7 +130,7 @@
   }
 }
 
-// ***************** status-badge *****************
+// ***************** STATUS BADGE *****************
 .status-badge {
   display: inline-flex;
   align-items: center;
@@ -274,6 +144,7 @@
   font-weight: 600;
   white-space: nowrap;
 
+  // ***************** STATUS DOT *****************
   &__dot {
     width: 6px;
     height: 6px;
@@ -282,25 +153,28 @@
     background-color: currentColor;
   }
 
-  // ***************** Status Modifier *****************
+  // ***************** COMPLETED STATUS MODIFIER ****************
   &--completed {
     background-color: var(--color-status-completed-background);
     color: var(--color-status-completed);
     border: 1px solid var(--color-status-completed-border);
   }
 
+  // ***************** PENDING STATUS MODIFIER ****************
   &--pending {
     background-color: var(--color-status-pending-background);
     color: var(--color-status-pending);
     border: 1px solid var(--color-status-pending-border);
   }
 
+  // ***************** FAILED STATUS MODIFIER ****************
   &--failed {
     background-color: var(--color-status-failed-background);
     color: var(--color-status-failed);
     border: 1px solid var(--color-status-failed-border);
   }
 
+  // ***************** DRAFT STATUS MODIFIER ****************
   &--draft {
     background-color: var(--color-status-draft-background);
     color: var(--color-status-draft);
@@ -308,32 +182,8 @@
   }
 }
 
-// ***************** assessment-list *****************
-.assessment-list {
-  width: 100%;
-  min-height: 100%;
-  box-sizing: border-box;
-  padding: 30px 32px 40px;
-  font-family: sans-serif;
-  background-color: var(--color-background-content);
-}
-
 // ***************** MEDIA QUERIES *****************
 @media (max-width: 1024px) {
-  .assessment-list {
-    padding: 24px 20px 32px;
-  }
-
-  .list-toolbar {
-    &__title {
-      font-size: 22px;
-    }
-
-    &__btn {
-      padding: 0 14px !important;
-    }
-  }
-
   .assessment-table {
     .mat-mdc-header-cell {
       padding: 0 14px;
@@ -345,29 +195,7 @@
   }
 }
 
-// ***************** MEDIA QUERIES *****************
 @media (max-width: 768px) {
-  .assessment-list {
-    padding: 20px 16px 28px;
-  }
-
-  .list-toolbar {
-    flex-direction: column;
-    align-items: stretch;
-
-    &__spacer {
-      display: none;
-    }
-
-    &__text {
-      margin-bottom: 4px;
-    }
-
-    &__btn {
-      width: 100%;
-    }
-  }
-
   .list-card {
     border-radius: 12px !important;
   }

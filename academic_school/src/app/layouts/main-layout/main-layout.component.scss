@@ -1,139 +1,121 @@
-// ******************** BEM BLOCKS ********************
-:host {
-  display: block;
-  width: 100%;
-  min-height: 100vh;
-}
+@reference "tailwindcss";
+// *************** BEM BLOCKS ***************
+// *************** MAIN LAYOUT ***************
+.main-layout {
+  @apply h-screen w-full overflow-hidden;
 
-// ******************** MAIN LAYOUT ********************
-.layout {
-  position: relative;
-  display: grid;
-  grid-template-columns: 260px minmax(0, 1fr);
-  grid-template-rows: minmax(0, 1fr);
-  width: 100%;
-  min-height: 100vh;
-  background-color: var(--color-background-content);
-}
+  background: var(--color-background-content);
 
-// ******************** SIDEBAR ********************
-.layout-sidebar {
-  grid-column: 1;
-  grid-row: 1;
-  width: 260px;
-  height: 100vh;
-  min-height: 0;
-  overflow: hidden;
-  background-color: var(--color-sidebar);
-  z-index: 1000;
-}
-
-// ******************** MAIN AREA ********************
-.layout-main {
-  grid-column: 2;
-  grid-row: 1;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: 68px minmax(0, 1fr) auto;
-  min-width: 0;
-  min-height: 100vh;
-}
-
-// ******************** HEADER ********************
-.layout-header {
-  grid-column: 1;
-  grid-row: 1;
-  min-width: 0;
-  z-index: 100;
-}
-
-// ******************** CONTENT ********************
-.layout-content {
-  grid-column: 1;
-  grid-row: 2;
-  min-width: 0;
-  min-height: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
-  background-color: var(--color-background-content);
-}
-
-// ******************** FOOTER ********************
-.layout-footer {
-  grid-column: 1;
-  grid-row: 3;
-  min-width: 0;
-}
-
-// ******************** OVERLAY ********************
-.layout-overlay {
-  display: none;
-}
-
-// ******************** MEDIA QUERIES ********************
-@media (max-width: 768px) {
-
-  .layout {
-    display: block;
-    width: 100%;
-    min-height: 100vh;
+  // *************** RIGHT CONTENT ***************
+  &__right {
+    @apply ml-[252px] flex h-screen min-h-0 min-w-0 flex-col max-[1100px]:ml-[230px];
   }
 
-  // ******************** SIDEBAR ********************
-  .layout-sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 260px;
-    height: 100vh;
+  // *************** SIDEBAR ***************
+  &__sidebar {
+    @apply fixed top-0 bottom-0 left-0 z-[100] w-[252px] overflow-y-auto overflow-x-hidden max-[1100px]:w-[230px];
+
+    background: var(--color-sidebar);
+    box-sizing: border-box;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+
+  // *************** HEADER ***************
+  &__header {
+    @apply sticky top-0 z-[90] h-[68px] min-h-[68px] shrink-0;
+
+    width: 100%;
+    box-sizing: border-box;
+    background: var(--color-header);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  // *************** MAIN CONTENT ***************
+  &__main {
+    @apply min-h-0 min-w-0 flex-1 overflow-y-auto overflow-x-hidden;
+
+    background: var(--color-background-content);
+    scrollbar-width: thin;
+    scrollbar-color: rgba(118, 81, 168, 0.25) transparent;
+  }
+
+  // *************** CONTENT ***************
+  &__content {
+    @apply flex min-h-full min-w-0 flex-col;
+
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  // *************** PAGE ***************
+  &__page {
+    @apply min-w-0 flex-1;
+
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  // *************** FOOTER ***************
+  &__footer {
+    @apply shrink-0;
+
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  // *************** BACKDROP ***************
+  &__backdrop {
+    display: none;
+  }
+}
+
+// *************** MEDIA QUERIES ***************
+@media (max-width: 767px) {
+  // *************** SIDEBAR ***************
+  .main-layout__sidebar {
+    width: 252px;
     transform: translateX(-100%);
-    transition: transform 0.25s ease;
-    z-index: 1001;
-    box-shadow: 8px 0 30px rgba(0, 0, 0, 0.12);
+    box-shadow: none;
   }
 
-  // ******************** SIDEBAR OPEN ********************
-  .layout-sidebar--open {
+  // *************** SIDEBAR OPEN STATE ***************
+  .main-layout__sidebar--open {
     transform: translateX(0);
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.18);
   }
 
-  // ******************** MAIN AREA ********************
-  .layout-main {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: 64px minmax(0, 1fr) auto;
-    width: 100%;
-    min-height: 100vh;
-  }
-
-  // ******************** HEADER ********************
-  .layout-header {
-    grid-column: 1;
-    grid-row: 1;
+  // *************** RIGHT CONTENT ***************
+  .main-layout__right {
+    margin-left: 0 !important;
     width: 100%;
   }
 
-  // ******************** CONTENT ********************
-  .layout-content {
-    grid-column: 1;
-    grid-row: 2;
-    width: 100%;
-    min-width: 0;
-  }
-
-  // ******************** FOOTER ********************
-  .layout-footer {
-    grid-column: 1;
-    grid-row: 3;
-    width: 100%;
-  }
-
-  // ******************** OVERLAY ********************
-  .layout-overlay {
+  // *************** BACKDROP ***************
+  .main-layout__backdrop {
+    display: block;
     position: fixed;
     inset: 0;
-    display: block;
-    background-color: rgba(15, 23, 42, 0.35);
-    z-index: 1000;
+    z-index: 95;
+
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+
+    background: rgba(0, 0, 0, 0.35);
+
+    cursor: pointer;
+  }
+}
+
+// *************** MEDIA QUERIES ***************
+@media (max-width: 480px) {
+  .main-layout__sidebar {
+    width: 245px;
   }
 }

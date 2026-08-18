@@ -1,7 +1,6 @@
 // *************** Angular Imports ***************
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-
 // *************** Angular Material Imports ***************
 import { MatIcon } from '@angular/material/icon';
 
@@ -18,8 +17,12 @@ export interface SubmenuItem {
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
 })
-
 export class SidebarComponent {
+  @Output() navigationSelected = new EventEmitter<void>();
+
+  onNavigationSelected(): void {
+  }
+  
   // *************** PUBLIC STATE VARIABLES ***************
   isAssessmentOpen = false;
   readonly assessmentSubmenus: SubmenuItem[] = [
@@ -27,6 +30,10 @@ export class SidebarComponent {
     { id: 'submission', label: 'Assessment Submission', link: '/assessments/review-scoring' },
     { id: 'result', label: 'Assessment Result', link: '/assessments/result' },
   ];
+
+  trackBySubmenuId(index: number, submenu: any): string {
+  return submenu.id;
+}
 
   // *************** ACTION HANDLERS ***************
   /**

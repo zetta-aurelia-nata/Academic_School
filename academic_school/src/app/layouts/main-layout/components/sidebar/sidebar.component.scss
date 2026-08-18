@@ -1,61 +1,74 @@
-// ******************** BEM BLOCKS ********************
-// ******************** MAIN SIDEBAR ********************
+@reference "tailwindcss";
+// *************** BEM BLOCKS ***************
+// *************** SIDEBAR ***************
 .sidebar {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-  padding: 22px 14px 18px;
-  box-sizing: border-box;
-  font-family: sans-serif;
-  letter-spacing: 0.3px;
-  background-color: var(--color-sidebar);
-  border-right: 1px solid var(--color-sidebar-hover);
-  overflow: hidden;
+  @apply flex h-full min-h-0 w-full flex-col overflow-x-hidden overflow-y-auto box-border;
 
-  // ******************** SIDEBAR NAVIGATION ********************
-  &__nav {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+  padding: 22px 14px 18px;
+
+  background-color: var(--color-sidebar-new);
+  color: var(--color-sidebar-text);
+  font-family: sans-serif;
+
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-sidebar-active) transparent;
+
+  // *************** LOGO ***************
+  &__logo {
+    @apply mb-7 flex min-w-0 items-center gap-2.5 px-1;
+
+    padding-top: 2px;
+    padding-bottom: 2px;
   }
 
-  // ******************** NAVIGATION ITEM ********************
+  // *************** LOGO ICON ***************
+  &__logo-icon {
+    @apply flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-[9px];
+
+    background-color: var(--color-sidebar-active);
+    color: var(--color-white);
+
+    mat-icon {
+      @apply h-5 w-5 text-[20px];
+    }
+  }
+
+  // *************** LOGO CONTENT ***************
+  &__logo-content {
+    @apply flex min-w-0 flex-col leading-tight;
+  }
+
+  // *************** LOGO TITLE ***************
+  &__logo-title {
+    @apply truncate text-[15px] font-bold;
+
+    color: var(--color-white);
+    letter-spacing: 0.2px;
+  }
+
+  // *************** LOGO TAGLINE ***************
+  &__logo-tagline {
+    @apply mt-0.5 truncate text-[10px] font-normal;
+
+    color: var(--color-sidebar-muted);
+  }
+
+  // *************** NAVIGATION ***************
+  &__nav {
+    @apply flex w-full flex-col gap-1;
+  }
+
+  // *************** NAVIGATION ITEM ***************
   &__item {
-    position: relative;
-    display: flex;
-    align-items: center;
-    width: 100%;
-    min-height: 43px;
-    padding: 10px 12px;
-    box-sizing: border-box;
-    gap: 11px;
-    border-radius: 10px;
+    @apply relative flex min-h-[43px] w-full box-border items-center gap-2.5 rounded-[10px] px-3 py-2.5 no-underline;
+
     color: var(--color-sidebar-text);
     font-size: 14px;
     font-weight: 500;
-    text-decoration: none;
+
     transition:
       background-color 0.2s ease,
       color 0.2s ease;
-
-    &-icon {
-      width: 19px;
-      height: 19px;
-      flex-shrink: 0;
-      font-size: 19px;
-      line-height: 19px;
-      color: var(--color-sidebar-muted);
-      transition: color 0.2s ease;
-    }
-
-    &-text {
-      min-width: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
 
     &:hover {
       background-color: var(--color-sidebar-hover);
@@ -66,20 +79,16 @@
       }
     }
 
+    // *************** ACTIVE MODIFIER ***************
     &--active {
       background-color: var(--color-sidebar-active);
       color: var(--color-white);
       font-weight: 600;
 
       &::before {
+        @apply absolute left-0 top-1/2 h-[22px] w-[3px] -translate-y-1/2 rounded-r-[4px];
+
         content: '';
-        position: absolute;
-        left: 0;
-        top: 50%;
-        width: 3px;
-        height: 22px;
-        transform: translateY(-50%);
-        border-radius: 0 4px 4px 0;
         background-color: var(--color-primary-light);
       }
 
@@ -89,30 +98,36 @@
     }
   }
 
-  // ******************** MENU GROUP ********************
-  &__group {
-    display: flex;
-    flex-direction: column;
+  // *************** ITEM ICON ***************
+  &__item-icon {
+    @apply h-[19px] w-[19px] shrink-0 text-[19px];
+
+    line-height: 19px;
+    color: var(--color-sidebar-muted);
+
+    transition: color 0.2s ease;
   }
 
-  // ******************** MENU BUTTON ********************
+  // *************** ITEM TEXT ***************
+  &__item-text {
+    @apply min-w-0 truncate;
+  }
+
+  // *************** MENU GROUP ***************
+  &__group {
+    @apply flex w-full flex-col;
+  }
+
+  // *************** MENU ***************
   &__menu {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    min-height: 43px;
-    padding: 10px 12px;
-    box-sizing: border-box;
-    border: none;
-    border-radius: 10px;
-    background: transparent;
+    @apply flex min-h-[43px] w-full box-border items-center justify-between rounded-[10px] border-0 bg-transparent px-3 py-2.5 text-left;
+
     color: var(--color-sidebar-text);
+    cursor: pointer;
     font-family: inherit;
     font-size: 14px;
     font-weight: 500;
-    text-align: left;
-    cursor: pointer;
+
     transition:
       background-color 0.2s ease,
       color 0.2s ease;
@@ -126,57 +141,55 @@
         color: var(--color-primary-light);
       }
     }
-
-    &-content {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-    }
-
-    &-text {
-      min-width: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    &-icon {
-      width: 19px;
-      height: 19px;
-      flex-shrink: 0;
-      font-size: 19px;
-      line-height: 19px;
-      color: var(--color-sidebar-muted);
-      transition: color 0.2s ease;
-    }
-
-    &-arrow {
-      font-size: 15px;
-      color: var(--color-sidebar-muted);
-      transition: color 0.2s ease;
-    }
   }
 
-  // ******************** SUBMENU ********************
+  // *************** MENU CONTENT ***************
+  &__menu-content {
+    @apply flex min-w-0 items-center gap-2.5;
+  }
+
+  // *************** MENU ICON ***************
+  &__menu-icon {
+    @apply h-[19px] w-[19px] shrink-0 text-[19px];
+
+    line-height: 19px;
+    color: var(--color-sidebar-muted);
+
+    transition: color 0.2s ease;
+  }
+
+  // *************** MENU TEXT ***************
+  &__menu-text {
+    @apply min-w-0 truncate;
+  }
+
+  // *************** MENU ARROW ***************
+  &__menu-arrow {
+    @apply h-[18px] w-[18px] shrink-0 text-[18px];
+
+    color: var(--color-sidebar-muted);
+
+    transition:
+      color 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  // *************** SUBMENU ***************
   &__submenu {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    margin-top: 4px;
+    @apply mt-1 flex flex-col gap-0.5 border-l pl-4;
+
     margin-left: 20px;
-    padding-left: 17px;
-    border-left: 1px solid var(--color-sidebar-active);
+    border-color: var(--color-sidebar-active);
   }
 
-  // ******************** SUBMENU ITEM ********************
+  // *************** SUBMENU ITEM ***************
   &__submenu-item {
-    position: relative;
-    padding: 8px 11px;
-    border-radius: 7px;
+    @apply relative flex min-h-[36px] box-border items-center rounded-[7px] px-2.5 py-2 no-underline;
+
     color: var(--color-sidebar-muted);
     font-size: 13px;
     font-weight: 400;
-    text-decoration: none;
+
     transition:
       background-color 0.2s ease,
       color 0.2s ease;
@@ -186,6 +199,7 @@
       color: var(--color-white);
     }
 
+    // *************** ACTIVE MODIFIER ***************
     &--active {
       background-color: var(--color-sidebar-hover);
       color: var(--color-primary-light);
@@ -194,47 +208,108 @@
   }
 }
 
-// ******************** RESPONSIVE MEDIA QUERIES ********************
+// *************** MEDIA QUERIES ***************
 @media (max-width: 1024px) {
   .sidebar {
     padding: 20px 12px 16px;
 
+    &__logo {
+      margin-bottom: 24px;
+    }
+
+    &__logo-title {
+      font-size: 14px;
+    }
+
     &__item,
     &__menu {
+      min-height: 41px;
+      padding: 9px 10px;
+      font-size: 13px;
+    }
+
+    &__submenu {
+      margin-left: 17px;
+      padding-left: 14px;
+    }
+
+    &__submenu-item {
+      font-size: 12px;
+    }
+  }
+}
+
+// *************** TABLET & MOBILE ***************
+@media (max-width: 768px) {
+  .sidebar {
+    @apply h-screen w-full overflow-y-auto;
+
+    padding: 22px 16px 18px;
+
+    &__logo {
+      margin-bottom: 28px;
+    }
+
+    &__logo-title {
+      font-size: 15px;
+    }
+
+    &__logo-tagline {
+      font-size: 10px;
+    }
+
+    &__item,
+    &__menu {
+      min-height: 44px;
+      padding: 10px 12px;
+      font-size: 14px;
+    }
+
+    &__submenu {
+      margin-left: 20px;
+      padding-left: 17px;
+    }
+
+    &__submenu-item {
+      min-height: 38px;
       font-size: 13px;
     }
   }
 }
 
-// ******************** MOBILE SIDEBAR ********************
-@media (max-width: 768px) {
+// *************** SMALL MOBILE ***************
+@media (max-width: 480px) {
   .sidebar {
-    padding: 16px 10px;
+    padding: 18px 14px 16px;
+
+    &__logo {
+      margin-bottom: 24px;
+    }
+
+    &__logo-icon {
+      @apply h-8 w-8;
+    }
+
+    &__logo-title {
+      font-size: 14px;
+    }
 
     &__item,
     &__menu {
-      justify-content: center;
-      padding: 10px;
-    }
-
-    &__item-text,
-    &__menu-text,
-    &__menu-arrow {
-      display: none;
-    }
-
-    &__menu-content {
-      justify-content: center;
+      min-height: 42px;
+      padding: 9px 11px;
+      font-size: 13px;
     }
 
     &__submenu {
-      margin-left: 0;
-      padding-left: 0;
-      border-left: none;
+      margin-left: 18px;
+      padding-left: 15px;
     }
 
     &__submenu-item {
-      text-align: center;
+      min-height: 36px;
+      padding: 7px 10px;
+      font-size: 12px;
     }
   }
 }

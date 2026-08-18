@@ -6,13 +6,6 @@ import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 
-interface AssessmentStat {
-  label: string;
-  value: number;
-  icon: string;
-  colorClass: string;
-}
-
 @Component({
   selector: 'app-dashboard',
   imports: [MatCardModule, MatIconModule, CommonModule],
@@ -21,36 +14,41 @@ interface AssessmentStat {
 })
 export class DashboardComponent {
   //********** PUBLIC STATE VARIABLES **********
-  stats: AssessmentStat[] = [
+  stats = [
     {
       label: 'Total Assessments',
-      value: 24,
+      value: 12,
+      description: 'All created assessments',
       icon: 'assignment',
       colorClass: 'progress-icon--purple',
     },
     {
-      label: 'Done',
-      value: 7,
-      icon: 'check_circle',
+      label: 'Total Students',
+      value: 150,
+      description: 'Across all assessments',
+      icon: 'groups',
       colorClass: 'progress-icon--green',
     },
     {
-      label: 'Active Assessments',
-      value: 8,
-      icon: 'play_circle',
+      label: 'Completed',
+      value: 5,
+      description: 'Assessments completed',
+      icon: 'check_circle',
       colorClass: 'progress-icon--blue',
     },
     {
-      label: 'Pending Reviews',
-      value: 6,
-      icon: 'hourglass_empty',
+      label: 'Pending Review',
+      value: 4,
+      description: 'Awaiting your review',
+      icon: 'schedule',
       colorClass: 'progress-icon--amber',
     },
     {
-      label: 'Draft Assessments',
+      label: 'Failed / Needs Work',
       value: 3,
-      icon: 'edit_note',
-      colorClass: 'progress-icon--gray',
+      description: 'Requires attention',
+      icon: 'cancel',
+      colorClass: 'progress-icon--red',
     },
   ];
 }

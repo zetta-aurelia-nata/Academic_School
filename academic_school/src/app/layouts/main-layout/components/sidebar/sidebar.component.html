@@ -1,6 +1,21 @@
+<!--********** SIDEBAR SECTION **********-->
 <aside class="sidebar">
+  <!--********** SIDEBAR LOGO **********-->
+  <div class="sidebar__logo">
+    <div class="sidebar__logo-icon">
+      <mat-icon>school</mat-icon>
+    </div>
+
+    <div class="sidebar__logo-content">
+      <div class="sidebar__logo-title">EduAssess</div>
+
+      <div class="sidebar__logo-tagline">Learn. Assess. Grow.</div>
+    </div>
+  </div>
+
+  <!--********** SIDEBAR NAVIGATION **********-->
   <nav class="sidebar__nav">
-    <!-- ******************** DASHBOARD ROUTING ******************** -->
+    <!--********** DASHBOARD MENU **********-->
     <a
       routerLink="/dashboard"
       routerLinkActive="sidebar__item--active"
@@ -8,10 +23,11 @@
       class="sidebar__item"
     >
       <mat-icon class="sidebar__item-icon">dashboard</mat-icon>
+
       <span class="sidebar__item-text">Dashboard</span>
     </a>
 
-    <!-- ******************** ASSESSMENTS SUBMENU ******************** -->
+    <!--********** ASSESSMENTS MENU **********-->
     <div class="sidebar__group">
       <button
         type="button"
@@ -22,13 +38,18 @@
       >
         <span class="sidebar__menu-content">
           <mat-icon class="sidebar__menu-icon">assignment</mat-icon>
+
           <span class="sidebar__menu-text">Assessments</span>
         </span>
-        <span class="sidebar__menu-arrow">{{ assessmentArrowIcon }}</span>
+
+        <mat-icon class="sidebar__menu-arrow">
+          {{ isAssessmentOpen ? 'expand_less' : 'expand_more' }}
+        </mat-icon>
       </button>
+
+      <!--********** ASSESSMENTS SUBMENU **********-->
       @if (isAssessmentOpen) {
-        <div class="sidebar__submenu" id="assessment-submenu">
-          <!-- ******************** SUBMENU ITEMS LOOP ******************** -->
+        <div id="assessment-submenu" class="sidebar__submenu">
           @for (submenu of assessmentSubmenus; track submenu.id) {
             <a
               [routerLink]="submenu.link"
