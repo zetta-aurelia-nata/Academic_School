@@ -168,6 +168,7 @@
       <div
         *ngFor="let student of students"
         class="result-student border-b border-[var(--color-border)] px-5 py-4"
+        [class.result-student--selected]="selectedStudent?.studentId === student.studentId"
       >
         <div class="result-student__content">
           <!--********** STUDENT INFORMATION **********-->
@@ -213,11 +214,20 @@
           <div class="result-student__action">
             <button
               mat-stroked-button
-              class="!h-9 !rounded-[9px] !px-4 !text-[11px] !font-semibold border[var(--color-border-dark)]"
+              class="!h-9 !rounded-[9px] !px-4 !text-[11px] !font-semibold"
               [disabled]="currentResultState.locked || student.answers.length === 0"
               (click)="onReviewAnswers(student)"
             >
-              Review Answers
+              <mat-icon
+                *ngIf="selectedStudent?.studentId === student.studentId"
+                class="!mr-1 !h-4 !w-4 !text-base"
+              >
+                visibility
+              </mat-icon>
+
+              {{
+                selectedStudent?.studentId === student.studentId ? 'Reviewing' : 'Review Answers'
+              }}
             </button>
           </div>
         </div>
@@ -244,7 +254,7 @@
   >
     <!--********** MANUAL SCORING HEADER **********-->
     <div
-      class="flex items-center justify-between gap-4 border-b border-[var(--color-border)] px-5 py-4"
+      class="flex items-center !rounded-[14px] justify-between gap-4 border-b border-[var(--color-border)] px-5 py-4 bg-[var(--color-primary-dark)]"
     >
       <!--********** SELECTED STUDENT INFORMATION **********-->
       <div class="flex items-center gap-3">
@@ -257,11 +267,11 @@
 
         <!--********** MANUAL SCORING TITLE **********-->
         <div>
-          <h2 class="m-0 text-[14px] font-bold text-[var(--color-title)]">Manual Scoring</h2>
+          <h2 class="m-0 text-[14px] font-bold text-[var(--color-white)]">Manual Scoring</h2>
 
-          <p class="m-0 mt-1 text-[11px] text-[var(--color-text-secondary)]">
+          <p class="m-0 mt-1 text-[11px] text-[var(--color-white)]">
             {{ selectedStudent.studentName }}
-            · Review essay answers and input score
+            | Review essay answers and input score
           </p>
         </div>
       </div>
@@ -374,6 +384,4 @@
       </button>
     </div>
   </mat-card>
-
-
 </section>
