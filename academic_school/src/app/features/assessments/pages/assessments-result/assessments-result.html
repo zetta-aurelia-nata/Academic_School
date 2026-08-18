@@ -254,13 +254,13 @@
   >
     <!--********** MANUAL SCORING HEADER **********-->
     <div
-      class="flex items-center !rounded-[14px] justify-between gap-4 border-b border-[var(--color-border)] px-5 py-4 bg-[var(--color-primary-dark)]"
+      class="flex items-center !rounded-t-[14px] justify-between gap-4 border-b border-[var(--color-border)] px-5 py-4 bg-[var(--color-primary-dark)]"
     >
       <!--********** SELECTED STUDENT INFORMATION **********-->
       <div class="flex items-center gap-3">
         <!--********** STUDENT AVATAR **********-->
         <div
-          class="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-primary-light)] text-[12px] font-bold text-[var(--color-primary-dark)]"
+          class="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-white)] text-[12px] font-bold text-[var(--color-primary-dark)]"
         >
           {{ selectedStudent.initials }}
         </div>
@@ -305,7 +305,7 @@
             </h3>
 
             <!--********** STUDENT ANSWER **********-->
-            <div class="mt-3 rounded-[9px] bg-[var(--color-background-content)] px-4 py-3">
+            <div class="mt-3 rounded-[9px] bg-[var(--color-card-blue-light)] px-4 py-3">
               <span
                 class="block text-[10px] font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]"
               >
@@ -352,7 +352,7 @@
 
     <!--********** MANUAL SCORING FOOTER **********-->
     <div
-      class="flex items-center justify-between gap-4 border-t border-[var(--color-border)] bg-[var(--color-background-content)] px-5 py-4 max-sm:flex-col max-sm:items-stretch"
+      class="flex items-center justify-between gap-4 border-t border-[var(--color-card-blue-light)] bg-[var(--color-white)] px-5 py-4 max-sm:flex-col max-sm:items-stretch"
     >
       <!--********** TOTAL SCORE **********-->
       <div>
@@ -378,8 +378,6 @@
         [disabled]="currentResultState.locked"
         (click)="onSaveScore()"
       >
-        <mat-icon class="!mr-1 !h-4 !w-4 !text-base"> save </mat-icon>
-
         Save Score
       </button>
     </div>
