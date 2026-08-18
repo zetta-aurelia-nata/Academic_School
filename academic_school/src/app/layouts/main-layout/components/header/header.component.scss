@@ -1,8 +1,16 @@
+@reference "tailwindcss";
+
 // *************** BEM BLOCKS ***************
 // *************** HEADER ***************
 .header {
+  @apply flex w-full items-center box-border h-[72px] px-8 bg-white border-b border-[var(--color-border)] text-[15px]
+    max-lg:px-6 max-md:h-16 max-md:px-4 max-md:gap-2.5 max-[480px]:h-[60px] max-[480px]:px-3;
+
   // *************** MENU TOGGLE ***************
   &__menu-toggle {
+    @apply hidden items-center justify-center w-[38px] h-[38px] shrink-0 p-0 border-0 rounded-lg bg-transparent
+      text-[var(--color-title)] cursor-pointer max-md:flex max-[480px]:w-[34px] max-[480px]:h-[34px];
+
     transition:
       background-color 0.2s ease,
       color 0.2s ease,
@@ -16,14 +24,36 @@
     &:active {
       transform: scale(0.94);
     }
+  }
 
-    mat-icon {
-      flex-shrink: 0;
-    }
+  &__menu-toggle-icon {
+    @apply w-[22px] h-[22px] text-[22px] leading-[22px] shrink-0
+      max-[480px]:w-5 max-[480px]:h-5 max-[480px]:text-xl max-[480px]:leading-5;
+  }
+
+  // *************** PAGE TITLE ***************
+  &__page {
+    @apply flex items-center gap-4 flex-1 min-w-0 overflow-hidden max-md:gap-2;
+  }
+
+  &__page-title {
+    @apply m-0 min-w-0 text-lg font-bold text-[var(--color-title)] whitespace-nowrap overflow-hidden text-ellipsis
+      max-lg:text-[17px] max-md:text-[15px] max-[480px]:text-[13px];
+  }
+
+  // *************** HEADER ACTIONS ***************
+  &__actions {
+    @apply flex items-center gap-[18px] shrink-0 whitespace-nowrap max-lg:gap-3 max-md:gap-2 max-[480px]:gap-1;
+  }
+
+  &__divider {
+    @apply w-px h-7 shrink-0 bg-[var(--color-border)] max-md:hidden;
   }
 
   // *************** USER PROFILE ***************
   &__user-profile {
+    @apply flex items-center gap-2.5 px-2.5 py-1.5 pl-1.5 rounded-full cursor-pointer max-md:p-1 max-[480px]:p-1;
+
     transition: background-color 0.2s ease;
 
     &:hover {
@@ -36,39 +66,33 @@
     }
   }
 
-  // *************** USER PROFILE CHEVRON ***************
+  &__user-avatar {
+    @apply flex items-center justify-center w-[38px] h-[38px] shrink-0 rounded-full bg-[var(--color-avatar-background)]
+      border-2 border-white shadow-[0_0_0_1px_var(--color-border)] overflow-hidden
+      max-md:w-[34px] max-md:h-[34px] max-[480px]:w-8 max-[480px]:h-8;
+  }
+
+  &__user-avatar-img {
+    @apply w-full h-full object-cover;
+  }
+
+  &__user-info {
+    @apply flex flex-col min-w-0 leading-[1.25] max-md:hidden;
+  }
+
+  &__user-name {
+    @apply text-sm font-semibold text-[var(--color-title)];
+  }
+
+  &__user-role {
+    @apply text-xs text-[var(--secondary-color)];
+  }
+
   &__user-profile-chevron {
+    @apply text-xs text-[var(--secondary-color)] max-md:hidden;
+
     transition:
       transform 0.2s ease,
       color 0.2s ease;
-  }
-}
-
-// *************** MEDIA QUERIES ***************
-@media (max-width: 768px) {
-  .header__menu-toggle {
-    display: flex;
-  }
-
-  .header__page {
-    margin-left: 8px;
-  }
-}
-
-@media (max-width: 480px) {
-  .header__menu-toggle {
-    width: 34px;
-    height: 34px;
-  }
-
-  .header__menu-toggle mat-icon {
-    width: 20px;
-    height: 20px;
-    font-size: 20px;
-    line-height: 20px;
-  }
-
-  .header__page {
-    margin-left: 4px;
   }
 }

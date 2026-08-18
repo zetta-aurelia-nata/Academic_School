@@ -1,19 +1,20 @@
+@reference "tailwindcss";
 // *************** BEM BLOCKS ***************
 // *************** MAIN LAYOUT ***************
 .main-layout {
-  width: 100%;
-  height: 100vh;
-  min-height: 0;
-  overflow: hidden;
+  @apply h-screen w-full overflow-hidden;
+
   background: var(--color-background-content);
 
   // *************** RIGHT CONTENT ***************
   &__right {
-    min-height: 0;
+    @apply ml-[252px] flex h-screen min-h-0 min-w-0 flex-col max-[1100px]:ml-[230px];
   }
 
   // *************** SIDEBAR ***************
   &__sidebar {
+    @apply fixed top-0 bottom-0 left-0 z-[100] w-[252px] overflow-y-auto overflow-x-hidden max-[1100px]:w-[230px];
+
     background: var(--color-sidebar);
     box-sizing: border-box;
     scrollbar-width: thin;
@@ -26,6 +27,8 @@
 
   // *************** HEADER ***************
   &__header {
+    @apply sticky top-0 z-[90] h-[68px] min-h-[68px] shrink-0;
+
     width: 100%;
     box-sizing: border-box;
     background: var(--color-header);
@@ -34,7 +37,8 @@
 
   // *************** MAIN CONTENT ***************
   &__main {
-    min-height: 0;
+    @apply min-h-0 min-w-0 flex-1 overflow-y-auto overflow-x-hidden;
+
     background: var(--color-background-content);
     scrollbar-width: thin;
     scrollbar-color: rgba(118, 81, 168, 0.25) transparent;
@@ -42,20 +46,24 @@
 
   // *************** CONTENT ***************
   &__content {
+    @apply flex min-h-full min-w-0 flex-col;
+
     width: 100%;
-    min-width: 0;
     box-sizing: border-box;
   }
 
   // *************** PAGE ***************
   &__page {
+    @apply min-w-0 flex-1;
+
     width: 100%;
-    min-width: 0;
     box-sizing: border-box;
   }
 
   // *************** FOOTER ***************
   &__footer {
+    @apply shrink-0;
+
     width: 100%;
     box-sizing: border-box;
   }

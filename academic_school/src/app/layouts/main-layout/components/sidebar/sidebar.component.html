@@ -1,71 +1,61 @@
 <!--********** SIDEBAR SECTION **********-->
-<aside
-  class="sidebar flex h-full min-h-0 w-full flex-col overflow-y-auto bg-[var(--color-sidebar-new)] px-3 py-5 md:px-3 lg:px-4"
->
+<aside class="sidebar">
   <!--********** SIDEBAR LOGO **********-->
-  <div class="sidebar__logo mb-6 flex min-w-0 items-center gap-2.5 px-1">
-    <div
-      class="flex h-9 w-9 shrink-0 items-center justify-center rounded-[9px] bg-[var(--color-sidebar-active)] text-white"
-    >
-      <mat-icon class="!text-[20px]">school</mat-icon>
+  <div class="sidebar__logo">
+    <div class="sidebar__logo-icon">
+      <mat-icon>school</mat-icon>
     </div>
 
-    <div class="min-w-0">
-      <div class="truncate text-[15px] font-bold leading-tight text-white">EduAssess</div>
+    <div class="sidebar__logo-content">
+      <div class="sidebar__logo-title">EduAssess</div>
 
-      <div class="mt-0.5 truncate text-[10px] text-[var(--color-sidebar-muted)]">
-        Learn. Assess. Grow.
-      </div>
+      <div class="sidebar__logo-tagline">Learn. Assess. Grow.</div>
     </div>
   </div>
 
   <!--********** SIDEBAR NAVIGATION **********-->
-  <nav class="flex w-full flex-col gap-1">
-    
+  <nav class="sidebar__nav">
     <!--********** DASHBOARD MENU **********-->
     <a
       routerLink="/dashboard"
       routerLinkActive="sidebar__item--active"
       [routerLinkActiveOptions]="{ exact: true }"
-      class="sidebar__item flex min-h-[43px] items-center gap-2.5 rounded-[10px] px-3 py-2.5 text-[14px] font-medium text-[var(--color-sidebar-text)]"
+      class="sidebar__item"
     >
-      <mat-icon class="shrink-0 !text-[19px]">dashboard</mat-icon>
+      <mat-icon class="sidebar__item-icon">dashboard</mat-icon>
 
-      <span class="truncate">Dashboard</span>
+      <span class="sidebar__item-text">Dashboard</span>
     </a>
 
     <!--********** ASSESSMENTS MENU **********-->
     <div class="sidebar__group">
       <button
         type="button"
-        class="sidebar__menu flex min-h-[43px] w-full items-center justify-between rounded-[10px] border-0 bg-transparent px-3 py-2.5 text-left text-[14px] font-medium text-[var(--color-sidebar-text)]"
+        class="sidebar__menu"
         [attr.aria-expanded]="isAssessmentOpen"
         aria-controls="assessment-submenu"
         (click)="toggleAssessment()"
       >
-        <span class="flex min-w-0 items-center gap-2.5">
-          <mat-icon class="shrink-0 !text-[19px]">assignment</mat-icon>
+        <span class="sidebar__menu-content">
+          <mat-icon class="sidebar__menu-icon">assignment</mat-icon>
 
-          <span class="truncate">Assessments</span>
+          <span class="sidebar__menu-text">Assessments</span>
         </span>
 
-        <mat-icon class="shrink-0 !text-[18px]">
+        <mat-icon class="sidebar__menu-arrow">
           {{ isAssessmentOpen ? 'expand_less' : 'expand_more' }}
         </mat-icon>
       </button>
 
       <!--********** ASSESSMENTS SUBMENU **********-->
       @if (isAssessmentOpen) {
-        <div
-          id="assessment-submenu"
-          class="sidebar__submenu ml-5 mt-1 flex flex-col gap-0.5 border-l border-[var(--color-sidebar-active)] pl-4"
-        >
+        <div id="assessment-submenu" class="sidebar__submenu">
           @for (submenu of assessmentSubmenus; track submenu.id) {
             <a
               [routerLink]="submenu.link"
               routerLinkActive="sidebar__submenu-item--active"
               [routerLinkActiveOptions]="{ exact: true }"
-              class="sidebar__submenu-item flex min-h-[36px] items-center rounded-[7px] px-2.5 py-2 text-[13px] text-[var(--color-sidebar-muted)]"
+              class="sidebar__submenu-item"
             >
               {{ submenu.label }}
             </a>
