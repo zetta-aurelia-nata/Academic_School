@@ -8,11 +8,8 @@ import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-publish-result-dialog',
-  imports: [
-    MatButtonModule,
-    MatDialogModule,
-    MatIconModule,
-  ],
+  imports: [MatButtonModule, MatDialogModule, MatIconModule],
   templateUrl: './publish-result-dialog.html',
+  styleUrl: './publish-result-dialog.scss',
 })
 export class PublishResultDialog {}
