@@ -213,7 +213,7 @@
           <div class="result-student__action">
             <button
               mat-stroked-button
-              class="!h-9 !rounded-[9px] !px-4 !text-[11px] !font-semibold"
+              class="!h-9 !rounded-[9px] !px-4 !text-[11px] !font-semibold border[var(--color-border-dark)]"
               [disabled]="currentResultState.locked || student.answers.length === 0"
               (click)="onReviewAnswers(student)"
             >
@@ -267,7 +267,7 @@
       </div>
 
       <!--********** CLOSE REVIEW ACTION **********-->
-      <button mat-icon-button (click)="onCloseReview()">
+      <button mat-icon-button (click)="onCloseReview()" (document:keydown.escape)="onCloseReview()">
         <mat-icon>close</mat-icon>
       </button>
     </div>
@@ -375,53 +375,5 @@
     </div>
   </mat-card>
 
-  <!--********** PUBLISH RESULT DIALOG **********-->
-  <div
-    *ngIf="showPublishDialog"
-    class="publish-dialog__overlay fixed inset-0 z-[1000] flex items-center justify-center bg-black/30 px-4"
-  >
-    <!--********** PUBLISH DIALOG **********-->
-    <div
-      class="publish-dialog w-full max-w-[430px] rounded-[14px] border border-[var(--color-border)] bg-[var(--color-white)] p-6 shadow-xl"
-    >
-      <!--********** PUBLISH ICON **********-->
-      <div
-        class="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-primary-light)] text-[var(--color-primary-dark)]"
-      >
-        <mat-icon>publish</mat-icon>
-      </div>
 
-      <!--********** DIALOG TITLE **********-->
-      <h2 class="m-0 text-[16px] font-bold text-[var(--color-title)]">
-        Publish Assessment Result?
-      </h2>
-
-      <!--********** DIALOG DESCRIPTION **********-->
-      <p class="m-0 mt-2 text-[12px] leading-[1.5] text-[var(--color-text-secondary)]">
-        Once published, the results will become visible to students. Make sure all scores have been
-        reviewed before publishing.
-      </p>
-
-      <!--********** DIALOG ACTIONS **********-->
-      <div class="mt-6 flex justify-end gap-2">
-        <!--********** CANCEL PUBLISH **********-->
-        <button
-          mat-button
-          class="!rounded-[8px] !text-[12px] !font-semibold"
-          (click)="cancelPublish()"
-        >
-          Cancel
-        </button>
-
-        <!--********** CONFIRM PUBLISH **********-->
-        <button
-          mat-flat-button
-          class="!rounded-[8px] !bg-[var(--color-primary-dark)] !px-4 !text-[12px] !font-semibold !text-white"
-          (click)="confirmPublish()"
-        >
-          Publish Result
-        </button>
-      </div>
-    </div>
-  </div>
 </section>

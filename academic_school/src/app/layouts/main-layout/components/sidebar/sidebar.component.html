@@ -21,6 +21,7 @@
       routerLinkActive="sidebar__item--active"
       [routerLinkActiveOptions]="{ exact: true }"
       class="sidebar__item"
+      (click)="onNavigationSelected()"
     >
       <mat-icon class="sidebar__item-icon">dashboard</mat-icon>
 
@@ -56,6 +57,7 @@
               routerLinkActive="sidebar__submenu-item--active"
               [routerLinkActiveOptions]="{ exact: true }"
               class="sidebar__submenu-item"
+              (click)="onNavigationSelected()"
             >
               {{ submenu.label }}
             </a>

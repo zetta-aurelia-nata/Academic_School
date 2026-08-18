@@ -21,6 +21,7 @@ export class SidebarComponent {
   @Output() navigationSelected = new EventEmitter<void>();
 
   onNavigationSelected(): void {
+    this.navigationSelected.emit();
   }
   
   // *************** PUBLIC STATE VARIABLES ***************
@@ -31,7 +32,7 @@ export class SidebarComponent {
     { id: 'result', label: 'Assessment Result', link: '/assessments/result' },
   ];
 
-  trackBySubmenuId(index: number, submenu: any): string {
+  trackBySubmenuId(index: number, submenu: SubmenuItem): string {
   return submenu.id;
 }
 

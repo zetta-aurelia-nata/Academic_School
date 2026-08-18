@@ -1,11 +1,8 @@
 <!--********** APP MAIN LAYOUT **********-->
 <div class="main-layout">
   <!--********** SIDEBAR SECTION **********-->
-  <aside
-    class="main-layout__sidebar"
-    [class.main-layout__sidebar--open]="isSidebarOpen"
-  >
-    <app-sidebar></app-sidebar>
+  <aside class="main-layout__sidebar" [class.main-layout__sidebar--open]="isSidebarOpen">
+    <app-sidebar (navigationSelected)="closeSidebar()"></app-sidebar>
   </aside>
 
   <!--********** SIDEBAR OVERLAY **********-->

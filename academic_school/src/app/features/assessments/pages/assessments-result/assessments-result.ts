@@ -1,18 +1,23 @@
 //********** ANGULAR IMPORTS **********
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 //********** ANGULAR MATERIAL IMPORTS **********
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
+
+//********** APPLICATION COMPONENTS IMPORTS **********
+import { PublishResultDialog } from './publish-result-dialog/publish-result-dialog';
 
 //********** APPLICATION MODELS AND SETTINGS IMPORTS **********
 import { ASSESSMENTS } from '../../assessment.data';
 import { Assessment } from '../assessments-list/assessment.list.model';
 
+//********** INTERFACES **********
 interface EssayAnswer {
   question: string;
   answer: string;
@@ -47,11 +52,14 @@ interface AssessmentResult {
     MatCardModule,
     MatIconModule,
     MatSelectModule,
-  ],
+],
   templateUrl: './assessments-result.html',
   styleUrl: './assessments-result.scss',
 })
 export class AssessmentsResult {
+  //********** PRIVATE VARIABLES **********
+  private readonly dialog = inject(MatDialog);
+
   //********** PUBLIC STATE VARIABLES **********
   assessments: Assessment[] = ASSESSMENTS;
   selectedAssessmentId = 1;
@@ -382,8 +390,6 @@ export class AssessmentsResult {
 
   selectedStudent?: ResultStudent;
 
-  showPublishDialog = false;
-
   successMessage = '';
 
   //********** SETTERS & GETTERS **********
@@ -485,7 +491,18 @@ export class AssessmentsResult {
       return;
     }
 
-    this.showPublishDialog = true;
+    const dialogRef = this.dialog.open(PublishResultDialog, {
+      width: '430px',
+      maxWidth: 'calc(100vw - 32px)',
+      autoFocus: 'first-tabbable',
+      restoreFocus: true,
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.confirmPublish();
+      }
+    });
   }
 
   confirmPublish(): void {
@@ -493,17 +510,11 @@ export class AssessmentsResult {
 
     state.published = true;
 
-    this.showPublishDialog = false;
-
     this.successMessage = 'Assessment results have been published successfully.';
 
     setTimeout(() => {
       this.successMessage = '';
     }, 3000);
-  }
-
-  cancelPublish(): void {
-    this.showPublishDialog = false;
   }
 
   unpublishResult(): void {
@@ -540,7 +551,7 @@ export class AssessmentsResult {
     }, 3000);
   }
 
-  //********** UTILITY  **********
+  //********** UTILITY **********
   statusClass(status: string): string {
     return `result-status result-status--${status.toLowerCase().replaceAll(' ', '-')}`;
   }

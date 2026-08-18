@@ -133,8 +133,10 @@
           <th mat-header-cell *matHeaderCellDef>Actions</th>
 
           <td mat-cell *matCellDef="let row">
+            
             <!--********** TABLE ACTIONS **********-->
             <div class="flex items-center gap-2">
+
               <!--********** EDIT ACTION **********-->
               <button
                 mat-icon-button
@@ -165,67 +167,4 @@
       </table>
     </div>
   </mat-card>
-
-  <!--********** DELETE CONFIRMATION MODAL **********-->
-  @if (showDeleteDialog) {
-    <!--********** MODAL BACKDROP **********-->
-    <div
-      class="fixed inset-0 z-[1000] flex items-center justify-center bg-black/40 p-4"
-      (click)="onCancelDelete()"
-    >
-      <!--********** DELETE DIALOG **********-->
-      <div
-        class="w-full max-w-[420px] rounded-[16px] border border-[var(--color-border)] bg-[var(--color-white)] p-6 shadow-2xl"
-        (click)="$event.stopPropagation()"
-      >
-        <!--********** DIALOG HEADER **********-->
-        <div class="mb-5 flex items-center justify-center gap-2">
-          <!--********** DELETE ICON **********-->
-          <div
-            class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-red-50 text-red-500"
-          >
-            <mat-icon> delete_outline </mat-icon>
-          </div>
-
-          <!--********** DIALOG TITLE **********-->
-          <div>
-            <h2 class="m-0 text-lg font-bold text-[var(--color-title)]">Delete Assessment?</h2>
-          </div>
-        </div>
-
-        <!--********** DELETE CONFIRMATION MESSAGE **********-->
-        <p class="mb-6 text-center text-[13px] leading-5 text-[var(--color-text-secondary)]">
-          Are you sure you want to delete
-
-          <strong class="font-semibold text-[var(--color-title)]">
-            {{ selectedAssessment?.title }}
-          </strong>
-          ?
-        </p>
-
-        <!--********** DIALOG ACTIONS **********-->
-        <div class="flex justify-center gap-3 max-sm:flex-col-reverse">
-          <!--********** CANCEL DELETE **********-->
-          <button
-            type="button"
-            mat-stroked-button
-            class="!h-10 !rounded-[10px] !border-[var(--color-border)] !px-5 !text-[13px] !font-semibold !text-[var(--color-title)] max-sm:!w-full"
-            (click)="onCancelDelete()"
-          >
-            Cancel
-          </button>
-
-          <!--********** CONFIRM DELETE **********-->
-          <button
-            type="button"
-            mat-flat-button
-            class="!h-10 !rounded-[10px] !bg-red-500 !px-5 !text-[13px] !font-semibold !text-white max-sm:!w-full"
-            (click)="onConfirmDelete()"
-          >
-            Delete
-          </button>
-        </div>
-      </div>
-    </div>
-  }
 </section>

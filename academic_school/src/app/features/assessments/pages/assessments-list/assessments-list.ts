@@ -6,9 +6,13 @@ import { Router } from '@angular/router';
 //********** ANGULAR MATERIAL IMPORTS **********
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
+
+//********** APPLICATION COMPONENTS IMPORTS **********
+import { DeleteAssessmentDialog } from './delete-assessment-dialog/delete-assessment-dialog';
 
 //********** APPLICATION MODELS AND SETTINGS IMPORTS **********
 import { ASSESSMENTS } from '../../assessment.data';
@@ -30,6 +34,7 @@ import { Assessment, AssessmentStatus } from './assessment.list.model';
 export class AssessmentList {
   //********** PRIVATE VARIABLES **********
   private readonly router = inject(Router);
+  private readonly dialog = inject(MatDialog);
 
   //********** PUBLIC STATE VARIABLES **********
   displayedColumns: string[] = [
@@ -44,16 +49,9 @@ export class AssessmentList {
 
   assessments: Assessment[] = ASSESSMENTS;
 
-  showDeleteDialog = false;
-  selectedAssessment: Assessment | null = null;
-
   //********** ACTION HANDLERS **********
   onCreateAssessment(): void {
     this.router.navigate(['/assessments/create']);
-  }
-
-  onView(assessment: Assessment): void {
-    this.router.navigate(['/assessments', assessment.id]);
   }
 
   onEdit(assessment: Assessment): void {
@@ -65,24 +63,21 @@ export class AssessmentList {
   }
 
   onDelete(assessment: Assessment): void {
-    this.selectedAssessment = assessment;
-    this.showDeleteDialog = true;
-  }
+    const dialogRef = this.dialog.open(DeleteAssessmentDialog, {
+      width: '420px',
+      maxWidth: 'calc(100vw - 32px)',
+      data: assessment,
+      autoFocus: 'first-tabbable',
+      restoreFocus: true,
+    });
 
-  onCancelDelete(): void {
-    this.showDeleteDialog = false;
-    this.selectedAssessment = null;
-  }
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (!confirmed) {
+        return;
+      }
 
-  onConfirmDelete(): void {
-    if (!this.selectedAssessment) {
-      return;
-    }
-
-    this.assessments = this.assessments.filter((item) => item.id !== this.selectedAssessment?.id);
-
-    this.showDeleteDialog = false;
-    this.selectedAssessment = null;
+      this.assessments = this.assessments.filter((item) => item.id !== assessment.id);
+    });
   }
 
   //********** UTILITY METHODS **********

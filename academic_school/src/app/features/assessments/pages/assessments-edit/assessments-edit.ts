@@ -197,9 +197,7 @@ export class EditAssessment implements OnInit {
       id: this.assessmentId,
       ...this.assessmentForm.value,
     };
-
-    console.log('Updated Assessment:', updatedAssessment);
-
+    
     this.router.navigate(['/assessments']);
   }
 
