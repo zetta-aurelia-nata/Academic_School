@@ -17,16 +17,19 @@
 
     <!--********** RESULT STATUS BADGES **********-->
     <div class="flex items-center gap-2">
+      <!--********** PUBLISHED STATUS **********-->
       <span *ngIf="currentResultState.published" class="result-badge result-badge--published">
         <span class="result-badge__dot"></span>
         Published
       </span>
 
+      <!--********** LOCKED STATUS **********-->
       <span *ngIf="currentResultState.locked" class="result-badge result-badge--locked">
         <mat-icon>lock</mat-icon>
         Locked
       </span>
 
+      <!--********** DRAFT STATUS **********-->
       <span *ngIf="!currentResultState.published" class="result-badge result-badge--draft">
         <span class="result-badge__dot"></span>
         Draft
@@ -58,12 +61,14 @@
         <mat-label>Assessment</mat-label>
 
         <mat-select [(ngModel)]="selectedAssessmentId" (selectionChange)="onAssessmentChange()">
+          <!--********** SELECTED ASSESSMENT **********-->
           <mat-select-trigger>
             <span class="assessment-select__value">
               {{ selectedAssessment?.title }}
             </span>
           </mat-select-trigger>
 
+          <!--********** ASSESSMENT OPTIONS **********-->
           <mat-option *ngFor="let assessment of assessments" [value]="assessment.id">
             <div class="assessment-option">
               <span class="assessment-option__title">
@@ -85,14 +90,14 @@
       <div class="flex items-center gap-3">
         <!--********** ASSESSMENT ICON **********-->
         <div
-          class="flex h-10 w-10 items-center justify-center rounded-[10px] bg-[var(--color-primary-light)] text-[var(--color-primary-dark)]"
+          class="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] bg-[var(--color-primary-light)] text-[var(--color-primary-dark)]"
         >
           <mat-icon>grading</mat-icon>
         </div>
 
         <!--********** ASSESSMENT DETAILS **********-->
-        <div>
-          <h2 class="m-0 text-[14px] font-bold text-[var(--color-title)]">
+        <div class="min-w-0">
+          <h2 class="m-0 overflow-hidden text-[14px] font-bold text-[var(--color-title)]">
             {{ selectedAssessment?.title }}
           </h2>
 
@@ -108,10 +113,11 @@
       <div class="flex items-center gap-2 max-sm:flex-col max-sm:items-stretch">
         <!--********** PUBLISH / UNPUBLISH ACTION **********-->
         <button
+          #publishTrigger
           mat-stroked-button
           class="!h-9 !rounded-[9px] !px-4 !text-[12px] !font-semibold"
           [disabled]="currentResultState.locked"
-          (click)="onPublish()"
+          (click)="onPublish($event)"
         >
           {{ currentResultState.published ? 'Unpublish' : 'Publish Result' }}
         </button>
@@ -156,7 +162,7 @@
         </div>
 
         <!--********** STUDENT COUNT **********-->
-        <span class="text-[12px] font-semibold text-[var(--color-text-secondary)]">
+        <span class="shrink-0 text-[12px] font-semibold text-[var(--color-text-secondary)]">
           {{ students.length }} Students
         </span>
       </div>
@@ -218,6 +224,7 @@
               [disabled]="currentResultState.locked || student.answers.length === 0"
               (click)="onReviewAnswers(student)"
             >
+              <!--********** REVIEWING ICON **********-->
               <mat-icon
                 *ngIf="selectedStudent?.studentId === student.studentId"
                 class="!mr-1 !h-4 !w-4 !text-base"
@@ -254,30 +261,35 @@
   >
     <!--********** MANUAL SCORING HEADER **********-->
     <div
-      class="flex items-center !rounded-t-[14px] justify-between gap-4 border-b border-[var(--color-border)] px-5 py-4 bg-[var(--color-primary-dark)]"
+      class="manual-scoring__header !rounded-t-[14px] border-b border-[var(--color-border)] bg-[var(--color-primary-dark)] px-5 py-4"
     >
       <!--********** SELECTED STUDENT INFORMATION **********-->
       <div class="flex items-center gap-3">
         <!--********** STUDENT AVATAR **********-->
         <div
-          class="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-white)] text-[12px] font-bold text-[var(--color-primary-dark)]"
+          class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--color-white)] text-[12px] font-bold text-[var(--color-primary-dark)]"
         >
           {{ selectedStudent.initials }}
         </div>
 
         <!--********** MANUAL SCORING TITLE **********-->
-        <div>
+        <div class="min-w-0">
           <h2 class="m-0 text-[14px] font-bold text-[var(--color-white)]">Manual Scoring</h2>
 
           <p class="m-0 mt-1 text-[11px] text-[var(--color-white)]">
             {{ selectedStudent.studentName }}
-            | Review essay answers and input score
+            · Review essay answers and input score
           </p>
         </div>
       </div>
 
       <!--********** CLOSE REVIEW ACTION **********-->
-      <button mat-icon-button (click)="onCloseReview()" (document:keydown.escape)="onCloseReview()">
+      <button
+        mat-icon-button
+        aria-label="Close student review"
+        (click)="onCloseReview()"
+        class="!text-[var(--color-white)]"
+      >
         <mat-icon>close</mat-icon>
       </button>
     </div>
@@ -352,7 +364,7 @@
 
     <!--********** MANUAL SCORING FOOTER **********-->
     <div
-      class="flex items-center justify-between gap-4 border-t border-[var(--color-card-blue-light)] bg-[var(--color-white)] px-5 py-4 max-sm:flex-col max-sm:items-stretch"
+      class="flex items-center justify-between gap-4 border-t border-[var(--color-border)] bg-[var(--color-background-content)] px-5 py-4 max-sm:flex-col max-sm:items-stretch"
     >
       <!--********** TOTAL SCORE **********-->
       <div>
@@ -378,8 +390,72 @@
         [disabled]="currentResultState.locked"
         (click)="onSaveScore()"
       >
+        <mat-icon class="!mr-1 !h-4 !w-4 !text-base"> save </mat-icon>
+
         Save Score
       </button>
     </div>
   </mat-card>
+
+  <!--********** PUBLISH RESULT DIALOG **********-->
+  <div
+    *ngIf="showPublishDialog"
+    class="publish-dialog__overlay fixed inset-0 z-[1000] flex items-center justify-center px-4"
+    role="presentation"
+  >
+    <!--********** PUBLISH DIALOG **********-->
+    <div
+      #publishDialog
+      class="publish-dialog w-full max-w-[430px] rounded-[14px] border border-[var(--color-border)] bg-[var(--color-white)] p-6 shadow-xl"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="publish-dialog-title"
+      aria-describedby="publish-dialog-description"
+      tabindex="-1"
+    >
+      <!--********** PUBLISH ICON **********-->
+      <div
+        class="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-primary-light)] text-[var(--color-primary-dark)]"
+        aria-hidden="true"
+      >
+        <mat-icon>publish</mat-icon>
+      </div>
+
+      <!--********** DIALOG TITLE **********-->
+      <h2 id="publish-dialog-title" class="m-0 text-[16px] font-bold text-[var(--color-title)]">
+        Publish Assessment Result?
+      </h2>
+
+      <!--********** DIALOG DESCRIPTION **********-->
+      <p
+        id="publish-dialog-description"
+        class="m-0 mt-2 text-[12px] leading-[1.5] text-[var(--color-text-secondary)]"
+      >
+        Once published, the results will become visible to students. Make sure all scores have been
+        reviewed before publishing.
+      </p>
+
+      <!--********** DIALOG ACTIONS **********-->
+      <div class="mt-6 flex justify-end gap-2">
+        <!--********** CANCEL PUBLISH **********-->
+        <button
+          #publishCancelButton
+          mat-button
+          class="!rounded-[8px] !text-[12px] !font-semibold"
+          (click)="cancelPublish()"
+        >
+          Cancel
+        </button>
+
+        <!--********** CONFIRM PUBLISH **********-->
+        <button
+          mat-flat-button
+          class="!rounded-[8px] !bg-[var(--color-primary-dark)] !px-4 !text-[12px] !font-semibold !text-white"
+          (click)="confirmPublish()"
+        >
+          Publish Result
+        </button>
+      </div>
+    </div>
+  </div>
 </section>

@@ -1,23 +1,18 @@
 //********** ANGULAR IMPORTS **********
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 //********** ANGULAR MATERIAL IMPORTS **********
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
-
-//********** APPLICATION COMPONENTS IMPORTS **********
-import { PublishResultDialog } from './publish-result-dialog/publish-result-dialog';
 
 //********** APPLICATION MODELS AND SETTINGS IMPORTS **********
 import { ASSESSMENTS } from '../../assessment.data';
 import { Assessment } from '../assessments-list/assessment.list.model';
 
-//********** INTERFACES **********
 interface EssayAnswer {
   question: string;
   answer: string;
@@ -52,16 +47,24 @@ interface AssessmentResult {
     MatCardModule,
     MatIconModule,
     MatSelectModule,
-],
+  ],
   templateUrl: './assessments-result.html',
   styleUrl: './assessments-result.scss',
 })
 export class AssessmentsResult {
+  //********** VIEW CHILD REFERENCES **********
+  @ViewChild('publishDialog')
+  publishDialog?: ElementRef<HTMLElement>;
+
+  @ViewChild('publishCancelButton')
+  publishCancelButton?: ElementRef<HTMLButtonElement>;
+
   //********** PRIVATE VARIABLES **********
-  private readonly dialog = inject(MatDialog);
+  private publishTrigger: HTMLElement | null = null;
 
   //********** PUBLIC STATE VARIABLES **********
   assessments: Assessment[] = ASSESSMENTS;
+
   selectedAssessmentId = 1;
 
   studentsByAssessment: Record<number, ResultStudent[]> = {
@@ -390,6 +393,8 @@ export class AssessmentsResult {
 
   selectedStudent?: ResultStudent;
 
+  showPublishDialog = false;
+
   successMessage = '';
 
   //********** SETTERS & GETTERS **********
@@ -481,7 +486,8 @@ export class AssessmentsResult {
     }, 3000);
   }
 
-  onPublish(): void {
+  //********** PUBLISH RESULT HANDLERS **********
+  onPublish(event: Event): void {
     if (this.currentResultState.locked) {
       return;
     }
@@ -491,17 +497,12 @@ export class AssessmentsResult {
       return;
     }
 
-    const dialogRef = this.dialog.open(PublishResultDialog, {
-      width: '430px',
-      maxWidth: 'calc(100vw - 32px)',
-      autoFocus: 'first-tabbable',
-      restoreFocus: true,
-    });
+    this.publishTrigger = event.currentTarget as HTMLElement;
 
-    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-      if (confirmed) {
-        this.confirmPublish();
-      }
+    this.showPublishDialog = true;
+
+    setTimeout(() => {
+      this.publishDialog?.nativeElement.focus();
     });
   }
 
@@ -510,11 +511,21 @@ export class AssessmentsResult {
 
     state.published = true;
 
+    this.showPublishDialog = false;
+
     this.successMessage = 'Assessment results have been published successfully.';
 
     setTimeout(() => {
       this.successMessage = '';
     }, 3000);
+
+    this.restorePublishTriggerFocus();
+  }
+
+  cancelPublish(): void {
+    this.showPublishDialog = false;
+
+    this.restorePublishTriggerFocus();
   }
 
   unpublishResult(): void {
@@ -531,6 +542,58 @@ export class AssessmentsResult {
     }, 3000);
   }
 
+  //********** KEYBOARD HANDLERS **********
+  @HostListener('document:keydown', ['$event'])
+  onDialogKeydown(event: KeyboardEvent): void {
+    if (!this.showPublishDialog) {
+      return;
+    }
+
+    //********** ESCAPE TO CLOSE DIALOG **********
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      this.cancelPublish();
+      return;
+    }
+
+    //********** FOCUS TRAP **********
+    if (event.key !== 'Tab') {
+      return;
+    }
+
+    const dialog = this.publishDialog?.nativeElement;
+
+    if (!dialog) {
+      return;
+    }
+
+    const focusableElements = dialog.querySelectorAll<HTMLElement>(
+      'button, input, select, textarea, a[href], [tabindex]:not([tabindex="-1"])',
+    );
+
+    if (focusableElements.length === 0) {
+      event.preventDefault();
+      return;
+    }
+
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+
+    //********** SHIFT + TAB **********
+    if (event.shiftKey && document.activeElement === firstElement) {
+      event.preventDefault();
+      lastElement.focus();
+      return;
+    }
+
+    //********** TAB **********
+    if (!event.shiftKey && document.activeElement === lastElement) {
+      event.preventDefault();
+      firstElement.focus();
+    }
+  }
+
+  //********** RESULT LOCK HANDLER **********
   lockResult(): void {
     if (!this.currentResultState.published) {
       this.successMessage = 'Publish the result before locking it.';
@@ -551,7 +614,14 @@ export class AssessmentsResult {
     }, 3000);
   }
 
-  //********** UTILITY **********
+  //********** UTILITY METHODS **********
+  private restorePublishTriggerFocus(): void {
+    setTimeout(() => {
+      this.publishTrigger?.focus();
+      this.publishTrigger = null;
+    });
+  }
+
   statusClass(status: string): string {
     return `result-status result-status--${status.toLowerCase().replaceAll(' ', '-')}`;
   }

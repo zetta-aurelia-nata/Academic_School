@@ -29,6 +29,7 @@
   line-height: 1;
   white-space: nowrap;
 
+  // ********** BADGE DOT **********
   &__dot {
     width: 6px;
     height: 6px;
@@ -37,6 +38,14 @@
     background: currentColor;
   }
 
+  // ********** PUBLISHED **********
+  &--published {
+    color: var(--color-primary-dark);
+    border-color: color-mix(in srgb, var(--color-primary) 20%, transparent);
+    background-color: var(--color-primary-light);
+  }
+
+  // ********** LOCKED **********
   &--locked {
     color: #b42318;
     border-color: #fecdca;
@@ -50,6 +59,7 @@
     }
   }
 
+  // ********** DRAFT **********
   &--draft {
     color: var(--color-text-secondary);
     border-color: var(--color-border);
@@ -101,58 +111,6 @@
   }
 }
 
-// ********** ASSESSMENT INFORMATION **********
-.assessment-info {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 0;
-
-  &__icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    flex-shrink: 0;
-    border-radius: 10px;
-    color: var(--color-primary-dark);
-    background-color: var(--color-primary-light);
-
-    mat-icon {
-      width: 20px;
-      height: 20px;
-      font-size: 20px;
-    }
-  }
-
-  &__content {
-    min-width: 0;
-  }
-
-  &__title {
-    margin: 0;
-    overflow: hidden;
-    color: var(--color-title);
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 20px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  &__meta {
-    margin: 4px 0 0;
-    color: var(--color-text-secondary);
-    font-size: 11px;
-    line-height: 16px;
-  }
-}
-
-.mat-mdc-icon-button{
-  color: var(--color-white);
-}
-
 // ********** RESULT ACTIONS **********
 .result-actions {
   display: flex;
@@ -160,7 +118,7 @@
   gap: 8px;
 }
 
-// *************** MATERIAL SELECT OVERRIDES ***************
+// ********** MATERIAL SELECT OVERRIDES **********
 ::ng-deep .result-select .mat-mdc-select-trigger {
   padding: 0 16px !important;
 }
@@ -177,23 +135,34 @@
 
 // ********** RESULT STUDENT **********
 .result-student {
-  transition: background-color 0.15s ease;
+  position: relative;
+  transition:
+    background-color 0.15s ease,
+    box-shadow 0.15s ease;
 
+  // ********** HOVER **********
   &:hover {
-    background-color: var(--color-primary-light);
+    background-color: rgba(248, 250, 252, 0.7);
   }
 
+  // ********** LAST ITEM **********
   &:last-child {
     border-bottom: 0;
   }
 
+  // ********** STUDENT CONTENT **********
   &__content {
     display: grid;
-    grid-template-columns: minmax(220px, 1.6fr) 110px 150px 140px;
+    grid-template-columns:
+      minmax(220px, 1.6fr)
+      110px
+      150px
+      140px;
     align-items: center;
     gap: 24px;
   }
 
+  // ********** STUDENT INFORMATION **********
   &__information {
     display: flex;
     align-items: center;
@@ -201,6 +170,7 @@
     gap: 12px;
   }
 
+  // ********** STUDENT AVATAR **********
   &__avatar {
     display: flex;
     align-items: center;
@@ -213,12 +183,17 @@
     background-color: var(--color-primary-light);
     font-size: 12px;
     font-weight: 700;
+    transition:
+      color 0.15s ease,
+      background-color 0.15s ease;
   }
 
+  // ********** STUDENT DETAILS **********
   &__details {
     min-width: 0;
   }
 
+  // ********** STUDENT NAME **********
   &__name {
     margin: 0;
     overflow: hidden;
@@ -228,8 +203,10 @@
     line-height: 18px;
     text-overflow: ellipsis;
     white-space: nowrap;
+    transition: color 0.15s ease;
   }
 
+  // ********** STUDENT META **********
   &__meta {
     margin: 4px 0 0;
     color: var(--color-text-secondary);
@@ -237,10 +214,12 @@
     line-height: 16px;
   }
 
+  // ********** STUDENT SCORE **********
   &__score {
     text-align: left;
   }
 
+  // ********** SCORE LABEL **********
   &__score-label {
     display: block;
     margin-bottom: 2px;
@@ -252,6 +231,7 @@
     letter-spacing: 0.5px;
   }
 
+  // ********** SCORE VALUE **********
   &__score-value {
     color: var(--color-primary-dark);
     font-size: 16px;
@@ -259,9 +239,37 @@
     line-height: 22px;
   }
 
+  // ********** STUDENT ACTION **********
   &__action {
     display: flex;
     justify-content: flex-end;
+  }
+}
+
+// ********** SELECTED STUDENT **********
+.result-student--selected {
+  background-color: var(--color-primary-light);
+  box-shadow: inset 3px 0 0 var(--color-primary-dark);
+
+  &:hover {
+    background-color: var(--color-primary-light);
+  }
+
+  // ********** SELECTED AVATAR **********
+  .result-student__avatar {
+    color: var(--color-white);
+    background-color: var(--color-primary-dark);
+  }
+
+  // ********** SELECTED NAME **********
+  .result-student__name {
+    color: var(--color-primary-dark);
+  }
+
+  // ********** SELECTED BUTTON **********
+  .result-student__action button {
+    border-color: var(--color-primary-dark) !important;
+    color: var(--color-primary-dark) !important;
   }
 }
 
@@ -281,6 +289,7 @@
   line-height: 1;
   white-space: nowrap;
 
+  // ********** STATUS DOT **********
   &__dot {
     width: 6px;
     height: 6px;
@@ -289,18 +298,21 @@
     background: currentColor;
   }
 
+  // ********** COMPLETED **********
   &--completed {
     color: #027a48;
     border-color: #abefc6;
     background-color: #ecfdf3;
   }
 
+  // ********** IN PROGRESS **********
   &--in-progress {
     color: #b54708;
     border-color: #fedf89;
     background-color: #fffaeb;
   }
 
+  // ********** PENDING **********
   &--pending {
     color: var(--color-text-secondary);
     border-color: var(--color-border);
@@ -317,16 +329,19 @@
     box-shadow 0.2s ease,
     background-color 0.2s ease;
 
+  // ********** HOVER **********
   &:hover:not(:disabled) {
     border-color: var(--color-primary) !important;
   }
 
+  // ********** FOCUS **********
   &:focus {
     border-color: var(--color-primary) !important;
     box-shadow: 0 0 0 3px var(--color-primary-light);
     outline: none;
   }
 
+  // ********** DISABLED **********
   &:disabled {
     cursor: not-allowed;
     opacity: 0.6;
@@ -341,52 +356,9 @@
   &:hover {
     background-color: rgba(248, 250, 252, 0.6);
   }
-
-  &__content {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 24px;
-  }
-
-  &__answer {
-    min-width: 0;
-    flex: 1;
-  }
-
-  &__input {
-    width: 130px;
-    flex-shrink: 0;
-  }
 }
 
-// ********** STUDENT ANSWER **********
-.student-answer {
-  margin-top: 12px;
-  padding: 12px 16px;
-  border: 1px solid var(--color-border);
-  border-radius: 9px;
-  background-color: var(--color-background-content);
-
-  &__label {
-    display: block;
-    color: var(--color-text-secondary);
-    font-size: 10px;
-    font-weight: 600;
-    line-height: 14px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  &__text {
-    margin: 4px 0 0;
-    color: var(--color-title);
-    font-size: 12px;
-    line-height: 18px;
-  }
-}
-
-// ********** MANUAL SCORING **********
+// ********** MANUAL SCORING HEADER **********
 .manual-scoring__header {
   display: flex;
   align-items: center;
@@ -420,36 +392,44 @@
   }
 }
 
-// ********** SELECTED STUDENT **********
-.result-student--selected {
-  position: relative;
-  background-color: var(--color-primary-light);
-  box-shadow: inset 3px 0 0 var(--color-primary-dark);
+// ********** PUBLISH DIALOG OVERLAY **********
+.publish-dialog__overlay {
+  backdrop-filter: blur(3px);
+  background-color: rgba(15, 23, 42, 0.3);
+}
 
-  .result-student__avatar {
-    background-color: var(--color-primary-dark);
-    color: var(--color-white);
+// ********** PUBLISH DIALOG **********
+.publish-dialog {
+  animation: publish-dialog-enter 0.2s ease-out;
+}
+
+// ********** PUBLISH DIALOG ANIMATION **********
+@keyframes publish-dialog-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
   }
 
-  .result-student__name {
-    color: var(--color-primary-dark);
-  }
-
-  .result-student__action button {
-    border-color: var(--color-primary-dark) !important;
-    color: var(--color-primary-dark) !important;
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 
 // ********** MEDIA QUERIES **********
 @media (max-width: 1024px) {
   .result-student__content {
-    grid-template-columns: minmax(200px, 1.5fr) 100px 130px 120px;
+    grid-template-columns:
+      minmax(200px, 1.5fr)
+      100px
+      130px
+      120px;
     gap: 16px;
   }
 }
 
 @media (max-width: 768px) {
+  // ********** ASSESSMENT SELECT **********
   .result-select {
     width: 100%;
   }
@@ -458,57 +438,64 @@
     max-width: 100%;
   }
 
+  // ********** STUDENT CONTENT **********
   .result-student__content {
     grid-template-columns: minmax(0, 1fr) auto;
     gap: 16px;
   }
 
+  // ********** STUDENT SCORE **********
   .result-student__score {
     text-align: right;
   }
 
+  // ********** STUDENT STATUS **********
   .result-student__status {
     grid-column: 1;
   }
 
+  // ********** STUDENT ACTION **********
   .result-student__action {
     grid-column: 2;
     grid-row: 2;
   }
 
-  .score-question__content {
-    flex-direction: column;
-  }
-
-  .score-question__input {
-    width: 100%;
+  // ********** MANUAL SCORING HEADER **********
+  .manual-scoring__header {
+    align-items: flex-start;
   }
 }
 
 @media (max-width: 640px) {
+  // ********** STUDENT CONTENT **********
   .result-student__content {
     grid-template-columns: 1fr;
     gap: 12px;
   }
 
+  // ********** STUDENT SCORE **********
   .result-student__score {
     text-align: left;
   }
 
+  // ********** STUDENT STATUS **********
   .result-student__status,
   .result-student__action {
     grid-column: auto;
     grid-row: auto;
   }
 
+  // ********** STUDENT ACTION **********
   .result-student__action {
     justify-content: flex-start;
   }
 
+  // ********** RESULT STATUS **********
   .result-status {
     display: inline-flex !important;
   }
 
+  // ********** MANUAL SCORING HEADER **********
   .manual-scoring__header {
     align-items: flex-start;
   }

@@ -1,18 +1,14 @@
 //********** ANGULAR IMPORTS **********
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 //********** ANGULAR MATERIAL IMPORTS **********
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
-
-//********** APPLICATION COMPONENTS IMPORTS **********
-import { DeleteAssessmentDialog } from './delete-assessment-dialog/delete-assessment-dialog';
 
 //********** APPLICATION MODELS AND SETTINGS IMPORTS **********
 import { ASSESSMENTS } from '../../assessment.data';
@@ -32,9 +28,22 @@ import { Assessment, AssessmentStatus } from './assessment.list.model';
   styleUrls: ['./assessments-list.scss'],
 })
 export class AssessmentList {
+  @ViewChild('deleteDialog') deleteDialog?: ElementRef<HTMLElement>;
+  @ViewChild('deleteCancelButton') deleteCancelButton?: ElementRef<HTMLButtonElement>;
+  
+  //********** KEYBOARD HANDLERS **********
+  @HostListener('document:keydown.escape')
+  onEscape(): void {
+    if (!this.showDeleteDialog) {
+      return;
+    }
+
+    this.onCancelDelete();
+  }
+
   //********** PRIVATE VARIABLES **********
   private readonly router = inject(Router);
-  private readonly dialog = inject(MatDialog);
+  private deleteTrigger: HTMLElement | null = null;
 
   //********** PUBLIC STATE VARIABLES **********
   displayedColumns: string[] = [
@@ -49,9 +58,16 @@ export class AssessmentList {
 
   assessments: Assessment[] = ASSESSMENTS;
 
+  showDeleteDialog = false;
+  selectedAssessment: Assessment | null = null;
+
   //********** ACTION HANDLERS **********
   onCreateAssessment(): void {
     this.router.navigate(['/assessments/create']);
+  }
+
+  onView(assessment: Assessment): void {
+    this.router.navigate(['/assessments', assessment.id]);
   }
 
   onEdit(assessment: Assessment): void {
@@ -62,21 +78,39 @@ export class AssessmentList {
     this.router.navigate(['/assessments', assessment.id, 'submissions']);
   }
 
-  onDelete(assessment: Assessment): void {
-    const dialogRef = this.dialog.open(DeleteAssessmentDialog, {
-      width: '420px',
-      maxWidth: 'calc(100vw - 32px)',
-      data: assessment,
-      autoFocus: 'first-tabbable',
-      restoreFocus: true,
+  onDelete(assessment: Assessment, event?: Event): void {
+    this.selectedAssessment = assessment;
+    this.deleteTrigger = event?.currentTarget as HTMLElement | null;
+    this.showDeleteDialog = true;
+
+    setTimeout(() => {
+      this.deleteDialog?.nativeElement.focus();
     });
+  }
 
-    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-      if (!confirmed) {
-        return;
-      }
+  onCancelDelete(): void {
+    this.showDeleteDialog = false;
+    this.selectedAssessment = null;
 
-      this.assessments = this.assessments.filter((item) => item.id !== assessment.id);
+    setTimeout(() => {
+      this.deleteTrigger?.focus();
+      this.deleteTrigger = null;
+    });
+  }
+
+  onConfirmDelete(): void {
+    if (!this.selectedAssessment) {
+      return;
+    }
+
+    this.assessments = this.assessments.filter((item) => item.id !== this.selectedAssessment?.id);
+
+    this.showDeleteDialog = false;
+    this.selectedAssessment = null;
+
+    setTimeout(() => {
+      this.deleteTrigger?.focus();
+      this.deleteTrigger = null;
     });
   }
 
