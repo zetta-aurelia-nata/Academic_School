@@ -1,6 +1,7 @@
 // *************** Angular Imports ***************
 import { Component, EventEmitter, Output } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+
 // *************** Angular Material Imports ***************
 import { MatIcon } from '@angular/material/icon';
 
@@ -17,6 +18,7 @@ export interface SubmenuItem {
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
 })
+
 export class SidebarComponent {
   @Output() navigationSelected = new EventEmitter<void>();
 
