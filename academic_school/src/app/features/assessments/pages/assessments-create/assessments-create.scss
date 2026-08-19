@@ -185,7 +185,7 @@
 }
 
 // ***************** OPTIONS EDITOR *****************
-.options-editor {
+.answer-options-editor {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -193,7 +193,7 @@
 }
 
 // ***************** OPTION ROW *****************
-.option-row {
+.answer-option-row {
   display: grid;
   grid-template-columns: 32px minmax(0, 1fr) 40px;
   justify-content: center;
@@ -289,17 +289,17 @@
     align-items: flex-start;
   }
 
-  .option-row {
+  .answer-option-row {
     grid-template-columns: 30px minmax(0, 1fr) 36px;
     column-gap: 8px;
   }
 
-  .option-row__index {
+  .answer-option-row__index {
     width: 28px;
     height: 28px;
   }
 
-  .option-row__check {
+  .answer-option-row__check {
     width: 36px;
   }
 

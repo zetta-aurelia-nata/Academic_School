@@ -251,24 +251,24 @@
                   </span>
                 </div>
               </div>
-
-              <div class="options-editor">
+              
+              <div class="answer-options-editor">
                 <div
-                  class="option-row"
+                  class="answer-option-row"
                   *ngFor="let optionNumber of [1, 2, 3, 4]; let optionIndex = index"
                 >
-                  <span class="option-row__index">
+                  <span class="answer-option-row__index">
                     {{ optionIndex + 1 }}
                   </span>
 
-                  <mat-form-field appearance="outline" class="option-row__field">
+                  <mat-form-field appearance="outline" class="answer-option-row__field">
                     <mat-label>Option {{ optionNumber }}</mat-label>
 
                     <input matInput placeholder="Write answer option..." />
                   </mat-form-field>
 
                   <mat-checkbox
-                    class="option-row__check"
+                    class="answer-option-row__check"
                     [aria-label]="'Mark option ' + (optionIndex + 1) + ' as correct'"
                   >
                   </mat-checkbox>
