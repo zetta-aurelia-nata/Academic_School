@@ -1,5 +1,6 @@
-// ***************** BEM BLOCKS *****************
-// ***************** EDIT ASSESSMENT *****************
+// ********** BEM BLOCKS **********
+
+// ********** EDIT ASSESSMENT **********
 :host {
   display: block;
   width: 100%;
@@ -8,23 +9,38 @@
 .edit-assessment {
   box-sizing: border-box;
 
-  // ***************** ACCORDION *****************
+  // ********** FIELD **********
+  &__field {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 0;
+  }
+
+  // ********** FIELD LABEL **********
+  &__field-label {
+    display: block;
+    margin-bottom: 7px;
+    color: var(--color-title);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  // ********** ACCORDION **********
   &__accordion {
     overflow: hidden !important;
     border: 1px solid var(--color-border) !important;
     border-radius: 14px !important;
     background: var(--color-white) !important;
     box-shadow: none !important;
+
     transition:
       border-color 0.2s ease,
       box-shadow 0.2s ease;
 
     &:hover {
-      border-color: color-mix(
-        in srgb,
-        var(--color-primary) 25%,
-        var(--color-border)
-      ) !important;
+      border-color: color-mix(in srgb, var(--color-primary) 25%, var(--color-border)) !important;
     }
 
     &.mat-expanded {
@@ -32,13 +48,14 @@
     }
   }
 
-  // ***************** ACCORDION HEADER *****************
+  // ********** ACCORDION HEADER **********
   &__accordion-header {
     position: relative;
     min-height: 84px !important;
     overflow: hidden;
     padding: 16px 24px !important;
     border-radius: 13px 13px 0 0 !important;
+
     transition:
       filter 0.2s ease,
       min-height 0.2s ease,
@@ -48,14 +65,17 @@
       display: none !important;
     }
 
+    // ********** ORANGE HEADER **********
     &--orange {
       background: var(--color-card-orange) !important;
     }
 
+    // ********** GREEN HEADER **********
     &--green {
       background: var(--color-card-green) !important;
     }
 
+    // ********** BLUE HEADER **********
     &--blue {
       background: var(--color-card-blue-dark) !important;
     }
@@ -70,37 +90,309 @@
     }
   }
 
-  // ***************** ACTIONS *****************
+  // ********** ACTIONS **********
   &__actions {
     margin-top: 4px;
   }
 
-  // ***************** BUTTONS *****************
-  &__button {
-    border-radius: 10px !important;
+  // ********** MATERIAL FIELD **********
+  ::ng-deep {
+    .edit-assessment__material-field {
+      width: 100%;
+      margin: 0 !important;
 
-    transition:
-      background-color 0.2s ease,
-      border-color 0.2s ease,
-      color 0.2s ease,
-      transform 0.2s ease,
-      box-shadow 0.2s ease;
+      // ********** SUBSCRIPT **********
+      .mat-mdc-form-field-subscript-wrapper {
+        min-height: 0 !important;
+      }
 
-    &:hover {
-      transform: translateY(-1px);
+      // ********** TEXT FIELD WRAPPER **********
+      .mat-mdc-text-field-wrapper {
+        min-height: 56px !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+        border-radius: 12px !important;
+        background-color: var(--color-white) !important;
+
+        transition:
+          box-shadow 0.2s ease,
+          background-color 0.2s ease;
+      }
+
+      // ********** INFIX **********
+      .mat-mdc-form-field-infix {
+        min-height: 56px !important;
+        padding: 16px !important;
+      }
+
+      // ********** REMOVE FLOATING LABEL **********
+      .mat-mdc-floating-label {
+        display: none !important;
+      }
+
+      // ********** OUTLINE **********
+      .mdc-notched-outline {
+        overflow: hidden;
+        border-radius: 12px !important;
+      }
+
+      .mdc-notched-outline__leading {
+        width: 12px !important;
+        border-radius: 12px 0 0 12px !important;
+      }
+
+      .mdc-notched-outline__notch {
+        display: none !important;
+      }
+
+      .mdc-notched-outline__trailing {
+        border-radius: 0 12px 12px 0 !important;
+      }
+
+      // ********** INPUT **********
+      .mat-mdc-input-element {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        margin: 0 !important;
+        padding: 0 !important;
+        color: var(--color-title) !important;
+        font-size: 13px !important;
+        line-height: 1.5 !important;
+      }
+
+      // ********** PLACEHOLDER **********
+      .mat-mdc-input-element::placeholder {
+        color: var(--color-text-secondary) !important;
+        opacity: 0.7 !important;
+      }
+
+      // ********** SELECT **********
+      .mat-mdc-select {
+        display: flex;
+        align-items: center;
+        min-height: 24px;
+        color: var(--color-title) !important;
+        font-size: 13px !important;
+      }
+
+      .mat-mdc-select-value {
+        color: var(--color-title) !important;
+        font-size: 13px !important;
+      }
+
+      .mat-mdc-select-placeholder {
+        color: var(--color-text-secondary) !important;
+        opacity: 0.7 !important;
+      }
+
+      // ********** SELECT ARROW **********
+      .mat-mdc-select-arrow-wrapper {
+        width: 28px !important;
+        padding-right: 4px !important;
+        transform: none !important;
+      }
+
+      .mat-mdc-select-arrow {
+        margin-right: 2px;
+        color: var(--color-text-secondary) !important;
+      }
+
+      // ********** HOVER **********
+      &:hover {
+        .mdc-notched-outline__leading,
+        .mdc-notched-outline__notch,
+        .mdc-notched-outline__trailing {
+          border-color: var(--color-primary) !important;
+        }
+      }
+
+      // ********** FOCUS **********
+      &.mat-focused {
+        .mdc-notched-outline__leading,
+        .mdc-notched-outline__notch,
+        .mdc-notched-outline__trailing {
+          border-color: var(--color-primary) !important;
+          border-width: 2px !important;
+        }
+
+        .mat-mdc-text-field-wrapper {
+          box-shadow: 0 0 0 3px rgba(118, 81, 168, 0.06);
+        }
+
+        .mat-mdc-select-arrow {
+          color: var(--color-primary) !important;
+        }
+      }
+
+      // ********** INVALID **********
+      &.mat-form-field-invalid {
+        .mdc-notched-outline__leading,
+        .mdc-notched-outline__notch,
+        .mdc-notched-outline__trailing {
+          border-color: #dc2626 !important;
+        }
+      }
+
+      // ********** DISABLED **********
+      &.mat-form-field-disabled {
+        .mat-mdc-text-field-wrapper {
+          background-color: #f5f3f7 !important;
+        }
+      }
     }
 
-    &:active {
-      transform: translateY(0);
+    // ********** TEXTAREA **********
+    .edit-assessment__textarea {
+      .mat-mdc-text-field-wrapper {
+        min-height: 120px !important;
+      }
+
+      .mat-mdc-form-field-infix {
+        min-height: 120px !important;
+        padding: 14px 16px !important;
+      }
+
+      textarea.mat-mdc-input-element {
+        display: block;
+        width: 100%;
+        min-height: 90px !important;
+        box-sizing: border-box;
+        margin: 0 !important;
+        padding: 0 !important;
+        resize: vertical;
+        color: var(--color-title) !important;
+        font-size: 13px !important;
+        line-height: 1.5 !important;
+      }
+
+      textarea.mat-mdc-input-element::placeholder {
+        color: var(--color-text-secondary) !important;
+        opacity: 0.7 !important;
+      }
     }
 
-    &:focus-visible {
-      outline: 3px solid rgba(118, 81, 168, 0.15);
-      outline-offset: 2px;
+    // ********** NUMBER INPUT **********
+    input[type='number'].mat-mdc-input-element {
+      appearance: textfield;
+    }
+
+    input[type='number'].mat-mdc-input-element::-webkit-inner-spin-button,
+    input[type='number'].mat-mdc-input-element::-webkit-outer-spin-button {
+      margin: 0;
+      appearance: none;
+    }
+
+    // ********** SUFFIX **********
+    .mat-mdc-form-field-text-suffix {
+      color: var(--color-text-secondary) !important;
+      font-size: 12px !important;
+    }
+
+    // ********** ERROR **********
+    .mat-mdc-form-field-error {
+      font-size: 11px !important;
+    }
+
+    // ********** SELECT PANEL **********
+    .assessment-select-panel {
+      overflow: hidden !important;
+      padding: 6px !important;
+      border: 1px solid var(--color-border) !important;
+      border-radius: 12px !important;
+      background: var(--color-white) !important;
+
+      box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.1),
+        0 2px 6px rgba(0, 0, 0, 0.05) !important;
+
+      .mat-mdc-option {
+        min-height: 42px !important;
+        margin: 2px 0;
+        border-radius: 8px !important;
+        color: var(--color-title) !important;
+        font-size: 13px !important;
+
+        transition:
+          background-color 0.15s ease,
+          color 0.15s ease;
+
+        &:hover:not(.mdc-list-item--disabled),
+        &.mat-mdc-option-active,
+        &.mdc-list-item--selected {
+          background-color: var(--color-primary-light) !important;
+          color: var(--color-primary-dark) !important;
+        }
+
+        .mdc-list-item__primary-text {
+          font-size: 13px !important;
+        }
+      }
+    }
+
+    // ********** RADIO BUTTON / CORRECT ANSWER **********
+    .mat-mdc-radio-button {
+      .mdc-radio {
+        padding: 8px !important;
+      }
+
+      // ********** DEFAULT RADIO **********
+      .mdc-radio__outer-circle {
+        border-color: var(--color-border) !important;
+      }
+
+      // ********** CORRECT ANSWER SELECTED **********
+      &.mat-mdc-radio-checked {
+        .mdc-radio__outer-circle {
+          border-color: var(--color-correct-answer) !important;
+        }
+
+        .mdc-radio__inner-circle {
+          border-color: var(--color-correct-answer) !important;
+          background-color: var(--color-correct-answer) !important;
+        }
+      }
+
+      // ********** HOVER **********
+      &:hover {
+        .mdc-radio__outer-circle {
+          border-color: var(--color-correct-answer) !important;
+        }
+      }
+
+      // ********** FOCUS **********
+      &:focus-within {
+        .mdc-radio__outer-circle {
+          border-color: var(--color-correct-answer) !important;
+        }
+      }
+    }
+
+    // ********** ACCORDION INDICATOR **********
+    .edit-assessment__accordion {
+      .mat-expansion-indicator {
+        margin-left: 12px;
+
+        &::after {
+          padding: 4px !important;
+          border-color: currentColor !important;
+          border-width: 0 2px 2px 0 !important;
+        }
+      }
+    }
+
+    // ********** EXPANSION PANEL BODY **********
+    .mat-expansion-panel-body {
+      padding: 0 24px 24px !important;
+    }
+
+    // ********** HEADER RIPPLE **********
+    .mat-expansion-panel-header .mat-ripple-element {
+      background-color: rgba(255, 255, 255, 0.12) !important;
     }
   }
 
-  // ***************** CANCEL BUTTON *****************
+  // ********** CANCEL BUTTON **********
   &__cancel-button {
     position: relative;
     display: inline-flex !important;
@@ -116,6 +408,7 @@
     color: var(--color-title) !important;
     font-size: 13px !important;
     font-weight: 600 !important;
+
     box-shadow:
       0 1px 2px rgba(0, 0, 0, 0.04),
       0 3px 8px rgba(0, 0, 0, 0.03);
@@ -140,6 +433,7 @@
       border-color: var(--color-primary) !important;
       background: var(--color-primary-light) !important;
       color: var(--color-primary-dark) !important;
+
       box-shadow:
         0 4px 10px rgba(118, 81, 168, 0.08),
         0 2px 4px rgba(0, 0, 0, 0.04);
@@ -156,7 +450,7 @@
     }
   }
 
-  // ***************** SAVE BUTTON *****************
+  // ********** SAVE BUTTON **********
   &__save-button {
     position: relative;
     display: inline-flex !important;
@@ -169,13 +463,7 @@
     overflow: hidden;
     border: 0 !important;
     border-radius: 10px !important;
-
-    background: linear-gradient(
-      135deg,
-      var(--color-primary),
-      var(--color-primary-dark)
-    ) !important;
-
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark)) !important;
     color: var(--color-white) !important;
     font-size: 13px !important;
     font-weight: 600 !important;
@@ -196,13 +484,7 @@
       width: 60%;
       height: 100%;
       content: '';
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.22),
-        transparent
-      );
-
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.22), transparent);
       transform: skewX(-20deg);
       transition: left 0.55s ease;
     }
@@ -240,6 +522,7 @@
 
     &:active {
       transform: translateY(0);
+
       box-shadow:
         0 3px 7px rgba(118, 81, 168, 0.2),
         0 1px 2px rgba(0, 0, 0, 0.08);
@@ -250,262 +533,14 @@
       outline-offset: 2px;
     }
   }
-
-  // ***************** MATERIAL OVERRIDES *****************
-  ::ng-deep {
-    .mat-expansion-panel-header-title,
-    .mat-expansion-panel-header-description {
-      min-width: 0;
-    }
-
-    .mat-mdc-form-field {
-      width: 100%;
-    }
-
-    .mat-mdc-text-field-wrapper {
-      min-height: 56px !important;
-
-      overflow: hidden !important;
-
-      border-radius: 12px !important;
-
-      background-color: var(--color-white) !important;
-
-      transition:
-        box-shadow 0.2s ease,
-        background-color 0.2s ease;
-    }
-
-    .mdc-notched-outline {
-      overflow: hidden;
-
-      border-radius: 12px !important;
-    }
-
-    .mdc-notched-outline__leading {
-      width: 12px !important;
-      border-radius: 12px 0 0 12px !important;
-    }
-
-    .mdc-notched-outline__trailing {
-      border-radius: 0 12px 12px 0 !important;
-    }
-
-    .mdc-notched-outline__notch {
-      border-radius: 0 !important;
-    }
-
-    .mat-mdc-form-field-infix {
-      min-height: 56px !important;
-      padding: 16px !important;
-    }
-
-    .mat-mdc-input-element {
-      color: var(--color-title) !important;
-
-      font-size: 13px !important;
-      line-height: 1.5 !important;
-    }
-
-    .mat-mdc-input-element::placeholder,
-    .mat-mdc-select-placeholder {
-      color: var(--color-text-secondary) !important;
-      opacity: 0.7;
-    }
-
-    .mat-mdc-select {
-      display: flex;
-      align-items: center;
-
-      min-height: 24px;
-    }
-
-    .mat-mdc-select-value {
-      color: var(--color-title) !important;
-      font-size: 13px !important;
-    }
-
-    .mat-mdc-select-arrow-wrapper {
-      width: 28px !important;
-      padding-right: 4px !important;
-      transform: none !important;
-    }
-
-    .mat-mdc-select-arrow {
-      margin-right: 2px;
-
-      color: var(--color-text-secondary) !important;
-    }
-
-    .mat-mdc-floating-label {
-      color: var(--color-text-secondary) !important;
-
-      font-size: 13px !important;
-      font-weight: 500 !important;
-    }
-
-    .mat-mdc-form-field:not(.mat-form-field-disabled):hover {
-      .mdc-notched-outline__leading,
-      .mdc-notched-outline__notch,
-      .mdc-notched-outline__trailing {
-        border-color: var(--color-primary) !important;
-      }
-    }
-
-    .mat-mdc-form-field.mat-focused {
-      .mdc-notched-outline__leading,
-      .mdc-notched-outline__notch,
-      .mdc-notched-outline__trailing {
-        border-color: var(--color-primary) !important;
-        border-width: 2px !important;
-      }
-
-      .mat-mdc-floating-label,
-      .mat-mdc-select-arrow {
-        color: var(--color-primary) !important;
-      }
-
-      .mat-mdc-text-field-wrapper {
-        box-shadow: 0 0 0 3px rgba(118, 81, 168, 0.06);
-      }
-    }
-
-    .mat-mdc-form-field.mat-form-field-invalid {
-      .mdc-notched-outline__leading,
-      .mdc-notched-outline__notch,
-      .mdc-notched-outline__trailing,
-      .mat-mdc-floating-label,
-      .mat-mdc-select-arrow {
-        color: #dc2626 !important;
-        border-color: #dc2626 !important;
-      }
-    }
-
-    .mat-mdc-form-field.mat-form-field-disabled {
-      .mat-mdc-text-field-wrapper {
-        background-color: #f5f3f7 !important;
-      }
-    }
-
-    textarea.mat-mdc-input-element {
-      min-height: 70px;
-
-      resize: vertical;
-
-      line-height: 1.5 !important;
-    }
-
-    input[type='number'].mat-mdc-input-element {
-      appearance: textfield;
-    }
-
-    input[type='number'].mat-mdc-input-element::-webkit-inner-spin-button,
-    input[type='number'].mat-mdc-input-element::-webkit-outer-spin-button {
-      margin: 0;
-      appearance: none;
-    }
-
-    .mat-mdc-form-field-text-suffix {
-      color: var(--color-text-secondary) !important;
-      font-size: 12px !important;
-    }
-
-    .mat-mdc-form-field-error {
-      font-size: 11px !important;
-    }
-
-    .assessment-select-panel {
-      overflow: hidden !important;
-
-      padding: 6px !important;
-
-      border: 1px solid var(--color-border) !important;
-      border-radius: 12px !important;
-
-      background: var(--color-white) !important;
-
-      box-shadow:
-        0 8px 24px rgba(0, 0, 0, 0.1),
-        0 2px 6px rgba(0, 0, 0, 0.05) !important;
-
-      .mat-mdc-option {
-        min-height: 42px !important;
-
-        margin: 2px 0;
-
-        border-radius: 8px !important;
-
-        color: var(--color-title) !important;
-
-        font-size: 13px !important;
-
-        transition:
-          background-color 0.15s ease,
-          color 0.15s ease;
-
-        &:hover:not(.mdc-list-item--disabled),
-        &.mat-mdc-option-active,
-        &.mdc-list-item--selected {
-          background-color: var(--color-primary-light) !important;
-          color: var(--color-primary-dark) !important;
-        }
-
-        .mdc-list-item__primary-text {
-          font-size: 13px !important;
-        }
-      }
-    }
-
-    .mat-mdc-radio-button {
-      .mdc-radio {
-        padding: 8px !important;
-      }
-
-      .mdc-radio__outer-circle {
-        border-color: var(--color-border) !important;
-      }
-
-      &.mat-mdc-radio-checked {
-        .mdc-radio__outer-circle,
-        .mdc-radio__inner-circle {
-          border-color: var(--color-primary) !important;
-        }
-      }
-    }
-
-    .edit-assessment__accordion {
-      .mat-expansion-indicator {
-        margin-left: 12px;
-
-        &::after {
-          padding: 4px !important;
-
-          border-color: currentColor !important;
-          border-width: 0 2px 2px 0 !important;
-        }
-      }
-    }
-
-    .mat-expansion-panel-body {
-      padding: 0 24px 24px !important;
-    }
-
-    .mat-expansion-panel-header .mat-ripple-element {
-      background-color: rgba(255, 255, 255, 0.12) !important;
-    }
-  }
 }
 
-// ***************** QUESTION ACCORDION *****************
-
+// ********** QUESTION ACCORDION **********
 .question-accordion {
   overflow: hidden !important;
-
   border: 1px solid var(--color-border) !important;
   border-radius: 12px !important;
-
   background: var(--color-white) !important;
-
   box-shadow: none !important;
 
   animation: fadeIn 0.2s ease;
@@ -515,24 +550,17 @@
     box-shadow 0.2s ease;
 
   &:hover {
-    border-color: color-mix(
-      in srgb,
-      var(--color-primary) 20%,
-      var(--color-border)
-    ) !important;
+    border-color: color-mix(in srgb, var(--color-primary) 20%, var(--color-border)) !important;
   }
 
   &.mat-expanded {
     border-radius: 12px !important;
   }
 
-  // ***************** QUESTION HEADER *****************
-
+  // ********** QUESTION HEADER **********
   &__header {
     min-height: 68px !important;
-
     padding: 8px 16px !important;
-
     background: var(--color-white) !important;
 
     transition:
@@ -553,28 +581,21 @@
     }
   }
 
-  // ***************** QUESTION PREVIEW *****************
-
+  // ********** QUESTION PREVIEW **********
   &__preview {
     display: block;
-
     min-width: 0;
     max-width: 650px;
-
     overflow: hidden;
-
     color: var(--color-title);
-
     font-size: 13px;
     font-weight: 600;
     line-height: 1.4;
-
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
-  // ***************** DELETE BUTTON *****************
-
+  // ********** DELETE BUTTON **********
   &__delete {
     color: var(--color-text-secondary) !important;
 
@@ -585,9 +606,7 @@
 
     &:hover {
       transform: scale(1.05);
-
       background-color: #fef2f2 !important;
-
       color: #dc2626 !important;
     }
 
@@ -597,54 +616,41 @@
   }
 }
 
-// ***************** QUESTION FORM *****************
-
+// ********** QUESTION FORM **********
 .form-section {
+  // ********** QUESTION NUMBER **********
   &__number {
     display: flex;
     align-items: center;
     justify-content: center;
-
     width: 28px;
     height: 28px;
-
     flex-shrink: 0;
-
     border-radius: 8px;
-
     background-color: var(--color-primary-light);
-
     color: var(--color-primary);
-
     font-size: 11px;
     font-weight: 700;
   }
 
+  // ********** SECTION TITLE **********
   &__title {
-    display: block;
-
     color: var(--color-title);
-
     font-size: 13px;
     font-weight: 700;
     line-height: 1.3;
   }
 }
 
-// ***************** QUESTION ITEM *****************
-
+// ********** QUESTION ITEM **********
 .question-item {
-  padding-top: 8px;
-
   background-color: var(--color-white);
 
+  // ********** QUESTION TYPE BADGE **********
   &__badge {
     flex-shrink: 0;
-
     border-radius: 999px;
-
     background-color: var(--color-primary-light);
-
     color: var(--color-primary-dark);
 
     &--essay {
@@ -659,19 +665,15 @@
   }
 }
 
-// ***************** OPTION EDITOR *****************
-
+// ********** OPTION EDITOR **********
 .options-editor {
   display: flex;
   flex-direction: column;
-
-  gap: 8px;
-
+  gap: 10px;
   width: 100%;
 }
 
-// ***************** OPTION ROW *****************
-
+// ********** OPTION ROW **********
 .option-row {
   display: grid;
 
@@ -681,68 +683,48 @@
     40px
     40px;
 
-  align-items: center;
-
+  align-items: start;
   column-gap: 10px;
-
   width: 100%;
-
   padding: 4px 0;
 
+  // ********** OPTION INDEX **********
   &__index {
     display: flex;
     align-items: center;
     justify-content: center;
-
     width: 30px;
     height: 30px;
-
+    margin-top: 28px;
     border-radius: 8px;
-
     background: var(--color-info-background);
-
     color: var(--color-progress-blue);
-
     font-size: 11px;
     font-weight: 700;
   }
 
-  &__field {
-    width: 100%;
-    min-width: 0;
-  }
-
+  // ********** CORRECT ANSWER CHECK **********
   &__check {
     display: flex;
     align-items: center;
     justify-content: center;
-
     width: 40px;
-
-    margin: 0;
-
+    margin-top: 28px;
     flex-shrink: 0;
   }
 }
 
-// ***************** ADD OPTION *****************
-
+// ********** ADD OPTION **********
 .add-option-btn {
   display: inline-flex !important;
   align-items: center;
   justify-content: center;
-
   width: fit-content;
-
   gap: 6px;
-
   margin-top: 4px;
   margin-left: 42px;
-
   border-radius: 9px !important;
-
   color: var(--color-primary-dark) !important;
-
   font-size: 12px !important;
   font-weight: 600 !important;
 
@@ -755,19 +737,14 @@
   mat-icon {
     width: 18px;
     height: 18px;
-
     margin: 0 !important;
-
     font-size: 18px;
   }
 
   &:hover {
     transform: translateY(-1px);
-
     border-color: var(--color-primary) !important;
-
     background: var(--color-primary-light) !important;
-
     color: var(--color-primary-dark) !important;
   }
 
@@ -776,11 +753,9 @@
   }
 }
 
-// ***************** ADD QUESTION *****************
-
+// ********** ADD QUESTION **********
 .add-question-button {
   height: 44px !important;
-
   border-radius: 10px !important;
 
   transition:
@@ -791,7 +766,6 @@
 
   &:hover {
     transform: translateY(-1px);
-
     box-shadow: 0 4px 10px rgba(118, 81, 168, 0.08);
   }
 
@@ -800,8 +774,7 @@
   }
 }
 
-// ***************** ANIMATION *****************
-
+// ********** ANIMATION **********
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -814,10 +787,16 @@
   }
 }
 
-// ***************** MEDIA QUERIES *****************
-
+// ********** RESPONSIVE - TABLET **********
 @media (max-width: 768px) {
   .edit-assessment {
+    // ********** FIELD LABEL **********
+    &__field-label {
+      margin-bottom: 6px;
+      font-size: 12px;
+    }
+
+    // ********** ACCORDION HEADER **********
     &__accordion-header {
       min-height: 78px !important;
       padding: 14px 16px !important;
@@ -827,13 +806,52 @@
       }
     }
 
+    // ********** ACTION BUTTONS **********
     &__cancel-button,
     &__save-button {
       width: 100%;
       min-width: 0;
     }
+
+    // ********** MATERIAL FIELD **********
+    ::ng-deep {
+      .edit-assessment__material-field {
+        .mat-mdc-text-field-wrapper {
+          border-radius: 10px !important;
+        }
+
+        .mdc-notched-outline {
+          border-radius: 10px !important;
+        }
+
+        .mdc-notched-outline__leading {
+          border-radius: 10px 0 0 10px !important;
+        }
+
+        .mdc-notched-outline__trailing {
+          border-radius: 0 10px 10px 0 !important;
+        }
+      }
+
+      // ********** TEXTAREA **********
+      .edit-assessment__textarea {
+        .mat-mdc-text-field-wrapper {
+          min-height: 116px !important;
+        }
+
+        .mat-mdc-form-field-infix {
+          min-height: 116px !important;
+          padding: 14px 12px !important;
+        }
+
+        textarea.mat-mdc-input-element {
+          min-height: 88px !important;
+        }
+      }
+    }
   }
 
+  // ********** OPTION ROW **********
   .option-row {
     grid-template-columns:
       30px
@@ -842,24 +860,34 @@
       36px;
 
     column-gap: 8px;
+
+    &__index {
+      width: 28px;
+      height: 28px;
+      margin-top: 27px;
+    }
+
+    &__check {
+      width: 36px;
+      margin-top: 27px;
+    }
   }
 
-  .option-row__index {
-    width: 28px;
-    height: 28px;
-  }
-
+  // ********** ADD OPTION **********
   .add-option-btn {
     margin-left: 38px;
   }
 
+  // ********** QUESTION PREVIEW **********
   .question-accordion__preview {
     max-width: 280px;
   }
 }
 
+// ********** RESPONSIVE - MOBILE **********
 @media (max-width: 560px) {
   .edit-assessment {
+    // ********** ACCORDION HEADER **********
     &__accordion-header {
       min-height: 72px !important;
       padding: 12px 14px !important;
@@ -868,12 +896,72 @@
         min-height: 72px !important;
       }
     }
+
+    // ********** FIELD LABEL **********
+    &__field-label {
+      margin-bottom: 6px;
+      font-size: 12px;
+    }
+
+    // ********** MATERIAL FIELD **********
+    ::ng-deep {
+      // ********** TEXTAREA **********
+      .edit-assessment__textarea {
+        .mat-mdc-text-field-wrapper {
+          min-height: 112px !important;
+          border-radius: 10px !important;
+        }
+
+        .mat-mdc-form-field-infix {
+          min-height: 112px !important;
+          padding: 13px 12px !important;
+        }
+
+        textarea.mat-mdc-input-element {
+          min-height: 84px !important;
+        }
+      }
+
+      // ********** EXPANSION PANEL BODY **********
+      .mat-expansion-panel-body {
+        padding: 0 14px 18px !important;
+      }
+
+      // ********** MATERIAL FIELD **********
+      .edit-assessment__material-field {
+        .mat-mdc-form-field-infix {
+          min-height: 54px !important;
+        }
+
+        .mat-mdc-text-field-wrapper,
+        .mdc-notched-outline {
+          border-radius: 10px !important;
+        }
+
+        .mdc-notched-outline__leading {
+          border-radius: 10px 0 0 10px !important;
+        }
+
+        .mdc-notched-outline__trailing {
+          border-radius: 0 10px 10px 0 !important;
+        }
+      }
+
+      // ********** TEXTAREA OVERRIDE **********
+      .edit-assessment__material-field.edit-assessment__textarea {
+        .mat-mdc-form-field-infix {
+          min-height: 112px !important;
+        }
+      }
+    }
   }
 
+  // ********** QUESTION PREVIEW **********
   .question-accordion__preview {
     max-width: 120px;
   }
 
+  // ********** OPTION ROW **********
   .option-row {
     grid-template-columns:
       28px
@@ -882,39 +970,21 @@
       34px;
 
     column-gap: 6px;
+
+    &__index {
+      width: 26px;
+      height: 26px;
+      margin-top: 26px;
+    }
+
+    &__check {
+      width: 34px;
+      margin-top: 26px;
+    }
   }
 
-  .option-row__index {
-    width: 26px;
-    height: 26px;
-  }
-
+  // ********** ADD OPTION **********
   .add-option-btn {
     margin-left: 34px;
-  }
-
-  ::ng-deep {
-    .edit-assessment {
-      .mat-expansion-panel-body {
-        padding: 0 14px 18px !important;
-      }
-
-      .mat-mdc-form-field-infix {
-        min-height: 54px !important;
-      }
-
-      .mat-mdc-text-field-wrapper,
-      .mdc-notched-outline {
-        border-radius: 10px !important;
-      }
-
-      .mdc-notched-outline__leading {
-        border-radius: 10px 0 0 10px !important;
-      }
-
-      .mdc-notched-outline__trailing {
-        border-radius: 0 10px 10px 0 !important;
-      }
-    }
   }
 }

@@ -14,14 +14,12 @@
       >
         <mat-icon>arrow_back</mat-icon>
       </button>
-
       <div>
         <h1
           class="m-0 text-2xl font-bold leading-[1.2] text-[var(--color-title)] max-md:text-[22px]"
         >
           Create Assessment
         </h1>
-
         <p class="mt-1 text-[13px] leading-5 text-[var(--color-text-secondary)]">
           Create a new assessment by entering the information and questions below.
         </p>
@@ -44,7 +42,6 @@
           <span class="text-base font-bold text-[var(--color-white)]">
             Assessment Information
           </span>
-
           <span class="mt-1 text-[13px] font-normal text-[var(--color-white)]">
             Enter the basic information of this assessment.
           </span>
@@ -54,86 +51,96 @@
       <!--********** CONTENT **********-->
       <div class="grid grid-cols-2 gap-5 p-1 pt-5 max-md:grid-cols-1">
         <!--********** ASSESSMENT NAME **********-->
-        <mat-form-field
-          appearance="outline"
-          hideRequiredMarker
-          class="col-span-2 w-full max-md:col-span-1"
-        >
-          <mat-label>Assessment Name</mat-label>
-
-          <input matInput formControlName="title" placeholder="Enter assessment name" />
-
-          <mat-error *ngIf="assessmentForm.get('title')?.hasError('required')">
-            Assessment name is required
-          </mat-error>
-        </mat-form-field>
+        <div class="create-assessment__field col-span-2 max-md:col-span-1">
+          <label class="create-assessment__field-label">Assessment Name</label>
+          <mat-form-field
+            appearance="outline"
+            hideRequiredMarker
+            class="create-assessment__material-field w-full"
+          >
+            <input matInput formControlName="title" placeholder="Enter assessment name" />
+            <mat-error *ngIf="assessmentForm.get('title')?.hasError('required')">
+              Assessment name is required
+            </mat-error>
+          </mat-form-field>
+        </div>
 
         <!--********** SUBJECT **********-->
-        <mat-form-field appearance="outline" hideRequiredMarker class="w-full">
-          <mat-label>Subject</mat-label>
-
-          <mat-select formControlName="subject" panelClass="assessment-select-panel">
-            <mat-option value="Mathematics">Mathematics</mat-option>
-            <mat-option value="Science">Science</mat-option>
-            <mat-option value="English">English</mat-option>
-            <mat-option value="History">History</mat-option>
-            <mat-option value="Computer Science"> Computer Science </mat-option>
-          </mat-select>
-
-          <mat-error *ngIf="assessmentForm.get('subject')?.hasError('required')">
-            Subject is required
-          </mat-error>
-        </mat-form-field>
+        <div class="create-assessment__field">
+          <label class="create-assessment__field-label">Subject</label>
+          <mat-form-field
+            appearance="outline"
+            hideRequiredMarker
+            class="create-assessment__material-field w-full"
+          >
+            <mat-select formControlName="subject" panelClass="assessment-select-panel">
+              <mat-option value="Mathematics">Mathematics</mat-option>
+              <mat-option value="Science">Science</mat-option>
+              <mat-option value="English">English</mat-option>
+              <mat-option value="History">History</mat-option>
+              <mat-option value="Computer Science">Computer Science</mat-option>
+            </mat-select>
+            <mat-error *ngIf="assessmentForm.get('subject')?.hasError('required')">
+              Subject is required
+            </mat-error>
+          </mat-form-field>
+        </div>
 
         <!--********** GRADE **********-->
-        <mat-form-field appearance="outline" hideRequiredMarker class="w-full">
-          <mat-label>Grade</mat-label>
-
-          <mat-select formControlName="grade" panelClass="assessment-select-panel">
-            <mat-option value="Grade 7">Grade 7</mat-option>
-            <mat-option value="Grade 8">Grade 8</mat-option>
-            <mat-option value="Grade 9">Grade 9</mat-option>
-            <mat-option value="Grade 10">Grade 10</mat-option>
-            <mat-option value="Grade 11">Grade 11</mat-option>
-            <mat-option value="Grade 12">Grade 12</mat-option>
-          </mat-select>
-
-          <mat-error *ngIf="assessmentForm.get('grade')?.hasError('required')">
-            Grade is required
-          </mat-error>
-        </mat-form-field>
+        <div class="create-assessment__field">
+          <label class="create-assessment__field-label">Grade</label>
+          <mat-form-field
+            appearance="outline"
+            hideRequiredMarker
+            class="create-assessment__material-field w-full"
+          >
+            <mat-select formControlName="grade" panelClass="assessment-select-panel">
+              <mat-option value="Grade 7">Grade 7</mat-option>
+              <mat-option value="Grade 8">Grade 8</mat-option>
+              <mat-option value="Grade 9">Grade 9</mat-option>
+              <mat-option value="Grade 10">Grade 10</mat-option>
+              <mat-option value="Grade 11">Grade 11</mat-option>
+              <mat-option value="Grade 12">Grade 12</mat-option>
+            </mat-select>
+            <mat-error *ngIf="assessmentForm.get('grade')?.hasError('required')">
+              Grade is required
+            </mat-error>
+          </mat-form-field>
+        </div>
 
         <!--********** DESCRIPTION **********-->
-        <mat-form-field
-          appearance="outline"
-          hideRequiredMarker
-          class="col-span-2 w-full max-md:col-span-1"
-        >
-          <mat-label>Description</mat-label>
-
-          <textarea
-            matInput
-            formControlName="description"
-            rows="4"
-            placeholder="Enter assessment description"
-          ></textarea>
-        </mat-form-field>
+        <div class="create-assessment__field col-span-2 max-md:col-span-1">
+          <label class="create-assessment__field-label">Description</label>
+          <mat-form-field
+            appearance="outline"
+            hideRequiredMarker
+            class="create-assessment__material-field create-assessment__textarea w-full"
+          >
+            <textarea
+              matInput
+              formControlName="description"
+              rows="4"
+              placeholder="Enter assessment description"
+            ></textarea>
+          </mat-form-field>
+        </div>
 
         <!--********** INSTRUCTIONS **********-->
-        <mat-form-field
-          appearance="outline"
-          hideRequiredMarker
-          class="col-span-2 w-full max-md:col-span-1"
-        >
-          <mat-label>Instructions</mat-label>
-
-          <textarea
-            matInput
-            formControlName="instructions"
-            rows="4"
-            placeholder="Enter instructions for students"
-          ></textarea>
-        </mat-form-field>
+        <div class="create-assessment__field col-span-2 max-md:col-span-1">
+          <label class="create-assessment__field-label">Instructions</label>
+          <mat-form-field
+            appearance="outline"
+            hideRequiredMarker
+            class="create-assessment__material-field create-assessment__textarea w-full"
+          >
+            <textarea
+              matInput
+              formControlName="instructions"
+              rows="4"
+              placeholder="Enter instructions for students"
+            ></textarea>
+          </mat-form-field>
+        </div>
       </div>
     </mat-expansion-panel>
 
@@ -148,7 +155,6 @@
       >
         <mat-panel-title class="!m-0 !flex !flex-col !items-start">
           <span class="text-base font-bold text-[var(--color-white)]"> Assessment Settings </span>
-
           <span class="mt-1 text-[13px] font-normal text-[var(--color-white)]">
             Configure the duration, points, and status of this assessment.
           </span>
@@ -158,45 +164,67 @@
       <!--********** CONTENT **********-->
       <div class="grid grid-cols-3 gap-5 p-1 pt-5 max-md:grid-cols-1">
         <!--********** DURATION **********-->
-        <mat-form-field appearance="outline" hideRequiredMarker class="w-full">
-          <mat-label>Duration</mat-label>
-
-          <input matInput type="number" formControlName="duration" min="1" placeholder="e.g. 60" />
-
-          <span matSuffix class="mr-2 text-[13px]"> minutes </span>
-
-          <mat-error *ngIf="assessmentForm.get('duration')?.hasError('required')">
-            Duration is required
-          </mat-error>
-        </mat-form-field>
+        <div class="create-assessment__field">
+          <label class="create-assessment__field-label">Duration</label>
+          <mat-form-field
+            appearance="outline"
+            hideRequiredMarker
+            class="create-assessment__material-field w-full"
+          >
+            <input
+              matInput
+              type="number"
+              formControlName="duration"
+              min="1"
+              placeholder="e.g. 60"
+            />
+            <span matSuffix class="mr-2 text-[13px]">minutes</span>
+            <mat-error *ngIf="assessmentForm.get('duration')?.hasError('required')">
+              Duration is required
+            </mat-error>
+          </mat-form-field>
+        </div>
 
         <!--********** TOTAL POINTS **********-->
-        <mat-form-field appearance="outline" hideRequiredMarker class="w-full">
-          <mat-label>Total Points</mat-label>
-
-          <input
-            matInput
-            type="number"
-            formControlName="totalPoints"
-            min="1"
-            placeholder="e.g. 100"
-          />
-
-          <mat-error *ngIf="assessmentForm.get('totalPoints')?.hasError('required')">
-            Total points is required
-          </mat-error>
-        </mat-form-field>
+        <div class="create-assessment__field">
+          <label class="create-assessment__field-label">Total Points</label>
+          <mat-form-field
+            appearance="outline"
+            hideRequiredMarker
+            class="create-assessment__material-field w-full"
+          >
+            <input
+              matInput
+              type="number"
+              formControlName="totalPoints"
+              min="1"
+              placeholder="e.g. 100"
+            />
+            <mat-error *ngIf="assessmentForm.get('totalPoints')?.hasError('required')">
+              Total points is required
+            </mat-error>
+          </mat-form-field>
+        </div>
 
         <!--********** STATUS **********-->
-        <mat-form-field appearance="outline" hideRequiredMarker class="w-full">
-          <mat-label>Status</mat-label>
-
-          <mat-select formControlName="status" panelClass="assessment-select-panel">
-            <mat-option value="Draft">Draft</mat-option>
-            <mat-option value="Published">Published</mat-option>
-            <mat-option value="Archived">Archived</mat-option>
-          </mat-select>
-        </mat-form-field>
+        <div class="create-assessment__field">
+          <label class="create-assessment__field-label">Status</label>
+          <mat-form-field
+            appearance="outline"
+            hideRequiredMarker
+            class="create-assessment__material-field w-full"
+          >
+            <mat-select
+              formControlName="status"
+              panelClass="assessment-select-panel"
+              placeholder="Select status"
+            >
+              <mat-option value="Draft">Draft</mat-option>
+              <mat-option value="Published">Published</mat-option>
+              <mat-option value="Archived">Archived</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
       </div>
     </mat-expansion-panel>
 
@@ -205,7 +233,6 @@
       <!--********** TITLE **********-->
       <div class="mb-4">
         <h2 class="m-0 text-base font-bold text-[var(--color-title)]">Assessment Type</h2>
-
         <p class="mt-1 text-[13px] text-[var(--color-text-secondary)]">
           Choose the type of question you want to create.
         </p>
@@ -223,17 +250,14 @@
           <div
             class="type-card__icon type-card__icon--amber flex h-11 w-11 shrink-0 items-center justify-center rounded-[10px]"
           >
-            <mat-icon class="!h-5 !w-5 !text-xl"> edit_note </mat-icon>
+            <mat-icon class="!h-5 !w-5 !text-xl">edit_note</mat-icon>
           </div>
-
           <div class="type-card__text flex min-w-0 flex-1 flex-col gap-px">
-            <span class="type-card__label text-sm font-semibold"> Essay </span>
-
+            <span class="type-card__label text-sm font-semibold">Essay</span>
             <span class="type-card__desc text-[11.5px]"> Open-ended written answer </span>
           </div>
-
           @if (selectedType === 'essay') {
-            <mat-icon class="type-card__check shrink-0"> check_circle </mat-icon>
+            <mat-icon class="type-card__check shrink-0">check_circle</mat-icon>
           }
         </button>
 
@@ -247,17 +271,14 @@
           <div
             class="type-card__icon type-card__icon--blue flex h-11 w-11 shrink-0 items-center justify-center rounded-[10px]"
           >
-            <mat-icon class="!h-5 !w-5 !text-xl"> checklist </mat-icon>
+            <mat-icon class="!h-5 !w-5 !text-xl">checklist</mat-icon>
           </div>
-
           <div class="type-card__text flex min-w-0 flex-1 flex-col gap-px">
             <span class="type-card__label text-sm font-semibold"> Multiple Choice </span>
-
             <span class="type-card__desc text-[11.5px]"> Select one correct answer </span>
           </div>
-
           @if (selectedType === 'multiple_choice') {
-            <mat-icon class="type-card__check shrink-0"> check_circle </mat-icon>
+            <mat-icon class="type-card__check shrink-0">check_circle</mat-icon>
           }
         </button>
       </div>
@@ -272,9 +293,8 @@
         <div
           class="empty-state__icon flex h-16 w-16 items-center justify-center rounded-full bg-[var(--color-primary-light)] text-[var(--color-primary)]"
         >
-          <mat-icon class="!h-[28px] !w-[28px] !text-[28px]"> quiz </mat-icon>
+          <mat-icon class="!h-[28px] !w-[28px] !text-[28px]">quiz</mat-icon>
         </div>
-
         <p
           class="empty-state__text m-0 max-w-[360px] text-[14px] leading-[1.5] text-[var(--color-text-secondary)]"
         >
@@ -295,12 +315,10 @@
           <div
             class="form-card__header-icon form-card__header-icon--amber flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-xl"
           >
-            <mat-icon> edit_note </mat-icon>
+            <mat-icon>edit_note</mat-icon>
           </div>
-
           <div class="min-w-0 flex-1">
             <h2 class="m-0 text-[17px] font-bold text-[var(--color-title)]">Essay Question</h2>
-
             <p class="mt-0.5 mb-0 text-[12.5px] text-[var(--color-text-secondary)]">
               Create an open-ended written question.
             </p>
@@ -309,39 +327,40 @@
 
         <!--********** QUESTION FORM **********-->
         <div class="assessment-form flex flex-col gap-5">
+          <!--********** QUESTION **********-->
           <div class="form-section">
             <div class="form-section__header">
-              <span class="form-section__number"> 1 </span>
-
+              <span class="form-section__number">1</span>
               <div>
-                <span class="form-section__title"> Question </span>
-
+                <span class="form-section__title">Question</span>
                 <span class="form-section__description">
                   Write the question students need to answer.
                 </span>
               </div>
             </div>
 
-            <mat-form-field appearance="outline" class="w-full">
-              <mat-label> Question Text </mat-label>
-
-              <textarea
-                matInput
-                rows="5"
-                formControlName="questionText"
-                placeholder="Write your essay question here..."
-              ></textarea>
-            </mat-form-field>
+            <div class="create-assessment__field">
+              <label class="create-assessment__field-label">Question Text</label>
+              <mat-form-field
+                appearance="outline"
+                class="create-assessment__material-field create-assessment__textarea w-full"
+              >
+                <textarea
+                  matInput
+                  rows="5"
+                  formControlName="questionText"
+                  placeholder="Write your essay question here..."
+                ></textarea>
+              </mat-form-field>
+            </div>
           </div>
 
           <!--********** ESSAY SETTINGS **********-->
           <div class="form-section">
             <div class="form-section__header">
-              <span class="form-section__number"> 2 </span>
-
+              <span class="form-section__number">2</span>
               <div>
-                <span class="form-section__title"> Question Settings </span>
-
+                <span class="form-section__title">Question Settings</span>
                 <span class="form-section__description">
                   Configure the answer requirements and score.
                 </span>
@@ -349,21 +368,218 @@
             </div>
 
             <div class="grid grid-cols-2 gap-4 max-[560px]:grid-cols-1">
-              <mat-form-field appearance="outline" class="w-full">
-                <mat-label> Max Word </mat-label>
+              <!--********** MAX WORD **********-->
+              <div class="create-assessment__field">
+                <label class="create-assessment__field-label">Max Word</label>
+                <mat-form-field
+                  appearance="outline"
+                  class="create-assessment__material-field w-full"
+                >
+                  <input
+                    matInput
+                    type="number"
+                    formControlName="maxWord"
+                    min="1"
+                    placeholder="e.g. 300"
+                  />
+                </mat-form-field>
+              </div>
 
-                <input
+              <!--********** TOTAL SCORE **********-->
+              <div class="create-assessment__field">
+                <label class="create-assessment__field-label">Total Score</label>
+                <mat-form-field
+                  appearance="outline"
+                  class="create-assessment__material-field w-full"
+                >
+                  <input
+                    matInput
+                    type="number"
+                    formControlName="questionPoints"
+                    min="1"
+                    placeholder="e.g. 10"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--********** ACTIONS **********-->
+        <div
+          class="form-card__actions mt-6 flex justify-end gap-3 border-t border-[var(--color-border)] pt-5 max-[560px]:flex-col-reverse"
+        >
+          <button
+            mat-stroked-button
+            type="button"
+            class="create-assessment__cancel-button max-[560px]:w-full"
+            (click)="cancelQuestion()"
+          >
+            Cancel
+          </button>
+          <button
+            mat-flat-button
+            type="button"
+            class="create-assessment__save-button max-[560px]:w-full"
+            (click)="addQuestion()"
+          >
+            <mat-icon>add</mat-icon>
+            <span>Add Question</span>
+          </button>
+        </div>
+      </mat-card>
+    }
+
+    <!--********** MULTIPLE CHOICE QUESTION **********-->
+    @if (selectedType === 'multiple_choice') {
+      <mat-card
+        class="form-card !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-7 max-md:!p-4"
+      >
+        <!--********** HEADER **********-->
+        <div
+          class="form-card__header mb-6 flex items-center gap-[14px] border-b border-[var(--color-border)] pb-5"
+        >
+          <div
+            class="form-card__header-icon form-card__header-icon--blue flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-xl"
+          >
+            <mat-icon>checklist</mat-icon>
+          </div>
+          <div class="min-w-0 flex-1">
+            <h2 class="m-0 text-[17px] font-bold text-[var(--color-title)]">
+              Multiple Choice Question
+            </h2>
+            <p class="mt-0.5 mb-0 text-[12.5px] text-[var(--color-text-secondary)]">
+              Select one correct answer from the available options.
+            </p>
+          </div>
+        </div>
+
+        <!--********** QUESTION FORM **********-->
+        <div class="assessment-form flex flex-col gap-5">
+          <!--********** QUESTION **********-->
+          <div class="form-section">
+            <div class="form-section__header">
+              <span class="form-section__number">1</span>
+              <div>
+                <span class="form-section__title">Question</span>
+                <span class="form-section__description">
+                  Write the question students need to answer.
+                </span>
+              </div>
+            </div>
+
+            <div class="create-assessment__field">
+              <label class="create-assessment__field-label">Question Text</label>
+              <mat-form-field
+                appearance="outline"
+                class="create-assessment__material-field create-assessment__textarea w-full"
+              >
+                <textarea
                   matInput
-                  type="number"
-                  formControlName="maxWord"
-                  min="1"
-                  placeholder="e.g. 300"
-                />
+                  rows="4"
+                  formControlName="questionText"
+                  placeholder="Write your question here..."
+                ></textarea>
               </mat-form-field>
+            </div>
+          </div>
 
-              <mat-form-field appearance="outline" class="w-full">
-                <mat-label> Total Score </mat-label>
+          <!--********** ANSWER OPTIONS **********-->
+          <div class="form-section">
+            <div class="form-section__header">
+              <span class="form-section__number">2</span>
 
+              <div>
+                <span class="form-section__title">Answer Options</span>
+                <span class="form-section__description">
+                  Add possible answers and mark one as correct.
+                </span>
+              </div>
+            </div>
+
+            <div class="answer-options-editor" formArrayName="options">
+              @for (option of options.controls; track option; let optionIndex = $index) {
+                <div
+                  class="answer-option-row"
+                  [class.answer-option-row--correct]="correctOptionIndex === optionIndex"
+                >
+                  <!--********** OPTION NUMBER **********-->
+                  <span class="answer-option-row__index">
+                    {{ optionIndex + 1 }}
+                  </span>
+
+                  <!--********** OPTION FIELD **********-->
+                  <div class="create-assessment__field answer-option-row__field">
+                    <label class="create-assessment__field-label">
+                      Option {{ optionIndex + 1 }}
+                    </label>
+
+                    <mat-form-field
+                      appearance="outline"
+                      class="create-assessment__material-field w-full"
+                    >
+                      <input
+                        matInput
+                        [formControlName]="optionIndex"
+                        placeholder="Write answer option..."
+                      />
+                    </mat-form-field>
+                  </div>
+
+                  <!--********** CORRECT ANSWER **********-->
+                  <div
+                    class="answer-option-row__correct"
+                    [class.answer-option-row__correct--active]="correctOptionIndex === optionIndex"
+                  >
+                    <mat-radio-button
+                      class="answer-option-row__radio"
+                      [checked]="correctOptionIndex === optionIndex"
+                      (change)="setCorrectOption(optionIndex)"
+                      [value]="optionIndex"
+                      [attr.aria-label]="'Mark option ' + (optionIndex + 1) + ' as correct'"
+                    >
+                    </mat-radio-button>
+
+                    @if (correctOptionIndex === optionIndex) {
+                      <span class="answer-option-row__correct-label"> Correct </span>
+                    }
+                  </div>
+
+                  <!--********** DELETE OPTION **********-->
+                  <button
+                    mat-icon-button
+                    type="button"
+                    class="answer-option-row__delete"
+                    [disabled]="options.length <= 2"
+                    (click)="removeOption(optionIndex)"
+                    aria-label="Remove option"
+                  >
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </div>
+              }
+
+              <!--********** ADD OPTION **********-->
+              <button mat-stroked-button type="button" class="add-option-btn" (click)="addOption()">
+                <mat-icon>add</mat-icon>
+                <span>Add Option</span>
+              </button>
+            </div>
+          </div>
+          
+          <!--********** SCORING **********-->
+          <div class="form-section">
+            <div class="form-section__header">
+              <span class="form-section__number">3</span>
+              <div>
+                <span class="form-section__title">Scoring</span>
+                <span class="form-section__description"> Set the score for this question. </span>
+              </div>
+            </div>
+
+            <div class="create-assessment__field w-full max-w-[220px] max-[560px]:max-w-full">
+              <label class="create-assessment__field-label">Maximum Points</label>
+              <mat-form-field appearance="outline" class="create-assessment__material-field w-full">
                 <input
                   matInput
                   type="number"
@@ -388,197 +604,14 @@
           >
             Cancel
           </button>
-
           <button
             mat-flat-button
             type="button"
             class="create-assessment__save-button max-[560px]:w-full"
             (click)="addQuestion()"
           >
-            <mat-icon> add </mat-icon>
-
-            <span> Add Question </span>
-          </button>
-        </div>
-      </mat-card>
-    }
-
-    <!--********** MULTIPLE CHOICE QUESTION **********-->
-    @if (selectedType === 'multiple_choice') {
-      <mat-card
-        class="form-card !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-7 max-md:!p-4"
-      >
-        <!--********** HEADER **********-->
-        <div
-          class="form-card__header mb-6 flex items-center gap-[14px] border-b border-[var(--color-border)] pb-5"
-        >
-          <div
-            class="form-card__header-icon form-card__header-icon--blue flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-xl"
-          >
-            <mat-icon> checklist </mat-icon>
-          </div>
-
-          <div class="min-w-0 flex-1">
-            <h2 class="m-0 text-[17px] font-bold text-[var(--color-title)]">
-              Multiple Choice Question
-            </h2>
-
-            <p class="mt-0.5 mb-0 text-[12.5px] text-[var(--color-text-secondary)]">
-              Select one correct answer from the available options.
-            </p>
-          </div>
-        </div>
-
-        <!--********** QUESTION FORM **********-->
-        <div class="assessment-form flex flex-col gap-5">
-          <div class="form-section">
-            <div class="form-section__header">
-              <span class="form-section__number"> 1 </span>
-
-              <div>
-                <span class="form-section__title"> Question </span>
-
-                <span class="form-section__description">
-                  Write the question students need to answer.
-                </span>
-              </div>
-            </div>
-
-            <mat-form-field appearance="outline" class="w-full">
-              <mat-label> Question Text </mat-label>
-
-              <textarea
-                matInput
-                rows="4"
-                formControlName="questionText"
-                placeholder="Write your question here..."
-              ></textarea>
-            </mat-form-field>
-          </div>
-
-          <!--********** ANSWER OPTIONS **********-->
-          <div class="form-section">
-            <div class="form-section__header">
-              <span class="form-section__number"> 2 </span>
-
-              <div>
-                <span class="form-section__title"> Answer Options </span>
-
-                <span class="form-section__description">
-                  Add possible answers and mark one as correct.
-                </span>
-              </div>
-            </div>
-
-            <div class="answer-options-editor" formArrayName="options">
-              @for (option of options.controls; track option; let optionIndex = $index) {
-                <div class="answer-option-row">
-                  <span class="answer-option-row__index">
-                    {{ optionIndex + 1 }}
-                  </span>
-
-                  <mat-form-field appearance="outline" class="answer-option-row__field">
-                    <mat-label> Option {{ optionIndex + 1 }} </mat-label>
-
-                    <input
-                      matInput
-                      [formControlName]="optionIndex"
-                      placeholder="Write answer option..."
-                    />
-                  </mat-form-field>
-
-                  <!--********** CORRECT ANSWER **********-->
-                  <div
-                    class="answer-option-row__correct"
-                    [class.answer-option-row__correct--active]="correctOptionIndex === optionIndex"
-                  >
-                    <mat-radio-button
-                      class="answer-option-row__radio"
-                      [checked]="correctOptionIndex === optionIndex"
-                      (change)="setCorrectOption(optionIndex)"
-                      [value]="optionIndex"
-                      [attr.aria-label]="'Mark option ' + (optionIndex + 1) + ' as correct'"
-                    >
-                    </mat-radio-button>
-
-                    @if (correctOptionIndex === optionIndex) {
-                      <span class="answer-option-row__correct-label"> Correct </span>
-                    }
-                  </div>
-
-                  <button
-                    mat-icon-button
-                    type="button"
-                    class="answer-option-row__delete"
-                    [disabled]="options.length <= 2"
-                    (click)="removeOption(optionIndex)"
-                    aria-label="Remove option"
-                  >
-                    <mat-icon> close </mat-icon>
-                  </button>
-                </div>
-              }
-
-              <!--********** ADD OPTION **********-->
-              <button mat-stroked-button type="button" class="add-option-btn" (click)="addOption()">
-                <mat-icon> add </mat-icon>
-
-                <span> Add Option </span>
-              </button>
-            </div>
-          </div>
-
-          <!--********** SCORING **********-->
-          <div class="form-section">
-            <div class="form-section__header">
-              <span class="form-section__number"> 3 </span>
-
-              <div>
-                <span class="form-section__title"> Scoring </span>
-
-                <span class="form-section__description"> Set the score for this question. </span>
-              </div>
-            </div>
-
-            <mat-form-field
-              appearance="outline"
-              class="w-full max-w-[220px] max-[560px]:max-w-full"
-            >
-              <mat-label> Maximum Points </mat-label>
-
-              <input
-                matInput
-                type="number"
-                formControlName="questionPoints"
-                min="1"
-                placeholder="e.g. 10"
-              />
-            </mat-form-field>
-          </div>
-        </div>
-
-        <!--********** ACTIONS **********-->
-        <div
-          class="form-card__actions mt-6 flex justify-end gap-3 border-t border-[var(--color-border)] pt-5 max-[560px]:flex-col-reverse"
-        >
-          <button
-            mat-stroked-button
-            type="button"
-            class="create-assessment__cancel-button max-[560px]:w-full"
-            (click)="cancelQuestion()"
-          >
-            Cancel
-          </button>
-
-          <button
-            mat-flat-button
-            type="button"
-            class="create-assessment__save-button max-[560px]:w-full"
-            (click)="addQuestion()"
-          >
-            <mat-icon> add </mat-icon>
-
-            <span> Add Question </span>
+            <mat-icon>add</mat-icon>
+            <span>Add Question</span>
           </button>
         </div>
       </mat-card>
@@ -590,7 +623,6 @@
         <div class="created-questions__header mb-4">
           <div>
             <h2 class="m-0 text-base font-bold text-[var(--color-title)]">Questions</h2>
-
             <p class="mt-1 text-[13px] text-[var(--color-text-secondary)]">
               Questions added to this assessment.
             </p>
@@ -613,10 +645,8 @@
                   >
                     {{ questionTypeLabel(question.type) }}
                   </span>
-
                   <span class="created-question__points"> {{ question.points }} pts </span>
                 </div>
-
                 <p class="created-question__text">
                   {{ question.text }}
                 </p>
@@ -629,7 +659,7 @@
                 (click)="removeCreatedQuestion(qi)"
                 aria-label="Remove question"
               >
-                <mat-icon> delete </mat-icon>
+                <mat-icon>delete</mat-icon>
               </button>
             </div>
           }
@@ -639,7 +669,7 @@
 
     <!--********** FORM ACTIONS **********-->
     <div
-      class="create-assessment__actions mt-6 flex items-center justify-end gap-3 border-t border-[var(--color-border)] pt-5 max-md:flex-col-reverse"
+      class="create-assessment__actions mt-6 flex items-center justify-center gap-3 border-t border-[var(--color-border)] pt-5 max-md:flex-col-reverse"
     >
       <button
         type="button"
@@ -649,15 +679,12 @@
       >
         Cancel
       </button>
-
       <button
         type="submit"
         mat-flat-button
         class="create-assessment__save-button !h-11 !px-7 max-md:!w-full"
       >
-        <mat-icon> save </mat-icon>
-
-        <span> Create Assessment </span>
+        <span>Create Assessment</span>
       </button>
     </div>
   </form>
