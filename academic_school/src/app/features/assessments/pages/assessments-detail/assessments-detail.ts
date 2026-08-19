@@ -9,8 +9,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 
 // ********** APPLICATION MODELS AND SETTINGS IMPORTS **********
-import { ASSESSMENTS } from '../../assessment.data';
+import { Assessment } from '../assessments-list/assessment.list.model';
 import { StudentReview } from '../assessments-review-scoring/assessment-review-scoring.model';
+import { AssessmentService } from '../../services/assessment.service';
 
 @Component({
   selector: 'app-assessments-detail',
@@ -18,15 +19,17 @@ import { StudentReview } from '../assessments-review-scoring/assessment-review-s
   templateUrl: './assessments-detail.html',
   styleUrls: ['./assessments-detail.scss'],
 })
+
 export class AssessmentsDetail {
   // ********** PRIVATE VARIABLES **********
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly assessmentService = inject(AssessmentService);
 
   // ********** PUBLIC STATE VARIABLES **********
-  assessment?: (typeof ASSESSMENTS)[number];
-
+  assessment?: Assessment;
   isStudentDetail = false;
+  searchQuery = '';
 
   studentsByAssessment: Record<number, StudentReview[]> = {
     1: [
@@ -229,7 +232,7 @@ export class AssessmentsDetail {
   };
 
   students: StudentReview[] = [];
-
+  filteredStudents: StudentReview[] = [];
   student?: StudentReview;
 
   answers = [
@@ -265,60 +268,70 @@ export class AssessmentsDetail {
     },
   ];
 
+  // ********** LIFECYCLE **********
   ngOnInit(): void {
     const assessmentId = Number(this.route.snapshot.paramMap.get('id'));
+
     const studentIdParam = this.route.snapshot.paramMap.get('studentId');
 
-    // ********** INIT / LOAD DATA **********
-    this.assessment = ASSESSMENTS.find(
-      (assessment) => assessment.id === assessmentId,
-    );
-
+    // ********** LOAD DATA / INIT **********
+    this.assessment = this.assessmentService.getAssessmentById(assessmentId);
     this.students = this.studentsByAssessment[assessmentId] ?? [];
-
+    this.filteredStudents = [...this.students];
     this.isStudentDetail = studentIdParam !== null;
-
     if (studentIdParam !== null) {
       const studentId = Number(studentIdParam);
-
-      this.student = this.students.find(
-        (student) => student.id === studentId,
-      );
+      this.student = this.students.find((student) => student.id === studentId);
     }
+  }
+
+  // ********** ACTION HANDLER **********
+  onSearch(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.searchQuery = input.value;
+    this.filterStudents();
+  }
+
+  private filterStudents(): void {
+    const query = this.searchQuery.trim().toLowerCase();
+    if (!query) {
+      this.filteredStudents = [...this.students];
+      return;
+    }
+
+    this.filteredStudents = this.students.filter((student) => {
+      return (
+        student.studentName.toLowerCase().includes(query) ||
+        student.studentId.toLowerCase().includes(query) ||
+        student.className.toLowerCase().includes(query) ||
+        student.email.toLowerCase().includes(query) ||
+        student.status.toLowerCase().includes(query)
+      );
+    });
+  }
+
+  clearSearch(): void {
+    this.searchQuery = '';
+    this.filteredStudents = [...this.students];
   }
 
   // ********** ACTION HANDLERS **********
   onStudentClick(student: StudentReview): void {
     const assessmentId = this.route.snapshot.paramMap.get('id');
-
-    this.router.navigate([
-      '/assessments',
-      assessmentId,
-      'submissions',
-      student.id,
-    ]);
+    this.router.navigate(['/assessments', assessmentId, 'submissions', student.id]);
   }
 
   onBack(): void {
     const assessmentId = this.route.snapshot.paramMap.get('id');
-
     if (this.isStudentDetail) {
-      this.router.navigate([
-        '/assessments',
-        assessmentId,
-        'submissions',
-      ]);
-
+      this.router.navigate(['/assessments', assessmentId, 'submissions']);
       return;
     }
-
     this.router.navigate(['/assessments/review-scoring']);
   }
 
   // ********** UTILITY METHODS **********
   statusClass(status: string): string {
-    return `review-status review-status--${status
-      .toLowerCase()
-      .replaceAll(' ', '-')}`;
+    return `review-status review-status--${status.toLowerCase().replaceAll(' ', '-')}`;
   }
 }

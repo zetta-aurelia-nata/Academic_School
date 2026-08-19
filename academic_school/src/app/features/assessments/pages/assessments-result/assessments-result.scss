@@ -71,19 +71,19 @@
 .result-select {
   width: 320px;
   margin: 0;
-}
 
-// ********** ASSESSMENT SELECT VALUE **********
-.assessment-select__value {
-  display: block;
-  max-width: 260px;
-  overflow: hidden;
-  color: var(--color-title);
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 20px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  // ********** SELECT VALUE **********
+  .assessment-select__value {
+    display: block;
+    max-width: 260px;
+    overflow: hidden;
+    color: var(--color-title);
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
 
 // ********** ASSESSMENT OPTION **********
@@ -93,6 +93,7 @@
   width: 100%;
   min-width: 0;
 
+  // ********** OPTION TITLE **********
   &__title {
     display: block;
     width: 100%;
@@ -119,10 +120,40 @@
 }
 
 // ********** MATERIAL SELECT OVERRIDES **********
-::ng-deep .result-select .mat-mdc-select-trigger {
-  padding: 0 16px !important;
+::ng-deep .result-select {
+  // ********** SELECT WRAPPER **********
+  .mat-mdc-text-field-wrapper {
+    overflow: hidden !important;
+    border-radius: 10px !important;
+  }
+
+  // ********** SELECT FLEX **********
+  .mat-mdc-form-field-flex {
+    border-radius: 10px !important;
+  }
+
+  // ********** SELECT TRIGGER **********
+  .mat-mdc-select-trigger {
+    padding: 0 16px !important;
+  }
+
+  // ********** SELECT OUTLINE **********
+  .mdc-notched-outline {
+    border-radius: 10px !important;
+  }
+
+  // ********** OUTLINE LEADING **********
+  .mdc-notched-outline__leading {
+    border-radius: 10px 0 0 10px !important;
+  }
+
+  // ********** OUTLINE TRAILING **********
+  .mdc-notched-outline__trailing {
+    border-radius: 0 10px 10px 0 !important;
+  }
 }
 
+// ********** MATERIAL SELECT PANEL **********
 ::ng-deep .mat-mdc-select-panel {
   min-width: 270px !important;
   padding: 6px 0 !important;
@@ -368,6 +399,7 @@
 
 // ********** TOTAL SCORE **********
 .total-score {
+  // ********** LABEL **********
   &__label {
     display: block;
     color: var(--color-text-secondary);
@@ -378,6 +410,7 @@
     letter-spacing: 0.5px;
   }
 
+  // ********** VALUE **********
   &__value {
     color: var(--color-primary-dark);
     font-size: 24px;
@@ -385,6 +418,7 @@
     line-height: 30px;
   }
 
+  // ********** MAXIMUM **********
   &__max {
     color: var(--color-text-secondary);
     font-size: 14px;
@@ -401,6 +435,48 @@
 // ********** PUBLISH DIALOG **********
 .publish-dialog {
   animation: publish-dialog-enter 0.2s ease-out;
+}
+
+// ********** TEACHER COMMENT **********
+.teacher-comment {
+  width: 100%;
+
+  // ********** COMMENT INPUT **********
+  &__input {
+    box-sizing: border-box;
+    min-height: 72px;
+    resize: vertical;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease,
+      background-color 0.2s ease;
+
+    // ********** PLACEHOLDER **********
+    &::placeholder {
+      color: var(--color-text-secondary);
+      opacity: 0.7;
+    }
+
+    // ********** HOVER **********
+    &:hover:not(:disabled) {
+      border-color: var(--color-primary) !important;
+    }
+
+    // ********** FOCUS **********
+    &:focus {
+      border-color: var(--color-primary) !important;
+      box-shadow: 0 0 0 3px var(--color-primary-light);
+      outline: none;
+    }
+
+    // ********** DISABLED **********
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+      resize: none;
+      background-color: var(--color-background-content) !important;
+    }
+  }
 }
 
 // ********** PUBLISH DIALOG ANIMATION **********
@@ -434,7 +510,7 @@
     width: 100%;
   }
 
-  .assessment-select__value {
+  .result-select .assessment-select__value {
     max-width: 100%;
   }
 

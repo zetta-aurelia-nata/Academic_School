@@ -9,7 +9,6 @@
       <h1 class="m-0 text-2xl font-bold leading-[1.2] tracking-[-0.3px] text-[var(--color-title)]">
         Assessment Result
       </h1>
-
       <p class="m-0 mt-1 text-[13px] text-[var(--color-text-secondary)]">
         Review, score, and publish student results
       </p>
@@ -140,8 +139,7 @@
     *ngIf="successMessage"
     class="mb-4 flex items-center gap-2 rounded-[10px] border border-[var(--color-status-completed-border)] bg-[var(--color-status-completed-background)] px-4 py-3 text-[12px] font-semibold text-[var(--color-status-completed)]"
   >
-    <mat-icon class="!h-5 !w-5 !text-[20px]"> check_circle </mat-icon>
-
+    <mat-icon class="!h-5 !w-5 !text-[20px]">check_circle</mat-icon>
     {{ successMessage }}
   </div>
 
@@ -200,7 +198,7 @@
 
           <!--********** STUDENT SCORE **********-->
           <div class="result-student__score">
-            <span class="result-student__score-label"> Score </span>
+            <span class="result-student__score-label">Score</span>
 
             <span class="result-student__score-value">
               {{ student.score }}/{{ student.maxScore }}
@@ -211,7 +209,6 @@
           <div class="result-student__status">
             <span [ngClass]="statusClass(student.status)" class="result-status">
               <span class="result-status__dot"></span>
-
               {{ student.status }}
             </span>
           </div>
@@ -327,6 +324,30 @@
               <p class="m-0 mt-1 text-[12px] leading-[1.5] text-[var(--color-title)]">
                 {{ answer.answer }}
               </p>
+            </div>
+
+            <!--********** TEACHER COMMENT **********-->
+            <div class="teacher-comment mt-4">
+              <!--********** COMMENT LABEL **********-->
+              <label
+                class="mb-1.5 block text-[10px] font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]"
+              >
+                Teacher Comment
+              </label>
+
+              <!--********** COMMENT INPUT **********-->
+              <textarea
+                [(ngModel)]="answer.teacherComment"
+                [disabled]="currentResultState.locked"
+                rows="3"
+                placeholder="Write feedback for this answer..."
+                class="teacher-comment__input w-full rounded-[9px] border border-[var(--color-border)] bg-[var(--color-white)] px-3 py-2.5 text-[12px] leading-[1.5] text-[var(--color-title)] outline-none"
+              ></textarea>
+
+              <!--********** COMMENT HINT **********-->
+              <span class="mt-1 block text-[10px] text-[var(--color-text-secondary)]">
+                Give feedback to help the student understand their score.
+              </span>
             </div>
           </div>
 

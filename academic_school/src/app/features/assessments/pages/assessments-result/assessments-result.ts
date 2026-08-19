@@ -1,6 +1,6 @@
 //********** ANGULAR IMPORTS **********
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 //********** ANGULAR MATERIAL IMPORTS **********
@@ -9,8 +9,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 
-//********** APPLICATION MODELS AND SETTINGS IMPORTS **********
-import { ASSESSMENTS } from '../../assessment.data';
+//********** APPLICATION MODELS AND SERVICES IMPORTS **********
+import { AssessmentService } from '../../services/assessment.service';
 import { Assessment } from '../assessments-list/assessment.list.model';
 
 interface EssayAnswer {
@@ -18,6 +18,7 @@ interface EssayAnswer {
   answer: string;
   maxScore: number;
   score: number;
+  teacherComment: string;
 }
 
 interface ResultStudent {
@@ -40,6 +41,7 @@ interface AssessmentResult {
 
 @Component({
   selector: 'app-assessments-result',
+  standalone: true,
   imports: [
     CommonModule,
     FormsModule,
@@ -51,7 +53,10 @@ interface AssessmentResult {
   templateUrl: './assessments-result.html',
   styleUrl: './assessments-result.scss',
 })
-export class AssessmentsResult {
+export class AssessmentsResult implements OnInit {
+  //********** PRIVATE SERVICES **********
+  private readonly assessmentService = inject(AssessmentService);
+
   //********** VIEW CHILD REFERENCES **********
   @ViewChild('publishDialog')
   publishDialog?: ElementRef<HTMLElement>;
@@ -63,10 +68,11 @@ export class AssessmentsResult {
   private publishTrigger: HTMLElement | null = null;
 
   //********** PUBLIC STATE VARIABLES **********
-  assessments: Assessment[] = ASSESSMENTS;
+  assessments: Assessment[] = [];
 
   selectedAssessmentId = 1;
 
+  //********** STUDENT RESULT DATA **********
   studentsByAssessment: Record<number, ResultStudent[]> = {
     1: [
       {
@@ -84,30 +90,35 @@ export class AssessmentsResult {
             answer: '25',
             maxScore: 20,
             score: 20,
+            teacherComment: '',
           },
           {
             question: 'What is the square root of 81?',
             answer: '9',
             maxScore: 20,
             score: 20,
+            teacherComment: '',
           },
           {
             question: 'Solve: 12 + 18',
             answer: '30',
             maxScore: 20,
             score: 20,
+            teacherComment: '',
           },
           {
             question: 'What is 100 ÷ 4?',
             answer: '25',
             maxScore: 20,
             score: 20,
+            teacherComment: '',
           },
           {
             question: 'Solve: 15 × 3',
             answer: '45',
             maxScore: 20,
             score: 12,
+            teacherComment: '',
           },
         ],
       },
@@ -126,30 +137,35 @@ export class AssessmentsResult {
             answer: '25',
             maxScore: 20,
             score: 20,
+            teacherComment: '',
           },
           {
             question: 'What is the square root of 81?',
             answer: '8',
             maxScore: 20,
             score: 10,
+            teacherComment: '',
           },
           {
             question: 'Solve: 12 + 18',
             answer: '30',
             maxScore: 20,
             score: 20,
+            teacherComment: '',
           },
           {
             question: 'What is 100 ÷ 4?',
             answer: '20',
             maxScore: 20,
             score: 8,
+            teacherComment: '',
           },
           {
             question: 'Solve: 15 × 3',
             answer: '40',
             maxScore: 20,
             score: 20,
+            teacherComment: '',
           },
         ],
       },
@@ -168,30 +184,35 @@ export class AssessmentsResult {
             answer: '25',
             maxScore: 20,
             score: 20,
+            teacherComment: '',
           },
           {
             question: 'What is the square root of 81?',
             answer: '9',
             maxScore: 20,
             score: 20,
+            teacherComment: '',
           },
           {
             question: 'Solve: 12 + 18',
             answer: '30',
             maxScore: 20,
             score: 18,
+            teacherComment: '',
           },
           {
             question: 'What is 100 ÷ 4?',
             answer: '25',
             maxScore: 20,
             score: 20,
+            teacherComment: '',
           },
           {
             question: 'Solve: 15 × 3',
             answer: '45',
             maxScore: 20,
             score: 10,
+            teacherComment: '',
           },
         ],
       },
@@ -207,7 +228,6 @@ export class AssessmentsResult {
         answers: [],
       },
     ],
-
     2: [
       {
         id: 1,
@@ -225,6 +245,7 @@ export class AssessmentsResult {
               'The story focuses on friendship, growth, and how people overcome challenges together.',
             maxScore: 25,
             score: 22,
+            teacherComment: '',
           },
           {
             question: 'Describe the main character.',
@@ -232,6 +253,7 @@ export class AssessmentsResult {
               'The main character is determined and learns from the challenges throughout the story.',
             maxScore: 25,
             score: 21,
+            teacherComment: '',
           },
           {
             question: 'What lesson can be learned from the story?',
@@ -239,6 +261,7 @@ export class AssessmentsResult {
               'The story teaches us that persistence and cooperation can help us overcome difficulties.',
             maxScore: 25,
             score: 22,
+            teacherComment: '',
           },
           {
             question: 'Give your personal opinion about the story.',
@@ -246,6 +269,7 @@ export class AssessmentsResult {
               'I think the story is meaningful because the characters develop through their experiences.',
             maxScore: 25,
             score: 20,
+            teacherComment: '',
           },
         ],
       },
@@ -264,29 +288,32 @@ export class AssessmentsResult {
             answer: 'The story is about friendship and challenges.',
             maxScore: 25,
             score: 20,
+            teacherComment: '',
           },
           {
             question: 'Describe the main character.',
             answer: 'The character is brave and kind.',
             maxScore: 25,
             score: 18,
+            teacherComment: '',
           },
           {
             question: 'What lesson can be learned from the story?',
             answer: 'We should never give up.',
             maxScore: 25,
             score: 21,
+            teacherComment: '',
           },
           {
             question: 'Give your personal opinion about the story.',
             answer: 'I enjoyed reading the story.',
             maxScore: 25,
             score: 19,
+            teacherComment: '',
           },
         ],
       },
     ],
-
     3: [
       {
         id: 1,
@@ -311,7 +338,6 @@ export class AssessmentsResult {
         answers: [],
       },
     ],
-
     4: [
       {
         id: 1,
@@ -336,7 +362,6 @@ export class AssessmentsResult {
         answers: [],
       },
     ],
-
     5: [
       {
         id: 1,
@@ -363,6 +388,7 @@ export class AssessmentsResult {
     ],
   };
 
+  //********** RESULT STATES **********
   resultStates: AssessmentResult[] = [
     {
       assessmentId: 1,
@@ -396,6 +422,29 @@ export class AssessmentsResult {
   showPublishDialog = false;
 
   successMessage = '';
+
+  //********** LIFECYCLE **********
+  ngOnInit(): void {
+    this.loadAssessments();
+  }
+
+  //********** DATA LOADING **********
+  private loadAssessments(): void {
+    this.assessments = this.assessmentService.getAssessments();
+
+    if (this.assessments.length === 0) {
+      this.selectedAssessmentId = 0;
+      return;
+    }
+
+    const selectedAssessmentExists = this.assessments.some(
+      (assessment) => assessment.id === this.selectedAssessmentId,
+    );
+
+    if (!selectedAssessmentExists) {
+      this.selectedAssessmentId = this.assessments[0].id;
+    }
+  }
 
   //********** SETTERS & GETTERS **********
   get students(): ResultStudent[] {
@@ -431,6 +480,7 @@ export class AssessmentsResult {
     this.selectedStudent = undefined;
   }
 
+  //********** SCORE HANDLERS **********
   onScoreChange(answer: EssayAnswer, value: number): void {
     if (this.currentResultState.locked) {
       return;

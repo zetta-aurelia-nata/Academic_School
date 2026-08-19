@@ -4,25 +4,52 @@
 >
   <!--********** STUDENT SUBMISSIONS **********-->
   <ng-container *ngIf="!isStudentDetail">
-
     <!--********** PAGE HEADER **********-->
-    <div class="mb-6 flex items-center gap-3">
-      <button
-        mat-icon-button
-        class="!flex !h-10 !w-10 !items-center !justify-center !rounded-[10px]"
-        (click)="onBack()"
-      >
-        <mat-icon>arrow_back</mat-icon>
-      </button>
+    <div class="mb-6 flex items-center justify-between gap-4 max-md:flex-col max-md:items-stretch">
+      <!--********** PAGE TITLE **********-->
+      <div class="flex min-w-0 items-center gap-3">
+        <button
+          mat-icon-button
+          class="!flex !h-10 !w-10 !shrink-0 !items-center !justify-center !rounded-[10px]"
+          (click)="onBack()"
+        >
+          <mat-icon>arrow_back</mat-icon>
+        </button>
 
-      <div class="min-w-0">
-        <h1 class="m-0 truncate text-2xl font-bold text-[var(--color-title)]">
-          Student Submissions
-        </h1>
+        <div class="min-w-0">
+          <h1 class="m-0 truncate text-2xl font-bold text-[var(--color-title)] max-md:text-[22px]">
+            Student Submissions
+          </h1>
 
-        <p class="m-0 mt-1 text-[13px] text-[var(--color-text-secondary)]">
-          {{ assessment?.title }}
-        </p>
+          <p class="m-0 mt-1 text-[13px] text-[var(--color-text-secondary)]">
+            {{ assessment?.title }}
+          </p>
+        </div>
+      </div>
+
+      <!--********** SEARCH **********-->
+      <div class="student-search">
+        <mat-icon class="student-search__icon">search</mat-icon>
+
+        <input
+          type="text"
+          class="student-search__input"
+          placeholder="Search students..."
+          [value]="searchQuery"
+          (input)="onSearch($event)"
+          aria-label="Search students"
+        />
+
+        <button
+          *ngIf="searchQuery"
+          type="button"
+          mat-icon-button
+          class="student-search__clear !h-8 !w-8"
+          aria-label="Clear search"
+          (click)="clearSearch()"
+        >
+          <mat-icon class="!text-[18px]">close</mat-icon>
+        </button>
       </div>
     </div>
 
@@ -30,7 +57,7 @@
     <div class="student-list">
       <!--********** STUDENT CARD **********-->
       <mat-card
-        *ngFor="let student of students"
+        *ngFor="let student of filteredStudents"
         class="student-card !mb-3 !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-0"
         (click)="onStudentClick(student)"
       >
@@ -66,6 +93,7 @@
               class="review-status hidden sm:inline-flex"
             >
               <span class="review-status__dot"></span>
+
               {{ student.status }}
             </span>
 
@@ -83,6 +111,27 @@
         </div>
       </mat-card>
 
+      <!--********** NO SEARCH RESULTS **********-->
+      <mat-card
+        *ngIf="students.length > 0 && filteredStudents.length === 0"
+        class="!rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-8"
+      >
+        <div class="flex flex-col items-center justify-center text-center">
+          <mat-icon class="mb-3 !h-10 !w-10 !text-[40px] !text-[var(--color-text-secondary)]">
+            search_off
+          </mat-icon>
+
+          <h2 class="m-0 text-[15px] font-bold text-[var(--color-title)]">No students found</h2>
+
+          <p class="m-0 mt-1 text-[12px] text-[var(--color-text-secondary)]">
+            No student matches "{{ searchQuery }}".
+          </p>
+
+          <button mat-button class="mt-3" (click)="clearSearch()">Clear Search</button>
+        </div>
+      </mat-card>
+
+      <!--********** NO SUBMISSIONS **********-->
       <mat-card
         *ngIf="students.length === 0"
         class="!rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-8"
@@ -129,7 +178,9 @@
     <mat-card
       class="detail-card !mb-4 !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-0"
     >
-      <div class="border-b border-[var(--color-border)] px-5 py-4 bg-[var(--color-card-orange)] !rounded-t-[14px]">
+      <div
+        class="rounded-t-[14px] border-b border-[var(--color-border)] bg-[var(--color-card-orange)] px-5 py-4"
+      >
         <h2 class="m-0 text-[14px] font-bold text-[var(--color-white)]">Student Information</h2>
       </div>
 
@@ -163,7 +214,9 @@
     <mat-card
       class="detail-card !mb-4 !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-0"
     >
-      <div class="border-b border-[var(--color-border)] px-5 py-4 bg-[var(--color-card-green)] !rounded-t-[14px]">
+      <div
+        class="rounded-t-[14px] border-b border-[var(--color-border)] bg-[var(--color-card-green)] px-5 py-4"
+      >
         <h2 class="m-0 text-[14px] font-bold text-[var(--color-white)]">Submission Information</h2>
       </div>
 
@@ -190,6 +243,7 @@
 
             <span [ngClass]="statusClass(student.status)" class="review-status mt-1">
               <span class="review-status__dot"></span>
+
               {{ student.status }}
             </span>
           </div>

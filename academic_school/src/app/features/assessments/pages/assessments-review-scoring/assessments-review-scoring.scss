@@ -2,6 +2,92 @@
 // *************** REVIEW SCORING ***************
 .review-scoring {
   box-sizing: border-box;
+
+  // *************** SEARCH ***************
+  &__search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 260px;
+    height: 40px;
+    padding: 0 38px 0 38px;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(72, 31, 110, 0.04);
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+
+    &:focus-within {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(118, 81, 168, 0.1);
+    }
+
+    input {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--color-title);
+
+      &::placeholder {
+        color: var(--color-text-secondary);
+        opacity: 0.8;
+      }
+    }
+  }
+
+  // *************** SEARCH ICON ***************
+  &__search-icon {
+    position: absolute;
+    left: 12px;
+    width: 18px !important;
+    height: 18px !important;
+    font-size: 18px !important;
+    color: var(--color-text-secondary);
+    pointer-events: none;
+  }
+
+  // *************** CLEAR SEARCH ***************
+  &__search-clear {
+    position: absolute;
+    right: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background-color: transparent;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+
+    &:hover {
+      background-color: var(--color-avatar-background);
+      color: var(--color-title);
+    }
+
+    mat-icon {
+      width: 16px !important;
+      height: 16px !important;
+      font-size: 16px !important;
+    }
+  }
+
+  // *************** EMPTY STATE ***************
+  &__empty {
+    box-shadow: 0 4px 16px rgba(30, 41, 59, 0.04);
+  }
 }
 
 // *************** REVIEW CARD ***************
@@ -232,6 +318,18 @@
 @media (max-width: 1024px) {
   .review-card {
     border-radius: 12px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .review-scoring {
+    &__toolbar {
+      align-items: stretch;
+    }
+
+    &__search {
+      width: 100%;
+    }
   }
 }
 
