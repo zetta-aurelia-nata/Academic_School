@@ -72,7 +72,6 @@
 
     <!-- ******************** RIGHT: FORM AREA ******************** -->
     <div class="form-panel min-w-0 flex-1 max-[900px]:w-[90%]">
-
       @if (!selectedType) {
         <div
           class="empty-state flex h-[600px] flex-col items-center justify-center gap-2.5 px-7 py-7 text-center"
@@ -254,20 +253,23 @@
               </div>
 
               <div class="options-editor">
-                <div class="option-row" *ngFor="let opt of [1, 2, 3, 4]; let i = index">
+                <div
+                  class="option-row"
+                  *ngFor="let optionNumber of [1, 2, 3, 4]; let optionIndex = index"
+                >
                   <span class="option-row__index">
-                    {{ i + 1 }}
+                    {{ optionIndex + 1 }}
                   </span>
 
                   <mat-form-field appearance="outline" class="option-row__field">
-                    <mat-label> Option {{ opt }} </mat-label>
+                    <mat-label>Option {{ optionNumber }}</mat-label>
 
                     <input matInput placeholder="Write answer option..." />
                   </mat-form-field>
 
                   <mat-checkbox
                     class="option-row__check"
-                    [aria-label]="'Mark option ' + (i + 1) + ' as correct'"
+                    [aria-label]="'Mark option ' + (optionIndex + 1) + ' as correct'"
                   >
                   </mat-checkbox>
                 </div>
