@@ -429,7 +429,6 @@ export class SubmissionService {
     );
   }
 
-  // ********** SCORE METHODS **********
   updateScore(assessmentId: number, studentId: number, score: number): void {
     const submission = this.getSubmission(assessmentId, studentId);
 
@@ -472,7 +471,6 @@ export class SubmissionService {
     submission.answers[answerIndex].teacherComment = comment;
   }
 
-  // ********** CALCULATION **********
   recalculateTotalScore(submission: Submission): void {
     submission.score = submission.answers.reduce(
       (total, answer) => total + Number(answer.score || 0),

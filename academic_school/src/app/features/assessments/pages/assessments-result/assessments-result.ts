@@ -341,11 +341,8 @@ export class AssessmentsResult implements OnInit {
 
   confirmPublish(): void {
     const state = this.currentResultState;
-
     state.published = true;
-
     this.showPublishDialog = false;
-
     this.successMessage =
       'Assessment results have been published successfully.';
 
@@ -358,7 +355,6 @@ export class AssessmentsResult implements OnInit {
 
   cancelPublish(): void {
     this.showPublishDialog = false;
-
     this.restorePublishTriggerFocus();
   }
 

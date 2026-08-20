@@ -1,12 +1,9 @@
 // ****************** TYPES ******************
-/**
- * List of all allowed assessment question types
- */
 export type QuestionType = 'essay' | 'multiple_choice';
 
 // ****************** INTERFACES ******************
 export interface QuestionOption {
-  // Option text displayed to the user
+  // Option text displayed for the user
   text: string;
 
   // Indicates whether this option is the correct answer
