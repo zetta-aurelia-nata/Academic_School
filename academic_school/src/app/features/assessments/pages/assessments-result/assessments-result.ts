@@ -1,47 +1,19 @@
 //********** ANGULAR IMPORTS **********
-import {
-  CommonModule,
-} from '@angular/common';
-import {
-  Component,
-  ElementRef,
-  HostListener,
-  OnInit,
-  ViewChild,
-  inject,
-} from '@angular/core';
-import {
-  FormsModule,
-} from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { Component, ElementRef, HostListener, OnInit, ViewChild, inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 //********** ANGULAR MATERIAL IMPORTS **********
-import {
-  MatButtonModule,
-} from '@angular/material/button';
-import {
-  MatCardModule,
-} from '@angular/material/card';
-import {
-  MatIconModule,
-} from '@angular/material/icon';
-import {
-  MatSelectModule,
-} from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
 
 //********** APPLICATION MODELS AND SERVICES IMPORTS **********
-import {
-  AssessmentService,
-} from '../../services/assessment.service';
-import {
-  SubmissionService,
-} from '../../services/submission.service';
-import {
-  Submission,
-  SubmissionAnswer,
-} from '../../models/submission.model';
-import {
-  Assessment,
-} from '../assessments-list/assessment.list.model';
+import { AssessmentService } from '../../services/assessment.service';
+import { SubmissionService } from '../../services/submission.service';
+import { Submission, SubmissionAnswer } from '../../models/submission.model';
+import { Assessment } from '../assessments-list/assessment.list.model';
 
 //********** RESULT STATE INTERFACE **********
 interface AssessmentResult {
@@ -107,13 +79,9 @@ export class AssessmentsResult implements OnInit {
 
   //********** PUBLIC STATE VARIABLES **********
   assessments: Assessment[] = [];
-
   selectedAssessmentId = 1;
-
   selectedStudent?: ResultStudent;
-
   showPublishDialog = false;
-
   successMessage = '';
 
   //********** RESULT STATES **********
@@ -170,26 +138,18 @@ export class AssessmentsResult implements OnInit {
 
   //********** SETTERS & GETTERS **********
   get students(): ResultStudent[] {
-    const submissions = this.submissionService.getSubmissions(
-      this.selectedAssessmentId,
-    );
+    const submissions = this.submissionService.getSubmissions(this.selectedAssessmentId);
 
-    return submissions.map((submission) =>
-      this.mapSubmissionToResultStudent(submission),
-    );
+    return submissions.map((submission) => this.mapSubmissionToResultStudent(submission));
   }
 
   get selectedAssessment(): Assessment | undefined {
-    return this.assessments.find(
-      (assessment) => assessment.id === this.selectedAssessmentId,
-    );
+    return this.assessments.find((assessment) => assessment.id === this.selectedAssessmentId);
   }
 
   get currentResultState(): AssessmentResult {
     return (
-      this.resultStates.find(
-        (result) => result.assessmentId === this.selectedAssessmentId,
-      ) ?? {
+      this.resultStates.find((result) => result.assessmentId === this.selectedAssessmentId) ?? {
         assessmentId: this.selectedAssessmentId,
         published: false,
         locked: false,
@@ -198,9 +158,7 @@ export class AssessmentsResult implements OnInit {
   }
 
   //********** DATA MAPPING **********
-  private mapSubmissionToResultStudent(
-    submission: Submission,
-  ): ResultStudent {
+  private mapSubmissionToResultStudent(submission: Submission): ResultStudent {
     return {
       submissionId: submission.id,
       assessmentId: submission.assessmentId,
@@ -214,15 +172,13 @@ export class AssessmentsResult implements OnInit {
       timeTaken: submission.timeTaken,
       score: submission.score,
       maxScore: submission.maxScore,
-      answers: submission.answers.map(
-        (answer: SubmissionAnswer) => ({
-          question: answer.question,
-          answer: answer.answer,
-          maxScore: answer.maxScore,
-          score: answer.score,
-          teacherComment: answer.teacherComment,
-        }),
-      ),
+      answers: submission.answers.map((answer: SubmissionAnswer) => ({
+        question: answer.question,
+        answer: answer.answer,
+        maxScore: answer.maxScore,
+        score: answer.score,
+        teacherComment: answer.teacherComment,
+      })),
     };
   }
 
@@ -242,10 +198,7 @@ export class AssessmentsResult implements OnInit {
   }
 
   //********** SCORE HANDLERS **********
-  onScoreChange(
-    answer: EssayAnswer,
-    value: number,
-  ): void {
+  onScoreChange(answer: EssayAnswer, value: number): void {
     if (this.currentResultState.locked) {
       return;
     }
@@ -294,16 +247,14 @@ export class AssessmentsResult implements OnInit {
 
     this.calculateTotalScore();
 
-    this.selectedStudent.answers.forEach(
-      (answer, index) => {
-        this.submissionService.updateAnswerScore(
-          this.selectedAssessmentId,
-          this.selectedStudent!.submissionId,
-          index,
-          answer.score,
-        );
-      },
-    );
+    this.selectedStudent.answers.forEach((answer, index) => {
+      this.submissionService.updateAnswerScore(
+        this.selectedAssessmentId,
+        this.selectedStudent!.submissionId,
+        index,
+        answer.score,
+      );
+    });
 
     this.submissionService.updateScore(
       this.selectedAssessmentId,
@@ -329,8 +280,7 @@ export class AssessmentsResult implements OnInit {
       return;
     }
 
-    this.publishTrigger =
-      event.currentTarget as HTMLElement;
+    this.publishTrigger = event.currentTarget as HTMLElement;
 
     this.showPublishDialog = true;
 
@@ -343,8 +293,7 @@ export class AssessmentsResult implements OnInit {
     const state = this.currentResultState;
     state.published = true;
     this.showPublishDialog = false;
-    this.successMessage =
-      'Assessment results have been published successfully.';
+    this.successMessage = 'Assessment results have been published successfully.';
 
     setTimeout(() => {
       this.successMessage = '';
@@ -365,8 +314,7 @@ export class AssessmentsResult implements OnInit {
 
     this.currentResultState.published = false;
 
-    this.successMessage =
-      'Assessment results have been unpublished.';
+    this.successMessage = 'Assessment results have been unpublished.';
 
     setTimeout(() => {
       this.successMessage = '';
@@ -374,13 +322,8 @@ export class AssessmentsResult implements OnInit {
   }
 
   //********** KEYBOARD HANDLERS **********
-  @HostListener(
-    'document:keydown',
-    ['$event'],
-  )
-  onDialogKeydown(
-    event: KeyboardEvent,
-  ): void {
+  @HostListener('document:keydown', ['$event'])
+  onDialogKeydown(event: KeyboardEvent): void {
     if (!this.showPublishDialog) {
       return;
     }
@@ -397,46 +340,34 @@ export class AssessmentsResult implements OnInit {
       return;
     }
 
-    const dialog =
-      this.publishDialog?.nativeElement;
+    const dialog = this.publishDialog?.nativeElement;
 
     if (!dialog) {
       return;
     }
 
-    const focusableElements =
-      dialog.querySelectorAll<HTMLElement>(
-        'button, input, select, textarea, a[href], [tabindex]:not([tabindex="-1"])',
-      );
+    const focusableElements = dialog.querySelectorAll<HTMLElement>(
+      'button, input, select, textarea, a[href], [tabindex]:not([tabindex="-1"])',
+    );
 
     if (focusableElements.length === 0) {
       event.preventDefault();
       return;
     }
 
-    const firstElement =
-      focusableElements[0];
+    const firstElement = focusableElements[0];
 
-    const lastElement =
-      focusableElements[
-        focusableElements.length - 1
-      ];
+    const lastElement = focusableElements[focusableElements.length - 1];
 
     //********** SHIFT + TAB **********
-    if (
-      event.shiftKey &&
-      document.activeElement === firstElement
-    ) {
+    if (event.shiftKey && document.activeElement === firstElement) {
       event.preventDefault();
       lastElement.focus();
       return;
     }
 
     //********** TAB **********
-    if (
-      !event.shiftKey &&
-      document.activeElement === lastElement
-    ) {
+    if (!event.shiftKey && document.activeElement === lastElement) {
       event.preventDefault();
       firstElement.focus();
     }
@@ -445,8 +376,7 @@ export class AssessmentsResult implements OnInit {
   //********** RESULT LOCK HANDLER **********
   lockResult(): void {
     if (!this.currentResultState.published) {
-      this.successMessage =
-        'Publish the result before locking it.';
+      this.successMessage = 'Publish the result before locking it.';
 
       setTimeout(() => {
         this.successMessage = '';
@@ -457,8 +387,7 @@ export class AssessmentsResult implements OnInit {
 
     this.currentResultState.locked = true;
 
-    this.successMessage =
-      'Assessment result is now locked.';
+    this.successMessage = 'Assessment result is now locked.';
 
     setTimeout(() => {
       this.successMessage = '';
@@ -474,8 +403,6 @@ export class AssessmentsResult implements OnInit {
   }
 
   statusClass(status: string): string {
-    return `result-status result-status--${status
-      .toLowerCase()
-      .replaceAll(' ', '-')}`;
+    return `result-status result-status--${status.toLowerCase().replaceAll(' ', '-')}`;
   }
 }
