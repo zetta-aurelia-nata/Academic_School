@@ -50,33 +50,38 @@
           Assessment
         </span>
 
-        <span class="mt-1 block text-[14px] font-bold text-[var(--color-title)]">
+        <span class="mt-1 block text-[16px] font-medium text-[var(--color-title)]">
           Select assessment to manage results
         </span>
       </div>
 
       <!--********** ASSESSMENT SELECT **********-->
-      <mat-form-field appearance="outline" class="result-select">
-        <mat-label>Assessment</mat-label>
-
-        <mat-select [(ngModel)]="selectedAssessmentId" (selectionChange)="onAssessmentChange()">
-          <!--********** SELECTED ASSESSMENT **********-->
-          <mat-select-trigger>
-            <span class="assessment-select__value">
-              {{ selectedAssessment?.title }}
-            </span>
-          </mat-select-trigger>
-
-          <!--********** ASSESSMENT OPTIONS **********-->
-          <mat-option *ngFor="let assessment of assessments" [value]="assessment.id">
-            <div class="assessment-option">
-              <span class="assessment-option__title">
-                {{ assessment.title }}
+      <div class="result-assessment__field">
+        <div class="result-option-title">
+          <label for="assessment-subject" class="edit-assessment__field-label mb-40">
+            Subject
+          </label>
+        </div>
+        <mat-form-field appearance="outline" class="result-select">
+          <mat-select [(ngModel)]="selectedAssessmentId" (selectionChange)="onAssessmentChange()">
+            <!--********** SELECTED ASSESSMENT **********-->
+            <mat-select-trigger>
+              <span class="assessment-select__value">
+                {{ selectedAssessment?.title }}
               </span>
-            </div>
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+            </mat-select-trigger>
+
+            <!--********** ASSESSMENT OPTIONS **********-->
+            <mat-option *ngFor="let assessment of assessments" [value]="assessment.id">
+              <div class="assessment-option">
+                <span class="assessment-option__title">
+                  {{ assessment.title }}
+                </span>
+              </div>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
     </div>
   </mat-card>
 

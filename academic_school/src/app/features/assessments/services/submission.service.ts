@@ -430,30 +430,40 @@ export class SubmissionService {
   }
 
   updateScore(assessmentId: number, studentId: number, score: number): void {
-    const submission = this.getSubmission(assessmentId, studentId);
-
-    if (!submission) {
-      return;
-    }
-
-    submission.score = score;
+    const idx = this.submissions.findIndex(
+      (s) => s.assessmentId === assessmentId && s.id === studentId,
+    );
+    if (idx === -1) return;
+    this.submissions = [
+      ...this.submissions.slice(0, idx),
+      { ...this.submissions[idx], score },
+      ...this.submissions.slice(idx + 1),
+    ];
   }
 
-  updateAnswerScore(
-    assessmentId: number,
-    studentId: number,
-    answerIndex: number,
-    score: number,
+  // In SubmissionService:
+  updateAnswerScore( assessmentId: number, studentId: number,  questionIndex: number, score: number,
   ): void {
-    const submission = this.getSubmission(assessmentId, studentId);
+    const idx = this.submissions.findIndex(
+      (s) => s.assessmentId === assessmentId && s.id === studentId,
+    );
+    if (idx === -1) return;
 
-    if (!submission || !submission.answers[answerIndex]) {
-      return;
+    const targetSubmission = this.submissions[idx];
+    const updatedAnswers = [...targetSubmission.answers];
+
+    if (updatedAnswers[questionIndex]) {
+      updatedAnswers[questionIndex] = {
+        ...updatedAnswers[questionIndex],
+        score,
+      };
     }
 
-    submission.answers[answerIndex].score = score;
-
-    this.recalculateTotalScore(submission);
+    this.submissions = [
+      ...this.submissions.slice(0, idx),
+      { ...targetSubmission, answers: updatedAnswers },
+      ...this.submissions.slice(idx + 1),
+    ];
   }
 
   updateTeacherComment(
@@ -462,13 +472,21 @@ export class SubmissionService {
     answerIndex: number,
     comment: string,
   ): void {
-    const submission = this.getSubmission(assessmentId, studentId);
+    const idx = this.submissions.findIndex(
+      (s) => s.assessmentId === assessmentId && s.id === studentId,
+    );
+    if (idx === -1) return;
 
-    if (!submission || !submission.answers[answerIndex]) {
-      return;
-    }
+    const targetSubmission = this.submissions[idx];
+    const updatedAnswers = targetSubmission.answers.map((ans, index) =>
+      index === answerIndex ? { ...ans, teacherComment: comment } : ans,
+    );
 
-    submission.answers[answerIndex].teacherComment = comment;
+    this.submissions = [
+      ...this.submissions.slice(0, idx),
+      { ...targetSubmission, answers: updatedAnswers },
+      ...this.submissions.slice(idx + 1),
+    ];
   }
 
   recalculateTotalScore(submission: Submission): void {

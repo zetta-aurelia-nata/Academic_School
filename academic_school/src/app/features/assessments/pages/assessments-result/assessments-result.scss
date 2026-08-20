@@ -111,6 +111,13 @@
   }
 }
 
+.edit-assessment{
+  &__field-label{
+    margin-bottom: 6px;
+    font-size: 12px;
+  }
+}
+
 // ********** RESULT ACTIONS **********
 .result-actions {
   display: flex;

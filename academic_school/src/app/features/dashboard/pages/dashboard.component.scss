@@ -109,6 +109,10 @@
     --card-color: var(--color-card-red);
   }
 
+  &.progress-icon--grey {
+    --card-color: var(--color-card-grey);
+  }
+
   &__content {
     min-width: 0;
   }

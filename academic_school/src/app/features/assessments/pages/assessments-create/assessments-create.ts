@@ -18,21 +18,8 @@ import { MatSelectModule } from '@angular/material/select';
 //********** SERVICE IMPORTS **********
 import { AssessmentService } from '../../services/assessment.service';
 
-//********** TYPES **********
-export type QuestionType = 'essay' | 'multiple_choice';
-
-//********** INTERFACES **********
-export interface CreatedQuestion {
-  id: number;
-  type: QuestionType;
-  text: string;
-  points: number;
-  maxWord?: number;
-  options?: {
-    text: string;
-    isCorrect: boolean;
-  }[];
-}
+//********** MODEL IMPORTS **********
+import { Question, QuestionType } from '../../models/question.model';
 
 @Component({
   selector: 'app-assessments-create',
@@ -63,7 +50,7 @@ export class AssessmentsCreate implements OnInit {
   assessmentForm!: FormGroup;
   selectedType: QuestionType | null = null;
   correctOptionIndex = 0;
-  questions: CreatedQuestion[] = [];
+  questions: Question[] = [];
 
   /**
    * Used to generate a unique ID for each question.
@@ -230,16 +217,18 @@ export class AssessmentsCreate implements OnInit {
     this.selectedType = null;
   }
 
+  noQuestionError = false;
+
   onSave(): void {
     if (this.assessmentForm.invalid) {
       this.assessmentForm.markAllAsTouched();
-
       return;
     }
-
     if (this.questions.length === 0) {
+      this.noQuestionError = true;
       return;
     }
+    this.noQuestionError = false;
 
     const formValue = this.assessmentForm.getRawValue();
     const assessmentData = {

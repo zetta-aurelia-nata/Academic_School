@@ -3,15 +3,22 @@ import { Injectable } from '@angular/core';
 
 // ********** APPLICATION IMPORTS **********
 import { ASSESSMENTS } from '../assessment.data';
-import { Assessment } from '../pages/assessments-list/assessment.list.model';
+import { Assessment, AssessmentStatus } from '../pages/assessments-list/assessment.list.model';
 
+export interface CreateAssessmentDto {
+  title: string;
+  subject: string;
+  grade: string;
+  description: string;
+  instructions: string;
+  duration: number;
+  totalPoints: number;
+  status: AssessmentStatus;
+}
 @Injectable({
   providedIn: 'root',
 })
 export class AssessmentService {
-  createAssessment(assessmentData: { title: any; subject: any; grade: any; description: any; instructions: any; duration: number; totalPoints: number; status: any; }) {
-    throw new Error('Method not implemented.');
-  }
   // ********** PRIVATE STATE **********
   private assessments: Assessment[] = [...ASSESSMENTS];
 
@@ -41,5 +48,18 @@ export class AssessmentService {
 
   addAssessment(assessment: Assessment): void {
     this.assessments.push(assessment);
+  }
+
+  createAssessment(dto: CreateAssessmentDto): void {
+    const newAssessment: Assessment = {
+      id: Date.now(),
+      title: dto.title,
+      subject: dto.subject,
+      grade: dto.grade,
+      totalStudents: 0,
+      status: dto.status,
+      date: new Date().toISOString().split('T')[0],
+    };
+    this.addAssessment(newAssessment);
   }
 }

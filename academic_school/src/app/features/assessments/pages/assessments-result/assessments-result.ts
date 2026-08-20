@@ -62,6 +62,7 @@ interface ResultStudent {
   templateUrl: './assessments-result.html',
   styleUrl: './assessments-result.scss',
 })
+
 export class AssessmentsResult implements OnInit {
   //********** PRIVATE SERVICES **********
   private readonly assessmentService = inject(AssessmentService);
@@ -328,14 +329,12 @@ export class AssessmentsResult implements OnInit {
       return;
     }
 
-    //********** ESCAPE TO CLOSE DIALOG **********
     if (event.key === 'Escape') {
       event.preventDefault();
       this.cancelPublish();
       return;
     }
 
-    //********** FOCUS TRAP **********
     if (event.key !== 'Tab') {
       return;
     }
@@ -359,21 +358,17 @@ export class AssessmentsResult implements OnInit {
 
     const lastElement = focusableElements[focusableElements.length - 1];
 
-    //********** SHIFT + TAB **********
     if (event.shiftKey && document.activeElement === firstElement) {
       event.preventDefault();
       lastElement.focus();
       return;
     }
-
-    //********** TAB **********
     if (!event.shiftKey && document.activeElement === lastElement) {
       event.preventDefault();
       firstElement.focus();
     }
   }
 
-  //********** RESULT LOCK HANDLER **********
   lockResult(): void {
     if (!this.currentResultState.published) {
       this.successMessage = 'Publish the result before locking it.';

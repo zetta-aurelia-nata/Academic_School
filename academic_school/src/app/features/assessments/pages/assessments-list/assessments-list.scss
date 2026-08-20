@@ -15,10 +15,16 @@
     transition:
       border-color 0.2s ease,
       box-shadow 0.2s ease;
+      
 
     &:focus-within {
       border-color: var(--color-primary);
       box-shadow: 0 0 0 3px rgba(118, 81, 168, 0.1);
+    }
+
+   .mat-toolbar h1{
+      font-size: larger;
+      font-weight: 900;
     }
 
     input {
