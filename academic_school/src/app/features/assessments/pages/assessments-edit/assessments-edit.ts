@@ -1,7 +1,7 @@
 // ********** ANGULAR IMPORTS **********
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 // ********** ANGULAR MATERIAL IMPORTS **********
@@ -135,7 +135,7 @@ export class EditAssessment implements OnInit {
     });
   }
 
-  private defaultOptions(): any[] {
+  private defaultOptions(): FormControl[] {
     return [this.fb.control('', Validators.required), this.fb.control('', Validators.required)];
   }
 

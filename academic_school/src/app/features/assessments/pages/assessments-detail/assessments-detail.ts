@@ -1,6 +1,6 @@
 // ********** ANGULAR IMPORTS **********
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 // ********** ANGULAR MATERIAL IMPORTS **********
@@ -53,7 +53,6 @@ export class AssessmentsDetail {
   assessment?: Assessment;
   isStudentDetail = false;
   searchQuery = '';
-
   students: StudentReview[] = [];
   filteredStudents: StudentReview[] = [];
   student?: StudentReview;

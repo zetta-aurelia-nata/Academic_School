@@ -62,7 +62,6 @@ interface ResultStudent {
   templateUrl: './assessments-result.html',
   styleUrl: './assessments-result.scss',
 })
-
 export class AssessmentsResult implements OnInit {
   //********** PRIVATE SERVICES **********
   private readonly assessmentService = inject(AssessmentService);
@@ -199,29 +198,34 @@ export class AssessmentsResult implements OnInit {
   }
 
   //********** SCORE HANDLERS **********
-  onScoreChange(answer: EssayAnswer, value: number): void {
-    if (this.currentResultState.locked) {
-      return;
-    }
-
-    let score = Number(value);
-
-    if (Number.isNaN(score)) {
-      score = 0;
-    }
-
-    if (score < 0) {
-      score = 0;
-    }
-
-    if (score > answer.maxScore) {
-      score = answer.maxScore;
-    }
-
-    answer.score = score;
-
-    this.calculateTotalScore();
+onScoreChange(answer: EssayAnswer, value: number): void {
+  if (this.currentResultState.locked || !this.selectedStudent) {
+    return;
   }
+
+  let score = Number(value);
+
+  if (Number.isNaN(score)) {
+    score = 0;
+  }
+
+  score = Math.min(Math.max(score, 0), answer.maxScore);
+
+  const index = this.selectedStudent.answers.indexOf(answer);
+
+  if (index === -1) {
+    return;
+  }
+
+  const updatedAnswer: EssayAnswer = { ...answer, score };
+
+  this.selectedStudent = {
+    ...this.selectedStudent,
+    answers: this.selectedStudent.answers.map((a, i) => (i === index ? updatedAnswer : a)),
+  };
+
+  this.calculateTotalScore();
+}
 
   calculateTotalScore(): void {
     if (!this.selectedStudent) {

@@ -47,7 +47,7 @@ export class AssessmentService {
   }
 
   addAssessment(assessment: Assessment): void {
-    this.assessments.push(assessment);
+    this.assessments=[...this.assessments, assessment];
   }
 
   createAssessment(dto: CreateAssessmentDto): void {
