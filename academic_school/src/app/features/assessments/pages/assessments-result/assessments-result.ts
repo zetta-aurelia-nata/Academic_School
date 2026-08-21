@@ -1,6 +1,6 @@
 //********** ANGULAR IMPORTS **********
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 //********** ANGULAR MATERIAL IMPORTS **********
@@ -9,37 +9,48 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 
-//********** APPLICATION MODELS AND SETTINGS IMPORTS **********
-import { ASSESSMENTS } from '../../assessment.data';
+//********** APPLICATION MODELS AND SERVICES IMPORTS **********
+import { AssessmentService } from '../../services/assessment.service';
+import { SubmissionService } from '../../services/submission.service';
+import { Submission, SubmissionAnswer } from '../../models/submission.model';
 import { Assessment } from '../assessments-list/assessment.list.model';
 
-interface EssayAnswer {
-  question: string;
-  answer: string;
-  maxScore: number;
-  score: number;
-}
-
-interface ResultStudent {
-  id: number;
-  studentName: string;
-  studentId: string;
-  className: string;
-  initials: string;
-  status: 'Completed' | 'Not Submitted' | 'In Progress';
-  score: number;
-  maxScore: number;
-  answers: EssayAnswer[];
-}
-
+//********** RESULT STATE INTERFACE **********
 interface AssessmentResult {
   assessmentId: number;
   published: boolean;
   locked: boolean;
 }
 
+//********** RESULT ANSWER INTERFACE **********
+interface EssayAnswer {
+  question: string;
+  answer: string;
+  maxScore: number;
+  score: number;
+  teacherComment: string;
+}
+
+//********** RESULT STUDENT INTERFACE **********
+interface ResultStudent {
+  submissionId: number;
+  assessmentId: number;
+  studentName: string;
+  studentId: string;
+  className: string;
+  initials: string;
+  email?: string;
+  status: string;
+  submittedAt?: string;
+  timeTaken?: string;
+  score: number;
+  maxScore: number;
+  answers: EssayAnswer[];
+}
+
 @Component({
   selector: 'app-assessments-result',
+  standalone: true,
   imports: [
     CommonModule,
     FormsModule,
@@ -51,7 +62,11 @@ interface AssessmentResult {
   templateUrl: './assessments-result.html',
   styleUrl: './assessments-result.scss',
 })
-export class AssessmentsResult {
+export class AssessmentsResult implements OnInit {
+  //********** PRIVATE SERVICES **********
+  private readonly assessmentService = inject(AssessmentService);
+  private readonly submissionService = inject(SubmissionService);
+
   //********** VIEW CHILD REFERENCES **********
   @ViewChild('publishDialog')
   publishDialog?: ElementRef<HTMLElement>;
@@ -63,306 +78,13 @@ export class AssessmentsResult {
   private publishTrigger: HTMLElement | null = null;
 
   //********** PUBLIC STATE VARIABLES **********
-  assessments: Assessment[] = ASSESSMENTS;
-
+  assessments: Assessment[] = [];
   selectedAssessmentId = 1;
+  selectedStudent?: ResultStudent;
+  showPublishDialog = false;
+  successMessage = '';
 
-  studentsByAssessment: Record<number, ResultStudent[]> = {
-    1: [
-      {
-        id: 1,
-        studentName: 'Alice Johnson',
-        studentId: 'STU-001',
-        className: 'Grade 10A',
-        initials: 'AJ',
-        status: 'Completed',
-        score: 92,
-        maxScore: 100,
-        answers: [
-          {
-            question: 'What is 5 × 5?',
-            answer: '25',
-            maxScore: 20,
-            score: 20,
-          },
-          {
-            question: 'What is the square root of 81?',
-            answer: '9',
-            maxScore: 20,
-            score: 20,
-          },
-          {
-            question: 'Solve: 12 + 18',
-            answer: '30',
-            maxScore: 20,
-            score: 20,
-          },
-          {
-            question: 'What is 100 ÷ 4?',
-            answer: '25',
-            maxScore: 20,
-            score: 20,
-          },
-          {
-            question: 'Solve: 15 × 3',
-            answer: '45',
-            maxScore: 20,
-            score: 12,
-          },
-        ],
-      },
-      {
-        id: 2,
-        studentName: 'Bob Smith',
-        studentId: 'STU-002',
-        className: 'Grade 10A',
-        initials: 'BS',
-        status: 'Completed',
-        score: 78,
-        maxScore: 100,
-        answers: [
-          {
-            question: 'What is 5 × 5?',
-            answer: '25',
-            maxScore: 20,
-            score: 20,
-          },
-          {
-            question: 'What is the square root of 81?',
-            answer: '8',
-            maxScore: 20,
-            score: 10,
-          },
-          {
-            question: 'Solve: 12 + 18',
-            answer: '30',
-            maxScore: 20,
-            score: 20,
-          },
-          {
-            question: 'What is 100 ÷ 4?',
-            answer: '20',
-            maxScore: 20,
-            score: 8,
-          },
-          {
-            question: 'Solve: 15 × 3',
-            answer: '40',
-            maxScore: 20,
-            score: 20,
-          },
-        ],
-      },
-      {
-        id: 3,
-        studentName: 'Charlie Brown',
-        studentId: 'STU-003',
-        className: 'Grade 10A',
-        initials: 'CB',
-        status: 'Completed',
-        score: 88,
-        maxScore: 100,
-        answers: [
-          {
-            question: 'What is 5 × 5?',
-            answer: '25',
-            maxScore: 20,
-            score: 20,
-          },
-          {
-            question: 'What is the square root of 81?',
-            answer: '9',
-            maxScore: 20,
-            score: 20,
-          },
-          {
-            question: 'Solve: 12 + 18',
-            answer: '30',
-            maxScore: 20,
-            score: 18,
-          },
-          {
-            question: 'What is 100 ÷ 4?',
-            answer: '25',
-            maxScore: 20,
-            score: 20,
-          },
-          {
-            question: 'Solve: 15 × 3',
-            answer: '45',
-            maxScore: 20,
-            score: 10,
-          },
-        ],
-      },
-      {
-        id: 4,
-        studentName: 'Diana Wilson',
-        studentId: 'STU-004',
-        className: 'Grade 10A',
-        initials: 'DW',
-        status: 'In Progress',
-        score: 0,
-        maxScore: 100,
-        answers: [],
-      },
-    ],
-
-    2: [
-      {
-        id: 1,
-        studentName: 'Emma Davis',
-        studentId: 'STU-011',
-        className: 'Grade 11A',
-        initials: 'ED',
-        status: 'Completed',
-        score: 85,
-        maxScore: 100,
-        answers: [
-          {
-            question: 'Explain the main theme of the story.',
-            answer:
-              'The story focuses on friendship, growth, and how people overcome challenges together.',
-            maxScore: 25,
-            score: 22,
-          },
-          {
-            question: 'Describe the main character.',
-            answer:
-              'The main character is determined and learns from the challenges throughout the story.',
-            maxScore: 25,
-            score: 21,
-          },
-          {
-            question: 'What lesson can be learned from the story?',
-            answer:
-              'The story teaches us that persistence and cooperation can help us overcome difficulties.',
-            maxScore: 25,
-            score: 22,
-          },
-          {
-            question: 'Give your personal opinion about the story.',
-            answer:
-              'I think the story is meaningful because the characters develop through their experiences.',
-            maxScore: 25,
-            score: 20,
-          },
-        ],
-      },
-      {
-        id: 2,
-        studentName: 'Liam Wilson',
-        studentId: 'STU-012',
-        className: 'Grade 11A',
-        initials: 'LW',
-        status: 'Completed',
-        score: 78,
-        maxScore: 100,
-        answers: [
-          {
-            question: 'Explain the main theme of the story.',
-            answer: 'The story is about friendship and challenges.',
-            maxScore: 25,
-            score: 20,
-          },
-          {
-            question: 'Describe the main character.',
-            answer: 'The character is brave and kind.',
-            maxScore: 25,
-            score: 18,
-          },
-          {
-            question: 'What lesson can be learned from the story?',
-            answer: 'We should never give up.',
-            maxScore: 25,
-            score: 21,
-          },
-          {
-            question: 'Give your personal opinion about the story.',
-            answer: 'I enjoyed reading the story.',
-            maxScore: 25,
-            score: 19,
-          },
-        ],
-      },
-    ],
-
-    3: [
-      {
-        id: 1,
-        studentName: 'Sophia Taylor',
-        studentId: 'STU-021',
-        className: 'Grade 9A',
-        initials: 'ST',
-        status: 'Completed',
-        score: 95,
-        maxScore: 100,
-        answers: [],
-      },
-      {
-        id: 2,
-        studentName: 'James Anderson',
-        studentId: 'STU-022',
-        className: 'Grade 9A',
-        initials: 'JA',
-        status: 'Completed',
-        score: 82,
-        maxScore: 100,
-        answers: [],
-      },
-    ],
-
-    4: [
-      {
-        id: 1,
-        studentName: 'William Jackson',
-        studentId: 'STU-031',
-        className: 'Grade 10B',
-        initials: 'WJ',
-        status: 'Completed',
-        score: 76,
-        maxScore: 100,
-        answers: [],
-      },
-      {
-        id: 2,
-        studentName: 'Isabella White',
-        studentId: 'STU-032',
-        className: 'Grade 10B',
-        initials: 'IW',
-        status: 'Completed',
-        score: 87,
-        maxScore: 100,
-        answers: [],
-      },
-    ],
-
-    5: [
-      {
-        id: 1,
-        studentName: 'Benjamin Harris',
-        studentId: 'STU-041',
-        className: 'Grade 10C',
-        initials: 'BH',
-        status: 'Completed',
-        score: 93,
-        maxScore: 100,
-        answers: [],
-      },
-      {
-        id: 2,
-        studentName: 'Charlotte Martin',
-        studentId: 'STU-042',
-        className: 'Grade 10C',
-        initials: 'CM',
-        status: 'In Progress',
-        score: 0,
-        maxScore: 100,
-        answers: [],
-      },
-    ],
-  };
-
+  //********** RESULT STATES **********
   resultStates: AssessmentResult[] = [
     {
       assessmentId: 1,
@@ -391,15 +113,34 @@ export class AssessmentsResult {
     },
   ];
 
-  selectedStudent?: ResultStudent;
+  //********** LIFECYCLE **********
+  ngOnInit(): void {
+    this.loadAssessments();
+  }
 
-  showPublishDialog = false;
+  //********** DATA LOADING **********
+  private loadAssessments(): void {
+    this.assessments = this.assessmentService.getAssessments();
 
-  successMessage = '';
+    if (this.assessments.length === 0) {
+      this.selectedAssessmentId = 0;
+      return;
+    }
+
+    const selectedAssessmentExists = this.assessments.some(
+      (assessment) => assessment.id === this.selectedAssessmentId,
+    );
+
+    if (!selectedAssessmentExists) {
+      this.selectedAssessmentId = this.assessments[0].id;
+    }
+  }
 
   //********** SETTERS & GETTERS **********
   get students(): ResultStudent[] {
-    return this.studentsByAssessment[this.selectedAssessmentId] ?? [];
+    const submissions = this.submissionService.getSubmissions(this.selectedAssessmentId);
+
+    return submissions.map((submission) => this.mapSubmissionToResultStudent(submission));
   }
 
   get selectedAssessment(): Assessment | undefined {
@@ -414,6 +155,31 @@ export class AssessmentsResult {
         locked: false,
       }
     );
+  }
+
+  //********** DATA MAPPING **********
+  private mapSubmissionToResultStudent(submission: Submission): ResultStudent {
+    return {
+      submissionId: submission.id,
+      assessmentId: submission.assessmentId,
+      studentName: submission.studentName,
+      studentId: submission.studentId,
+      className: submission.className,
+      initials: submission.initials,
+      email: submission.email,
+      status: submission.status,
+      submittedAt: submission.submittedAt,
+      timeTaken: submission.timeTaken,
+      score: submission.score,
+      maxScore: submission.maxScore,
+      answers: submission.answers.map((answer: SubmissionAnswer) => ({
+        question: answer.question,
+        answer: answer.answer,
+        maxScore: answer.maxScore,
+        score: answer.score,
+        teacherComment: answer.teacherComment,
+      })),
+    };
   }
 
   //********** ACTION HANDLERS **********
@@ -431,8 +197,9 @@ export class AssessmentsResult {
     this.selectedStudent = undefined;
   }
 
+  //********** SCORE HANDLERS **********
   onScoreChange(answer: EssayAnswer, value: number): void {
-    if (this.currentResultState.locked) {
+    if (this.currentResultState.locked || !this.selectedStudent) {
       return;
     }
 
@@ -442,15 +209,20 @@ export class AssessmentsResult {
       score = 0;
     }
 
-    if (score < 0) {
-      score = 0;
+    score = Math.min(Math.max(score, 0), answer.maxScore);
+
+    const index = this.selectedStudent.answers.indexOf(answer);
+
+    if (index === -1) {
+      return;
     }
 
-    if (score > answer.maxScore) {
-      score = answer.maxScore;
-    }
+    const updatedAnswer: EssayAnswer = { ...answer, score };
 
-    answer.score = score;
+    this.selectedStudent = {
+      ...this.selectedStudent,
+      answers: this.selectedStudent.answers.map((a, i) => (i === index ? updatedAnswer : a)),
+    };
 
     this.calculateTotalScore();
   }
@@ -461,13 +233,14 @@ export class AssessmentsResult {
     }
 
     const total = this.selectedStudent.answers.reduce(
-      (sum, answer) => sum + Number(answer.score),
+      (sum, answer) => sum + Number(answer.score || 0),
       0,
     );
 
     this.selectedStudent.score = total;
   }
 
+  //********** SAVE SCORE **********
   onSaveScore(): void {
     if (!this.selectedStudent) {
       return;
@@ -478,6 +251,21 @@ export class AssessmentsResult {
     }
 
     this.calculateTotalScore();
+
+    this.selectedStudent.answers.forEach((answer, index) => {
+      this.submissionService.updateAnswerScore(
+        this.selectedAssessmentId,
+        this.selectedStudent!.submissionId,
+        index,
+        answer.score,
+      );
+    });
+
+    this.submissionService.updateScore(
+      this.selectedAssessmentId,
+      this.selectedStudent.submissionId,
+      this.selectedStudent.score,
+    );
 
     this.successMessage = `Score for ${this.selectedStudent.studentName} has been saved.`;
 
@@ -507,12 +295,10 @@ export class AssessmentsResult {
   }
 
   confirmPublish(): void {
-    const state = this.currentResultState;
-
-    state.published = true;
-
+    this.resultStates = this.resultStates.map((r) =>
+      r.assessmentId === this.selectedAssessmentId ? { ...r, published: true } : r,
+    );
     this.showPublishDialog = false;
-
     this.successMessage = 'Assessment results have been published successfully.';
 
     setTimeout(() => {
@@ -524,14 +310,13 @@ export class AssessmentsResult {
 
   cancelPublish(): void {
     this.showPublishDialog = false;
-
     this.restorePublishTriggerFocus();
   }
 
   unpublishResult(): void {
-    if (this.currentResultState.locked) {
-      return;
-    }
+    this.resultStates = this.resultStates.map((r) =>
+      r.assessmentId === this.selectedAssessmentId ? { ...r, published: true } : r,
+    );
 
     this.currentResultState.published = false;
 
@@ -549,14 +334,12 @@ export class AssessmentsResult {
       return;
     }
 
-    //********** ESCAPE TO CLOSE DIALOG **********
     if (event.key === 'Escape') {
       event.preventDefault();
       this.cancelPublish();
       return;
     }
 
-    //********** FOCUS TRAP **********
     if (event.key !== 'Tab') {
       return;
     }
@@ -577,23 +360,20 @@ export class AssessmentsResult {
     }
 
     const firstElement = focusableElements[0];
+
     const lastElement = focusableElements[focusableElements.length - 1];
 
-    //********** SHIFT + TAB **********
     if (event.shiftKey && document.activeElement === firstElement) {
       event.preventDefault();
       lastElement.focus();
       return;
     }
-
-    //********** TAB **********
     if (!event.shiftKey && document.activeElement === lastElement) {
       event.preventDefault();
       firstElement.focus();
     }
   }
 
-  //********** RESULT LOCK HANDLER **********
   lockResult(): void {
     if (!this.currentResultState.published) {
       this.successMessage = 'Publish the result before locking it.';
@@ -605,7 +385,9 @@ export class AssessmentsResult {
       return;
     }
 
-    this.currentResultState.locked = true;
+    this.resultStates = this.resultStates.map((r) =>
+      r.assessmentId === this.selectedAssessmentId ? { ...r, published: true } : r,
+    );
 
     this.successMessage = 'Assessment result is now locked.';
 

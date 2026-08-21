@@ -13,16 +13,44 @@
       </h1>
 
       <span class="text-[13px] text-[var(--color-text-secondary)]">
-        {{ assessments.length }} total assessments
+        {{ filteredAssessments.length }} total assessments
       </span>
     </div>
 
+    <!--********** SPACER **********-->
     <span class="flex-1 max-md:hidden"></span>
+
+    <!--********** SEARCH **********-->
+    <div class="list-toolbar__search">
+      <!--********** SEARCH ICON **********-->
+      <mat-icon class="list-toolbar__search-icon"> search </mat-icon>
+
+      <!--********** SEARCH INPUT **********-->
+      <input
+        type="text"
+        placeholder="Search assessments..."
+        [(ngModel)]="searchQuery"
+        (input)="onSearch()"
+        aria-label="Search assessments"
+      />
+
+      <!--********** CLEAR SEARCH **********-->
+      @if (searchQuery) {
+        <button
+          type="button"
+          class="list-toolbar__search-clear"
+          aria-label="Clear search"
+          (click)="clearSearch()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      }
+    </div>
 
     <!--********** EXPORT ACTION **********-->
     <button
       mat-stroked-button
-      class="list-toolbar__btn list-toolbar__btn--export !inline-flex !h-10 !items-center !justify-center !gap-2 !rounded-[10px] !px-[18px] !text-[13px] !font-semibold max-md:!w-full"
+      class="list-toolbar__btn list-toolbar__btn--export !inline-flex !h-10 !items-center !justify-center !gap-2 !rounded-[10px] !px-[30px] !text-[13px] !font-semibold max-md:!w-full"
     >
       <mat-icon class="!h-[18px] !w-[18px] !text-[18px]"> download </mat-icon>
 
@@ -33,7 +61,7 @@
     <button
       mat-flat-button
       color="primary"
-      class="list-toolbar__btn list-toolbar__btn--create !inline-flex !h-10 !items-center !justify-center !gap-2 !rounded-[10px] !px-[18px] !text-[13px] !font-semibold max-md:!w-full"
+      class="list-toolbar__btn list-toolbar__btn--create !inline-flex !h-10 !items-center !justify-center !gap-2 !rounded-[10px] !px-[30px] !text-[13px] !font-semibold max-md:!w-full"
       (click)="onCreateAssessment()"
     >
       <mat-icon class="!h-[18px] !w-[18px] !text-[18px]"> add </mat-icon>
@@ -48,7 +76,11 @@
   >
     <!--********** TABLE CONTAINER **********-->
     <div class="w-full overflow-x-auto">
-      <table mat-table [dataSource]="assessments" class="assessment-table w-full min-w-[850px]">
+      <table
+        mat-table
+        [dataSource]="filteredAssessments"
+        class="assessment-table w-full min-w-[850px]"
+      >
         <!--********** TITLE COLUMN **********-->
         <ng-container matColumnDef="title">
           <th mat-header-cell *matHeaderCellDef>Assessment Name</th>
@@ -65,6 +97,7 @@
                 <mat-icon class="!h-[19px] !w-[19px] !text-[19px]"> assignment </mat-icon>
               </div>
 
+              <!--********** ASSESSMENT NAME **********-->
               <span>
                 {{ row.title }}
               </span>
@@ -106,6 +139,7 @@
           <td mat-cell *matCellDef="let row">
             <span [ngClass]="statusClass(row.status)">
               <span class="status-badge__dot"></span>
+
               {{ row.status }}
             </span>
           </td>
@@ -142,7 +176,7 @@
                 aria-label="Edit assessment"
                 (click)="onEdit(row)"
               >
-                <mat-icon>edit</mat-icon>
+                <mat-icon> edit </mat-icon>
               </button>
 
               <!--********** DELETE ACTION **********-->
@@ -152,20 +186,49 @@
                 aria-label="Delete assessment"
                 (click)="onDelete(row)"
               >
-                <mat-icon>delete</mat-icon>
+                <mat-icon> delete </mat-icon>
               </button>
             </div>
           </td>
         </ng-container>
 
-        <!--********** TABLE ROWS **********-->
+        <!--********** TABLE HEADER **********-->
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 
+        <!--********** TABLE ROWS **********-->
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+        <!--********** EMPTY SEARCH RESULT **********-->
+        <tr class="mat-mdc-row" *matNoDataRow>
+          <td
+            class="mat-mdc-cell !h-[160px] !border-b-0 !text-center"
+            [attr.colspan]="displayedColumns.length"
+          >
+            <div class="flex flex-col items-center justify-center gap-2">
+              <!--********** EMPTY ICON **********-->
+              <div
+                class="flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-primary-light)] text-[var(--color-primary-dark)]"
+              >
+                <mat-icon> search_off </mat-icon>
+              </div>
+
+              <!--********** EMPTY TITLE **********-->
+              <span class="text-[14px] font-semibold text-[var(--color-title)]">
+                No assessments found
+              </span>
+
+              <!--********** EMPTY DESCRIPTION **********-->
+              <span class="text-[12px] text-[var(--color-text-secondary)]">
+                Try searching with a different keyword.
+              </span>
+            </div>
+          </td>
+        </tr>
       </table>
     </div>
   </mat-card>
 
+  <!--********** DELETE DIALOG **********-->
   @if (showDeleteDialog) {
     <!--********** MODAL BACKDROP **********-->
     <div
@@ -191,12 +254,12 @@
             class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-red-50 text-red-500"
             aria-hidden="true"
           >
-            <mat-icon>delete_outline</mat-icon>
+            <mat-icon> delete_outline </mat-icon>
           </div>
 
           <!--********** DIALOG TITLE **********-->
           <div>
-            <h2 id="publish-dialog-title" class="m-0 text-lg font-bold text-[var(--color-title)]">
+            <h2 id="delete-dialog-title" class="m-0 text-lg font-bold text-[var(--color-title)]">
               Delete Assessment?
             </h2>
           </div>
@@ -204,7 +267,7 @@
 
         <!--********** DELETE CONFIRMATION MESSAGE **********-->
         <p
-          id="publish-dialog-description"
+          id="delete-dialog-description"
           class="mb-6 text-center text-[13px] leading-5 text-[var(--color-text-secondary)]"
         >
           Are you sure you want to delete

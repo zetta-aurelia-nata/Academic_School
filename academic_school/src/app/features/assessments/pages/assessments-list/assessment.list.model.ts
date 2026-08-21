@@ -24,4 +24,16 @@ export interface Assessment {
 
   // Date when the assessment is scheduled or created
   date: string;
+
+  // The description text for the assessment 
+  description?: string;
+
+  // Instruction before taking the assessment
+  instructions?: string;
+
+// Total duration allowed to complete the assessment in minutes
+  duration?: number;
+
+ // Total score point for each assessment
+  totalPoints?: number;
 }

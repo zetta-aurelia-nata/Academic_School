@@ -50,5 +50,12 @@ export class DashboardComponent {
       icon: 'cancel',
       colorClass: 'progress-icon--red',
     },
+    {
+      label: 'Draft',
+      value: 1,
+      description: 'Waiting to Publish',
+      icon: 'cancel',
+      colorClass: 'progress-icon--grey',
+    },
   ];
 }

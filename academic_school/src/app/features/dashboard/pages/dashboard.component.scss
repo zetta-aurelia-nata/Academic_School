@@ -34,7 +34,7 @@
 
 // *************** WELCOME BANNER ***************
 .welcome-banner {
-  border: 1px solid var(--color-banner-border);
+  border: 1px solid var(--color-border);
   background: linear-gradient(
     135deg,
     var(--color-banner-start) 0%,
@@ -57,11 +57,11 @@
 
   &__circle {
     &--large {
-      background-color: var(--color-decoration-white);
+      background-color: var(--color-primary-light);
     }
 
     &--small {
-      background-color: var(--color-decoration-primary);
+      background-color: var(--color-primary-light);
     }
   }
 
@@ -107,6 +107,10 @@
 
   &.progress-icon--red {
     --card-color: var(--color-card-red);
+  }
+
+  &.progress-icon--grey {
+    --card-color: var(--color-card-grey);
   }
 
   &__content {
