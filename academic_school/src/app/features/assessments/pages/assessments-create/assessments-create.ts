@@ -201,11 +201,8 @@ export class AssessmentsCreate implements OnInit {
   }
 
   removeCreatedQuestion(index: number): void {
-    if (index < 0 || index >= this.questions.length) {
-      return;
-    }
-
-    this.questions.splice(index, 1);
+    if (index < 0 || index >= this.questions.length) return;
+    this.questions = this.questions.filter((_, i) => i !== index);
   }
 
   questionTypeLabel(type: QuestionType): string {

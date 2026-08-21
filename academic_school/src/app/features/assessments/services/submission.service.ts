@@ -442,7 +442,11 @@ export class SubmissionService {
   }
 
   // In SubmissionService:
-  updateAnswerScore( assessmentId: number, studentId: number,  questionIndex: number, score: number,
+  updateAnswerScore(
+    assessmentId: number,
+    studentId: number,
+    questionIndex: number,
+    score: number,
   ): void {
     const idx = this.submissions.findIndex(
       (s) => s.assessmentId === assessmentId && s.id === studentId,
@@ -489,10 +493,7 @@ export class SubmissionService {
     ];
   }
 
-  recalculateTotalScore(submission: Submission): void {
-    submission.score = submission.answers.reduce(
-      (total, answer) => total + Number(answer.score || 0),
-      0,
-    );
+  recalculateTotalScore(submission: Submission): number {
+    return submission.answers.reduce((total, answer) => total + Number(answer.score || 0), 0);
   }
 }

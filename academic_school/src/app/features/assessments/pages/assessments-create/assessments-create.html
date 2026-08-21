@@ -686,6 +686,11 @@
       </div>
     }
 
+        <!--********** NO QUESTION ERROR   **********-->
+    <div *ngIf="noQuestionError" role="alert" class="mt-4 rounded-lg bg-red-50 p-3 text-xs font-medium text-red-600 border border-red-200 flex items-center gap-2">
+      <span>Please add at least one question before creating.</span>
+    </div>
+    
     <!--********** FORM ACTIONS **********-->
     <div
       class="create-assessment__actions mt-6 flex items-center justify-center gap-3 border-t border-[var(--color-border)] pt-5 max-md:flex-col-reverse"

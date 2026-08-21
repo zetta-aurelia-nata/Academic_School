@@ -42,7 +42,8 @@ interface AnswerReview {
   templateUrl: './assessments-detail.html',
   styleUrls: ['./assessments-detail.scss'],
 })
-export class AssessmentsDetail {
+
+export class AssessmentsDetail implements OnInit {
   // ********** PRIVATE VARIABLES **********
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);

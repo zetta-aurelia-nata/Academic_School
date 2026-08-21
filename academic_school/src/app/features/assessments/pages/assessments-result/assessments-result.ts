@@ -198,34 +198,34 @@ export class AssessmentsResult implements OnInit {
   }
 
   //********** SCORE HANDLERS **********
-onScoreChange(answer: EssayAnswer, value: number): void {
-  if (this.currentResultState.locked || !this.selectedStudent) {
-    return;
+  onScoreChange(answer: EssayAnswer, value: number): void {
+    if (this.currentResultState.locked || !this.selectedStudent) {
+      return;
+    }
+
+    let score = Number(value);
+
+    if (Number.isNaN(score)) {
+      score = 0;
+    }
+
+    score = Math.min(Math.max(score, 0), answer.maxScore);
+
+    const index = this.selectedStudent.answers.indexOf(answer);
+
+    if (index === -1) {
+      return;
+    }
+
+    const updatedAnswer: EssayAnswer = { ...answer, score };
+
+    this.selectedStudent = {
+      ...this.selectedStudent,
+      answers: this.selectedStudent.answers.map((a, i) => (i === index ? updatedAnswer : a)),
+    };
+
+    this.calculateTotalScore();
   }
-
-  let score = Number(value);
-
-  if (Number.isNaN(score)) {
-    score = 0;
-  }
-
-  score = Math.min(Math.max(score, 0), answer.maxScore);
-
-  const index = this.selectedStudent.answers.indexOf(answer);
-
-  if (index === -1) {
-    return;
-  }
-
-  const updatedAnswer: EssayAnswer = { ...answer, score };
-
-  this.selectedStudent = {
-    ...this.selectedStudent,
-    answers: this.selectedStudent.answers.map((a, i) => (i === index ? updatedAnswer : a)),
-  };
-
-  this.calculateTotalScore();
-}
 
   calculateTotalScore(): void {
     if (!this.selectedStudent) {
@@ -295,8 +295,9 @@ onScoreChange(answer: EssayAnswer, value: number): void {
   }
 
   confirmPublish(): void {
-    const state = this.currentResultState;
-    state.published = true;
+    this.resultStates = this.resultStates.map((r) =>
+      r.assessmentId === this.selectedAssessmentId ? { ...r, published: true } : r,
+    );
     this.showPublishDialog = false;
     this.successMessage = 'Assessment results have been published successfully.';
 
@@ -313,9 +314,9 @@ onScoreChange(answer: EssayAnswer, value: number): void {
   }
 
   unpublishResult(): void {
-    if (this.currentResultState.locked) {
-      return;
-    }
+    this.resultStates = this.resultStates.map((r) =>
+      r.assessmentId === this.selectedAssessmentId ? { ...r, published: true } : r,
+    );
 
     this.currentResultState.published = false;
 
@@ -384,7 +385,9 @@ onScoreChange(answer: EssayAnswer, value: number): void {
       return;
     }
 
-    this.currentResultState.locked = true;
+    this.resultStates = this.resultStates.map((r) =>
+      r.assessmentId === this.selectedAssessmentId ? { ...r, published: true } : r,
+    );
 
     this.successMessage = 'Assessment result is now locked.';
 
