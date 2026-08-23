@@ -52,7 +52,6 @@
   }
 
   // ********** ACCORDION HEADER **********
-
   &__accordion-header {
     position: relative;
     min-height: 84px !important;
@@ -63,6 +62,8 @@
       filter 0.2s ease,
       min-height 0.2s ease,
       background-color 0.2s ease;
+
+    --mat-expansion-header-indicator-color: var(--color-white);
 
     &::before {
       display: none !important;
@@ -327,9 +328,10 @@
     }
 
     // ********** ERROR **********
-
     .mat-mdc-form-field-error {
       font-size: 11px !important;
+      color: var(--color-card-red);
+      justify-content: flex-start;
     }
 
     // ********** SELECT PANEL **********
@@ -390,10 +392,10 @@
     }
 
     // ********** ACCORDION INDICATOR **********
-
     .create-assessment__accordion {
       .mat-expansion-indicator {
         margin-left: 12px;
+        color: var(--color-white) !important;
 
         &::after {
           padding: 4px !important;
@@ -404,13 +406,11 @@
     }
 
     // ********** EXPANSION PANEL BODY **********
-
     .mat-expansion-panel-body {
       padding: 0 24px 24px !important;
     }
 
     // ********** HEADER RIPPLE **********
-
     .mat-expansion-panel-header .mat-ripple-element {
       background-color: rgba(255, 255, 255, 0.12) !important;
     }
@@ -810,7 +810,6 @@
   // ********** DELETE **********
 
   &__delete {
-    color: var(--color-text-secondary) !important;
 
     &:hover {
       color: var(--color-card-red) !important;

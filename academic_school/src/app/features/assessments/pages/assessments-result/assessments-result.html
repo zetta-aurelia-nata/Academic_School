@@ -1,4 +1,4 @@
-<!--********** ASSESSMENT RESULT SECTION **********-->
+<!--********** ASSESSMENT REVIEW & SCORING SECTION **********-->
 <section
   class="assessment-result w-full min-h-full box-border bg-[var(--color-background-content)] px-8 pt-[30px] pb-10 font-sans max-lg:px-5 max-lg:pt-6 max-md:px-4 max-md:pt-5"
 >
@@ -412,11 +412,13 @@
       <!--********** SAVE SCORE ACTION **********-->
       <button
         mat-flat-button
-        class="!h-9 !rounded-[9px] !bg-[var(--color-primary-dark)] !px-5 !text-[12px] !font-semibold !text-white align-center justify-center"
+        class="!h-9 !rounded-[9px] !px-5 !text-[12px] !font-semibold !text-white align-center justify-center transition-colors duration-300"
+        [ngClass]="scoreJustSaved ? '!bg-[#027a48]' : '!bg-[var(--color-primary-dark)]'"
         [disabled]="currentResultState.locked"
         (click)="onSaveScore()"
       >
-        Save Score
+        <mat-icon *ngIf="scoreJustSaved" class="!mr-1 !h-4 !w-4 !text-base">check_circle</mat-icon>
+        {{ scoreJustSaved ? 'Score Saved' : 'Save Score' }}
       </button>
     </div>
   </mat-card>

@@ -83,6 +83,7 @@ export class AssessmentsResult implements OnInit {
   selectedStudent?: ResultStudent;
   showPublishDialog = false;
   successMessage = '';
+  scoreJustSaved = false;
 
   //********** RESULT STATES **********
   resultStates: AssessmentResult[] = [
@@ -268,10 +269,15 @@ export class AssessmentsResult implements OnInit {
     );
 
     this.successMessage = `Score for ${this.selectedStudent.studentName} has been saved.`;
+    this.scoreJustSaved = true;
 
     setTimeout(() => {
       this.successMessage = '';
     }, 3000);
+
+    setTimeout(() => {
+      this.scoreJustSaved = false;
+    }, 2000);
   }
 
   //********** PUBLISH RESULT HANDLERS **********

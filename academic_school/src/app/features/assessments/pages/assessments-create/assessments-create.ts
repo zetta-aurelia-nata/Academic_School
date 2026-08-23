@@ -48,6 +48,7 @@ export class AssessmentsCreate implements OnInit {
 
   //********** PUBLIC STATE VARIABLES **********
   assessmentForm!: FormGroup;
+  questionForm!: FormGroup;
   selectedType: QuestionType | null = null;
   correctOptionIndex = 0;
   questions: Question[] = [];
@@ -73,7 +74,10 @@ export class AssessmentsCreate implements OnInit {
       duration: ['', [Validators.required, Validators.min(1)]],
       totalPoints: ['', [Validators.required, Validators.min(1)]],
       status: ['', Validators.required],
-      questionText: [''],
+    });
+
+    this.questionForm = this.fb.group({
+      questionText: ['', Validators.required],
       maxWord: ['', Validators.min(1)],
       questionPoints: ['', [Validators.required, Validators.min(1)]],
       options: this.fb.array([]),
@@ -82,15 +86,11 @@ export class AssessmentsCreate implements OnInit {
 
   //********** GETTER **********
   get options(): FormArray {
-    return this.assessmentForm.get('options') as FormArray;
+    return this.questionForm.get('options') as FormArray;
   }
 
   //********** ACTION HANDLERS **********
   selectType(type: QuestionType): void {
-    /*
-     * If the same question type is selected, keep the form open.
-     * This allows the user to create another question.
-     */
     if (this.selectedType === type) {
       return;
     }
@@ -105,7 +105,7 @@ export class AssessmentsCreate implements OnInit {
 
   //********** PRIVATE VARIABLES **********
   private resetQuestionForm(): void {
-    this.assessmentForm.patchValue({
+    this.questionForm.reset({
       questionText: '',
       maxWord: '',
       questionPoints: '',
@@ -148,18 +148,20 @@ export class AssessmentsCreate implements OnInit {
       return;
     }
 
-    const questionTextControl = this.assessmentForm.get('questionText');
+    const questionTextControl = this.questionForm.get('questionText');
     const questionText = questionTextControl?.value?.trim();
+    const questionPointsControl = this.questionForm.get('questionPoints');
 
-    if (!questionText) {
+    if (!questionText || questionPointsControl?.invalid) {
       questionTextControl?.markAsTouched();
+      questionPointsControl?.markAsTouched();
       return;
     }
 
-    const points = Number(this.assessmentForm.get('questionPoints')?.value);
+    const points = Number(questionPointsControl?.value);
 
     if (this.selectedType === 'essay') {
-      const maxWord = Number(this.assessmentForm.get('maxWord')?.value);
+      const maxWord = Number(this.questionForm.get('maxWord')?.value);
 
       this.questions.push({
         id: this.questionIdCounter++,

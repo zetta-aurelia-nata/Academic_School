@@ -223,6 +223,9 @@
               <mat-option value="Published">Published</mat-option>
               <mat-option value="Archived">Archived</mat-option>
             </mat-select>
+            <mat-error *ngIf="assessmentForm.get('status')?.hasError('required')">
+              Status is required
+            </mat-error>
           </mat-form-field>
         </div>
       </div>
@@ -289,7 +292,7 @@
       </div>
 
       <!--********** QUESTION AREA (RIGHT) **********-->
-      <div class="type-question-layout__content min-w-0">
+      <div class="type-question-layout__content min-w-0" [formGroup]="questionForm">
         @if (!selectedType) {
           <!--********** EMPTY STATE **********-->
           <div
@@ -356,6 +359,9 @@
                       formControlName="questionText"
                       placeholder="Write your essay question here..."
                     ></textarea>
+                    <mat-error *ngIf="questionForm.get('questionText')?.hasError('required')">
+                      Question text is required
+                    </mat-error>
                   </mat-form-field>
                 </div>
               </div>
@@ -404,6 +410,12 @@
                         min="1"
                         placeholder="e.g. 10"
                       />
+                      <mat-error *ngIf="questionForm.get('questionPoints')?.hasError('required')">
+                        Total score is required
+                      </mat-error>
+                      <mat-error *ngIf="questionForm.get('questionPoints')?.hasError('min')">
+                        Total score must be at least 1
+                      </mat-error>
                     </mat-form-field>
                   </div>
                 </div>
@@ -485,6 +497,9 @@
                       formControlName="questionText"
                       placeholder="Write your question here..."
                     ></textarea>
+                    <mat-error *ngIf="questionForm.get('questionText')?.hasError('required')">
+                      Question text is required
+                    </mat-error>
                   </mat-form-field>
                 </div>
               </div>
@@ -528,6 +543,9 @@
                             [formControlName]="optionIndex"
                             placeholder="Write answer option..."
                           />
+                          <mat-error *ngIf="option.hasError('required')">
+                            Option text is required
+                          </mat-error>
                         </mat-form-field>
                       </div>
 
@@ -604,6 +622,12 @@
                       min="1"
                       placeholder="e.g. 10"
                     />
+                    <mat-error *ngIf="questionForm.get('questionPoints')?.hasError('required')">
+                      Maximum points is required
+                    </mat-error>
+                    <mat-error *ngIf="questionForm.get('questionPoints')?.hasError('min')">
+                      Maximum points must be at least 1
+                    </mat-error>
                   </mat-form-field>
                 </div>
               </div>

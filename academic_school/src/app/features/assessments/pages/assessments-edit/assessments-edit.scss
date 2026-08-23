@@ -55,6 +55,7 @@
     overflow: hidden;
     padding: 16px 24px !important;
     border-radius: 13px 13px 0 0 !important;
+    --mat-expansion-header-indicator-color: var(--color-white);
 
     transition:
       filter 0.2s ease,
@@ -292,6 +293,8 @@
     // ********** ERROR **********
     .mat-mdc-form-field-error {
       font-size: 11px !important;
+      color: var(--color-card-red);
+      justify-content: flex-start;
     }
 
     // ********** SELECT PANEL **********
@@ -372,10 +375,11 @@
     .edit-assessment__accordion {
       .mat-expansion-indicator {
         margin-left: 12px;
+        color: var(--color-white) !important;
 
         &::after {
           padding: 4px !important;
-          border-color: currentColor !important;
+          border-color: var(--color-white) !important;
           border-width: 0 2px 2px 0 !important;
         }
       }
@@ -995,7 +999,7 @@
       margin-top: 27px;
     }
 
-    &__remove{
+    &__remove {
       color: var(--color-black);
     }
   }
