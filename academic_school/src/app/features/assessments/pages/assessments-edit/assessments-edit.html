@@ -285,6 +285,9 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
 
+      <!--**************** MAINTAIN ORDER QUESTION ****************-->
+      
+
       <!--********** QUESTIONS CONTENT **********-->
       <div class="flex flex-col gap-4 p-1 pt-5" formArrayName="questions">
         <!--********** EMPTY QUESTIONS **********-->
@@ -439,7 +442,12 @@
                   <mat-radio-group formControlName="correctOptionIndex" class="options-editor">
                     <div formArrayName="options">
                       @for (option of questionOptions(qi).controls; track option; let oi = $index) {
-                        <div class="option-row">
+                        <div
+                          class="option-row"
+                          [class.option-row--correct]="
+                            question.get('correctOptionIndex')?.value === oi
+                          "
+                        >
                           <!--********** OPTION NUMBER **********-->
                           <span class="option-row__index">
                             {{ oi + 1 }}
@@ -470,18 +478,24 @@
                           </div>
 
                           <!--********** CORRECT ANSWER **********-->
-                          <mat-radio-button
-                            class="option-row__check"
-                            [value]="oi"
-                            [aria-label]="'Mark option ' + (oi + 1) + ' as correct'"
-                          >
-                          </mat-radio-button>
+                          <div class="option-row__correct">
+                            <mat-radio-button
+                              class="option-row__check"
+                              [value]="oi"
+                              [aria-label]="'Mark option ' + (oi + 1) + ' as correct'"
+                            ></mat-radio-button>
+
+                            @if (question.get('correctOptionIndex')?.value === oi) {
+                              <span class="option-row__correct-label"> Correct Answer </span>
+                            }
+                          </div>
 
                           <!--********** REMOVE OPTION **********-->
                           <button
                             mat-icon-button
                             type="button"
                             aria-label="Remove option"
+                            class="option-row__remove"
                             [disabled]="questionOptions(qi).length <= 2"
                             (click)="removeOption(qi, oi)"
                           >
@@ -568,15 +582,11 @@
         class="edit-assessment__cancel-button max-md:!w-full"
         (click)="onCancel()"
       >
-        <mat-icon>close</mat-icon>
-
         <span>Cancel</span>
       </button>
 
       <!--********** SAVE BUTTON **********-->
       <button type="submit" mat-flat-button class="edit-assessment__save-button max-md:!w-full">
-        <mat-icon>save</mat-icon>
-
         <span>Save Changes</span>
       </button>
     </div>

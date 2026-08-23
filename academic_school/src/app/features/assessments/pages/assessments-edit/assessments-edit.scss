@@ -664,23 +664,17 @@
 .options-editor {
   display: flex;
   flex-direction: column;
-  gap: 10px;
   width: 100%;
 }
 
 // ********** OPTION ROW **********
 .option-row {
   display: grid;
-
-  grid-template-columns:
-    32px
-    minmax(0, 1fr)
-    40px
-    40px;
-
+  grid-template-columns: 32px minmax(0, 1fr) 130px 40px;
   align-items: start;
   column-gap: 10px;
   width: 100%;
+  min-height: 78px;
   padding: 4px 0;
 
   // ********** OPTION INDEX **********
@@ -691,21 +685,142 @@
     width: 30px;
     height: 30px;
     margin-top: 28px;
+    flex-shrink: 0;
     border-radius: 8px;
     background: var(--color-info-background);
     color: var(--color-progress-blue);
     font-size: 11px;
     font-weight: 700;
+    line-height: 1;
   }
 
-  // ********** CORRECT ANSWER CHECK **********
+  // ********** OPTION FIELD **********
+  &__field {
+    min-width: 0;
+  }
+
+  // ********** CORRECT ANSWER AREA **********
+  &__correct {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 4px;
+    min-height: 56px;
+    margin-top: 28px;
+    white-space: nowrap;
+  }
+
+  // ********** RADIO BUTTON **********
   &__check {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 40px;
-    margin-top: 28px;
+    height: 40px;
+    margin: 0 !important;
     flex-shrink: 0;
+  }
+
+  // ********** CORRECT ANSWER LABEL **********
+  &__correct-label {
+    display: inline-flex;
+    align-items: center;
+    color: var(--color-correct-answer);
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  // ********** REMOVE OPTION **********
+  &__remove {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 40px !important;
+    height: 40px !important;
+    margin-top: 28px !important;
+    padding: 0 !important;
+    flex-shrink: 0;
+    color: var(--color-text-secondary) !important;
+    border-radius: 8px !important;
+    transition:
+      color 0.2s ease,
+      background-color 0.2s ease,
+      transform 0.2s ease;
+
+    mat-icon {
+      width: 18px;
+      height: 18px;
+      margin: 0 !important;
+      font-size: 18px;
+      line-height: 18px;
+    }
+
+    &:hover:not(:disabled) {
+      background-color: #fef2f2 !important;
+      color: #dc2626 !important;
+      transform: scale(1.05);
+    }
+
+    &:active:not(:disabled) {
+      transform: scale(0.95);
+    }
+
+    &:disabled {
+      opacity: 0.35;
+    }
+  }
+
+  // ********** CORRECT ROW **********
+  &--correct {
+    .option-row__index {
+      background: color-mix(in srgb, var(--color-correct-answer) 12%, var(--color-white));
+      color: var(--color-correct-answer);
+    }
+
+    .option-row__correct-label {
+      animation: correctAnswerFadeIn 0.2s ease;
+    }
+  }
+}
+
+// ********** CORRECT ANSWER RADIO **********
+::ng-deep {
+  .option-row__correct {
+    .mat-mdc-radio-button {
+      margin: 0 !important;
+
+      .mdc-radio {
+        padding: 8px !important;
+      }
+
+      .mdc-radio__outer-circle {
+        border-color: var(--color-border) !important;
+      }
+
+      &.mat-mdc-radio-checked {
+        .mdc-radio__outer-circle {
+          border-color: var(--color-correct-answer) !important;
+        }
+
+        .mdc-radio__inner-circle {
+          border-color: var(--color-correct-answer) !important;
+          background-color: var(--color-correct-answer) !important;
+        }
+      }
+
+      &:hover {
+        .mdc-radio__outer-circle {
+          border-color: var(--color-correct-answer) !important;
+        }
+      }
+
+      &:focus-within {
+        .mdc-radio__outer-circle {
+          border-color: var(--color-correct-answer) !important;
+        }
+      }
+    }
   }
 }
 
@@ -745,6 +860,19 @@
 
   &:active {
     transform: translateY(0);
+  }
+}
+
+// ********** CORRECT ANSWER ANIMATION **********
+@keyframes correctAnswerFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-3px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
@@ -865,6 +993,10 @@
     &__check {
       width: 36px;
       margin-top: 27px;
+    }
+
+    &__remove{
+      color: var(--color-black);
     }
   }
 

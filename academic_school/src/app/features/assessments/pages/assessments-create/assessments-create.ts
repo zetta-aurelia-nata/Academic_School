@@ -70,12 +70,12 @@ export class AssessmentsCreate implements OnInit {
       grade: ['', Validators.required],
       description: [''],
       instructions: [''],
-      duration: [60, [Validators.required, Validators.min(1)]],
-      totalPoints: [100, [Validators.required, Validators.min(1)]],
-      status: ['Draft', Validators.required],
+      duration: ['', [Validators.required, Validators.min(1)]],
+      totalPoints: ['', [Validators.required, Validators.min(1)]],
+      status: ['', Validators.required],
       questionText: [''],
-      maxWord: [300, Validators.min(1)],
-      questionPoints: [10, [Validators.required, Validators.min(1)]],
+      maxWord: ['', Validators.min(1)],
+      questionPoints: ['', [Validators.required, Validators.min(1)]],
       options: this.fb.array([]),
     });
   }
@@ -103,17 +103,19 @@ export class AssessmentsCreate implements OnInit {
     }
   }
 
+  //********** PRIVATE VARIABLES **********
   private resetQuestionForm(): void {
     this.assessmentForm.patchValue({
       questionText: '',
-      maxWord: 300,
-      questionPoints: 10,
+      maxWord: '',
+      questionPoints: '',
     });
 
     this.options.clear();
     this.correctOptionIndex = 0;
   }
 
+  //********** PRIVATE VARIABLES **********
   private createDefaultOptions(): void {
     for (let i = 0; i < 4; i++) {
       this.options.push(this.fb.control('', Validators.required));
@@ -216,6 +218,7 @@ export class AssessmentsCreate implements OnInit {
 
   noQuestionError = false;
 
+  // ********** ACTION HANDLER **********F
   onSave(): void {
     if (this.assessmentForm.invalid) {
       this.assessmentForm.markAllAsTouched();
@@ -244,6 +247,7 @@ export class AssessmentsCreate implements OnInit {
     this.router.navigate(['/assessments']);
   }
 
+  // ********** ACTION HANDLER **********
   onCancel(): void {
     this.router.navigate(['/assessments']);
   }

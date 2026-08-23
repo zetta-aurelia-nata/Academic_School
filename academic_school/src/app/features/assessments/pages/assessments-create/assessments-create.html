@@ -31,7 +31,7 @@
   <form [formGroup]="assessmentForm" (ngSubmit)="onSave()" class="mx-auto w-full max-w-[1100px]">
     <!--********** ASSESSMENT INFORMATION **********-->
     <mat-expansion-panel
-      class="create-assessment__accordion !mb-5 !overflow-hidden !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !shadow-none"
+      class="create-assessment__accordion !mb-3 !overflow-hidden !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !shadow-none"
       [expanded]="true"
     >
       <!--********** HEADER **********-->
@@ -146,7 +146,7 @@
 
     <!--********** ASSESSMENT SETTINGS **********-->
     <mat-expansion-panel
-      class="create-assessment__accordion !mb-5 !overflow-hidden !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !shadow-none"
+      class="create-assessment__accordion !mb-3 !overflow-hidden !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !shadow-none"
       [expanded]="true"
     >
       <!--********** HEADER **********-->
@@ -230,7 +230,7 @@
 
     <!--********** ASSESSMENT TYPE & QUESTION BUILDER **********-->
     <div
-      class="type-question-layout mb-5 mt-15 grid grid-cols-[280px_1fr] items-start gap-5 max-lg:grid-cols-1"
+      class="type-question-layout mb-5 mt-10 grid grid-cols-[280px_1fr] items-start gap-5 max-lg:grid-cols-1"
     >
       <!--********** ASSESSMENT TYPE (LEFT) **********-->
       <div class="type-panel lg:sticky lg:top-6">
@@ -548,7 +548,7 @@
                         </mat-radio-button>
 
                         @if (correctOptionIndex === optionIndex) {
-                          <span class="answer-option-row__correct-label"> Correct </span>
+                          <span class="answer-option-row__correct-label"> Correct Answer </span>
                         }
                       </div>
 
@@ -638,59 +638,68 @@
 
     <!--********** QUESTIONS CREATED **********-->
     @if (questions.length > 0) {
-      <div class="created-questions mt-5">
-        <div class="created-questions__header mb-4">
-          <div>
-            <h2 class="m-0 text-base font-bold text-[var(--color-title)]">Questions</h2>
-            <p class="mt-1 text-[13px] text-[var(--color-text-secondary)]">
-              Questions added to this assessment.
-            </p>
+      <mat-expansion-panel
+        class="create-assessment__accordion !mb-3 !overflow-hidden !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !shadow-none"
+        [expanded]="true"
+      >
+        <!--********** HEADER **********-->
+        <mat-expansion-panel-header
+          class="create-assessment__accordion-header create-assessment__accordion-header--green !h-auto !min-h-[25px] !px-6 max-md:!px-4 !bg-[var(--color-primary)]"
+        >
+          <mat-panel-title class="!m-0 !flex !flex-col !items-start">
+            <span class="text-base font-bold text-[var(--color-white)]"> List Questions </span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div class="created-questions mt-4 !p-4">
+          <div class="flex flex-col gap-3">
+            @for (question of questions; track question.id; let qi = $index) {
+              <div class="created-question">
+                <div class="created-question__number">
+                  {{ qi + 1 }}
+                </div>
+
+                <div class="created-question__content">
+                  <div class="created-question__top">
+                    <span
+                      class="question-item__badge"
+                      [class.question-item__badge--essay]="question.type === 'essay'"
+                      [class.question-item__badge--mc]="question.type === 'multiple_choice'"
+                    >
+                      {{ questionTypeLabel(question.type) }}
+                    </span>
+                    <span class="created-question__points"> {{ question.points }} pts </span>
+                  </div>
+                  <p class="created-question__text">
+                    {{ question.text }}
+                  </p>
+                </div>
+
+                <button
+                  mat-icon-button
+                  type="button"
+                  class="created-question__delete"
+                  (click)="removeCreatedQuestion(qi)"
+                  aria-label="Remove question"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            }
           </div>
         </div>
-
-        <div class="flex flex-col gap-3">
-          @for (question of questions; track question.id; let qi = $index) {
-            <div class="created-question">
-              <div class="created-question__number">
-                {{ qi + 1 }}
-              </div>
-
-              <div class="created-question__content">
-                <div class="created-question__top">
-                  <span
-                    class="question-item__badge"
-                    [class.question-item__badge--essay]="question.type === 'essay'"
-                    [class.question-item__badge--mc]="question.type === 'multiple_choice'"
-                  >
-                    {{ questionTypeLabel(question.type) }}
-                  </span>
-                  <span class="created-question__points"> {{ question.points }} pts </span>
-                </div>
-                <p class="created-question__text">
-                  {{ question.text }}
-                </p>
-              </div>
-
-              <button
-                mat-icon-button
-                type="button"
-                class="created-question__delete"
-                (click)="removeCreatedQuestion(qi)"
-                aria-label="Remove question"
-              >
-                <mat-icon>delete</mat-icon>
-              </button>
-            </div>
-          }
-        </div>
-      </div>
+      </mat-expansion-panel>
     }
 
-        <!--********** NO QUESTION ERROR   **********-->
-    <div *ngIf="noQuestionError" role="alert" class="mt-4 rounded-lg bg-red-50 p-3 text-xs font-medium text-red-600 border border-red-200 flex items-center gap-2">
+    <!--********** NO QUESTION ERROR   **********-->
+    <div
+      *ngIf="noQuestionError"
+      role="alert"
+      class="mt-4 rounded-lg bg-red-50 p-3 text-xs font-medium text-red-600 border border-red-200 flex items-center gap-2"
+    >
       <span>Please add at least one question before creating.</span>
     </div>
-    
+
     <!--********** FORM ACTIONS **********-->
     <div
       class="create-assessment__actions mt-6 flex items-center justify-center gap-3 border-t border-[var(--color-border)] pt-5 max-md:flex-col-reverse"

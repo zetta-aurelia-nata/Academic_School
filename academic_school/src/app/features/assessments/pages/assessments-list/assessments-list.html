@@ -4,9 +4,9 @@
 >
   <!--********** TOOLBAR **********-->
   <mat-toolbar
-    class="list-toolbar !mb-6 !flex !h-auto !min-h-0 !items-center !gap-3 !bg-transparent !p-0 max-md:!flex-col max-md:!items-stretch"
+    class="list-toolbar !mb-5 !flex !h-auto !min-h-0 !items-center !gap-3 !bg-transparent !p-0 max-md:!flex-col max-md:!items-stretch"
   >
-    <!--********** TOOLBAR TEXT **********-->
+    <!--********** PAGE TITLE **********-->
     <div class="flex flex-col gap-1">
       <h1 class="m-0 text-2xl font-bold leading-[1.2] text-[var(--color-title)] max-lg:text-[22px]">
         Assessments List
@@ -20,6 +20,32 @@
     <!--********** SPACER **********-->
     <span class="flex-1 max-md:hidden"></span>
 
+    <!--********** EXPORT BUTTON **********-->
+    <button
+      mat-stroked-button
+      type="button"
+      class="list-toolbar__btn list-toolbar__btn--export !inline-flex !h-10 !items-center !justify-center !gap-2 !rounded-[10px] !px-[22px] !text-[13px] !font-semibold max-md:!w-full"
+    >
+      <mat-icon class="!h-[18px] !w-[18px] !text-[18px]"> download </mat-icon>
+
+      <span>Export</span>
+    </button>
+
+    <!--********** CREATE BUTTON **********-->
+    <button
+      mat-flat-button
+      type="button"
+      class="list-toolbar__btn list-toolbar__btn--create !inline-flex !h-10 !items-center !justify-center !gap-2 !rounded-[10px] !px-[22px] !text-[13px] !font-semibold max-md:!w-full"
+      (click)="onCreateAssessment()"
+    >
+      <mat-icon class="!h-[18px] !w-[18px] !text-[18px]"> add </mat-icon>
+
+      <span>Create Assessment</span>
+    </button>
+  </mat-toolbar>
+
+  <!--********** FILTER TOOLBAR **********-->
+  <div class="toolbar-filter" #filterWrapper>
     <!--********** SEARCH **********-->
     <div class="list-toolbar__search">
       <!--********** SEARCH ICON **********-->
@@ -47,28 +73,190 @@
       }
     </div>
 
-    <!--********** EXPORT ACTION **********-->
+    <!--********** FILTER BUTTON **********-->
     <button
       mat-stroked-button
-      class="list-toolbar__btn list-toolbar__btn--export !inline-flex !h-10 !items-center !justify-center !gap-2 !rounded-[10px] !px-[30px] !text-[13px] !font-semibold max-md:!w-full"
+      type="button"
+      class="toolbar-filter__btn"
+      [class.toolbar-filter__btn--active]="hasActiveFilters"
+      (click)="toggleFilterPanel()"
+      aria-label="Open assessment filters"
     >
-      <mat-icon class="!h-[18px] !w-[18px] !text-[18px]"> download </mat-icon>
+      <mat-icon>filter_list</mat-icon>
 
-      <span>Export</span>
+      <span>Filter</span>
+
+      @if (activeFilterCount > 0) {
+        <span class="toolbar-filter__count">
+          {{ activeFilterCount }}
+        </span>
+      }
     </button>
 
-    <!--********** CREATE ACTION **********-->
-    <button
-      mat-flat-button
-      color="primary"
-      class="list-toolbar__btn list-toolbar__btn--create !inline-flex !h-10 !items-center !justify-center !gap-2 !rounded-[10px] !px-[30px] !text-[13px] !font-semibold max-md:!w-full"
-      (click)="onCreateAssessment()"
-    >
-      <mat-icon class="!h-[18px] !w-[18px] !text-[18px]"> add </mat-icon>
+    <!--********** FILTER PANEL **********-->
+    @if (showFilterPanel) {
+      <div class="filter-panel" (click)="$event.stopPropagation()">
+        <!--********** PANEL HEADER **********-->
+        <div class="filter-panel__header">Filter</div>
 
-      <span>Create Assessment</span>
-    </button>
-  </mat-toolbar>
+        <!--********** SUBJECT **********-->
+        <div class="filter-panel__section">
+          <div class="filter-panel__section-head">
+            <span class="filter-panel__section-title"> Subject </span>
+
+            <button type="button" class="filter-panel__reset" (click)="resetSubjectDraft()">
+              Reset
+            </button>
+          </div>
+
+          <div class="filter-panel__dropdown">
+            <button
+              type="button"
+              class="filter-panel__dropdown-trigger"
+              (click)="toggleDropdown('subject')"
+            >
+              <span>
+                {{ draftSubject === 'ALL' ? 'All subjects' : draftSubject }}
+              </span>
+
+              <mat-icon>expand_more</mat-icon>
+            </button>
+
+            @if (openDropdown === 'subject') {
+              <div class="filter-panel__dropdown-menu">
+                <button type="button" (click)="selectDraftSubject('ALL')">All subjects</button>
+
+                @for (subject of subjectOptions; track subject) {
+                  <button type="button" (click)="selectDraftSubject(subject)">
+                    {{ subject }}
+                  </button>
+                }
+              </div>
+            }
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <!--********** STATUS **********-->
+        <div class="filter-panel__section">
+          <div class="filter-panel__section-head">
+            <span class="filter-panel__section-title"> Status </span>
+
+            <button type="button" class="filter-panel__reset" (click)="resetStatusDraft()">
+              Reset
+            </button>
+          </div>
+
+          <div class="filter-panel__dropdown">
+            <button
+              type="button"
+              class="filter-panel__dropdown-trigger"
+              (click)="toggleDropdown('status')"
+            >
+              <span class="filter-panel__dropdown-value">
+                @if (draftStatus !== 'ALL') {
+                  <span [class]="statusDotClass(draftStatus)"></span>
+                }
+
+                {{ draftStatus === 'ALL' ? 'All statuses' : draftStatus }}
+              </span>
+
+              <mat-icon>expand_more</mat-icon>
+            </button>
+
+            @if (openDropdown === 'status') {
+              <div class="filter-panel__dropdown-menu">
+                <button type="button" (click)="selectDraftStatus('ALL')">All statuses</button>
+
+                @for (status of statusOptions; track status) {
+                  <button type="button" (click)="selectDraftStatus(status)">
+                    <span [class]="statusDotClass(status)"></span>
+
+                    {{ status }}
+                  </button>
+                }
+              </div>
+            }
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <!--********** GRADE **********-->
+        <div class="filter-panel__section">
+          <div class="filter-panel__section-head">
+            <span class="filter-panel__section-title"> Grade </span>
+
+            <button type="button" class="filter-panel__reset" (click)="resetGradeDraft()">
+              Reset
+            </button>
+          </div>
+
+          <div class="filter-panel__dropdown">
+            <button
+              type="button"
+              class="filter-panel__dropdown-trigger"
+              (click)="toggleDropdown('grade')"
+            >
+              <span>
+                {{ draftGrade === 'ALL' ? 'All grades' : draftGrade }}
+              </span>
+
+              <mat-icon>expand_more</mat-icon>
+            </button>
+
+            @if (openDropdown === 'grade') {
+              <div class="filter-panel__dropdown-menu">
+                <button type="button" (click)="selectDraftGrade('ALL')">All grades</button>
+
+                @for (grade of gradeOptions; track grade) {
+                  <button type="button" (click)="selectDraftGrade(grade)">
+                    {{ grade }}
+                  </button>
+                }
+              </div>
+            }
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <!--********** ASSESSMENT NAME **********-->
+        <div class="filter-panel__section">
+          <div class="filter-panel__section-head">
+            <span class="filter-panel__section-title"> Assessment Name </span>
+
+            <button type="button" class="filter-panel__reset" (click)="resetAssessmentNameDraft()">
+              Reset
+            </button>
+          </div>
+
+          <div class="filter-panel__input-wrapper">
+            <input
+              type="text"
+              class="filter-panel__input"
+              placeholder="Search assessment name..."
+              [(ngModel)]="draftAssessmentName"
+            />
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <!--********** FOOTER **********-->
+        <div class="filter-panel__footer">
+          <button type="button" class="filter-panel__reset-all" (click)="resetAllDraft()">
+            Reset all
+          </button>
+
+          <button type="button" class="filter-panel__apply" (click)="applyFilterPanel()">
+            Apply now
+          </button>
+        </div>
+      </div>
+    }
+  </div>
 
   <!--********** TABLE CARD **********-->
   <mat-card
@@ -86,7 +274,6 @@
           <th mat-header-cell *matHeaderCellDef>Assessment Name</th>
 
           <td mat-cell *matCellDef="let row">
-            <!--********** ASSESSMENT TITLE **********-->
             <div
               class="flex items-center gap-3 text-[13px] font-semibold text-[var(--color-title)]"
             >
@@ -139,7 +326,6 @@
           <td mat-cell *matCellDef="let row">
             <span [ngClass]="statusClass(row.status)">
               <span class="status-badge__dot"></span>
-
               {{ row.status }}
             </span>
           </td>
@@ -167,26 +353,27 @@
           <th mat-header-cell *matHeaderCellDef>Actions</th>
 
           <td mat-cell *matCellDef="let row">
-            <!--********** TABLE ACTIONS **********-->
             <div class="flex items-center gap-2">
               <!--********** EDIT ACTION **********-->
               <button
                 mat-icon-button
+                type="button"
                 class="assessment-table__action assessment-table__action--edit"
                 aria-label="Edit assessment"
                 (click)="onEdit(row)"
               >
-                <mat-icon> edit </mat-icon>
+                <mat-icon>edit</mat-icon>
               </button>
 
               <!--********** DELETE ACTION **********-->
               <button
                 mat-icon-button
+                type="button"
                 class="assessment-table__action assessment-table__action--delete"
                 aria-label="Delete assessment"
-                (click)="onDelete(row)"
+                (click)="onDelete(row, $event)"
               >
-                <mat-icon> delete </mat-icon>
+                <mat-icon>delete</mat-icon>
               </button>
             </div>
           </td>
@@ -209,7 +396,7 @@
               <div
                 class="flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-primary-light)] text-[var(--color-primary-dark)]"
               >
-                <mat-icon> search_off </mat-icon>
+                <mat-icon>search_off</mat-icon>
               </div>
 
               <!--********** EMPTY TITLE **********-->
@@ -219,7 +406,7 @@
 
               <!--********** EMPTY DESCRIPTION **********-->
               <span class="text-[12px] text-[var(--color-text-secondary)]">
-                Try searching with a different keyword.
+                Try searching with a different keyword or filter.
               </span>
             </div>
           </td>
@@ -248,13 +435,13 @@
         (click)="$event.stopPropagation()"
       >
         <!--********** DIALOG HEADER **********-->
-        <div class="mb-5 flex items-center justify-center gap-2">
+        <div class="mb-5 flex items-center justify-center gap-3">
           <!--********** DELETE ICON **********-->
           <div
             class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-red-50 text-red-500"
             aria-hidden="true"
           >
-            <mat-icon> delete_outline </mat-icon>
+            <mat-icon>delete_outline</mat-icon>
           </div>
 
           <!--********** DIALOG TITLE **********-->
@@ -293,7 +480,6 @@
 
           <!--********** CONFIRM DELETE **********-->
           <button
-            #deleteConfirmButton
             type="button"
             mat-flat-button
             class="!h-10 !rounded-[10px] !bg-red-500 !px-5 !text-[13px] !font-semibold !text-white max-sm:!w-full"

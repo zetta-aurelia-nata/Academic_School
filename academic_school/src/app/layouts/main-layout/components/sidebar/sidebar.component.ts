@@ -18,20 +18,19 @@ export interface SubmenuItem {
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
 })
-
 export class SidebarComponent {
   @Output() navigationSelected = new EventEmitter<void>();
 
   onNavigationSelected(): void {
     this.navigationSelected.emit();
   }
-  
+
   // *************** PUBLIC STATE VARIABLES ***************
   isAssessmentOpen = false;
   readonly assessmentSubmenus: SubmenuItem[] = [
     { id: 'list', label: 'Assessments List', link: '/assessments' },
-    { id: 'submission', label: 'Assessment Submission', link: '/assessments/review-scoring' },
-    { id: 'result', label: 'Assessment Result', link: '/assessments/result' },
+    { id: 'result', label: 'Assessment Scoring', link: '/assessments/result' },
+    { id: 'submission', label: 'Assessment Result', link: '/assessments/review-scoring' },
   ];
 
   // *************** ACTION HANDLERS ***************

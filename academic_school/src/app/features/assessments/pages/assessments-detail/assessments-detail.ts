@@ -1,6 +1,6 @@
 // ********** ANGULAR IMPORTS **********
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit} from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 // ********** ANGULAR MATERIAL IMPORTS **********
@@ -14,8 +14,6 @@ import { AssessmentService } from '../../services/assessment.service';
 import { SubmissionService } from '../../services/submission.service';
 import { Submission, SubmissionAnswer } from '../../models/submission.model';
 
-// ********** LOCAL VIEW-MODEL INTERFACES **********
-// (kept so the template's field names stay the same as before)
 interface StudentReview {
   id: number;
   studentName: string;
@@ -42,7 +40,6 @@ interface AnswerReview {
   templateUrl: './assessments-detail.html',
   styleUrls: ['./assessments-detail.scss'],
 })
-
 export class AssessmentsDetail implements OnInit {
   // ********** PRIVATE VARIABLES **********
   private readonly route = inject(ActivatedRoute);
@@ -70,7 +67,6 @@ export class AssessmentsDetail implements OnInit {
     const submissions = this.submissionService.getSubmissions(assessmentId);
     this.students = submissions.map((submission) => this.mapSubmissionToStudentReview(submission));
     this.filteredStudents = [...this.students];
-
     this.isStudentDetail = studentIdParam !== null;
 
     if (studentIdParam !== null) {
