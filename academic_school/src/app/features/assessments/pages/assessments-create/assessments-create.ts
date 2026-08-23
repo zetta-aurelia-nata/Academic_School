@@ -4,6 +4,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
+//********** ANGULAR CDK IMPORTS **********
+import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, CdkDragPlaceholder } from '@angular/cdk/drag-drop';
+
 //********** ANGULAR MATERIAL IMPORTS **********
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -38,6 +41,9 @@ import { Question, QuestionType } from '../../models/question.model';
     MatCheckboxModule,
     MatSelectModule,
     MatExpansionModule,
+    CdkDropList,
+    CdkDrag,
+    CdkDragPlaceholder
   ],
 })
 export class AssessmentsCreate implements OnInit {
@@ -52,10 +58,7 @@ export class AssessmentsCreate implements OnInit {
   selectedType: QuestionType | null = null;
   correctOptionIndex = 0;
   questions: Question[] = [];
-
-  /**
-   * Used to generate a unique ID for each question.
-   */
+   
   private questionIdCounter = 1;
   constructor(fb: FormBuilder, router: Router, assessmentService: AssessmentService) {
     this.fb = fb;
@@ -207,6 +210,37 @@ export class AssessmentsCreate implements OnInit {
   removeCreatedQuestion(index: number): void {
     if (index < 0 || index >= this.questions.length) return;
     this.questions = this.questions.filter((_, i) => i !== index);
+  }
+
+  // ********** ACTION HANDLERS : REORDER QUESTIONS **********
+  dropCreatedQuestion(event: CdkDragDrop<Question[]>): void {
+    if (event.previousIndex === event.currentIndex) {
+      return;
+    }
+
+    const reordered = [...this.questions];
+    moveItemInArray(reordered, event.previousIndex, event.currentIndex);
+    this.questions = reordered;
+  }
+
+  moveCreatedQuestionUp(index: number): void {
+    if (index <= 0) {
+      return;
+    }
+
+    const reordered = [...this.questions];
+    moveItemInArray(reordered, index, index - 1);
+    this.questions = reordered;
+  }
+
+  moveCreatedQuestionDown(index: number): void {
+    if (index >= this.questions.length - 1) {
+      return;
+    }
+
+    const reordered = [...this.questions];
+    moveItemInArray(reordered, index, index + 1);
+    this.questions = reordered;
   }
 
   questionTypeLabel(type: QuestionType): string {

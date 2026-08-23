@@ -1,8 +1,18 @@
 // ********** ANGULAR IMPORTS **********
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+
+// ********** ANGULAR CDK IMPORTS **********
+import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, CdkDragPlaceholder } from '@angular/cdk/drag-drop';
 
 // ********** ANGULAR MATERIAL IMPORTS **********
 import { MatButtonModule } from '@angular/material/button';
@@ -35,6 +45,9 @@ import { Question, QuestionType } from '../../models/question.model';
     MatSelectModule,
     MatIconModule,
     MatRadioModule,
+    CdkDropList,
+    CdkDrag,
+    CdkDragPlaceholder
   ],
   templateUrl: './assessments-edit.html',
   styleUrl: './assessments-edit.scss',
@@ -155,6 +168,39 @@ export class EditAssessment implements OnInit {
     this.questions.removeAt(index);
   }
 
+  // ********** ACTION HANDLERS : REORDER QUESTIONS **********
+  dropQuestion(event: CdkDragDrop<FormGroup[]>): void {
+    if (event.previousIndex === event.currentIndex) {
+      return;
+    }
+
+    this.moveQuestion(event.previousIndex, event.currentIndex);
+  }
+
+  moveQuestionUp(index: number): void {
+    if (index <= 0) {
+      return;
+    }
+
+    this.moveQuestion(index, index - 1);
+  }
+
+  moveQuestionDown(index: number): void {
+    if (index >= this.questions.length - 1) {
+      return;
+    }
+
+    this.moveQuestion(index, index + 1);
+  }
+
+  private moveQuestion(previousIndex: number, currentIndex: number): void {
+    const controls = [...this.questions.controls] as FormGroup[];
+    moveItemInArray(controls, previousIndex, currentIndex);
+
+    this.questions.clear();
+    controls.forEach((control) => this.questions.push(control));
+  }
+
   // ********** ACTION HANDLERS : OPTIONS **********
   addOption(questionIndex: number): void {
     this.questionOptions(questionIndex).push(this.fb.control('', Validators.required));
@@ -217,10 +263,7 @@ export class EditAssessment implements OnInit {
     this.router.navigate(['/assessments']);
   }
 
-  // ********************************************************
   // ********** CANCEL **********
-  // ********************************************************
-
   onCancel(): void {
     this.router.navigate(['/assessments']);
   }

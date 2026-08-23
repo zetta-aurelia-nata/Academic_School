@@ -35,8 +35,27 @@ export const ASSESSMENT_ROUTES: Routes = [
   // ********** ASSESSMENT RESULT **********
   {
     path: 'result',
-    loadComponent: () =>
-      import('./pages/assessments-result/assessments-result').then((m) => m.AssessmentsResult),
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import('./pages/assessments-result/assessments-result').then((m) => m.AssessmentsResult),
+      },
+      {
+        path: ':id',
+        loadComponent: () =>
+          import('./pages/assessments-detail/assessments-detail').then(
+            (m) => m.AssessmentsDetail,
+          ),
+      },
+      {
+        path: ':id/student/:studentId',
+        loadComponent: () =>
+          import('./pages/assessments-result/assessments-result').then(
+            (m) => m.AssessmentsResult,
+          ),
+      },
+    ],
   },
 
   // ********** STUDENT SUBMISSIONS **********

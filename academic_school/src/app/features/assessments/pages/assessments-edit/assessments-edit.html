@@ -286,10 +286,16 @@
       </mat-expansion-panel-header>
 
       <!--**************** MAINTAIN ORDER QUESTION ****************-->
-      
+      <!--********** DRAG A QUESTION BY ITS HANDLE, OR USE THE UP/DOWN ARROWS, TO REORDER **********-->
 
       <!--********** QUESTIONS CONTENT **********-->
-      <div class="flex flex-col gap-4 p-1 pt-5" formArrayName="questions">
+      <div
+        class="question-list flex flex-col gap-4 p-1 pt-5"
+        formArrayName="questions"
+        cdkDropList
+        cdkDropListLockAxis="y"
+        (cdkDropListDropped)="dropQuestion($event)"
+      >
         <!--********** EMPTY QUESTIONS **********-->
         @if (questions.length === 0) {
           <div
@@ -311,12 +317,28 @@
             [formGroupName]="qi"
             class="question-accordion !overflow-hidden !rounded-[12px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !shadow-none"
             [expanded]="qi === 0"
+            cdkDrag
+            cdkDragBoundary=".question-list"
+            [cdkDragDisabled]="questions.length <= 1"
           >
+            <!--********** DRAG PREVIEW PLACEHOLDER **********-->
+            <div class="question-accordion__placeholder" *cdkDragPlaceholder></div>
+
             <!--********** QUESTION HEADER **********-->
             <mat-expansion-panel-header
               class="question-accordion__header !h-auto !min-h-[68px] !px-4"
             >
               <mat-panel-title class="!m-0 !flex !items-center !gap-3">
+                <!--********** DRAG HANDLE **********-->
+                <span
+                  class="question-accordion__drag-handle"
+                  cdkDragHandle
+                  aria-label="Drag to reorder question"
+                  (click)="$event.stopPropagation()"
+                >
+                  <mat-icon>drag_indicator</mat-icon>
+                </span>
+
                 <!--********** QUESTION NUMBER **********-->
                 <span class="form-section__number">
                   {{ qi + 1 }}
@@ -339,7 +361,31 @@
                 </span>
               </mat-panel-title>
 
-              <mat-panel-description class="!m-0 !flex !items-center !justify-end">
+              <mat-panel-description class="!m-0 !flex !items-center !justify-end !gap-1">
+                <!--********** MOVE UP **********-->
+                <button
+                  mat-icon-button
+                  type="button"
+                  aria-label="Move question up"
+                  class="question-accordion__reorder"
+                  [disabled]="qi === 0"
+                  (click)="moveQuestionUp(qi); $event.stopPropagation()"
+                >
+                  <mat-icon>arrow_upward</mat-icon>
+                </button>
+
+                <!--********** MOVE DOWN **********-->
+                <button
+                  mat-icon-button
+                  type="button"
+                  aria-label="Move question down"
+                  class="question-accordion__reorder"
+                  [disabled]="qi === questions.length - 1"
+                  (click)="moveQuestionDown(qi); $event.stopPropagation()"
+                >
+                  <mat-icon>arrow_downward</mat-icon>
+                </button>
+
                 <!--********** DELETE QUESTION **********-->
                 <button
                   mat-icon-button

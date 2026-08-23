@@ -676,9 +676,31 @@
         </mat-expansion-panel-header>
 
         <div class="created-questions mt-4 !p-4">
-          <div class="flex flex-col gap-3">
+          <div
+            class="flex flex-col gap-3 created-question-list"
+            cdkDropList
+            cdkDropListLockAxis="y"
+            (cdkDropListDropped)="dropCreatedQuestion($event)"
+          >
             @for (question of questions; track question.id; let qi = $index) {
-              <div class="created-question">
+              <div
+                class="created-question"
+                cdkDrag
+                cdkDragBoundary=".created-question-list"
+                [cdkDragDisabled]="questions.length <= 1"
+              >
+                <!--********** DRAG PREVIEW PLACEHOLDER **********-->
+                <div class="created-question__placeholder" *cdkDragPlaceholder></div>
+
+                <!--********** DRAG HANDLE **********-->
+                <span
+                  class="created-question__drag-handle"
+                  cdkDragHandle
+                  aria-label="Drag to reorder question"
+                >
+                  <mat-icon>drag_indicator</mat-icon>
+                </span>
+
                 <div class="created-question__number">
                   {{ qi + 1 }}
                 </div>
@@ -698,6 +720,30 @@
                     {{ question.text }}
                   </p>
                 </div>
+
+                <!--********** MOVE UP **********-->
+                <button
+                  mat-icon-button
+                  type="button"
+                  class="created-question__reorder"
+                  [disabled]="qi === 0"
+                  (click)="moveCreatedQuestionUp(qi)"
+                  aria-label="Move question up"
+                >
+                  <mat-icon>arrow_upward</mat-icon>
+                </button>
+
+                <!--********** MOVE DOWN **********-->
+                <button
+                  mat-icon-button
+                  type="button"
+                  class="created-question__reorder"
+                  [disabled]="qi === questions.length - 1"
+                  (click)="moveCreatedQuestionDown(qi)"
+                  aria-label="Move question down"
+                >
+                  <mat-icon>arrow_downward</mat-icon>
+                </button>
 
                 <button
                   mat-icon-button
