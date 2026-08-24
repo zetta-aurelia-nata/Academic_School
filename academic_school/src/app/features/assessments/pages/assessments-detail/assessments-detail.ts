@@ -36,6 +36,17 @@ interface AnswerReview {
   maxScore: number;
 }
 
+interface ResultAnswer {
+  question: string;
+  type: 'essay' | 'multiple_choice';
+  answer: string;
+  maxScore: number;
+  score: number;
+  teacherComment: string;
+  options: { text: string; isCorrect: boolean }[];
+  correctAnswer?: string;
+}
+
 @Component({
   selector: 'app-assessments-detail',
   imports: [CommonModule, MatButtonModule, MatCardModule, MatIconModule],
@@ -57,6 +68,8 @@ export class AssessmentsDetail implements OnInit {
   filteredStudents: StudentReview[] = [];
   student?: StudentReview;
   answers: AnswerReview[] = [];
+  currentResultState: any;
+  selectedStudent: any;
 
   // ********** LIFECYCLE HOOKS **********
   ngOnInit(): void {
@@ -162,4 +175,5 @@ export class AssessmentsDetail implements OnInit {
   statusClass(status: string): string {
     return `review-status review-status--${status.toLowerCase().replaceAll(' ', '-')}`;
   }
+
 }

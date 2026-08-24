@@ -22,7 +22,7 @@
 
     <!--********** FILTER TOOLBAR **********-->
     <div
-      class="toolbar-filter !inline-flex !h-10 !items-center !justify-center !gap-2 !rounded-[10px] !px-[22px] !text-[13px] !font-semibold max-md:!w-full"
+      class="toolbar-filter !inline-flex !h-10 !items-center !justify-center !gap-2 !rounded-[10px] !px-[22px] !text-[13px] !font-semibold max-md:!w-full !mr-[-40px]"
     >
       <!--********** SEARCH **********-->
       <div class="list-toolbar__search">
@@ -211,19 +211,19 @@
             </div>
           </div>
         }
-        <!--********** CREATE BUTTON **********-->
-        <button
-          mat-flat-button
-          type="button"
-          class="list-toolbar__btn list-toolbar__btn--create !inline-flex !h-10 !items-center !gap-2 !rounded-[10px] !px-[22px] !text-[13px] !font-semibold max-md:!w-full"
-          (click)="onCreateAssessment()"
-        >
-          <mat-icon class="!h-[18px] !w-[18px] !text-[18px]"> add </mat-icon>
-
-          <span>Create Assessment</span>
-        </button>
       </div>
     </div>
+    <!--********** CREATE BUTTON **********-->
+    <button
+      mat-flat-button
+      type="button"
+      class="list-toolbar__btn list-toolbar__btn--create !inline-flex !h-10 !items-center !gap-2 !rounded-[10px] !px-[22px] !text-[13px] !font-semibold max-md:!w-full"
+      (click)="onCreateAssessment()"
+    >
+      <mat-icon class="!h-[18px] !w-[18px] !text-[18px]"> add </mat-icon>
+
+      <span>Create Assessment</span>
+    </button>
   </mat-toolbar>
 
   <!--********** TABLE CARD **********-->
