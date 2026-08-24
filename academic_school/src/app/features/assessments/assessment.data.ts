@@ -1,74 +1,26 @@
 import { Assessment } from './pages/assessments-list/assessment.list.model';
 import { Question } from './models/question.model';
 
-export const ASSESSMENTS: Assessment[] = [
-  {
-    id: 1,
-    title: 'Mathematics Quiz',
-    subject: 'Mathematics',
-    grade: 'Grade 10',
-    totalStudents: 25,
-    status: 'Completed',
-    date: '2026-05-20',
-  },
-  {
-    id: 2,
-    title: 'English Literature Essay',
-    subject: 'English Literature',
-    grade: 'Grade 11',
-    totalStudents: 28,
-    status: 'Pending',
-    date: '2026-05-19',
-  },
-  {
-    id: 3,
-    title: 'Science Chapter 5 Test',
-    subject: 'Science',
-    grade: 'Grade 9',
-    totalStudents: 30,
-    status: 'Completed',
-    date: '2026-05-18',
-  },
-  {
-    id: 4,
-    title: 'History Midterm',
-    subject: 'History',
-    grade: 'Grade 10',
-    totalStudents: 27,
-    status: 'Failed',
-    date: '2026-05-17',
-  },
-  {
-    id: 5,
-    title: 'Biology Chapter 3 Quiz',
-    subject: 'Biology',
-    grade: 'Grade 10',
-    totalStudents: 20,
-    status: 'Draft',
-    date: '2026-05-25',
-  },
-];
-
-// ********** MOCK QUESTIONS PER ASSESSMENT **********
+// ********** QUESTIONS PER ASSESSMENT **********
 export const ASSESSMENT_QUESTIONS: Record<number, Question[]> = {
   1: [
     {
       id: 101,
       type: 'multiple_choice',
-      text: 'What is the value of π (pi) rounded to two decimal places?',
-      points: 10,
+      text: 'What is 5 × 5?',
+      points: 50,
       options: [
-        { text: '3.14', isCorrect: true },
-        { text: '3.41', isCorrect: false },
-        { text: '3.16', isCorrect: false },
-        { text: '3.12', isCorrect: false },
+        { text: '25', isCorrect: true },
+        { text: '20', isCorrect: false },
+        { text: '30', isCorrect: false },
+        { text: '15', isCorrect: false },
       ],
     },
     {
       id: 102,
       type: 'essay',
       text: 'Explain the Pythagorean theorem and provide an example of its application.',
-      points: 20,
+      points: 50,
       maxWord: 200,
     },
   ],
@@ -157,3 +109,58 @@ export const ASSESSMENT_QUESTIONS: Record<number, Question[]> = {
     },
   ],
 };
+
+// ********** ASSESSMENTS **********
+// Questions are stored directly on each assessment so every page reads the same data source.
+export const ASSESSMENTS: Assessment[] = [
+  {
+    id: 1,
+    title: 'Mathematics Quiz',
+    subject: 'Mathematics',
+    grade: 'Grade 10',
+    totalStudents: 25,
+    status: 'Completed',
+    date: '2026-05-20',
+    questions: ASSESSMENT_QUESTIONS[1],
+  },
+  {
+    id: 2,
+    title: 'English Literature Essay',
+    subject: 'English Literature',
+    grade: 'Grade 11',
+    totalStudents: 28,
+    status: 'Pending',
+    date: '2026-05-19',
+    questions: ASSESSMENT_QUESTIONS[2],
+  },
+  {
+    id: 3,
+    title: 'Science Chapter 5 Test',
+    subject: 'Science',
+    grade: 'Grade 9',
+    totalStudents: 30,
+    status: 'Completed',
+    date: '2026-05-18',
+    questions: ASSESSMENT_QUESTIONS[3],
+  },
+  {
+    id: 4,
+    title: 'History Midterm',
+    subject: 'History',
+    grade: 'Grade 10',
+    totalStudents: 27,
+    status: 'Failed',
+    date: '2026-05-17',
+    questions: ASSESSMENT_QUESTIONS[4],
+  },
+  {
+    id: 5,
+    title: 'Biology Chapter 3 Quiz',
+    subject: 'Biology',
+    grade: 'Grade 10',
+    totalStudents: 20,
+    status: 'Draft',
+    date: '2026-05-25',
+    questions: ASSESSMENT_QUESTIONS[5],
+  },
+];

@@ -81,13 +81,14 @@ export class AssessmentsCreate implements OnInit {
 
     this.questionForm = this.fb.group({
       questionText: ['', Validators.required],
-      maxWord: ['', Validators.min(1)],
+      maxWord: ['', Validators.required, Validators.min(1)],
       questionPoints: ['', [Validators.required, Validators.min(1)]],
       options: this.fb.array([]),
     });
+    
   }
 
-  //********** GETTER **********
+  //********** SETTER & GETTER **********
   get options(): FormArray {
     return this.questionForm.get('options') as FormArray;
   }

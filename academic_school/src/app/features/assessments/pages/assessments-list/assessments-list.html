@@ -20,259 +20,211 @@
     <!--********** SPACER **********-->
     <span class="flex-1 max-md:hidden"></span>
 
-    <!--********** EXPORT BUTTON **********-->
-    <button
-      mat-stroked-button
-      type="button"
-      class="list-toolbar__btn list-toolbar__btn--export !inline-flex !h-10 !items-center !justify-center !gap-2 !rounded-[10px] !px-[22px] !text-[13px] !font-semibold max-md:!w-full"
+    <!--********** FILTER TOOLBAR **********-->
+    <div
+      class="toolbar-filter !inline-flex !h-10 !items-center !justify-center !gap-2 !rounded-[10px] !px-[22px] !text-[13px] !font-semibold max-md:!w-full"
     >
-      <mat-icon class="!h-[18px] !w-[18px] !text-[18px]"> download </mat-icon>
+      <!--********** SEARCH **********-->
+      <div class="list-toolbar__search">
+        <!--********** SEARCH ICON **********-->
+        <mat-icon class="list-toolbar__search-icon"> search </mat-icon>
 
-      <span>Export</span>
-    </button>
+        <!--********** SEARCH INPUT **********-->
+        <input
+          type="text"
+          placeholder="Search assessments..."
+          [(ngModel)]="searchQuery"
+          (input)="onSearch()"
+          aria-label="Search assessments"
+        />
 
-    <!--********** CREATE BUTTON **********-->
-    <button
-      mat-flat-button
-      type="button"
-      class="list-toolbar__btn list-toolbar__btn--create !inline-flex !h-10 !items-center !justify-center !gap-2 !rounded-[10px] !px-[22px] !text-[13px] !font-semibold max-md:!w-full"
-      (click)="onCreateAssessment()"
-    >
-      <mat-icon class="!h-[18px] !w-[18px] !text-[18px]"> add </mat-icon>
-
-      <span>Create Assessment</span>
-    </button>
-  </mat-toolbar>
-
-  <!--********** FILTER TOOLBAR **********-->
-  <div class="toolbar-filter">
-    <!--********** SEARCH **********-->
-    <div class="list-toolbar__search">
-      <!--********** SEARCH ICON **********-->
-      <mat-icon class="list-toolbar__search-icon"> search </mat-icon>
-
-      <!--********** SEARCH INPUT **********-->
-      <input
-        type="text"
-        placeholder="Search assessments..."
-        [(ngModel)]="searchQuery"
-        (input)="onSearch()"
-        aria-label="Search assessments"
-      />
-
-      <!--********** CLEAR SEARCH **********-->
-      @if (searchQuery) {
-        <button
-          type="button"
-          class="list-toolbar__search-clear"
-          aria-label="Clear search"
-          (click)="clearSearch()"
-        >
-          <mat-icon>close</mat-icon>
-        </button>
-      }
-    </div>
-
-    <!--********** FILTER WRAPPER **********-->
-    <div class="toolbar-filter__wrapper" #filterWrapper>
-      <!--********** FILTER BUTTON **********-->
-      <button
-        mat-stroked-button
-        type="button"
-        class="toolbar-filter__btn"
-        [class.toolbar-filter__btn--active]="hasActiveFilters"
-        (click)="toggleFilterPanel()"
-        aria-label="Open assessment filters"
-        [attr.aria-expanded]="showFilterPanel"
-      >
-        <mat-icon>filter_list</mat-icon>
-
-        <span>Filter</span>
-
-        @if (activeFilterCount > 0) {
-          <span class="toolbar-filter__count">
-            {{ activeFilterCount }}
-          </span>
+        <!--********** CLEAR SEARCH **********-->
+        @if (searchQuery) {
+          <button
+            type="button"
+            class="list-toolbar__search-clear"
+            aria-label="Clear search"
+            (click)="clearSearch()"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
         }
-      </button>
+      </div>
 
-      <!--********** FILTER PANEL **********-->
-      @if (showFilterPanel) {
-        <div
-          class="filter-panel"
-          role="dialog"
-          aria-label="Assessment filters"
-          (click)="$event.stopPropagation()"
+      <!--********** FILTER WRAPPER **********-->
+      <div class="toolbar-filter__wrapper" #filterWrapper>
+        <!--********** FILTER BUTTON **********-->
+        <button
+          mat-stroked-button
+          type="button"
+          class="toolbar-filter__btn"
+          [class.toolbar-filter__btn--active]="hasActiveFilters"
+          (click)="toggleFilterPanel()"
+          aria-label="Open assessment filters"
+          [attr.aria-expanded]="showFilterPanel"
         >
-          <!--********** PANEL HEADER **********-->
-          <div class="filter-panel__header">Filter</div>
+          <mat-icon>filter_list</mat-icon>
 
-          <!--********** SUBJECT **********-->
-          <div class="filter-panel__section">
-            <div class="filter-panel__section-head">
-              <span class="filter-panel__section-title"> Subject </span>
+          <span>Filter</span>
 
-              <button type="button" class="filter-panel__reset" (click)="resetSubjectDraft()">
-                Reset
-              </button>
+          @if (activeFilterCount > 0) {
+            <span class="toolbar-filter__count">
+              {{ activeFilterCount }}
+            </span>
+          }
+        </button>
+
+        <!--********** FILTER PANEL **********-->
+        @if (showFilterPanel) {
+          <div
+            class="filter-panel"
+            role="dialog"
+            aria-label="Assessment filters"
+            (click)="$event.stopPropagation()"
+          >
+            <!--********** PANEL HEADER **********-->
+            <div class="filter-panel__header">Filter</div>
+
+            <!--********** SUBJECT **********-->
+            <div class="filter-panel__section">
+              <div class="filter-panel__section-head">
+                <span class="filter-panel__section-title"> Subject </span>
+              </div>
+
+              <div class="filter-panel__dropdown">
+                <button
+                  type="button"
+                  class="filter-panel__dropdown-trigger"
+                  (click)="toggleDropdown('subject')"
+                  [attr.aria-expanded]="openDropdown === 'subject'"
+                >
+                  <span>
+                    {{ draftSubject === 'ALL' ? 'All subjects' : draftSubject }}
+                  </span>
+
+                  <mat-icon>expand_more</mat-icon>
+                </button>
+
+                @if (openDropdown === 'subject') {
+                  <div class="filter-panel__dropdown-menu">
+                    <button type="button" (click)="selectDraftSubject('ALL')">All subjects</button>
+
+                    @for (subject of subjectOptions; track subject) {
+                      <button type="button" (click)="selectDraftSubject(subject)">
+                        {{ subject }}
+                      </button>
+                    }
+                  </div>
+                }
+              </div>
             </div>
 
-            <div class="filter-panel__dropdown">
-              <button
-                type="button"
-                class="filter-panel__dropdown-trigger"
-                (click)="toggleDropdown('subject')"
-                [attr.aria-expanded]="openDropdown === 'subject'"
-              >
-                <span>
-                  {{ draftSubject === 'ALL' ? 'All subjects' : draftSubject }}
-                </span>
+            <mat-divider></mat-divider>
 
-                <mat-icon>expand_more</mat-icon>
+            <!--********** STATUS **********-->
+            <div class="filter-panel__section">
+              <div class="filter-panel__section-head">
+                <span class="filter-panel__section-title"> Status </span>
+              </div>
+
+              <div class="filter-panel__dropdown">
+                <button
+                  type="button"
+                  class="filter-panel__dropdown-trigger"
+                  (click)="toggleDropdown('status')"
+                  [attr.aria-expanded]="openDropdown === 'status'"
+                >
+                  <span class="filter-panel__dropdown-value">
+                    @if (draftStatus !== 'ALL') {
+                      <span [class]="statusDotClass(draftStatus)"></span>
+                    }
+
+                    {{ draftStatus === 'ALL' ? 'All status' : draftStatus }}
+                  </span>
+
+                  <mat-icon>expand_more</mat-icon>
+                </button>
+
+                @if (openDropdown === 'status') {
+                  <div class="filter-panel__dropdown-menu">
+                    <button type="button" (click)="selectDraftStatus('ALL')">All statuses</button>
+
+                    @for (status of statusOptions; track status) {
+                      <button type="button" (click)="selectDraftStatus(status)">
+                        <span [class]="statusDotClass(status)"></span>
+
+                        {{ status }}
+                      </button>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+
+            <mat-divider></mat-divider>
+
+            <!--********** GRADE **********-->
+            <div class="filter-panel__section">
+              <div class="filter-panel__section-head">
+                <span class="filter-panel__section-title"> Grade </span>
+              </div>
+
+              <div class="filter-panel__dropdown">
+                <button
+                  type="button"
+                  class="filter-panel__dropdown-trigger"
+                  (click)="toggleDropdown('grade')"
+                  [attr.aria-expanded]="openDropdown === 'grade'"
+                >
+                  <span>
+                    {{ draftGrade === 'ALL' ? 'All grades' : draftGrade }}
+                  </span>
+
+                  <mat-icon>expand_more</mat-icon>
+                </button>
+
+                @if (openDropdown === 'grade') {
+                  <div class="filter-panel__dropdown-menu">
+                    <button type="button" (click)="selectDraftGrade('ALL')">All grades</button>
+
+                    @for (grade of gradeOptions; track grade) {
+                      <button type="button" (click)="selectDraftGrade(grade)">
+                        {{ grade }}
+                      </button>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+
+            <mat-divider></mat-divider>
+
+            <!--********** FOOTER **********-->
+            <div class="filter-panel__footer">
+              <button type="button" class="filter-panel__reset-all" (click)="resetAllDraft()">
+                Reset all
               </button>
 
-              @if (openDropdown === 'subject') {
-                <div class="filter-panel__dropdown-menu">
-                  <button type="button" (click)="selectDraftSubject('ALL')">All subjects</button>
-
-                  @for (subject of subjectOptions; track subject) {
-                    <button type="button" (click)="selectDraftSubject(subject)">
-                      {{ subject }}
-                    </button>
-                  }
-                </div>
-              }
+              <button type="button" class="filter-panel__apply" (click)="applyFilterPanel()">
+                Apply now
+              </button>
             </div>
           </div>
+        }
+        <!--********** CREATE BUTTON **********-->
+        <button
+          mat-flat-button
+          type="button"
+          class="list-toolbar__btn list-toolbar__btn--create !inline-flex !h-10 !items-center !gap-2 !rounded-[10px] !px-[22px] !text-[13px] !font-semibold max-md:!w-full"
+          (click)="onCreateAssessment()"
+        >
+          <mat-icon class="!h-[18px] !w-[18px] !text-[18px]"> add </mat-icon>
 
-          <mat-divider></mat-divider>
-
-          <!--********** STATUS **********-->
-          <div class="filter-panel__section">
-            <div class="filter-panel__section-head">
-              <span class="filter-panel__section-title"> Status </span>
-
-              <button type="button" class="filter-panel__reset" (click)="resetStatusDraft()">
-                Reset
-              </button>
-            </div>
-
-            <div class="filter-panel__dropdown">
-              <button
-                type="button"
-                class="filter-panel__dropdown-trigger"
-                (click)="toggleDropdown('status')"
-                [attr.aria-expanded]="openDropdown === 'status'"
-              >
-                <span class="filter-panel__dropdown-value">
-                  @if (draftStatus !== 'ALL') {
-                    <span [class]="statusDotClass(draftStatus)"></span>
-                  }
-
-                  {{ draftStatus === 'ALL' ? 'All statuses' : draftStatus }}
-                </span>
-
-                <mat-icon>expand_more</mat-icon>
-              </button>
-
-              @if (openDropdown === 'status') {
-                <div class="filter-panel__dropdown-menu">
-                  <button type="button" (click)="selectDraftStatus('ALL')">All statuses</button>
-
-                  @for (status of statusOptions; track status) {
-                    <button type="button" (click)="selectDraftStatus(status)">
-                      <span [class]="statusDotClass(status)"></span>
-
-                      {{ status }}
-                    </button>
-                  }
-                </div>
-              }
-            </div>
-          </div>
-
-          <mat-divider></mat-divider>
-
-          <!--********** GRADE **********-->
-          <div class="filter-panel__section">
-            <div class="filter-panel__section-head">
-              <span class="filter-panel__section-title"> Grade </span>
-
-              <button type="button" class="filter-panel__reset" (click)="resetGradeDraft()">
-                Reset
-              </button>
-            </div>
-
-            <div class="filter-panel__dropdown">
-              <button
-                type="button"
-                class="filter-panel__dropdown-trigger"
-                (click)="toggleDropdown('grade')"
-                [attr.aria-expanded]="openDropdown === 'grade'"
-              >
-                <span>
-                  {{ draftGrade === 'ALL' ? 'All grades' : draftGrade }}
-                </span>
-
-                <mat-icon>expand_more</mat-icon>
-              </button>
-
-              @if (openDropdown === 'grade') {
-                <div class="filter-panel__dropdown-menu">
-                  <button type="button" (click)="selectDraftGrade('ALL')">All grades</button>
-
-                  @for (grade of gradeOptions; track grade) {
-                    <button type="button" (click)="selectDraftGrade(grade)">
-                      {{ grade }}
-                    </button>
-                  }
-                </div>
-              }
-            </div>
-          </div>
-
-          <mat-divider></mat-divider>
-
-          <!--********** ASSESSMENT NAME **********-->
-          <div class="filter-panel__section">
-            <div class="filter-panel__section-head">
-              <span class="filter-panel__section-title"> Assessment Name </span>
-
-              <button
-                type="button"
-                class="filter-panel__reset"
-                (click)="resetAssessmentNameDraft()"
-              >
-                Reset
-              </button>
-            </div>
-
-            <div class="filter-panel__input-wrapper">
-              <input
-                type="text"
-                class="filter-panel__input"
-                placeholder="Search assessment name..."
-                [(ngModel)]="draftAssessmentName"
-              />
-            </div>
-          </div>
-
-          <mat-divider></mat-divider>
-
-          <!--********** FOOTER **********-->
-          <div class="filter-panel__footer">
-            <button type="button" class="filter-panel__reset-all" (click)="resetAllDraft()">
-              Reset all
-            </button>
-
-            <button type="button" class="filter-panel__apply" (click)="applyFilterPanel()">
-              Apply now
-            </button>
-          </div>
-        </div>
-      }
+          <span>Create Assessment</span>
+        </button>
+      </div>
     </div>
-  </div>
+  </mat-toolbar>
 
   <!--********** TABLE CARD **********-->
   <mat-card

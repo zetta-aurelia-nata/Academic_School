@@ -312,6 +312,9 @@
     color: var(--color-status-draft);
     border: 1px solid var(--color-status-draft-border);
   }
+  &--not-submitted {
+    background-color: var(--color-card-grey);
+  }
 }
 
 // *************** MEDIA QUERIES ***************

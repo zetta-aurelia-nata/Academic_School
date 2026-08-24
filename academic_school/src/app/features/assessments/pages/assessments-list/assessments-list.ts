@@ -62,11 +62,8 @@ export class AssessmentList {
 
   assessments: Assessment[] = [];
   filteredAssessments: Assessment[] = [];
-
   searchQuery = '';
-
   showDeleteDialog = false;
-
   selectedAssessment: Assessment | null = null;
 
   //********** APPLIED FILTERS **********
@@ -77,12 +74,8 @@ export class AssessmentList {
   dateTo = '';
   keyword = '';
   assessmentName = '';
-
-  //********** FILTER PANEL STATE **********
   showFilterPanel = false;
   openDropdown: 'subject' | 'status' | 'grade' | null = null;
-
-  //********** FILTER PANEL DRAFT STATE **********
   draftStatus: string = 'ALL';
   draftSubject: string = 'ALL';
   draftGrade: string = 'ALL';
@@ -93,12 +86,13 @@ export class AssessmentList {
 
   //********** STATUS OPTIONS **********
   readonly statusOptions: AssessmentStatus[] = [
-    'COMPLETED' as AssessmentStatus,
-    'PENDING' as AssessmentStatus,
-    'FAILED' as AssessmentStatus,
-    'DRAFT' as AssessmentStatus,
-    'PUBLISHED' as AssessmentStatus,
-    'ARCHIVED' as AssessmentStatus,
+    'Completed' as AssessmentStatus,
+    'Not Submitted' as AssessmentStatus,
+    'Pending' as AssessmentStatus,
+    'Failed' as AssessmentStatus,
+    'Draft' as AssessmentStatus,
+    'Published' as AssessmentStatus,
+    'Achieved' as AssessmentStatus,
   ];
 
   //********** KEYBOARD HANDLERS **********
@@ -142,19 +136,17 @@ export class AssessmentList {
     this.applyFilters();
   }
 
-  //********** SEARCH (TOP TOOLBAR SEARCH) **********
+  //********** ACTION HANDLERS **********
   onSearch(): void {
     this.applyFilters();
   }
 
-  //********** CLEAR SEARCH **********
   clearSearch(): void {
     this.searchQuery = '';
 
     this.applyFilters();
   }
 
-  //********** TOGGLE FILTER PANEL **********
   toggleFilterPanel(): void {
     this.showFilterPanel = !this.showFilterPanel;
 
@@ -173,49 +165,41 @@ export class AssessmentList {
     }
   }
 
-  //********** CLOSE FILTER PANEL **********
   closeFilterPanel(): void {
     this.showFilterPanel = false;
 
     this.openDropdown = null;
   }
 
-  //********** TOGGLE DROPDOWN (SUBJECT / STATUS) **********
-toggleDropdown(name: 'subject' | 'status' | 'grade'): void {
-  this.openDropdown = this.openDropdown === name ? null : name;
-}
-  //********** SELECT DRAFT SUBJECT **********
+  toggleDropdown(name: 'subject' | 'status' | 'grade'): void {
+    this.openDropdown = this.openDropdown === name ? null : name;
+  }
   selectDraftSubject(subject: string): void {
     this.draftSubject = subject;
 
     this.openDropdown = null;
   }
 
-  //********** SELECT DRAFT GRADE **********
   selectDraftGrade(grade: string): void {
     this.draftGrade = grade;
 
     this.openDropdown = null;
   }
 
-  //********** RESET GRADE DRAFT **********
   resetGradeDraft(): void {
     this.draftGrade = 'ALL';
   }
 
-  //********** RESET ASSESSMENT NAME DRAFT **********
   resetAssessmentNameDraft(): void {
     this.draftAssessmentName = '';
   }
 
-  //********** SELECT DRAFT STATUS **********
   selectDraftStatus(status: string): void {
     this.draftStatus = status;
 
     this.openDropdown = null;
   }
 
-  //********** RESET INDIVIDUAL SECTIONS (DRAFT ONLY) **********
   resetDateRangeDraft(): void {
     this.draftDateFrom = '';
     this.draftDateTo = '';
@@ -233,7 +217,6 @@ toggleDropdown(name: 'subject' | 'status' | 'grade'): void {
     this.draftKeyword = '';
   }
 
-  //********** RESET ALL (DRAFT + APPLIED, IMMEDIATE) **********
   resetAllDraft(): void {
     //********** RESET DRAFT **********
     this.draftStatus = 'ALL';
@@ -258,7 +241,6 @@ toggleDropdown(name: 'subject' | 'status' | 'grade'): void {
     this.applyFilters();
   }
 
-  //********** APPLY FILTER PANEL (COMMIT DRAFT -> APPLIED) **********
   applyFilterPanel(): void {
     this.selectedStatus = this.draftStatus;
     this.selectedSubject = this.draftSubject;
@@ -274,7 +256,6 @@ toggleDropdown(name: 'subject' | 'status' | 'grade'): void {
     this.closeFilterPanel();
   }
 
-  //********** APPLY SEARCH + FILTERS **********
   private applyFilters(): void {
     const topQuery = this.searchQuery.trim().toLowerCase();
     const keywordQuery = this.keyword.trim().toLowerCase();
@@ -341,7 +322,7 @@ toggleDropdown(name: 'subject' | 'status' | 'grade'): void {
     });
   }
 
-  //********** SUBJECT OPTIONS **********
+  //********** SETTER & GETTER **********
   get subjectOptions(): string[] {
     const subjects = this.assessments
       .map((assessment) => assessment.subject)
@@ -350,7 +331,6 @@ toggleDropdown(name: 'subject' | 'status' | 'grade'): void {
     return Array.from(new Set(subjects)).sort();
   }
 
-  //********** GRADE OPTIONS **********
   get gradeOptions(): string[] {
     const grades = this.assessments
       .map((assessment) => assessment.grade)
@@ -359,7 +339,6 @@ toggleDropdown(name: 'subject' | 'status' | 'grade'): void {
     return Array.from(new Set(grades)).sort();
   }
 
-  //********** ACTIVE FILTERS **********
   get hasActiveFilters(): boolean {
     return (
       this.searchQuery.trim().length > 0 ||
@@ -373,7 +352,6 @@ toggleDropdown(name: 'subject' | 'status' | 'grade'): void {
     );
   }
 
-  //********** ACTIVE FILTER COUNT **********
   get activeFilterCount(): number {
     let count = 0;
 
@@ -404,27 +382,23 @@ toggleDropdown(name: 'subject' | 'status' | 'grade'): void {
     return count;
   }
 
-  //********** CREATE ASSESSMENT **********
+  //********** ACTION HANDLERS **********
   onCreateAssessment(): void {
     this.router.navigate(['/assessments/create']);
   }
 
-  //********** VIEW ASSESSMENT **********
   onView(assessment: Assessment): void {
     this.router.navigate(['/assessments', assessment.id]);
   }
 
-  //********** EDIT ASSESSMENT **********
   onEdit(assessment: Assessment): void {
     this.router.navigate(['/assessments/edit', assessment.id]);
   }
 
-  //********** REVIEW ASSESSMENT **********
   onReviewAssessment(assessment: Assessment): void {
     this.router.navigate(['/assessments', assessment.id, 'submissions']);
   }
 
-  //********** DELETE ASSESSMENT **********
   onDelete(assessment: Assessment, event?: Event): void {
     this.selectedAssessment = assessment;
 
@@ -437,7 +411,6 @@ toggleDropdown(name: 'subject' | 'status' | 'grade'): void {
     });
   }
 
-  //********** CANCEL DELETE **********
   onCancelDelete(): void {
     this.showDeleteDialog = false;
 
@@ -450,7 +423,6 @@ toggleDropdown(name: 'subject' | 'status' | 'grade'): void {
     });
   }
 
-  //********** CONFIRM DELETE **********
   onConfirmDelete(): void {
     if (!this.selectedAssessment) {
       return;
@@ -471,12 +443,10 @@ toggleDropdown(name: 'subject' | 'status' | 'grade'): void {
     });
   }
 
-  //********** STATUS CLASS **********
   statusClass(status: AssessmentStatus): string {
     return `status-badge status-badge--${status.toString().toLowerCase()}`;
   }
 
-  //********** FILTER STATUS DOT CLASS **********
   statusDotClass(status: string): string {
     return `toolbar-filter__status-dot toolbar-filter__status-dot--${status
       .toString()

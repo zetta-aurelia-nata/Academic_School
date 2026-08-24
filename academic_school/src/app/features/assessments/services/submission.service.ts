@@ -3,11 +3,14 @@ import { Injectable } from '@angular/core';
 
 // ********** APPLICATION MODELS **********
 import { Submission, SubmissionAnswer } from '../models/submission.model';
+import { AssessmentService } from './assessment.service';
+import { Question } from '../models/question.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SubmissionService {
+  constructor(private readonly assessmentService: AssessmentService) {}
   // ********** PRIVATE STATE **********
   private submissions: Submission[] = [
     {
@@ -420,13 +423,51 @@ export class SubmissionService {
 
   // ********** GETTERS **********
   getSubmissions(assessmentId: number): Submission[] {
-    return this.submissions.filter((submission) => submission.assessmentId === assessmentId);
+    return this.submissions
+      .filter((submission) => submission.assessmentId === assessmentId)
+      .map((submission) => this.syncSubmissionWithAssessmentQuestions(submission));
   }
 
   getSubmission(assessmentId: number, studentId: number): Submission | undefined {
-    return this.submissions.find(
-      (submission) => submission.assessmentId === assessmentId && submission.id === studentId,
+    const submission = this.submissions.find(
+      (item) => item.assessmentId === assessmentId && item.id === studentId,
     );
+
+    return submission ? this.syncSubmissionWithAssessmentQuestions(submission) : undefined;
+  }
+
+  private syncSubmissionWithAssessmentQuestions(submission: Submission): Submission {
+    const questions = this.assessmentService.getAssessmentById(submission.assessmentId)?.questions ?? [];
+
+    if (questions.length === 0) {
+      return { ...submission, answers: [...submission.answers] };
+    }
+
+    const answers = questions.map((question: Question) => {
+      const existing = submission.answers.find((answer) => answer.question === question.text);
+
+      if (existing) {
+        return {
+          ...existing,
+          maxScore: question.points,
+        };
+      }
+
+      // Keep every assessment result aligned with the questions defined in List/Edit.
+      return {
+        question: question.text,
+        answer: question.type === 'multiple_choice' ? (question.options?.[0]?.text ?? '-') : '-',
+        maxScore: question.points,
+        score: 0,
+        teacherComment: '',
+      };
+    });
+
+    return {
+      ...submission,
+      answers,
+      maxScore: questions.reduce((sum, question) => sum + question.points, 0),
+    };
   }
 
   updateScore(assessmentId: number, studentId: number, score: number): void {
@@ -466,6 +507,53 @@ export class SubmissionService {
     this.submissions = [
       ...this.submissions.slice(0, idx),
       { ...targetSubmission, answers: updatedAnswers },
+      ...this.submissions.slice(idx + 1),
+    ];
+  }
+
+
+  updateAnswerScoreByQuestion(
+    assessmentId: number,
+    studentId: number,
+    question: string,
+    score: number,
+  ): void {
+    const idx = this.submissions.findIndex(
+      (s) => s.assessmentId === assessmentId && s.id === studentId,
+    );
+    if (idx === -1) return;
+
+    const target = this.submissions[idx];
+    const answers = target.answers.map((answer) =>
+      answer.question === question ? { ...answer, score } : answer,
+    );
+
+    this.submissions = [
+      ...this.submissions.slice(0, idx),
+      { ...target, answers },
+      ...this.submissions.slice(idx + 1),
+    ];
+  }
+
+  updateTeacherCommentByQuestion(
+    assessmentId: number,
+    studentId: number,
+    question: string,
+    comment: string,
+  ): void {
+    const idx = this.submissions.findIndex(
+      (s) => s.assessmentId === assessmentId && s.id === studentId,
+    );
+    if (idx === -1) return;
+
+    const target = this.submissions[idx];
+    const answers = target.answers.map((answer) =>
+      answer.question === question ? { ...answer, teacherComment: comment } : answer,
+    );
+
+    this.submissions = [
+      ...this.submissions.slice(0, idx),
+      { ...target, answers },
       ...this.submissions.slice(idx + 1),
     ];
   }

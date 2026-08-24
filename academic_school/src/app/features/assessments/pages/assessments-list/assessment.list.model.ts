@@ -1,6 +1,8 @@
+import { Question } from '../../models/question.model';
+
 // ****************** TYPES ******************
 // List of allowed assessment statuses
-export type AssessmentStatus = 'Completed' | 'Pending' | 'Failed' | 'Draft';
+export type AssessmentStatus = 'Completed' | 'Pending' | 'Failed' | 'Draft' | 'Not Submitted';
 
 // ****************** INTERFACES ******************
 export interface Assessment {
@@ -36,4 +38,7 @@ export interface Assessment {
 
  // Total score point for each assessment
   totalPoints?: number;
+
+  // Questions belonging to this assessment. This is the single source of truth for List, Edit, Result and Review.
+  questions?: Question[];
 }

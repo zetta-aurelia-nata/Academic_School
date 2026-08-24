@@ -79,6 +79,7 @@
               <mat-option value="English">English</mat-option>
               <mat-option value="History">History</mat-option>
               <mat-option value="Computer Science">Computer Science</mat-option>
+              <mat-option value="Biology">Biology</mat-option>
             </mat-select>
             <mat-error *ngIf="assessmentForm.get('subject')?.hasError('required')">
               Subject is required
@@ -122,6 +123,9 @@
               rows="4"
               placeholder="Enter assessment description"
             ></textarea>
+            <mat-error *ngIf="assessmentForm.get('description')?.hasError('required')">
+              Duration is required
+            </mat-error>
           </mat-form-field>
         </div>
 
@@ -393,6 +397,7 @@
                         min="1"
                         placeholder="e.g. 300"
                       />
+                      <mat-error *ngIf="questionForm.get('maxWord')?.hasError('required')">Maximum word is required</mat-error>
                     </mat-form-field>
                   </div>
 
@@ -598,7 +603,7 @@
               </div>
 
               <!--********** SCORING **********-->
-              <div class="form-section">
+              <div class="form-section !mt-10">
                 <div class="form-section__header">
                   <span class="form-section__number">3</span>
                   <div>
@@ -613,7 +618,7 @@
                   <label class="create-assessment__field-label">Maximum Points</label>
                   <mat-form-field
                     appearance="outline"
-                    class="create-assessment__material-field w-full"
+                    class="create-assessment__material-field w-50"
                   >
                     <input
                       matInput

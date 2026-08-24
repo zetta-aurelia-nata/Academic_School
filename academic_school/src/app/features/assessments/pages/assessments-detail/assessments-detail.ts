@@ -13,7 +13,9 @@ import { Assessment } from '../assessments-list/assessment.list.model';
 import { AssessmentService } from '../../services/assessment.service';
 import { SubmissionService } from '../../services/submission.service';
 import { Submission, SubmissionAnswer } from '../../models/submission.model';
+import { Question } from '../../models/question.model';
 
+// ********** INTERFACES **********
 interface StudentReview {
   id: number;
   studentName: string;
@@ -56,7 +58,7 @@ export class AssessmentsDetail implements OnInit {
   student?: StudentReview;
   answers: AnswerReview[] = [];
 
-  // ********** LIFECYCLE **********
+  // ********** LIFECYCLE HOOKS **********
   ngOnInit(): void {
     const assessmentId = Number(this.route.snapshot.paramMap.get('id'));
     const studentIdParam = this.route.snapshot.paramMap.get('studentId');
@@ -75,12 +77,22 @@ export class AssessmentsDetail implements OnInit {
 
       if (submission) {
         this.student = this.mapSubmissionToStudentReview(submission);
-        this.answers = submission.answers.map((answer: SubmissionAnswer) => ({
-          question: answer.question,
-          answer: answer.answer,
-          score: answer.score,
-          maxScore: answer.maxScore,
-        }));
+        const essayQuestions = (this.assessment?.questions ?? []).filter(
+          (question: Question) => question.type === 'essay',
+        );
+
+        this.answers = essayQuestions.map((question: Question) => {
+          const submittedAnswer = submission.answers.find(
+            (answer: SubmissionAnswer) => answer.question === question.text,
+          );
+
+          return {
+            question: question.text,
+            answer: submittedAnswer?.answer ?? '-',
+            score: submittedAnswer?.score ?? 0,
+            maxScore: question.points,
+          };
+        });
       }
     }
   }

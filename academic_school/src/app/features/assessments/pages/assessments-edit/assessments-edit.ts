@@ -10,9 +10,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-
-// ********** ANGULAR CDK IMPORTS **********
-import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, CdkDragPlaceholder } from '@angular/cdk/drag-drop';
+import {
+  CdkDrag,
+  CdkDragDrop,
+  CdkDropList,
+  moveItemInArray,
+  CdkDragPlaceholder,
+} from '@angular/cdk/drag-drop';
 
 // ********** ANGULAR MATERIAL IMPORTS **********
 import { MatButtonModule } from '@angular/material/button';
@@ -25,7 +29,6 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 
 // ********** APPLICATION MODELS AND DATA IMPORTS **********
-import { ASSESSMENT_QUESTIONS } from '../../assessment.data';
 import { AssessmentService } from '../../services/assessment.service';
 import { Question, QuestionType } from '../../models/question.model';
 
@@ -47,7 +50,7 @@ import { Question, QuestionType } from '../../models/question.model';
     MatRadioModule,
     CdkDropList,
     CdkDrag,
-    CdkDragPlaceholder
+    CdkDragPlaceholder,
   ],
   templateUrl: './assessments-edit.html',
   styleUrl: './assessments-edit.scss',
@@ -85,7 +88,7 @@ export class EditAssessment implements OnInit {
       grade: ['', Validators.required],
       description: [''],
       instructions: [''],
-      duration: [60, [Validators.required, Validators.min(1)]],
+      duration: [60, [Validators.required, Validators.min(10)]],
       totalPoints: [100, [Validators.required, Validators.min(1)]],
       status: ['Draft', Validators.required],
       questions: this.fb.array([]),
@@ -109,7 +112,7 @@ export class EditAssessment implements OnInit {
       status: assessment.status,
     });
 
-    const questions = ASSESSMENT_QUESTIONS[this.assessmentId] ?? [];
+    const questions = assessment.questions ?? [];
 
     questions.forEach((question) => {
       this.questions.push(this.createQuestionGroup(question));
@@ -152,7 +155,7 @@ export class EditAssessment implements OnInit {
     return [this.fb.control('', Validators.required), this.fb.control('', Validators.required)];
   }
 
-  // ********** ACTION HANDLERS : QUESTIONS **********
+  // ********** ACTION HANDLERS **********
   addQuestion(type: QuestionType): void {
     this.questions.push(
       this.createQuestionGroup({
@@ -168,7 +171,7 @@ export class EditAssessment implements OnInit {
     this.questions.removeAt(index);
   }
 
-  // ********** ACTION HANDLERS : REORDER QUESTIONS **********
+  // ********** ACTION HANDLERS **********
   dropQuestion(event: CdkDragDrop<FormGroup[]>): void {
     if (event.previousIndex === event.currentIndex) {
       return;
@@ -201,15 +204,13 @@ export class EditAssessment implements OnInit {
     controls.forEach((control) => this.questions.push(control));
   }
 
-  // ********** ACTION HANDLERS : OPTIONS **********
+  // ********** ACTION HANDLERS **********
   addOption(questionIndex: number): void {
     this.questionOptions(questionIndex).push(this.fb.control('', Validators.required));
   }
 
   removeOption(questionIndex: number, optionIndex: number): void {
     const options = this.questionOptions(questionIndex);
-
-    // ********** MINIMUM 2 OPTIONS **********
     if (options.length <= 2) {
       return;
     }
@@ -249,21 +250,29 @@ export class EditAssessment implements OnInit {
       subject: formValue.subject,
       grade: formValue.grade,
       status: formValue.status,
-
       description: formValue.description,
-
       instructions: formValue.instructions,
-
       duration: formValue.duration,
-
-      totalPoints: formValue.totalPoints,
+      totalPoints: Number(formValue.totalPoints),
+      questions: formValue.questions.map((question: any) => ({
+        id: Number(question.id),
+        type: question.type,
+        text: question.text,
+        points: Number(question.points),
+        maxWord: question.type === 'essay' ? Number(question.maxWord) : undefined,
+        options:
+          question.type === 'multiple_choice'
+            ? question.options.map((text: string, index: number) => ({
+                text,
+                isCorrect: index === Number(question.correctOptionIndex),
+              }))
+            : undefined,
+      })),
     });
-
-    // ********** NAVIGATE BACK **********
     this.router.navigate(['/assessments']);
   }
 
-  // ********** CANCEL **********
+  // ********** ACTION HANDLERS **********
   onCancel(): void {
     this.router.navigate(['/assessments']);
   }

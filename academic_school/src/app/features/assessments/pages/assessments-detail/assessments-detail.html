@@ -1,4 +1,4 @@
-<!--********** ASSESSMENT DETAIL PAGE **********-->
+  <!--********** ASSESSMENT DETAIL PAGE **********-->
 <section
   class="assessment-detail w-full min-h-full box-border bg-[var(--color-background-content)] px-8 pt-[30px] pb-10 font-sans max-lg:px-5 max-lg:pt-6 max-md:px-4 max-md:pt-5"
 >
@@ -275,95 +275,7 @@
       </div>
     </mat-card>
 
-    <!--********** SUBMITTED ANSWERS MULTIPLE CHOICES **********-->
-    <mat-card
-      class="detail-card !mb-4 !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-0"
-    >
-      <div class="border-b border-[var(--color-border)] px-5 py-4">
-        <h2 class="m-0 text-[14px] font-bold text-[var(--color-title)]">Multiple Choices</h2>
-      </div>
 
-      <div class="flex flex-col">
-        <!--********** ANSWER ITEM MULTIPLE CHOICES **********-->
-        <div
-          *ngFor="let item of answers; let i = index"
-          class="answer-item border-b border-[var(--color-border)] p-5 last:border-b-0"
-        >
-          <div class="flex items-start justify-between gap-4">
-            <!--********** QUESTION AND ANSWER **********-->
-            <div class="min-w-0">
-              <span
-                class="text-[11px] font-bold uppercase tracking-wide text-[var(--color-text-secondary)]"
-              >
-                Question {{ i + 1 }}
-              </span>
-
-              <h3 class="m-0 mt-2 text-[13px] font-semibold text-[var(--color-title)]">
-                {{ item.question }}
-              </h3>
-
-              <p class="m-0 mt-2 text-[12px] text-[var(--color-text-secondary)]">
-                Answer:
-
-                <span class="font-semibold text-[var(--color-title)]">
-                  {{ item.answer }}
-                </span>
-              </p>
-            </div>
-
-            <!--********** ANSWER SCORE **********-->
-            <span class="shrink-0 text-[12px] font-bold text-[var(--color-primary-dark)]">
-              {{ item.score }}/{{ item.maxScore }}
-            </span>
-          </div>
-        </div>
-      </div>
-    </mat-card>
-
-    <!--********** SUBMITTED ANSWERS ESSAY **********-->
-    <mat-card
-      class="detail-card !mb-4 !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-0"
-    >
-      <div class="border-b border-[var(--color-border)] px-5 py-4">
-        <h1 class="m-0 text-[15px] font-bold text-[var(--color-title)]">Essay Result</h1>
-      </div>
-
-      <div class="flex flex-col">
-        <!--********** ANSWER ITEM MULTIPLE CHOICES **********-->
-        <div
-          *ngFor="let item of answers; let i = index"
-          class="answer-item border-b border-[var(--color-border)] p-5 last:border-b-0"
-        >
-          <div class="flex items-start justify-between gap-4">
-            <!--********** QUESTION AND ANSWER **********-->
-            <div class="min-w-0">
-              <span
-                class="text-[11px] font-bold uppercase tracking-wide text-[var(--color-text-secondary)]"
-              >
-                Question {{ i + 1 }}
-              </span>
-
-              <h3 class="m-0 mt-2 text-[13px] font-semibold text-[var(--color-title)]">
-                {{ item.question }}
-              </h3>
-
-              <p class="m-0 mt-2 text-[12px] text-[var(--color-text-secondary)]">
-                Answer:
-
-                <span class="font-semibold text-[var(--color-title)]">
-                  {{ item.answer }}
-                </span>
-              </p>
-            </div>
-
-            <!--********** ANSWER SCORE **********-->
-            <span class="shrink-0 text-[12px] font-bold text-[var(--color-primary-dark)]">
-              {{ item.score }}/{{ item.maxScore }}
-            </span>
-          </div>
-        </div>
-      </div>
-    </mat-card>
 
     <!--********** FINAL SCORE **********-->
     <mat-card

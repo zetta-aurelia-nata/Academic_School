@@ -94,26 +94,14 @@
       transform: translateY(1px);
     }
 
-    // ***************** EXPORT BUTTON *****************
-    &--export {
-      color: var(--color-primary-dark) !important;
-      background-color: var(--color-white) !important;
-      border: 1px solid var(--color-border-dark) !important;
-      box-shadow: 0 1px 3px rgba(72, 31, 110, 0.04);
-
-      &:hover {
-        background-color: var(--color-primary-light) !important;
-        border-color: var(--color-primary) !important;
-        box-shadow: 0 2px 6px rgba(72, 31, 110, 0.08);
-      }
-    }
-
     // ***************** CREATE BUTTON *****************
     &--create {
       color: var(--color-white) !important;
       background-color: var(--color-primary-dark) !important;
       border: 1px solid var(--color-primary-dark) !important;
       box-shadow: 0 3px 8px rgba(72, 31, 110, 0.18);
+      margin-left: 20px;
+      justify-items: flex-end;
 
       &:hover {
         filter: brightness(0.95);
@@ -129,8 +117,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  width: 100%;
-  margin-bottom: 18px;
+  padding: 10px;
 
   &__wrapper {
     position: relative;
@@ -770,10 +757,6 @@
       order: 2;
     }
 
-    &__btn--export {
-      order: 3;
-    }
-
     &__btn--create {
       order: 4;
     }
@@ -811,8 +794,11 @@
 
     .list-toolbar__search {
       width: 100%;
+      height: 50px;
       max-width: none;
     }
+
+    
 
     &__btn {
       width: 100%;

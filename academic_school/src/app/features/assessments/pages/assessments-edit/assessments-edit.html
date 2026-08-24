@@ -95,6 +95,7 @@
               <mat-option value="English">English</mat-option>
               <mat-option value="History">History</mat-option>
               <mat-option value="Computer Science"> Computer Science </mat-option>
+              <mat-option value="Biology">Biology</mat-option>
             </mat-select>
 
             <mat-error *ngIf="assessmentForm.get('subject')?.hasError('required')">
@@ -149,6 +150,7 @@
               rows="4"
               placeholder="Enter assessment description"
             ></textarea>
+            <mat-error *ngIf="assessmentForm.get('description')?.hasError('required')">Description text is required</mat-error>
           </mat-form-field>
         </div>
 
@@ -214,9 +216,8 @@
 
             <span matSuffix class="mr-2 text-[13px]"> minutes </span>
 
-            <mat-error *ngIf="assessmentForm.get('duration')?.hasError('required')">
-              Duration is required
-            </mat-error>
+            <mat-error *ngIf="assessmentForm.get('duration')?.hasError('required')">Duration is required</mat-error>
+            <mat-error *ngIf="assessmentForm.get('duration')?.hasError('min')">Duration must be min 10</mat-error>
           </mat-form-field>
         </div>
 
@@ -241,6 +242,7 @@
             <mat-error *ngIf="assessmentForm.get('totalPoints')?.hasError('required')">
               Total points is required
             </mat-error>
+            <mat-error *ngIf="assessmentForm.get('totalPoints')?.hasError('min')">Score must be min 1</mat-error>
           </mat-form-field>
         </div>
 
@@ -262,6 +264,7 @@
               <mat-option value="Archived">Archived</mat-option>
               <mat-option value="Failed">Failed</mat-option>
             </mat-select>
+            <mat-error *ngIf="assessmentForm.get('status')?.hasError('required')">Status is required</mat-error>
           </mat-form-field>
         </div>
       </div>
@@ -285,9 +288,7 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
 
-      <!--**************** MAINTAIN ORDER QUESTION ****************-->
-      <!--********** DRAG A QUESTION BY ITS HANDLE, OR USE THE UP/DOWN ARROWS, TO REORDER **********-->
-
+      <!--**************** REORDER QUESTION ****************-->
       <!--********** QUESTIONS CONTENT **********-->
       <div
         class="question-list flex flex-col gap-4 p-1 pt-5"

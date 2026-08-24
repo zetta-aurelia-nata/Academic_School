@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 // ********** APPLICATION IMPORTS **********
 import { ASSESSMENTS } from '../assessment.data';
 import { Assessment, AssessmentStatus } from '../pages/assessments-list/assessment.list.model';
+import { Question } from '../models/question.model';
 
 export interface CreateAssessmentDto {
   title: string;
@@ -14,6 +15,7 @@ export interface CreateAssessmentDto {
   duration: number;
   totalPoints: number;
   status: AssessmentStatus;
+  questions?: Question[];
 }
 @Injectable({
   providedIn: 'root',
@@ -59,6 +61,7 @@ export class AssessmentService {
       totalStudents: 0,
       status: dto.status,
       date: new Date().toISOString().split('T')[0],
+      questions: dto.questions ?? [],
     };
     this.addAssessment(newAssessment);
   }
