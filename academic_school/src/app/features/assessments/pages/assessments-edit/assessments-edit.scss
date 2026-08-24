@@ -230,14 +230,14 @@
         .mdc-notched-outline__leading,
         .mdc-notched-outline__notch,
         .mdc-notched-outline__trailing {
-          border-color: #dc2626 !important;
+          border-color: var(--color-card-red) !important;
         }
       }
 
       // ********** DISABLED **********
       &.mat-form-field-disabled {
         .mat-mdc-text-field-wrapper {
-          background-color: #f5f3f7 !important;
+          background-color: var(--color-white) !important;
         }
       }
     }
@@ -604,8 +604,8 @@
 
     &:hover {
       transform: scale(1.05);
-      background-color: #fef2f2 !important;
-      color: #dc2626 !important;
+      background-color: var(--color-white) !important;
+      color: var(--color-card-red) !important;
     }
 
     &:active {
@@ -844,8 +844,8 @@
     }
 
     &:hover:not(:disabled) {
-      background-color: #fef2f2 !important;
-      color: #dc2626 !important;
+      background-color: var(--color-white) !important;
+      color: var(--color-card-red) !important;
       transform: scale(1.05);
     }
 

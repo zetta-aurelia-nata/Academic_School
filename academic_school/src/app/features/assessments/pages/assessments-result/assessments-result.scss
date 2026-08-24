@@ -337,16 +337,16 @@
 
   // ********** COMPLETED **********
   &--completed {
-    color: #027a48;
-    border-color: #abefc6;
-    background-color: #ecfdf3;
+    color: var(--color-card-green);
+    border-color: var(--color-card-green-border);
+    background-color: var(--color-card-green-light);
   }
 
   // ********** IN PROGRESS **********
   &--in-progress {
-    color: #b54708;
-    border-color: #fedf89;
-    background-color: #fffaeb;
+    color: var(--color-card-yellow-dark);
+    border-color: var(--color-card-yellow-border);
+    background-color: var(--color-card-yellow-light);
   }
 
   // ********** PENDING **********
