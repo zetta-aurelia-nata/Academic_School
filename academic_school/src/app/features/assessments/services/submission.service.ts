@@ -437,7 +437,8 @@ export class SubmissionService {
   }
 
   private syncSubmissionWithAssessmentQuestions(submission: Submission): Submission {
-    const questions = this.assessmentService.getAssessmentById(submission.assessmentId)?.questions ?? [];
+    const questions =
+      this.assessmentService.getAssessmentById(submission.assessmentId)?.questions ?? [];
 
     if (questions.length === 0) {
       return { ...submission, answers: [...submission.answers] };
@@ -446,28 +447,41 @@ export class SubmissionService {
     const answers = questions.map((question: Question) => {
       const existing = submission.answers.find((answer) => answer.question === question.text);
 
-      if (existing) {
-        return {
-          ...existing,
-          maxScore: question.points,
-        };
-      }
+      const answerText =
+        existing?.answer ??
+        (question.type === 'multiple_choice' ? (question.options?.[0]?.text ?? '-') : '-');
 
-      // Keep every assessment result aligned with the questions defined in List/Edit.
       return {
         question: question.text,
-        answer: question.type === 'multiple_choice' ? (question.options?.[0]?.text ?? '-') : '-',
+        answer: answerText,
         maxScore: question.points,
-        score: 0,
-        teacherComment: '',
+        // MC selalu di-auto-score dari correctness; essay pakai skor terakhir yang disimpan teacher.
+        score: this.computeAnswerScore(question, answerText, existing?.score),
+        teacherComment: existing?.teacherComment ?? '',
       };
     });
+
+    const score = answers.reduce((sum, answer) => sum + Number(answer.score || 0), 0);
 
     return {
       ...submission,
       answers,
+      score,
       maxScore: questions.reduce((sum, question) => sum + question.points, 0),
     };
+  }
+
+  private computeAnswerScore(
+    question: Question,
+    answerText: string,
+    existingScore?: number,
+  ): number {
+    if (question.type === 'multiple_choice') {
+      const correctOption = (question.options ?? []).find((option) => option.isCorrect);
+      return correctOption && answerText === correctOption.text ? question.points : 0;
+    }
+
+    return Number(existingScore ?? 0);
   }
 
   updateScore(assessmentId: number, studentId: number, score: number): void {
@@ -510,7 +524,6 @@ export class SubmissionService {
       ...this.submissions.slice(idx + 1),
     ];
   }
-
 
   updateAnswerScoreByQuestion(
     assessmentId: number,

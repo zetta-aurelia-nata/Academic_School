@@ -1,5 +1,5 @@
 // ****************** TYPES ******************
-// List of qustion type
+// List of question type
 export type QuestionType = 'essay' | 'multiple_choice';
 
 // ****************** INTERFACES ******************

@@ -1,12 +1,18 @@
 // ***************** BEM BLOCKS *****************
 // ***************** LIST TOOLBAR *****************
 .list-toolbar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 16px;
+
+  // ***************** SEARCH *****************
   &__search {
     position: relative;
     display: flex;
     align-items: center;
     width: 100%;
-    max-width: 420px;
+    max-width: 360px;
     height: 40px;
     padding: 0 40px;
     background-color: var(--color-white);
@@ -82,8 +88,30 @@
     }
   }
 
+  // ***************** TOOLBAR ACTIONS *****************
+  &__actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-left: auto;
+    min-width: 0;
+  }
+
   // ***************** TOOLBAR BUTTON *****************
   &__btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0;
+
+    height: 40px !important;
+    padding: 0 18px !important;
+
+    border-radius: 10px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+
     transition:
       background-color 0.2s ease,
       border-color 0.2s ease,
@@ -93,25 +121,31 @@
     &:active {
       transform: translateY(1px);
     }
+  }
 
-    // ***************** CREATE BUTTON *****************
-    &--create {
-      color: var(--color-white) !important;
-      background-color: var(--color-primary-dark) !important;
-      border: 1px solid var(--color-primary-dark) !important;
-      box-shadow: 0 3px 8px rgba(72, 31, 110, 0.18);
-      margin-left: 20px;
-      justify-items: flex-end;
+  // ***************** CREATE BUTTON *****************
+  &__btn--create {
+    gap: 8px !important;
 
-      &:hover {
-        filter: brightness(0.95);
-        box-shadow: 0 4px 10px rgba(72, 31, 110, 0.22);
-      }
+    color: var(--color-white) !important;
+    background-color: var(--color-primary-dark) !important;
+    border: 1px solid var(--color-primary-dark) !important;
+    box-shadow: 0 3px 8px rgba(72, 31, 110, 0.18);
+
+    &:hover {
+      filter: brightness(0.95);
+      box-shadow: 0 4px 10px rgba(72, 31, 110, 0.22);
+    }
+
+    mat-icon {
+      width: 18px !important;
+      height: 18px !important;
+      font-size: 18px !important;
     }
   }
 }
 
-.mat-toolbar h1{
+.mat-toolbar h1 {
   font-weight: bold;
   font-size: 25px;
 }
@@ -122,8 +156,9 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px;
+  padding: 0;
 
+  // ***************** FILTER WRAPPER *****************
   &__wrapper {
     position: relative;
     flex: 0 0 auto;
@@ -131,21 +166,25 @@
 
   // ***************** FILTER BUTTON *****************
   &__btn {
-    flex: 0 0 auto;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
+    flex-shrink: 0;
+
     gap: 8px !important;
     min-width: 104px;
     height: 40px !important;
     padding: 0 16px !important;
+
     color: var(--color-title) !important;
     background-color: var(--color-white) !important;
     border: 1px solid var(--color-border) !important;
     border-radius: 10px !important;
     box-shadow: 0 1px 3px rgba(72, 31, 110, 0.04);
+
     font-size: 13px !important;
     font-weight: 600 !important;
+
     transition:
       background-color 0.2s ease,
       border-color 0.2s ease,
@@ -209,18 +248,22 @@
   // ***************** FILTER PANEL *****************
   .filter-panel {
     position: absolute;
-    top: calc(100% + 4px);
+    top: calc(100% + 6px);
     left: 0;
     right: auto;
+
     width: 340px;
     max-width: calc(100vw - 32px);
+
     z-index: 100;
+
     background-color: var(--color-white);
     border: 1px solid var(--color-border);
     border-radius: 14px;
     box-shadow:
       0 12px 32px rgba(30, 41, 59, 0.12),
       0 2px 8px rgba(30, 41, 59, 0.06);
+
     overflow: hidden;
 
     // ***** PANEL HEADER *****
@@ -361,6 +404,7 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
+      min-width: 0;
     }
 
     &__dropdown-menu {
@@ -369,8 +413,10 @@
       left: 0;
       right: 0;
       z-index: 101;
+
       max-height: 220px;
       overflow-y: auto;
+
       padding: 6px;
       background-color: var(--color-white);
       border: 1px solid var(--color-border);
@@ -748,37 +794,53 @@
     }
   }
 
-  .list-toolbar__search {
-    max-width: 380px;
+  .list-toolbar {
+    &__search {
+      max-width: 320px;
+    }
   }
 }
 
 // ***************** TABLET *****************
 @media (max-width: 768px) {
   .list-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+
+    &__actions {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      width: 100%;
+      margin-left: 0;
+      gap: 10px;
+    }
+
     &__search {
+      grid-column: 1 / -1;
       width: 100%;
       max-width: none;
-      order: 2;
     }
 
     &__btn--create {
-      order: 4;
+      width: 100%;
     }
   }
 
   .toolbar-filter {
-    gap: 8px;
-    margin-bottom: 16px;
+    width: 100%;
 
-    .list-toolbar__search {
-      flex: 1;
-      width: auto;
-      max-width: none;
+    &__wrapper {
+      width: 100%;
     }
 
     &__btn {
-      min-width: 100px;
+      width: 100%;
+    }
+
+    .filter-panel {
+      left: auto;
+      right: 0;
     }
   }
 
@@ -793,26 +855,64 @@
 
 // ***************** MOBILE *****************
 @media (max-width: 480px) {
-  .toolbar-filter {
-    flex-direction: column;
-    align-items: stretch;
+  .list-toolbar {
+    gap: 10px;
 
-    .list-toolbar__search {
+    &__actions {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
       width: 100%;
-      height: 50px;
-      max-width: none;
+      gap: 10px;
     }
 
-    
+    &__search {
+      width: 100%;
+      max-width: none;
+      height: 42px;
+    }
+
+    &__btn--create {
+      width: 100%;
+      height: 42px !important;
+    }
+  }
+
+  .toolbar-filter {
+    width: 100%;
+
+    &__wrapper {
+      width: 100%;
+    }
 
     &__btn {
       width: 100%;
+      height: 42px !important;
     }
 
     .filter-panel {
+      top: calc(100% + 8px);
+      left: 0;
       right: 0;
       width: 100%;
-      max-width: 100%;
+      max-width: none;
     }
+
+    .filter-panel__date-row {
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .filter-panel__footer {
+      flex-direction: column;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+
+  .assessment-table {
+    min-width: 780px;
   }
 }

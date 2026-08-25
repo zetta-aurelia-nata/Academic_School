@@ -110,6 +110,10 @@ export class AssessmentsResult implements OnInit {
       .map((submission) => this.mapSubmissionToResultStudent(submission));
   }
 
+  get essayAnswers(): ResultAnswer[] {
+    return this.selectedStudent?.answers.filter((answer) => answer.type === 'essay') ?? [];
+  }
+
   get currentResultState(): AssessmentResult {
     return (
       this.resultStates.find((state) => state.assessmentId === this.selectedAssessmentId) ?? {
@@ -207,19 +211,21 @@ export class AssessmentsResult implements OnInit {
 
     this.calculateTotalScore();
 
+    const submissionID = this.selectedStudent.submissionId;
+
     this.selectedStudent.answers.forEach((answer) => {
       if (answer.type !== 'essay') return;
 
       this.submissionService.updateAnswerScoreByQuestion(
         this.selectedAssessmentId,
-        this.selectedStudent!.submissionId,
+        submissionID,
         answer.question,
         answer.score,
       );
 
       this.submissionService.updateTeacherCommentByQuestion(
         this.selectedAssessmentId,
-        this.selectedStudent!.submissionId,
+        submissionID,
         answer.question,
         answer.teacherComment,
       );
@@ -227,9 +233,18 @@ export class AssessmentsResult implements OnInit {
 
     this.submissionService.updateScore(
       this.selectedAssessmentId,
-      this.selectedStudent.submissionId,
+      submissionID,
       this.selectedStudent.score,
     );
+
+    const upatedSubmission = this.submissionService.getSubmission(
+      this.selectedAssessmentId,
+      submissionID,
+    );
+
+    if (upatedSubmission) {
+      this.selectedStudent = this.mapSubmissionToResultStudent(upatedSubmission);
+    }
 
     this.successMessage = `Score for ${this.selectedStudent.studentName} has been saved.`;
     this.scoreJustSaved = true;

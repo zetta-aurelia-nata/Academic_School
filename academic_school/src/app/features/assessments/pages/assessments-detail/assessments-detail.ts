@@ -27,6 +27,7 @@ interface StudentReview {
   submittedAt?: string;
   timeTaken?: string;
   score?: number;
+  maxScore?: number;
 }
 
 interface AnswerReview {
@@ -68,6 +69,7 @@ export class AssessmentsDetail implements OnInit {
   filteredStudents: StudentReview[] = [];
   student?: StudentReview;
   answers: AnswerReview[] = [];
+  mcAnswers: AnswerReview[] = [];
   currentResultState: any;
   selectedStudent: any;
 
@@ -106,6 +108,27 @@ export class AssessmentsDetail implements OnInit {
             maxScore: question.points,
           };
         });
+
+        const mcQuestions = (this.assessment?.questions ?? []).filter(
+          (question: Question) => question.type === 'multiple_choice',
+        );
+
+        this.mcAnswers = mcQuestions.map((question: Question) => {
+          const submittedAnswer = submission.answers.find(
+            (answer: SubmissionAnswer) => answer.question === question.text,
+          );
+
+          const answerText = submittedAnswer?.answer ?? '-';
+          const correctOption = (question.options ?? []).find((option) => option.isCorrect);
+          const isCorrect = correctOption ? answerText === correctOption.text : false;
+
+          return {
+            question: question.text,
+            answer: answerText,
+            score: isCorrect ? question.points : 0,
+            maxScore: question.points,
+          };
+        });
       }
     }
   }
@@ -123,6 +146,7 @@ export class AssessmentsDetail implements OnInit {
       submittedAt: submission.submittedAt,
       timeTaken: submission.timeTaken,
       score: submission.score,
+      maxScore: submission.maxScore,
     };
   }
 
