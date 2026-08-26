@@ -1,14 +1,22 @@
-//********** ANGULAR IMPORTS **********
+// ********** ANGULAR IMPORTS **********
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, EventEmitter, HostListener, Input, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-//********** ANGULAR MATERIAL IMPORTS **********
+// ********** ANGULAR MATERIAL IMPORTS **********
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 
-//********** FILTER MODEL **********
+// ********** INTERFACES **********
 export interface FilterValue {
   status: string;
   subject: string;
@@ -22,35 +30,23 @@ export interface FilterValue {
 @Component({
   selector: 'app-filter',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    MatButtonModule,
-    MatIconModule,
-    MatDividerModule,
-  ],
+  imports: [CommonModule, FormsModule, MatButtonModule, MatIconModule, MatDividerModule],
   templateUrl: './filter-component.html',
   styleUrls: ['./filter-component.scss'],
 })
 export class FilterComponent {
-  //********** VIEW CHILDREN **********
   @ViewChild('filterWrapper')
   filterWrapperRef?: ElementRef<HTMLElement>;
 
-  //********** INPUTS **********
+  // ********** DECORATION VARIABLES **********
   @Input() statusOptions: string[] = [];
   @Input() subjectOptions: string[] = [];
   @Input() gradeOptions: string[] = [];
-
-  //********** OUTPUTS **********
   @Output() filterApplied = new EventEmitter<FilterValue>();
 
-  //********** PUBLIC STATE VARIABLES **********
+  // ********** PUBLIC STATE VARIABLES **********
   showFilterPanel = false;
-
   openDropdown: 'subject' | 'status' | 'grade' | null = null;
-
-  //********** APPLIED FILTERS **********
   selectedStatus = 'ALL';
   selectedSubject = 'ALL';
   selectedGrade = 'ALL';
@@ -58,7 +54,6 @@ export class FilterComponent {
   dateTo = '';
   assessmentName = '';
 
-  //********** DRAFT FILTERS **********
   draftStatus = 'ALL';
   draftSubject = 'ALL';
   draftGrade = 'ALL';
@@ -66,7 +61,6 @@ export class FilterComponent {
   draftDateTo = '';
   draftAssessmentName = '';
 
-  //********** KEYBOARD HANDLERS **********
   @HostListener('document:keydown.escape')
   onEscape(): void {
     if (!this.showFilterPanel) {
@@ -76,7 +70,6 @@ export class FilterComponent {
     this.closeFilterPanel();
   }
 
-  //********** OUTSIDE CLICK HANDLER (CLOSES FILTER PANEL) **********
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
     if (!this.showFilterPanel) {
@@ -85,20 +78,15 @@ export class FilterComponent {
 
     const target = event.target as HTMLElement;
 
-    if (
-      this.filterWrapperRef &&
-      !this.filterWrapperRef.nativeElement.contains(target)
-    ) {
+    if (this.filterWrapperRef && !this.filterWrapperRef.nativeElement.contains(target)) {
       this.closeFilterPanel();
     }
   }
 
-  //********** TOGGLE FILTER PANEL **********
   toggleFilterPanel(): void {
     this.showFilterPanel = !this.showFilterPanel;
 
     if (this.showFilterPanel) {
-      //********** SYNC DRAFT WITH APPLIED VALUES **********
       this.draftStatus = this.selectedStatus;
       this.draftSubject = this.selectedSubject;
       this.draftGrade = this.selectedGrade;
@@ -111,68 +99,56 @@ export class FilterComponent {
     }
   }
 
-  //********** CLOSE FILTER PANEL **********
   closeFilterPanel(): void {
     this.showFilterPanel = false;
 
     this.openDropdown = null;
   }
 
-  //********** TOGGLE DROPDOWN **********
   toggleDropdown(name: 'subject' | 'status' | 'grade'): void {
     this.openDropdown = this.openDropdown === name ? null : name;
   }
 
-  //********** SELECT SUBJECT **********
   selectDraftSubject(subject: string): void {
     this.draftSubject = subject;
 
     this.openDropdown = null;
   }
 
-  //********** SELECT GRADE **********
   selectDraftGrade(grade: string): void {
     this.draftGrade = grade;
 
     this.openDropdown = null;
   }
 
-  //********** SELECT STATUS **********
   selectDraftStatus(status: string): void {
     this.draftStatus = status;
 
     this.openDropdown = null;
   }
 
-  //********** RESET GRADE **********
   resetGradeDraft(): void {
     this.draftGrade = 'ALL';
   }
 
-  //********** RESET ASSESSMENT NAME **********
   resetAssessmentNameDraft(): void {
     this.draftAssessmentName = '';
   }
 
-  //********** RESET DATE RANGE **********
   resetDateRangeDraft(): void {
     this.draftDateFrom = '';
     this.draftDateTo = '';
   }
 
-  //********** RESET SUBJECT **********
   resetSubjectDraft(): void {
     this.draftSubject = 'ALL';
   }
 
-  //********** RESET STATUS **********
   resetStatusDraft(): void {
     this.draftStatus = 'ALL';
   }
 
-  //********** RESET ALL FILTERS **********
   resetAllDraft(): void {
-    //********** RESET DRAFT **********
     this.draftStatus = 'ALL';
     this.draftSubject = 'ALL';
     this.draftGrade = 'ALL';
@@ -181,7 +157,6 @@ export class FilterComponent {
     this.draftDateTo = '';
     this.draftAssessmentName = '';
 
-    //********** RESET APPLIED **********
     this.selectedStatus = 'ALL';
     this.selectedSubject = 'ALL';
     this.selectedGrade = 'ALL';
@@ -193,7 +168,6 @@ export class FilterComponent {
     this.emitFilter();
   }
 
-  //********** APPLY FILTER PANEL **********
   applyFilterPanel(): void {
     this.selectedStatus = this.draftStatus;
     this.selectedSubject = this.draftSubject;
@@ -208,7 +182,6 @@ export class FilterComponent {
     this.closeFilterPanel();
   }
 
-  //********** EMIT FILTER **********
   private emitFilter(): void {
     this.filterApplied.emit({
       status: this.selectedStatus,
@@ -217,11 +190,11 @@ export class FilterComponent {
       dateFrom: this.dateFrom,
       dateTo: this.dateTo,
       assessmentName: this.assessmentName,
-      keyword: ''
+      keyword: '',
     });
   }
 
-  //********** ACTIVE FILTER STATE **********
+  // ********** SETTER & GETTER **********
   get hasActiveFilters(): boolean {
     return (
       this.selectedStatus !== 'ALL' ||
@@ -233,7 +206,6 @@ export class FilterComponent {
     );
   }
 
-  //********** ACTIVE FILTER COUNT **********
   get activeFilterCount(): number {
     let count = 0;
 
@@ -260,7 +232,6 @@ export class FilterComponent {
     return count;
   }
 
-  //********** STATUS DOT CLASS **********
   statusDotClass(status: string): string {
     return `toolbar-filter__status-dot toolbar-filter__status-dot--${status
       .toString()

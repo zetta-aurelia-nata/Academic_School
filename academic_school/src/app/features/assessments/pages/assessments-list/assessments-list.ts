@@ -93,14 +93,12 @@ export class AssessmentList {
     this.loadAssessments();
   }
 
-  //********** LOAD ASSESSMENTS **********
   private loadAssessments(): void {
     this.assessments = this.assessmentService.getAssessments();
 
     this.applyFilters();
   }
 
-  //********** SEARCH HANDLERS **********
   onSearch(): void {
     this.applyFilters();
   }
@@ -111,7 +109,6 @@ export class AssessmentList {
     this.applyFilters();
   }
 
-  //********** FILTER HANDLER **********
   onFilterApplied(filters: FilterValue): void {
     //********** UPDATE APPLIED FILTERS **********
     this.selectedStatus = filters.status;
@@ -126,7 +123,6 @@ export class AssessmentList {
     this.applyFilters();
   }
 
-  //********** APPLY FILTERS **********
   private applyFilters(): void {
     const topQuery = this.searchQuery.trim().toLowerCase();
     const keywordQuery = this.keyword.trim().toLowerCase();
@@ -229,7 +225,7 @@ export class AssessmentList {
     this.router.navigate(['/assessments', assessment.id, 'submissions']);
   }
 
-  //********** DELETE HANDLERS **********
+  //********** ACTION HANDLERS **********
   onDelete(assessment: Assessment, event?: Event): void {
     this.selectedAssessment = assessment;
 
@@ -274,7 +270,6 @@ export class AssessmentList {
     });
   }
 
-  //********** STATUS CLASS **********
   statusClass(status: AssessmentStatus): string {
     return `status-badge status-badge--${status.toString().toLowerCase()}`;
   }

@@ -1,22 +1,9 @@
 // ********** ANGULAR IMPORTS **********
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import {
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import {FormArray,FormBuilder,FormControl,FormGroup,ReactiveFormsModule,Validators,} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  CdkDrag,
-  CdkDragDrop,
-  CdkDropList,
-  moveItemInArray,
-  CdkDragPlaceholder,
-} from '@angular/cdk/drag-drop';
+import {CdkDrag,CdkDragDrop,CdkDropList,moveItemInArray,CdkDragPlaceholder,} from '@angular/cdk/drag-drop';
 
 // ********** ANGULAR MATERIAL IMPORTS **********
 import { MatButtonModule } from '@angular/material/button';

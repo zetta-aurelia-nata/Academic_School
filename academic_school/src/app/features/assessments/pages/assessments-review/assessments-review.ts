@@ -16,7 +16,13 @@ import { Assessment, AssessmentStatus } from '../assessments-list/assessment.lis
 @Component({
   selector: 'app-assessments-review',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatButtonModule, MatCardModule, MatIconModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule,
+  ],
   templateUrl: './assessments-review.html',
   styleUrls: ['./assessments-review.scss'],
 })

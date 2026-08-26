@@ -213,7 +213,7 @@ export class AssessmentsCreate implements OnInit {
     this.questions = this.questions.filter((_, i) => i !== index);
   }
 
-  // ********** ACTION HANDLERS : REORDER QUESTIONS **********
+  // ********** ACTION HANDLERS **********
   dropCreatedQuestion(event: CdkDragDrop<Question[]>): void {
     if (event.previousIndex === event.currentIndex) {
       return;
