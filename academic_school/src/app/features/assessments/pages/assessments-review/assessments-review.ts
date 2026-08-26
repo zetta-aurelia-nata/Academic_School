@@ -14,13 +14,13 @@ import { AssessmentService } from '../../services/assessment.service';
 import { Assessment, AssessmentStatus } from '../assessments-list/assessment.list.model';
 
 @Component({
-  selector: 'app-review-scoring',
+  selector: 'app-assessments-review',
   standalone: true,
   imports: [CommonModule, FormsModule, MatButtonModule, MatCardModule, MatIconModule],
-  templateUrl: './assessments-review-scoring.html',
-  styleUrls: ['./assessments-review-scoring.scss'],
+  templateUrl: './assessments-review.html',
+  styleUrls: ['./assessments-review.scss'],
 })
-export class AssessmentsReviewScoring implements OnInit {
+export class AssessmentsReview implements OnInit {
   // ********** PRIVATE SERVICES **********
   private readonly router = inject(Router);
   private readonly assessmentService = inject(AssessmentService);

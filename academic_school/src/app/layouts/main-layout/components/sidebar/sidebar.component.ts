@@ -30,7 +30,7 @@ export class SidebarComponent {
   readonly assessmentSubmenus: SubmenuItem[] = [
     { id: 'list', label: 'Assessments List', link: '/assessments' },
     { id: 'result', label: 'Assessment Scoring', link: '/assessments/result' },
-    { id: 'submission', label: 'Assessment Result', link: '/assessments/review-scoring' },
+    { id: 'submission', label: 'Assessment Result', link: '/assessments/review' },
   ];
 
   // *************** ACTION HANDLERS ***************

@@ -1,6 +1,6 @@
 //********** ANGULAR IMPORTS **********
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, HostListener, ViewChild, inject } from '@angular/core';
+import { Component, ElementRef, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -10,14 +10,20 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatDividerModule } from '@angular/material/divider';
 
 //********** APPLICATION IMPORTS **********
 import { AssessmentService } from '../../services/assessment.service';
 import { Assessment, AssessmentStatus } from './assessment.list.model';
 
+//********** SHARED COMPONENT IMPORTS **********
+import {
+  FilterComponent,
+  FilterValue,
+} from '../../../../shared/components/filter-component/filter-component';
+
 @Component({
   selector: 'app-assessment-list',
+  standalone: true,
   imports: [
     CommonModule,
     FormsModule,
@@ -26,7 +32,7 @@ import { Assessment, AssessmentStatus } from './assessment.list.model';
     MatIconModule,
     MatToolbarModule,
     MatTableModule,
-    MatDividerModule,
+    FilterComponent,
   ],
   templateUrl: './assessments-list.html',
   styleUrls: ['./assessments-list.scss'],
@@ -38,9 +44,6 @@ export class AssessmentList {
 
   @ViewChild('deleteCancelButton')
   deleteCancelButton?: ElementRef<HTMLButtonElement>;
-
-  @ViewChild('filterWrapper')
-  filterWrapperRef?: ElementRef<HTMLElement>;
 
   //********** SERVICES **********
   private readonly router = inject(Router);
@@ -62,67 +65,28 @@ export class AssessmentList {
 
   assessments: Assessment[] = [];
   filteredAssessments: Assessment[] = [];
+
   searchQuery = '';
+
   showDeleteDialog = false;
   selectedAssessment: Assessment | null = null;
 
   //********** APPLIED FILTERS **********
-  selectedStatus: string = 'ALL';
-  selectedSubject: string = 'ALL';
-  selectedGrade: string = 'ALL';
+  selectedStatus = 'ALL';
+  selectedSubject = 'ALL';
+  selectedGrade = 'ALL';
   dateFrom = '';
   dateTo = '';
   keyword = '';
   assessmentName = '';
-  showFilterPanel = false;
-  openDropdown: 'subject' | 'status' | 'grade' | null = null;
-  draftStatus: string = 'ALL';
-  draftSubject: string = 'ALL';
-  draftGrade: string = 'ALL';
-  draftDateFrom = '';
-  draftDateTo = '';
-  draftKeyword = '';
-  draftAssessmentName = '';
 
-  //********** STATUS OPTIONS **********
   readonly statusOptions: AssessmentStatus[] = [
-    'Completed' as AssessmentStatus,
-    'Not Submitted' as AssessmentStatus,
-    'Pending' as AssessmentStatus,
-    'Failed' as AssessmentStatus,
-    'Draft' as AssessmentStatus,
-    'Published' as AssessmentStatus,
-    'Achieved' as AssessmentStatus,
+    'Completed',
+    'Not Submitted',
+    'Pending',
+    'Failed',
+    'Draft',
   ];
-
-  //********** KEYBOARD HANDLERS **********
-  @HostListener('document:keydown.escape')
-  onEscape(): void {
-    if (this.showFilterPanel) {
-      this.closeFilterPanel();
-      return;
-    }
-
-    if (!this.showDeleteDialog) {
-      return;
-    }
-
-    this.onCancelDelete();
-  }
-
-  //********** OUTSIDE CLICK HANDLER (CLOSES FILTER PANEL) **********
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent): void {
-    if (!this.showFilterPanel) {
-      return;
-    }
-
-    const target = event.target as HTMLElement;
-
-    if (this.filterWrapperRef && !this.filterWrapperRef.nativeElement.contains(target)) {
-      this.closeFilterPanel();
-    }
-  }
 
   //********** LIFECYCLE **********
   ngOnInit(): void {
@@ -136,7 +100,7 @@ export class AssessmentList {
     this.applyFilters();
   }
 
-  //********** ACTION HANDLERS **********
+  //********** SEARCH HANDLERS **********
   onSearch(): void {
     this.applyFilters();
   }
@@ -147,115 +111,22 @@ export class AssessmentList {
     this.applyFilters();
   }
 
-  toggleFilterPanel(): void {
-    this.showFilterPanel = !this.showFilterPanel;
+  //********** FILTER HANDLER **********
+  onFilterApplied(filters: FilterValue): void {
+    //********** UPDATE APPLIED FILTERS **********
+    this.selectedStatus = filters.status;
+    this.selectedSubject = filters.subject;
+    this.selectedGrade = filters.grade;
 
-    if (this.showFilterPanel) {
-      //********** SYNC DRAFT WITH APPLIED VALUES **********
-      this.draftStatus = this.selectedStatus;
-      this.draftSubject = this.selectedSubject;
-      this.draftGrade = this.selectedGrade;
-
-      this.draftDateFrom = this.dateFrom;
-      this.draftDateTo = this.dateTo;
-      this.draftKeyword = this.keyword;
-      this.draftAssessmentName = this.assessmentName;
-    } else {
-      this.openDropdown = null;
-    }
-  }
-
-  closeFilterPanel(): void {
-    this.showFilterPanel = false;
-
-    this.openDropdown = null;
-  }
-
-  toggleDropdown(name: 'subject' | 'status' | 'grade'): void {
-    this.openDropdown = this.openDropdown === name ? null : name;
-  }
-  selectDraftSubject(subject: string): void {
-    this.draftSubject = subject;
-
-    this.openDropdown = null;
-  }
-
-  selectDraftGrade(grade: string): void {
-    this.draftGrade = grade;
-
-    this.openDropdown = null;
-  }
-
-  resetGradeDraft(): void {
-    this.draftGrade = 'ALL';
-  }
-
-  resetAssessmentNameDraft(): void {
-    this.draftAssessmentName = '';
-  }
-
-  selectDraftStatus(status: string): void {
-    this.draftStatus = status;
-
-    this.openDropdown = null;
-  }
-
-  resetDateRangeDraft(): void {
-    this.draftDateFrom = '';
-    this.draftDateTo = '';
-  }
-
-  resetSubjectDraft(): void {
-    this.draftSubject = 'ALL';
-  }
-
-  resetStatusDraft(): void {
-    this.draftStatus = 'ALL';
-  }
-
-  resetKeywordDraft(): void {
-    this.draftKeyword = '';
-  }
-
-  resetAllDraft(): void {
-    //********** RESET DRAFT **********
-    this.draftStatus = 'ALL';
-    this.draftSubject = 'ALL';
-    this.draftGrade = 'ALL';
-
-    this.draftDateFrom = '';
-    this.draftDateTo = '';
-    this.draftKeyword = '';
-    this.draftAssessmentName = '';
-
-    //********** RESET APPLIED **********
-    this.selectedStatus = 'ALL';
-    this.selectedSubject = 'ALL';
-    this.selectedGrade = 'ALL';
-
-    this.dateFrom = '';
-    this.dateTo = '';
-    this.keyword = '';
-    this.assessmentName = '';
+    this.dateFrom = filters.dateFrom;
+    this.dateTo = filters.dateTo;
+    this.keyword = filters.keyword;
+    this.assessmentName = filters.assessmentName;
 
     this.applyFilters();
   }
 
-  applyFilterPanel(): void {
-    this.selectedStatus = this.draftStatus;
-    this.selectedSubject = this.draftSubject;
-    this.selectedGrade = this.draftGrade;
-
-    this.dateFrom = this.draftDateFrom;
-    this.dateTo = this.draftDateTo;
-    this.keyword = this.draftKeyword;
-    this.assessmentName = this.draftAssessmentName;
-
-    this.applyFilters();
-
-    this.closeFilterPanel();
-  }
-
+  //********** APPLY FILTERS **********
   private applyFilters(): void {
     const topQuery = this.searchQuery.trim().toLowerCase();
     const keywordQuery = this.keyword.trim().toLowerCase();
@@ -266,8 +137,10 @@ export class AssessmentList {
     const targetGrade = this.selectedGrade.toString().trim().toLowerCase();
 
     const fromDate = this.dateFrom ? new Date(this.dateFrom) : null;
+
     const toDate = this.dateTo ? new Date(this.dateTo) : null;
 
+    //********** SEARCH MATCHER **********
     const matchesQuery = (assessment: Assessment, query: string): boolean =>
       !query ||
       [
@@ -339,49 +212,6 @@ export class AssessmentList {
     return Array.from(new Set(grades)).sort();
   }
 
-  get hasActiveFilters(): boolean {
-    return (
-      this.searchQuery.trim().length > 0 ||
-      this.assessmentName.trim().length > 0 ||
-      this.selectedStatus !== 'ALL' ||
-      this.selectedSubject !== 'ALL' ||
-      this.selectedGrade !== 'ALL' ||
-      !!this.dateFrom ||
-      !!this.dateTo ||
-      this.keyword.trim().length > 0
-    );
-  }
-
-  get activeFilterCount(): number {
-    let count = 0;
-
-    if (this.assessmentName.trim().length > 0) {
-      count++;
-    }
-
-    if (this.selectedStatus !== 'ALL') {
-      count++;
-    }
-
-    if (this.selectedSubject !== 'ALL') {
-      count++;
-    }
-
-    if (this.selectedGrade !== 'ALL') {
-      count++;
-    }
-
-    if (this.dateFrom || this.dateTo) {
-      count++;
-    }
-
-    if (this.keyword.trim().length > 0) {
-      count++;
-    }
-
-    return count;
-  }
-
   //********** ACTION HANDLERS **********
   onCreateAssessment(): void {
     this.router.navigate(['/assessments/create']);
@@ -399,6 +229,7 @@ export class AssessmentList {
     this.router.navigate(['/assessments', assessment.id, 'submissions']);
   }
 
+  //********** DELETE HANDLERS **********
   onDelete(assessment: Assessment, event?: Event): void {
     this.selectedAssessment = assessment;
 
@@ -443,13 +274,8 @@ export class AssessmentList {
     });
   }
 
+  //********** STATUS CLASS **********
   statusClass(status: AssessmentStatus): string {
     return `status-badge status-badge--${status.toString().toLowerCase()}`;
-  }
-
-  statusDotClass(status: string): string {
-    return `toolbar-filter__status-dot toolbar-filter__status-dot--${status
-      .toString()
-      .toLowerCase()}`;
   }
 }

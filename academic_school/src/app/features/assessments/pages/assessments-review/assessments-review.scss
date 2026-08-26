@@ -1,6 +1,6 @@
 // *************** BEM BLOCKS ***************
 // *************** REVIEW SCORING ***************
-.review-scoring {
+.assessments-review {
   box-sizing: border-box;
 
   // *************** SEARCH ***************
@@ -325,7 +325,7 @@
 }
 
 @media (max-width: 768px) {
-  .review-scoring {
+  .assessments-review {
     &__toolbar {
       align-items: stretch;
     }

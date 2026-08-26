@@ -13,6 +13,7 @@ export class SubmissionService {
   constructor(private readonly assessmentService: AssessmentService) {}
   // ********** PRIVATE STATE **********
   private submissions: Submission[] = [
+    // ===== Assessment 1: Mathematics Quiz (MC 50 + Essay 50 = 100) =====
     {
       id: 1,
       assessmentId: 1,
@@ -30,36 +31,16 @@ export class SubmissionService {
         {
           question: 'What is 5 × 5?',
           answer: '25',
-          maxScore: 20,
-          score: 20,
+          maxScore: 50,
+          score: 50,
           teacherComment: '',
         },
         {
-          question: 'What is the square root of 81?',
-          answer: '9',
-          maxScore: 20,
-          score: 20,
-          teacherComment: '',
-        },
-        {
-          question: 'Solve: 12 + 18',
-          answer: '30',
-          maxScore: 20,
-          score: 20,
-          teacherComment: '',
-        },
-        {
-          question: 'What is 100 ÷ 4?',
-          answer: '25',
-          maxScore: 20,
-          score: 20,
-          teacherComment: '',
-        },
-        {
-          question: 'Solve: 15 × 3',
-          answer: '45',
-          maxScore: 20,
-          score: 12,
+          question: 'Explain the Pythagorean theorem and provide an example of its application.',
+          answer:
+            'The Pythagorean theorem states that in a right triangle, a² + b² = c², where c is the hypotenuse. For example, a triangle with legs 3 and 4 has a hypotenuse of 5.',
+          maxScore: 50,
+          score: 42,
           teacherComment: '',
         },
       ],
@@ -81,36 +62,16 @@ export class SubmissionService {
         {
           question: 'What is 5 × 5?',
           answer: '25',
-          maxScore: 20,
-          score: 20,
+          maxScore: 50,
+          score: 50,
           teacherComment: '',
         },
         {
-          question: 'What is the square root of 81?',
-          answer: '8',
-          maxScore: 20,
-          score: 10,
-          teacherComment: '',
-        },
-        {
-          question: 'Solve: 12 + 18',
-          answer: '30',
-          maxScore: 20,
-          score: 20,
-          teacherComment: '',
-        },
-        {
-          question: 'What is 100 ÷ 4?',
-          answer: '20',
-          maxScore: 20,
-          score: 8,
-          teacherComment: '',
-        },
-        {
-          question: 'Solve: 15 × 3',
-          answer: '40',
-          maxScore: 20,
-          score: 20,
+          question: 'Explain the Pythagorean theorem and provide an example of its application.',
+          answer:
+            'The theorem says the sides of a right triangle relate by squares. It helps find missing side lengths.',
+          maxScore: 50,
+          score: 28,
           teacherComment: '',
         },
       ],
@@ -132,36 +93,16 @@ export class SubmissionService {
         {
           question: 'What is 5 × 5?',
           answer: '25',
-          maxScore: 20,
-          score: 20,
+          maxScore: 50,
+          score: 50,
           teacherComment: '',
         },
         {
-          question: 'What is the square root of 81?',
-          answer: '9',
-          maxScore: 20,
-          score: 20,
-          teacherComment: '',
-        },
-        {
-          question: 'Solve: 12 + 18',
-          answer: '30',
-          maxScore: 20,
-          score: 18,
-          teacherComment: '',
-        },
-        {
-          question: 'What is 100 ÷ 4?',
-          answer: '25',
-          maxScore: 20,
-          score: 20,
-          teacherComment: '',
-        },
-        {
-          question: 'Solve: 15 × 3',
-          answer: '45',
-          maxScore: 20,
-          score: 10,
+          question: 'Explain the Pythagorean theorem and provide an example of its application.',
+          answer:
+            'The Pythagorean theorem relates the sides of a right triangle: a² + b² = c². It is used to calculate distances, such as finding the diagonal of a rectangle.',
+          maxScore: 50,
+          score: 38,
           teacherComment: '',
         },
       ],
@@ -193,6 +134,7 @@ export class SubmissionService {
       answers: [],
     },
 
+    // ===== Assessment 2: English Literature Essay (Essay 50 + Essay 30 = 80) =====
     {
       id: 1,
       assessmentId: 2,
@@ -204,39 +146,24 @@ export class SubmissionService {
       status: 'Completed',
       submittedAt: 'May 19, 2026 · 08:45 AM',
       timeTaken: '55 minutes',
-      score: 85,
-      maxScore: 100,
+      score: 66,
+      maxScore: 80,
       answers: [
         {
-          question: 'Explain the main theme of the story.',
+          question:
+            'Analyze the main theme of the novel and discuss how the author develops it throughout the story.',
           answer:
-            'The story focuses on friendship, growth, and how people overcome challenges together.',
-          maxScore: 25,
-          score: 22,
+            "The novel explores themes of friendship, growth, and resilience. The author develops this through the protagonist's evolving relationships and the challenges she overcomes throughout the plot.",
+          maxScore: 50,
+          score: 42,
           teacherComment: '',
         },
         {
-          question: 'Describe the main character.',
+          question: 'Compare and contrast the protagonist and antagonist of the story.',
           answer:
-            'The main character is determined and learns from the challenges throughout the story.',
-          maxScore: 25,
-          score: 21,
-          teacherComment: '',
-        },
-        {
-          question: 'What lesson can be learned from the story?',
-          answer:
-            'The story teaches us that persistence and cooperation can help us overcome difficulties.',
-          maxScore: 25,
-          score: 22,
-          teacherComment: '',
-        },
-        {
-          question: 'Give your personal opinion about the story.',
-          answer:
-            'I think the story is meaningful because the characters develop through their experiences.',
-          maxScore: 25,
-          score: 20,
+            "The protagonist is compassionate and determined, while the antagonist is selfish and manipulative. Their conflicting values drive much of the story's tension.",
+          maxScore: 30,
+          score: 24,
           teacherComment: '',
         },
       ],
@@ -252,35 +179,22 @@ export class SubmissionService {
       status: 'Completed',
       submittedAt: 'May 19, 2026 · 09:10 AM',
       timeTaken: '51 minutes',
-      score: 78,
-      maxScore: 100,
+      score: 55,
+      maxScore: 80,
       answers: [
         {
-          question: 'Explain the main theme of the story.',
-          answer: 'The story is about friendship and challenges.',
-          maxScore: 25,
+          question:
+            'Analyze the main theme of the novel and discuss how the author develops it throughout the story.',
+          answer: 'The story is mainly about friendship and overcoming challenges together.',
+          maxScore: 50,
+          score: 35,
+          teacherComment: '',
+        },
+        {
+          question: 'Compare and contrast the protagonist and antagonist of the story.',
+          answer: 'The main character is brave while the antagonist is cruel and selfish.',
+          maxScore: 30,
           score: 20,
-          teacherComment: '',
-        },
-        {
-          question: 'Describe the main character.',
-          answer: 'The character is brave and kind.',
-          maxScore: 25,
-          score: 18,
-          teacherComment: '',
-        },
-        {
-          question: 'What lesson can be learned from the story?',
-          answer: 'We should never give up.',
-          maxScore: 25,
-          score: 21,
-          teacherComment: '',
-        },
-        {
-          question: 'Give your personal opinion about the story.',
-          answer: 'I enjoyed reading the story.',
-          maxScore: 25,
-          score: 19,
           teacherComment: '',
         },
       ],
@@ -296,9 +210,27 @@ export class SubmissionService {
       status: 'Completed',
       submittedAt: 'May 19, 2026 · 09:42 AM',
       timeTaken: '58 minutes',
-      score: 89,
-      maxScore: 100,
-      answers: [],
+      score: 70,
+      maxScore: 80,
+      answers: [
+        {
+          question:
+            'Analyze the main theme of the novel and discuss how the author develops it throughout the story.',
+          answer:
+            "The theme centers on perseverance, shown through the protagonist's growth across the story's major turning points.",
+          maxScore: 50,
+          score: 44,
+          teacherComment: '',
+        },
+        {
+          question: 'Compare and contrast the protagonist and antagonist of the story.',
+          answer:
+            "The protagonist values honesty and cooperation, in contrast to the antagonist's deceit and self-interest.",
+          maxScore: 30,
+          score: 26,
+          teacherComment: '',
+        },
+      ],
     },
     {
       id: 4,
@@ -310,10 +242,11 @@ export class SubmissionService {
       email: 'noah.miller@school.com',
       status: 'In Progress',
       score: 0,
-      maxScore: 100,
+      maxScore: 80,
       answers: [],
     },
 
+    // ===== Assessment 3: Science Chapter 5 Test (MC 10 + Essay 20 = 30) =====
     {
       id: 1,
       assessmentId: 3,
@@ -325,9 +258,25 @@ export class SubmissionService {
       status: 'Completed',
       submittedAt: 'May 18, 2026 · 08:20 AM',
       timeTaken: '40 minutes',
-      score: 95,
-      maxScore: 100,
-      answers: [],
+      score: 29,
+      maxScore: 30,
+      answers: [
+        {
+          question: 'Which organelle is responsible for producing energy in a cell?',
+          answer: 'Mitochondria',
+          maxScore: 10,
+          score: 10,
+          teacherComment: '',
+        },
+        {
+          question: 'Describe the process of photosynthesis and its importance to living organisms.',
+          answer:
+            'Photosynthesis is the process by which plants convert sunlight, water, and carbon dioxide into glucose and oxygen. It is essential because it provides energy and oxygen for most living organisms.',
+          maxScore: 20,
+          score: 19,
+          teacherComment: '',
+        },
+      ],
     },
     {
       id: 2,
@@ -340,9 +289,25 @@ export class SubmissionService {
       status: 'Completed',
       submittedAt: 'May 18, 2026 · 08:45 AM',
       timeTaken: '43 minutes',
-      score: 82,
-      maxScore: 100,
-      answers: [],
+      score: 24,
+      maxScore: 30,
+      answers: [
+        {
+          question: 'Which organelle is responsible for producing energy in a cell?',
+          answer: 'Mitochondria',
+          maxScore: 10,
+          score: 10,
+          teacherComment: '',
+        },
+        {
+          question: 'Describe the process of photosynthesis and its importance to living organisms.',
+          answer:
+            'Photosynthesis lets plants make food from sunlight. It produces oxygen that living things need to breathe.',
+          maxScore: 20,
+          score: 14,
+          teacherComment: '',
+        },
+      ],
     },
     {
       id: 3,
@@ -355,11 +320,28 @@ export class SubmissionService {
       status: 'Completed',
       submittedAt: 'May 18, 2026 · 09:05 AM',
       timeTaken: '39 minutes',
-      score: 90,
-      maxScore: 100,
-      answers: [],
+      score: 28,
+      maxScore: 30,
+      answers: [
+        {
+          question: 'Which organelle is responsible for producing energy in a cell?',
+          answer: 'Mitochondria',
+          maxScore: 10,
+          score: 10,
+          teacherComment: '',
+        },
+        {
+          question: 'Describe the process of photosynthesis and its importance to living organisms.',
+          answer:
+            'Photosynthesis converts light energy into chemical energy stored in glucose, releasing oxygen as a byproduct. It sustains the food chain for nearly all life on Earth.',
+          maxScore: 20,
+          score: 18,
+          teacherComment: '',
+        },
+      ],
     },
 
+    // ===== Assessment 4: History Midterm (MC 15 + MC 10 = 25, fully auto-scored) =====
     {
       id: 1,
       assessmentId: 4,
@@ -371,9 +353,24 @@ export class SubmissionService {
       status: 'Completed',
       submittedAt: 'May 17, 2026 · 08:30 AM',
       timeTaken: '50 minutes',
-      score: 76,
-      maxScore: 100,
-      answers: [],
+      score: 15,
+      maxScore: 25,
+      answers: [
+        {
+          question: 'Which event is considered the immediate cause of World War I?',
+          answer: 'The assassination of Archduke Franz Ferdinand',
+          maxScore: 15,
+          score: 15,
+          teacherComment: '',
+        },
+        {
+          question: 'Which alliance did Germany belong to before World War I?',
+          answer: 'Warsaw Pact',
+          maxScore: 10,
+          score: 0,
+          teacherComment: '',
+        },
+      ],
     },
     {
       id: 2,
@@ -386,11 +383,27 @@ export class SubmissionService {
       status: 'Completed',
       submittedAt: 'May 17, 2026 · 09:00 AM',
       timeTaken: '47 minutes',
-      score: 87,
-      maxScore: 100,
-      answers: [],
+      score: 25,
+      maxScore: 25,
+      answers: [
+        {
+          question: 'Which event is considered the immediate cause of World War I?',
+          answer: 'The assassination of Archduke Franz Ferdinand',
+          maxScore: 15,
+          score: 15,
+          teacherComment: '',
+        },
+        {
+          question: 'Which alliance did Germany belong to before World War I?',
+          answer: 'Triple Alliance',
+          maxScore: 10,
+          score: 10,
+          teacherComment: '',
+        },
+      ],
     },
 
+    // ===== Assessment 5: Biology Chapter 3 Quiz (MC 10 + Essay 20 = 30) =====
     {
       id: 1,
       assessmentId: 5,
@@ -402,9 +415,25 @@ export class SubmissionService {
       status: 'Completed',
       submittedAt: 'May 25, 2026 · 08:15 AM',
       timeTaken: '35 minutes',
-      score: 93,
-      maxScore: 100,
-      answers: [],
+      score: 29,
+      maxScore: 30,
+      answers: [
+        {
+          question: 'What is the basic functional unit of the kidney?',
+          answer: 'Nephron',
+          maxScore: 10,
+          score: 10,
+          teacherComment: '',
+        },
+        {
+          question: 'Explain the difference between mitosis and meiosis.',
+          answer:
+            'Mitosis produces two identical diploid cells for growth and repair, while meiosis produces four genetically varied haploid cells for reproduction.',
+          maxScore: 20,
+          score: 19,
+          teacherComment: '',
+        },
+      ],
     },
     {
       id: 2,
@@ -416,7 +445,7 @@ export class SubmissionService {
       email: 'charlotte.martin@school.com',
       status: 'In Progress',
       score: 0,
-      maxScore: 100,
+      maxScore: 30,
       answers: [],
     },
   ];

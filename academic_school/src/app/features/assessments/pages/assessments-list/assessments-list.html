@@ -46,319 +46,13 @@
         }
       </div>
 
-      <!--********** FILTER **********-->
-      <div class="toolbar-filter__wrapper" #filterWrapper>
-        <div class="toolbar-filter">
-          <button
-            mat-stroked-button
-            type="button"
-            class="toolbar-filter__btn"
-            [class.toolbar-filter__btn--active]="hasActiveFilters"
-            [attr.aria-expanded]="showFilterPanel"
-            aria-label="Open assessment filters"
-            (click)="toggleFilterPanel()"
-          >
-            <mat-icon>filter_list</mat-icon>
-
-            <span>Filter</span>
-
-            @if (activeFilterCount > 0) {
-              <span class="toolbar-filter__count">
-                {{ activeFilterCount }}
-              </span>
-            }
-          </button>
-
-          <!--********** FILTER PANEL **********-->
-          @if (showFilterPanel) {
-            <div
-              class="filter-panel"
-              role="dialog"
-              aria-label="Assessment filters"
-              (click)="$event.stopPropagation()"
-            >
-              <!--********** FILTER PANEL HEADER **********-->
-              <div class="filter-panel__header">Filter Assessments</div>
-
-              <!--********** ASSESSMENT NAME **********-->
-              <div class="filter-panel__section">
-                <div class="filter-panel__section-head">
-                  <span class="filter-panel__section-title"> Assessment Name </span>
-
-                  @if (draftAssessmentName) {
-                    <button
-                      type="button"
-                      class="filter-panel__reset"
-                      (click)="resetAssessmentNameDraft()"
-                    >
-                      Reset
-                    </button>
-                  }
-                </div>
-
-                <div class="filter-panel__input-wrapper">
-                  <input
-                    type="text"
-                    class="filter-panel__input"
-                    placeholder="Search assessment name..."
-                    [(ngModel)]="draftAssessmentName"
-                  />
-                </div>
-              </div>
-
-              <mat-divider></mat-divider>
-
-              <!--********** STATUS FILTER **********-->
-              <div class="filter-panel__section">
-                <div class="filter-panel__section-head">
-                  <span class="filter-panel__section-title"> Status </span>
-
-                  @if (draftStatus !== 'ALL') {
-                    <button type="button" class="filter-panel__reset" (click)="resetStatusDraft()">
-                      Reset
-                    </button>
-                  }
-                </div>
-
-                <div class="filter-panel__dropdown">
-                  <button
-                    type="button"
-                    class="filter-panel__dropdown-trigger"
-                    [attr.aria-expanded]="openDropdown === 'status'"
-                    (click)="toggleDropdown('status')"
-                  >
-                    <span class="filter-panel__dropdown-value">
-                      @if (draftStatus === 'ALL') {
-                        <span>All Status</span>
-                      } @else {
-                        <span
-                          class="toolbar-filter__status-dot"
-                          [ngClass]="statusDotClass(draftStatus)"
-                        ></span>
-
-                        <span>
-                          {{ draftStatus }}
-                        </span>
-                      }
-                    </span>
-
-                    <mat-icon>
-                      {{ openDropdown === 'status' ? 'expand_less' : 'expand_more' }}
-                    </mat-icon>
-                  </button>
-
-                  @if (openDropdown === 'status') {
-                    <div class="filter-panel__dropdown-menu">
-                      <button type="button" (click)="selectDraftStatus('ALL')">
-                        <span>All Status</span>
-                      </button>
-
-                      @for (status of statusOptions; track status) {
-                        <button type="button" (click)="selectDraftStatus(status)">
-                          <span
-                            class="toolbar-filter__status-dot"
-                            [ngClass]="statusDotClass(status)"
-                          ></span>
-
-                          <span>{{ status }}</span>
-                        </button>
-                      }
-                    </div>
-                  }
-                </div>
-              </div>
-
-              <mat-divider></mat-divider>
-
-              <!--********** SUBJECT FILTER **********-->
-              <div class="filter-panel__section">
-                <div class="filter-panel__section-head">
-                  <span class="filter-panel__section-title"> Subject </span>
-
-                  @if (draftSubject !== 'ALL') {
-                    <button type="button" class="filter-panel__reset" (click)="resetSubjectDraft()">
-                      Reset
-                    </button>
-                  }
-                </div>
-
-                <div class="filter-panel__dropdown">
-                  <button
-                    type="button"
-                    class="filter-panel__dropdown-trigger"
-                    [attr.aria-expanded]="openDropdown === 'subject'"
-                    (click)="toggleDropdown('subject')"
-                  >
-                    <span class="filter-panel__dropdown-value">
-                      @if (draftSubject === 'ALL') {
-                        <span>All Subjects</span>
-                      } @else {
-                        <span>{{ draftSubject }}</span>
-                      }
-                    </span>
-
-                    <mat-icon>
-                      {{ openDropdown === 'subject' ? 'expand_less' : 'expand_more' }}
-                    </mat-icon>
-                  </button>
-
-                  @if (openDropdown === 'subject') {
-                    <div class="filter-panel__dropdown-menu">
-                      <button type="button" (click)="selectDraftSubject('ALL')">
-                        All Subjects
-                      </button>
-
-                      @for (subject of subjectOptions; track subject) {
-                        <button type="button" (click)="selectDraftSubject(subject)">
-                          {{ subject }}
-                        </button>
-                      }
-                    </div>
-                  }
-                </div>
-              </div>
-
-              <mat-divider></mat-divider>
-
-              <!--********** GRADE FILTER **********-->
-              <div class="filter-panel__section">
-                <div class="filter-panel__section-head">
-                  <span class="filter-panel__section-title"> Grade </span>
-
-                  @if (draftGrade !== 'ALL') {
-                    <button type="button" class="filter-panel__reset" (click)="resetGradeDraft()">
-                      Reset
-                    </button>
-                  }
-                </div>
-
-                <div class="filter-panel__dropdown">
-                  <button
-                    type="button"
-                    class="filter-panel__dropdown-trigger"
-                    [attr.aria-expanded]="openDropdown === 'grade'"
-                    (click)="toggleDropdown('grade')"
-                  >
-                    <span class="filter-panel__dropdown-value">
-                      @if (draftGrade === 'ALL') {
-                        <span>All Grades</span>
-                      } @else {
-                        <span>{{ draftGrade }}</span>
-                      }
-                    </span>
-
-                    <mat-icon>
-                      {{ openDropdown === 'grade' ? 'expand_less' : 'expand_more' }}
-                    </mat-icon>
-                  </button>
-
-                  @if (openDropdown === 'grade') {
-                    <div class="filter-panel__dropdown-menu">
-                      <button type="button" (click)="selectDraftGrade('ALL')">All Grades</button>
-
-                      @for (grade of gradeOptions; track grade) {
-                        <button type="button" (click)="selectDraftGrade(grade)">
-                          {{ grade }}
-                        </button>
-                      }
-                    </div>
-                  }
-                </div>
-              </div>
-
-              <mat-divider></mat-divider>
-
-              <!--********** DATE RANGE FILTER **********-->
-              <div class="filter-panel__section">
-                <div class="filter-panel__section-head">
-                  <span class="filter-panel__section-title"> Date Range </span>
-
-                  @if (draftDateFrom || draftDateTo) {
-                    <button
-                      type="button"
-                      class="filter-panel__reset"
-                      (click)="resetDateRangeDraft()"
-                    >
-                      Reset
-                    </button>
-                  }
-                </div>
-
-                <div class="filter-panel__date-row">
-                  <!--********** DATE FROM **********-->
-                  <div class="filter-panel__date-field">
-                    <label for="filter-date-from"> From </label>
-
-                    <div class="filter-panel__date-input">
-                      <input
-                        id="filter-date-from"
-                        type="date"
-                        [(ngModel)]="draftDateFrom"
-                        aria-label="Filter date from"
-                      />
-
-                      <mat-icon> calendar_today </mat-icon>
-                    </div>
-                  </div>
-
-                  <!--********** DATE TO **********-->
-                  <div class="filter-panel__date-field">
-                    <label for="filter-date-to"> To </label>
-
-                    <div class="filter-panel__date-input">
-                      <input
-                        id="filter-date-to"
-                        type="date"
-                        [(ngModel)]="draftDateTo"
-                        aria-label="Filter date to"
-                      />
-
-                      <mat-icon> calendar_today </mat-icon>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <mat-divider></mat-divider>
-
-              <!--********** KEYWORD FILTER **********-->
-              <div class="filter-panel__section">
-                <div class="filter-panel__section-head">
-                  <span class="filter-panel__section-title"> Keyword </span>
-
-                  @if (draftKeyword) {
-                    <button type="button" class="filter-panel__reset" (click)="resetKeywordDraft()">
-                      Reset
-                    </button>
-                  }
-                </div>
-
-                <div class="filter-panel__search">
-                  <mat-icon> search </mat-icon>
-
-                  <input
-                    type="text"
-                    placeholder="Search by keyword..."
-                    [(ngModel)]="draftKeyword"
-                    aria-label="Search by keyword"
-                  />
-                </div>
-              </div>
-
-              <!--********** FILTER PANEL FOOTER **********-->
-              <div class="filter-panel__footer">
-                <button type="button" class="filter-panel__reset-all" (click)="resetAllDraft()">
-                  Reset All
-                </button>
-
-                <button type="button" class="filter-panel__apply" (click)="applyFilterPanel()">
-                  Apply Filters
-                </button>
-              </div>
-            </div>
-          }
-        </div>
-      </div>
+      <!--********** FILTER COMPONENT **********-->
+      <app-filter
+        [statusOptions]="statusOptions"
+        [subjectOptions]="subjectOptions"
+        [gradeOptions]="gradeOptions"
+        (filterApplied)="onFilterApplied($event)"
+      ></app-filter>
 
       <!--********** CREATE ASSESSMENT **********-->
       <button
@@ -367,7 +61,7 @@
         class="list-toolbar__btn list-toolbar__btn--create"
         (click)="onCreateAssessment()"
       >
-        <mat-icon>add</mat-icon>
+        <mat-icon> add </mat-icon>
 
         <span> Create Assessment </span>
       </button>
@@ -476,7 +170,7 @@
                 aria-label="Edit assessment"
                 (click)="onEdit(row)"
               >
-                <mat-icon>edit</mat-icon>
+                <mat-icon> edit </mat-icon>
               </button>
 
               <!--********** DELETE ACTION **********-->
@@ -487,7 +181,7 @@
                 aria-label="Delete assessment"
                 (click)="onDelete(row, $event)"
               >
-                <mat-icon>delete</mat-icon>
+                <mat-icon> delete </mat-icon>
               </button>
             </div>
           </td>
@@ -509,7 +203,7 @@
               <div
                 class="flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-primary-light)] text-[var(--color-primary-dark)]"
               >
-                <mat-icon>search_off</mat-icon>
+                <mat-icon> search_off </mat-icon>
               </div>
 
               <span class="text-[14px] font-semibold text-[var(--color-title)]">
@@ -551,7 +245,7 @@
             class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-red-50 text-red-500"
             aria-hidden="true"
           >
-            <mat-icon>delete_outline</mat-icon>
+            <mat-icon> delete_outline </mat-icon>
           </div>
 
           <div>

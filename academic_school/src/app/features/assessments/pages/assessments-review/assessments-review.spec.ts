@@ -1,18 +1,18 @@
 //********** ANGULAR TESTING IMPORT **********
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AssessmentsReviewScoring } from './assessments-review-scoring';
+import { AssessmentsReview } from './assessments-review';
 
 //**********  TEST SUITE **********
-describe('AssessmentsReviewScoring', () => {
-  let component: AssessmentsReviewScoring;
-  let fixture: ComponentFixture<AssessmentsReviewScoring>;
+describe('AssessmentsReview', () => {
+  let component: AssessmentsReview;
+  let fixture: ComponentFixture<AssessmentsReview>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AssessmentsReviewScoring],
+      imports: [AssessmentsReview],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AssessmentsReviewScoring);
+    fixture = TestBed.createComponent(AssessmentsReview);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

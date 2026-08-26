@@ -1,6 +1,7 @@
 // ********** ANGULAR IMPORTS **********
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 // ********** ANGULAR MATERIAL IMPORTS **********
@@ -37,20 +38,9 @@ interface AnswerReview {
   maxScore: number;
 }
 
-interface ResultAnswer {
-  question: string;
-  type: 'essay' | 'multiple_choice';
-  answer: string;
-  maxScore: number;
-  score: number;
-  teacherComment: string;
-  options: { text: string; isCorrect: boolean }[];
-  correctAnswer?: string;
-}
-
 @Component({
   selector: 'app-assessments-detail',
-  imports: [CommonModule, MatButtonModule, MatCardModule, MatIconModule],
+  imports: [CommonModule, FormsModule, MatButtonModule, MatCardModule, MatIconModule],
   templateUrl: './assessments-detail.html',
   styleUrls: ['./assessments-detail.scss'],
 })
@@ -60,6 +50,8 @@ export class AssessmentsDetail implements OnInit {
   private readonly router = inject(Router);
   private readonly assessmentService = inject(AssessmentService);
   private readonly submissionService = inject(SubmissionService);
+  private currentAssessmentId = 0;
+  private currentSubmissionId = 0;
 
   // ********** PUBLIC STATE VARIABLES **********
   assessment?: Assessment;
@@ -70,8 +62,6 @@ export class AssessmentsDetail implements OnInit {
   student?: StudentReview;
   answers: AnswerReview[] = [];
   mcAnswers: AnswerReview[] = [];
-  currentResultState: any;
-  selectedStudent: any;
 
   // ********** LIFECYCLE HOOKS **********
   ngOnInit(): void {
@@ -80,6 +70,7 @@ export class AssessmentsDetail implements OnInit {
 
     // ********** LOAD DATA / INIT **********
     this.assessment = this.assessmentService.getAssessmentById(assessmentId);
+    this.currentAssessmentId = assessmentId;
 
     const submissions = this.submissionService.getSubmissions(assessmentId);
     this.students = submissions.map((submission) => this.mapSubmissionToStudentReview(submission));
@@ -88,10 +79,13 @@ export class AssessmentsDetail implements OnInit {
 
     if (studentIdParam !== null) {
       const studentId = Number(studentIdParam);
+      this.currentSubmissionId = studentId;
       const submission = submissions.find((s) => s.id === studentId);
 
       if (submission) {
         this.student = this.mapSubmissionToStudentReview(submission);
+
+        // ********** ESSAY QUESTIONS **********
         const essayQuestions = (this.assessment?.questions ?? []).filter(
           (question: Question) => question.type === 'essay',
         );
@@ -109,6 +103,7 @@ export class AssessmentsDetail implements OnInit {
           };
         });
 
+        // ********** MULTIPLE CHOICE QUESTIONS **********
         const mcQuestions = (this.assessment?.questions ?? []).filter(
           (question: Question) => question.type === 'multiple_choice',
         );
@@ -119,7 +114,9 @@ export class AssessmentsDetail implements OnInit {
           );
 
           const answerText = submittedAnswer?.answer ?? '-';
+
           const correctOption = (question.options ?? []).find((option) => option.isCorrect);
+
           const isCorrect = correctOption ? answerText === correctOption.text : false;
 
           return {
@@ -192,12 +189,11 @@ export class AssessmentsDetail implements OnInit {
       this.router.navigate(['/assessments', assessmentId, 'submissions']);
       return;
     }
-    this.router.navigate(['/assessments/review-scoring']);
+    this.router.navigate(['/assessments/review']);
   }
 
   // ********** UTILITY METHODS **********
   statusClass(status: string): string {
     return `review-status review-status--${status.toLowerCase().replaceAll(' ', '-')}`;
   }
-
 }

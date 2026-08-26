@@ -23,39 +23,18 @@ export const ASSESSMENT_ROUTES: Routes = [
       import('./pages/assessments-edit/assessments-edit').then((m) => m.EditAssessment),
   },
 
-  // ********** REVIEW & SCORING **********
+  // ********** REVIEW SUBMISSIONS (read-only browsing) **********
   {
-    path: 'review-scoring',
+    path: 'review',
     loadComponent: () =>
-      import('./pages/assessments-review-scoring/assessments-review-scoring').then(
-        (m) => m.AssessmentsReviewScoring,
-      ),
+      import('./pages/assessments-review/assessments-review').then((m) => m.AssessmentsReview),
   },
 
-  // ********** ASSESSMENT RESULT **********
+  // ********** REVIEW RESULT **********
   {
     path: 'result',
-    children: [
-      {
-        path: '',
-        loadComponent: () =>
-          import('./pages/assessments-result/assessments-result').then((m) => m.AssessmentsResult),
-      },
-      {
-        path: ':id',
-        loadComponent: () =>
-          import('./pages/assessments-detail/assessments-detail').then(
-            (m) => m.AssessmentsDetail,
-          ),
-      },
-      {
-        path: ':id/student/:studentId',
-        loadComponent: () =>
-          import('./pages/assessments-result/assessments-result').then(
-            (m) => m.AssessmentsResult,
-          ),
-      },
-    ],
+    loadComponent: () =>
+      import('./pages/assessments-result/assessments-result').then((m) => m.AssessmentsResult),
   },
 
   // ********** STUDENT SUBMISSIONS **********
