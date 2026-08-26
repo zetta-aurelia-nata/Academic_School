@@ -11,6 +11,7 @@
         <button
           mat-icon-button
           class="!flex !h-10 !w-10 !shrink-0 !items-center !justify-center !rounded-[10px]"
+          aria-label="Go back"
           (click)="onBack()"
         >
           <mat-icon>arrow_back</mat-icon>
@@ -158,6 +159,7 @@
       <button
         mat-icon-button
         class="!flex !h-10 !w-10 !items-center !justify-center !rounded-[10px]"
+        aria-label="Back to assessment list card"
         (click)="onBack()"
       >
         <mat-icon>arrow_back</mat-icon>
@@ -357,7 +359,9 @@
                 {{ item.question }}
               </h3>
 
-              <p class="m-0 mt-2 text-[12px] p-5 bg-(--color-card-blue-light) text-[var(--color-black)]">
+              <p
+                class="m-0 mt-2 text-[12px] p-5 bg-(--color-card-blue-light) text-[var(--color-black)]"
+              >
                 Answer :
 
                 <span class="font-semibold text-[var(--color-title)]">
@@ -418,23 +422,6 @@
         </div>
       </div>
     </mat-card>
-  </ng-container>
-
-  <!--********** INVALID STUDENT **********-->
-  <ng-container *ngIf="isStudentDetail && !student">
-    <div class="flex min-h-[400px] flex-col items-center justify-center text-center">
-      <mat-icon class="mb-3 !h-10 !w-10 !text-[40px] !text-[var(--color-text-secondary)]">
-        person_off
-      </mat-icon>
-
-      <h2 class="m-0 text-[16px] font-bold text-[var(--color-title)]">Student not found</h2>
-
-      <p class="m-0 mt-1 text-[12px] text-[var(--color-text-secondary)]">
-        The selected student submission could not be found.
-      </p>
-
-      <button mat-button class="mt-4" (click)="onBack()">Back to submissions</button>
-    </div>
   </ng-container>
 
   <!--********** INVALID STUDENT **********-->

@@ -117,7 +117,6 @@ export class AssessmentList {
 
     this.dateFrom = filters.dateFrom;
     this.dateTo = filters.dateTo;
-    this.keyword = filters.keyword;
     this.assessmentName = filters.assessmentName;
 
     this.applyFilters();

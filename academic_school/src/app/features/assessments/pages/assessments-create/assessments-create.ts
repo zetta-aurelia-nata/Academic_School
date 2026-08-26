@@ -1,11 +1,17 @@
 //********** ANGULAR IMPORTS **********
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 //********** ANGULAR CDK IMPORTS **********
-import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, CdkDragPlaceholder } from '@angular/cdk/drag-drop';
+import {
+  CdkDrag,
+  CdkDragDrop,
+  CdkDropList,
+  moveItemInArray,
+  CdkDragPlaceholder,
+} from '@angular/cdk/drag-drop';
 
 //********** ANGULAR MATERIAL IMPORTS **********
 import { MatButtonModule } from '@angular/material/button';
@@ -43,14 +49,14 @@ import { Question, QuestionType } from '../../models/question.model';
     MatExpansionModule,
     CdkDropList,
     CdkDrag,
-    CdkDragPlaceholder
+    CdkDragPlaceholder,
   ],
 })
 export class AssessmentsCreate implements OnInit {
   //********** PRIVATE DEPENDENCIES **********
-  private readonly fb: FormBuilder;
-  private readonly router: Router;
-  private readonly assessmentService: AssessmentService;
+  private readonly fb = inject(FormBuilder);
+  private readonly router = inject(Router);
+  private readonly assessmentService = inject(AssessmentService);
 
   //********** PUBLIC STATE VARIABLES **********
   assessmentForm!: FormGroup;
@@ -58,7 +64,7 @@ export class AssessmentsCreate implements OnInit {
   selectedType: QuestionType | null = null;
   correctOptionIndex = 0;
   questions: Question[] = [];
-   
+
   private questionIdCounter = 1;
   constructor(fb: FormBuilder, router: Router, assessmentService: AssessmentService) {
     this.fb = fb;
@@ -85,7 +91,6 @@ export class AssessmentsCreate implements OnInit {
       questionPoints: ['', [Validators.required, Validators.min(1)]],
       options: this.fb.array([]),
     });
-    
   }
 
   //********** SETTER & GETTER **********
@@ -111,7 +116,7 @@ export class AssessmentsCreate implements OnInit {
   private resetQuestionForm(): void {
     this.questionForm.reset({
       questionText: '',
-      maxWord: '',
+      maxWord: ['', [Validators.required, Validators.min(1)]],
       questionPoints: '',
     });
 

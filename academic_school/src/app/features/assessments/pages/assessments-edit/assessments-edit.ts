@@ -1,9 +1,22 @@
 // ********** ANGULAR IMPORTS **********
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import {FormArray,FormBuilder,FormControl,FormGroup,ReactiveFormsModule,Validators,} from '@angular/forms';
+import { Component, inject, OnInit } from '@angular/core';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import {CdkDrag,CdkDragDrop,CdkDropList,moveItemInArray,CdkDragPlaceholder,} from '@angular/cdk/drag-drop';
+import {
+  CdkDrag,
+  CdkDragDrop,
+  CdkDropList,
+  moveItemInArray,
+  CdkDragPlaceholder,
+} from '@angular/cdk/drag-drop';
 
 // ********** ANGULAR MATERIAL IMPORTS **********
 import { MatButtonModule } from '@angular/material/button';
@@ -44,10 +57,10 @@ import { Question, QuestionType } from '../../models/question.model';
 })
 export class EditAssessment implements OnInit {
   // ********** PRIVATE VARIABLES **********
-  private readonly fb: FormBuilder;
-  private readonly route: ActivatedRoute;
-  private readonly router: Router;
-  private readonly assessmentService: AssessmentService;
+  private readonly fb = inject(FormBuilder);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly assessmentService = inject(AssessmentService);
 
   // ********** CONSTRUCTOR **********
   constructor(
@@ -76,7 +89,7 @@ export class EditAssessment implements OnInit {
       description: [''],
       instructions: [''],
       duration: [60, [Validators.required, Validators.min(10)]],
-      totalPoints: [100, [Validators.required, Validators.min(1)]],
+      totalPoints: [100, [Validators.required, Validators.min(10)]],
       status: ['Draft', Validators.required],
       questions: this.fb.array([]),
     });

@@ -1,7 +1,6 @@
 // ********** ANGULAR IMPORTS **********
 import { CommonModule } from '@angular/common';
-import {
-  Component,
+import { Component,
   ElementRef,
   EventEmitter,
   HostListener,
@@ -23,7 +22,6 @@ export interface FilterValue {
   grade: string;
   dateFrom: string;
   dateTo: string;
-  keyword: string;
   assessmentName: string;
 }
 
@@ -93,7 +91,6 @@ export class FilterComponent {
 
       this.draftDateFrom = this.dateFrom;
       this.draftDateTo = this.dateTo;
-      this.draftAssessmentName = this.assessmentName;
     } else {
       this.openDropdown = null;
     }
@@ -131,10 +128,6 @@ export class FilterComponent {
     this.draftGrade = 'ALL';
   }
 
-  resetAssessmentNameDraft(): void {
-    this.draftAssessmentName = '';
-  }
-
   resetDateRangeDraft(): void {
     this.draftDateFrom = '';
     this.draftDateTo = '';
@@ -155,7 +148,6 @@ export class FilterComponent {
 
     this.draftDateFrom = '';
     this.draftDateTo = '';
-    this.draftAssessmentName = '';
 
     this.selectedStatus = 'ALL';
     this.selectedSubject = 'ALL';
@@ -163,7 +155,6 @@ export class FilterComponent {
 
     this.dateFrom = '';
     this.dateTo = '';
-    this.assessmentName = '';
 
     this.emitFilter();
   }
@@ -175,7 +166,6 @@ export class FilterComponent {
 
     this.dateFrom = this.draftDateFrom;
     this.dateTo = this.draftDateTo;
-    this.assessmentName = this.draftAssessmentName;
 
     this.emitFilter();
 
@@ -190,7 +180,6 @@ export class FilterComponent {
       dateFrom: this.dateFrom,
       dateTo: this.dateTo,
       assessmentName: this.assessmentName,
-      keyword: '',
     });
   }
 
@@ -208,10 +197,6 @@ export class FilterComponent {
 
   get activeFilterCount(): number {
     let count = 0;
-
-    if (this.assessmentName.trim().length > 0) {
-      count++;
-    }
 
     if (this.selectedStatus !== 'ALL') {
       count++;

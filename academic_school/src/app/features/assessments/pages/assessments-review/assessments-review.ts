@@ -16,13 +16,7 @@ import { Assessment, AssessmentStatus } from '../assessments-list/assessment.lis
 @Component({
   selector: 'app-assessments-review',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    MatButtonModule,
-    MatCardModule,
-    MatIconModule,
-  ],
+  imports: [CommonModule, FormsModule, MatButtonModule, MatCardModule, MatIconModule],
   templateUrl: './assessments-review.html',
   styleUrls: ['./assessments-review.scss'],
 })
@@ -52,7 +46,6 @@ export class AssessmentsReview implements OnInit {
     const query = this.searchQuery.trim().toLowerCase();
     if (!query) {
       this.filteredAssessments = [...this.assessments];
-
       return;
     }
 
@@ -60,14 +53,12 @@ export class AssessmentsReview implements OnInit {
       const title = assessment.title?.toString().toLowerCase() ?? '';
       const subject = assessment.subject?.toString().toLowerCase() ?? '';
       const grade = assessment.grade?.toString().toLowerCase() ?? '';
-      const totalStudents = assessment.totalStudents?.toString().toLowerCase() ?? '';
       const status = assessment.status?.toString().toLowerCase() ?? '';
 
       return (
         title.includes(query) ||
         subject.includes(query) ||
         grade.includes(query) ||
-        totalStudents.includes(query) ||
         status.includes(query)
       );
     });
@@ -75,9 +66,9 @@ export class AssessmentsReview implements OnInit {
 
   clearSearch(): void {
     this.searchQuery = '';
+
     this.filteredAssessments = [...this.assessments];
   }
-
   // ********** ACTION HANDLERS **********
   onReview(assessment: Assessment): void {
     this.router.navigate(['/assessments', assessment.id, 'submissions']);

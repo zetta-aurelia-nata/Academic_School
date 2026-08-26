@@ -32,35 +32,6 @@
       >
         <!--********** FILTER PANEL HEADER **********-->
         <div class="filter-panel__header">Filter Assessments</div>
-
-        <!--********** ASSESSMENT NAME **********-->
-        <div class="filter-panel__section">
-          <div class="filter-panel__section-head">
-            <span class="filter-panel__section-title"> Assessment Name </span>
-
-            @if (draftAssessmentName) {
-              <button
-                type="button"
-                class="filter-panel__reset"
-                (click)="resetAssessmentNameDraft()"
-              >
-                Reset
-              </button>
-            }
-          </div>
-
-          <div class="filter-panel__input-wrapper">
-            <input
-              type="text"
-              class="filter-panel__input"
-              placeholder="Search assessment name..."
-              [(ngModel)]="draftAssessmentName"
-            />
-          </div>
-        </div>
-
-        <mat-divider></mat-divider>
-
         <!--********** STATUS FILTER **********-->
         <div class="filter-panel__section">
           <div class="filter-panel__section-head">

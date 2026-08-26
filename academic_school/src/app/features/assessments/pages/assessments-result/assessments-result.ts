@@ -68,9 +68,9 @@ export class AssessmentsResult implements OnInit {
   private readonly assessmentService = inject(AssessmentService);
   private readonly submissionService = inject(SubmissionService);
 
-  @ViewChild('publishDialog') publishDialog?: ElementRef<HTMLElement>;
-
   private publishTrigger: HTMLElement | null = null;
+
+  @ViewChild('publishDialog') publishDialog?: ElementRef<HTMLElement>;
 
   assessments: Assessment[] = [];
   selectedAssessmentId = 1;
@@ -194,7 +194,10 @@ export class AssessmentsResult implements OnInit {
 
     score = Math.min(Math.max(score, 0), answer.maxScore);
 
-    answer.score = score;
+    const updatedAnswers = this.selectedStudent.answers.map((a) =>
+      a === answer ? { ...a, score } : a,
+    );
+    this.selectedStudent = { ...this.selectedStudent, answers: updatedAnswers };
     this.calculateTotalScore();
   }
 
@@ -206,6 +209,7 @@ export class AssessmentsResult implements OnInit {
     );
   }
 
+  //********** ACTION HANDLERS **********
   onSaveScore(): void {
     if (!this.selectedStudent || this.currentResultState.locked) return;
 
@@ -237,13 +241,13 @@ export class AssessmentsResult implements OnInit {
       this.selectedStudent.score,
     );
 
-    const upatedSubmission = this.submissionService.getSubmission(
+    const updatedSubmission = this.submissionService.getSubmission(
       this.selectedAssessmentId,
       submissionID,
     );
 
-    if (upatedSubmission) {
-      this.selectedStudent = this.mapSubmissionToResultStudent(upatedSubmission);
+    if (updatedSubmission) {
+      this.selectedStudent = this.mapSubmissionToResultStudent(updatedSubmission);
     }
 
     this.successMessage = `Score for ${this.selectedStudent.studentName} has been saved.`;
@@ -341,6 +345,7 @@ export class AssessmentsResult implements OnInit {
     }
   }
 
+  //********** ANGULAR IMPORTS **********
   private restorePublishTriggerFocus(): void {
     setTimeout(() => {
       this.publishTrigger?.focus();
