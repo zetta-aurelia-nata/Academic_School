@@ -116,7 +116,7 @@ export class AssessmentsCreate implements OnInit {
   private resetQuestionForm(): void {
     this.questionForm.reset({
       questionText: '',
-      maxWord: ['', [Validators.required, Validators.min(1)]],
+      maxWord: '',
       questionPoints: '',
     });
 
@@ -170,7 +170,13 @@ export class AssessmentsCreate implements OnInit {
     const points = Number(questionPointsControl?.value);
 
     if (this.selectedType === 'essay') {
-      const maxWord = Number(this.questionForm.get('maxWord')?.value);
+      const maxWordControl = this.questionForm.get('maxWord');
+      const maxWord = Number(maxWordControl?.value);
+
+      if (maxWordControl?.invalid || !maxWord || maxWord <= 0) {
+        maxWordControl?.markAsTouched();
+        return;
+      }
 
       this.questions.push({
         id: this.questionIdCounter++,
