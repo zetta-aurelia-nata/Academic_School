@@ -47,7 +47,7 @@
   }
 
   &__divider {
-    @apply w-px h-7 shrink-0 bg-[var(--color-border)] max-md:hidden;
+    @apply w-px h-7 shrink-0 bg-[var(--color-border-dark)] max-md:hidden;
   }
 
   // *************** USER PROFILE ***************

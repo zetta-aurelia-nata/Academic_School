@@ -268,7 +268,7 @@
 
     <!--********** RESULT HEADER ACCORDION **********-->
     <mat-card
-      class="detail-card !mb-4 !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-0"
+      class="detail-card !mb-2 !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-0"
     >
       <div
         class="rounded-[14px] border-b border-[var(--color-border)] bg-[var(--color-card-blue)] px-5 py-4"
@@ -281,9 +281,9 @@
 
     <!--********** SUBMITTED ANSWERS MULTIPLE CHOICES **********-->
     <mat-card
-      class="detail-card !mb-4 !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-0"
+      class="detail-card !mb-4 !rounded-[14px] !border !border-[var(--color-border)] !p-0"
     >
-      <div class="border-b border-[var(--color-border)] px-5 py-4">
+      <div class="border-b border-[var(--color-border)] px-5 py-4 ">
         <h2 class="m-0 text-[14px] font-bold text-[var(--color-title)]">Multiple Choices</h2>
       </div>
 
@@ -368,6 +368,16 @@
                   {{ item.answer }}
                 </span>
               </p>
+
+              <!--********** TEACHER REVIEW/COMMENT **********-->
+              <p
+                class="text-[11px] font-semibold uppercase tracking-wide mt-5 text-[var(--color-text-secondary)]"
+              >
+                Teacher Review :
+              </p>
+              <span class="font-semibold text-[var(--color-title)] text-[12px]">
+                {{ item.answer }}
+              </span>
             </div>
 
             <!--********** ANSWER SCORE READ ONLY **********-->

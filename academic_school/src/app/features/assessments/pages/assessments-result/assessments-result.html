@@ -36,7 +36,7 @@
     </div>
   </div>
 
-  <!--********** ASSESSMENT SELECTION CARD **********-->
+  <!--********* ASSESSMENT SELECTION CARD **********-->
   <mat-card
     class="result-card !mb-4 !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-5"
   >
@@ -223,18 +223,10 @@
           <div class="result-student__action">
             <button
               mat-stroked-button
-              class="!h-9 !rounded-[9px] !px-4 !text-[11px] !font-semibold"
+              class="!h-9 !rounded-[9px] !px-4 !text-[11px] bg-[var(--color-sidebar-hover)] !font-semibold"
               [disabled]="currentResultState.locked || student.answers.length === 0"
               (click)="onReviewAnswers(student)"
             >
-              <!--********** REVIEWING ICON **********-->
-              <mat-icon
-                *ngIf="selectedStudent?.studentId === student.studentId"
-                class="!mr-1 !h-4 !w-4 !text-base"
-              >
-                visibility
-              </mat-icon>
-
               {{
                 selectedStudent?.studentId === student.studentId ? 'Reviewing' : 'Review Answers'
               }}
