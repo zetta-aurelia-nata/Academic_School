@@ -1,5 +1,4 @@
 // ********** BEM BLOCKS **********
-
 // ********** EDIT ASSESSMENT **********
 :host {
   display: block;
@@ -55,6 +54,7 @@
     overflow: hidden;
     padding: 16px 24px !important;
     border-radius: 13px 13px 0 0 !important;
+    --mat-expansion-header-indicator-color: var(--color-white);
 
     transition:
       filter 0.2s ease,
@@ -230,14 +230,14 @@
         .mdc-notched-outline__leading,
         .mdc-notched-outline__notch,
         .mdc-notched-outline__trailing {
-          border-color: #dc2626 !important;
+          border-color: var(--color-card-red) !important;
         }
       }
 
       // ********** DISABLED **********
       &.mat-form-field-disabled {
         .mat-mdc-text-field-wrapper {
-          background-color: #f5f3f7 !important;
+          background-color: var(--color-white) !important;
         }
       }
     }
@@ -292,6 +292,8 @@
     // ********** ERROR **********
     .mat-mdc-form-field-error {
       font-size: 11px !important;
+      color: var(--color-card-red);
+      justify-content: flex-start;
     }
 
     // ********** SELECT PANEL **********
@@ -372,10 +374,11 @@
     .edit-assessment__accordion {
       .mat-expansion-indicator {
         margin-left: 12px;
+        color: var(--color-white) !important;
 
         &::after {
           padding: 4px !important;
-          border-color: currentColor !important;
+          border-color: var(--color-white) !important;
           border-width: 0 2px 2px 0 !important;
         }
       }
@@ -601,14 +604,98 @@
 
     &:hover {
       transform: scale(1.05);
-      background-color: #fef2f2 !important;
-      color: #dc2626 !important;
+      background-color: var(--color-white) !important;
+      color: var(--color-card-red) !important;
     }
 
     &:active {
       transform: scale(0.95);
     }
   }
+
+  // ********** REORDER (UP / DOWN) BUTTONS **********
+  &__reorder {
+    color: var(--color-text-secondary) !important;
+
+    transition:
+      color 0.2s ease,
+      background-color 0.2s ease,
+      transform 0.2s ease;
+
+    &:hover:not(:disabled) {
+      transform: scale(1.05);
+      background-color: var(--color-primary-light) !important;
+      color: var(--color-primary) !important;
+    }
+
+    &:active:not(:disabled) {
+      transform: scale(0.95);
+    }
+
+    &:disabled {
+      opacity: 0.35;
+    }
+  }
+
+  // ********** DRAG HANDLE **********
+  &__drag-handle {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 28px;
+    color: var(--color-text-secondary);
+    cursor: grab;
+    touch-action: none;
+
+    mat-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+
+    &:hover {
+      color: var(--color-primary);
+    }
+
+    &:active {
+      cursor: grabbing;
+    }
+  }
+
+  // ********** DRAG PLACEHOLDER (SHOWN AT DROP TARGET SLOT) **********
+  &__placeholder {
+    height: 68px;
+    margin-bottom: 0;
+    border: 2px dashed var(--color-primary);
+    border-radius: 12px;
+    background: var(--color-primary-light);
+    opacity: 0.6;
+  }
+
+  // ********** WHILE DRAGGING **********
+  &.cdk-drag-preview {
+    border-radius: 12px !important;
+    box-shadow:
+      0 8px 20px rgba(0, 0, 0, 0.12),
+      0 2px 6px rgba(0, 0, 0, 0.08) !important;
+  }
+
+  &.cdk-drag-animating {
+    transition:
+      transform 250ms cubic-bezier(0, 0, 0.2, 1),
+      opacity 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  &.cdk-drag-dragging {
+    opacity: 0.85;
+  }
+}
+
+// ********** DROP LIST GAP ANIMATION **********
+.question-list.cdk-drop-list-dragging .question-accordion:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
 // ********** QUESTION FORM **********
@@ -664,23 +751,17 @@
 .options-editor {
   display: flex;
   flex-direction: column;
-  gap: 10px;
   width: 100%;
 }
 
 // ********** OPTION ROW **********
 .option-row {
   display: grid;
-
-  grid-template-columns:
-    32px
-    minmax(0, 1fr)
-    40px
-    40px;
-
+  grid-template-columns: 32px minmax(0, 1fr) 130px 40px;
   align-items: start;
   column-gap: 10px;
   width: 100%;
+  min-height: 78px;
   padding: 4px 0;
 
   // ********** OPTION INDEX **********
@@ -691,21 +772,142 @@
     width: 30px;
     height: 30px;
     margin-top: 28px;
+    flex-shrink: 0;
     border-radius: 8px;
     background: var(--color-info-background);
     color: var(--color-progress-blue);
     font-size: 11px;
     font-weight: 700;
+    line-height: 1;
   }
 
-  // ********** CORRECT ANSWER CHECK **********
+  // ********** OPTION FIELD **********
+  &__field {
+    min-width: 0;
+  }
+
+  // ********** CORRECT ANSWER AREA **********
+  &__correct {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 4px;
+    min-height: 56px;
+    margin-top: 28px;
+    white-space: nowrap;
+  }
+
+  // ********** RADIO BUTTON **********
   &__check {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 40px;
-    margin-top: 28px;
+    height: 40px;
+    margin: 0 !important;
     flex-shrink: 0;
+  }
+
+  // ********** CORRECT ANSWER LABEL **********
+  &__correct-label {
+    display: inline-flex;
+    align-items: center;
+    color: var(--color-correct-answer);
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  // ********** REMOVE OPTION **********
+  &__remove {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 40px !important;
+    height: 40px !important;
+    margin-top: 28px !important;
+    padding: 0 !important;
+    flex-shrink: 0;
+    color: var(--color-text-secondary) !important;
+    border-radius: 8px !important;
+    transition:
+      color 0.2s ease,
+      background-color 0.2s ease,
+      transform 0.2s ease;
+
+    mat-icon {
+      width: 18px;
+      height: 18px;
+      margin: 0 !important;
+      font-size: 18px;
+      line-height: 18px;
+    }
+
+    &:hover:not(:disabled) {
+      background-color: var(--color-white) !important;
+      color: var(--color-card-red) !important;
+      transform: scale(1.05);
+    }
+
+    &:active:not(:disabled) {
+      transform: scale(0.95);
+    }
+
+    &:disabled {
+      opacity: 0.35;
+    }
+  }
+
+  // ********** CORRECT ROW **********
+  &--correct {
+    .option-row__index {
+      background: color-mix(in srgb, var(--color-correct-answer) 12%, var(--color-white));
+      color: var(--color-correct-answer);
+    }
+
+    .option-row__correct-label {
+      animation: correctAnswerFadeIn 0.2s ease;
+    }
+  }
+}
+
+// ********** CORRECT ANSWER RADIO **********
+::ng-deep {
+  .option-row__correct {
+    .mat-mdc-radio-button {
+      margin: 0 !important;
+
+      .mdc-radio {
+        padding: 8px !important;
+      }
+
+      .mdc-radio__outer-circle {
+        border-color: var(--color-border) !important;
+      }
+
+      &.mat-mdc-radio-checked {
+        .mdc-radio__outer-circle {
+          border-color: var(--color-correct-answer) !important;
+        }
+
+        .mdc-radio__inner-circle {
+          border-color: var(--color-correct-answer) !important;
+          background-color: var(--color-correct-answer) !important;
+        }
+      }
+
+      &:hover {
+        .mdc-radio__outer-circle {
+          border-color: var(--color-correct-answer) !important;
+        }
+      }
+
+      &:focus-within {
+        .mdc-radio__outer-circle {
+          border-color: var(--color-correct-answer) !important;
+        }
+      }
+    }
   }
 }
 
@@ -745,6 +947,19 @@
 
   &:active {
     transform: translateY(0);
+  }
+}
+
+// ********** CORRECT ANSWER ANIMATION **********
+@keyframes correctAnswerFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-3px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
@@ -866,6 +1081,10 @@
       width: 36px;
       margin-top: 27px;
     }
+
+    &__remove {
+      color: var(--color-black);
+    }
   }
 
   // ********** ADD OPTION **********
@@ -953,7 +1172,26 @@
 
   // ********** QUESTION PREVIEW **********
   .question-accordion__preview {
-    max-width: 120px;
+    max-width: 90px;
+  }
+
+  // ********** DRAG HANDLE **********
+  .question-accordion__drag-handle {
+    width: 18px;
+  }
+
+  // ********** REORDER / DELETE BUTTONS **********
+  .question-accordion__reorder,
+  .question-accordion__delete {
+    width: 34px !important;
+    height: 34px !important;
+    padding: 0 !important;
+
+    .mat-icon {
+      font-size: 18px !important;
+      width: 18px !important;
+      height: 18px !important;
+    }
   }
 
   // ********** OPTION ROW **********

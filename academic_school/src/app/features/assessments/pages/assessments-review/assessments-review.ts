@@ -14,13 +14,13 @@ import { AssessmentService } from '../../services/assessment.service';
 import { Assessment, AssessmentStatus } from '../assessments-list/assessment.list.model';
 
 @Component({
-  selector: 'app-review-scoring',
+  selector: 'app-assessments-review',
   standalone: true,
   imports: [CommonModule, FormsModule, MatButtonModule, MatCardModule, MatIconModule],
-  templateUrl: './assessments-review-scoring.html',
-  styleUrls: ['./assessments-review-scoring.scss'],
+  templateUrl: './assessments-review.html',
+  styleUrls: ['./assessments-review.scss'],
 })
-export class AssessmentsReviewScoring implements OnInit {
+export class AssessmentsReview implements OnInit {
   // ********** PRIVATE SERVICES **********
   private readonly router = inject(Router);
   private readonly assessmentService = inject(AssessmentService);
@@ -46,7 +46,6 @@ export class AssessmentsReviewScoring implements OnInit {
     const query = this.searchQuery.trim().toLowerCase();
     if (!query) {
       this.filteredAssessments = [...this.assessments];
-
       return;
     }
 
@@ -54,14 +53,12 @@ export class AssessmentsReviewScoring implements OnInit {
       const title = assessment.title?.toString().toLowerCase() ?? '';
       const subject = assessment.subject?.toString().toLowerCase() ?? '';
       const grade = assessment.grade?.toString().toLowerCase() ?? '';
-      const totalStudents = assessment.totalStudents?.toString().toLowerCase() ?? '';
       const status = assessment.status?.toString().toLowerCase() ?? '';
 
       return (
         title.includes(query) ||
         subject.includes(query) ||
         grade.includes(query) ||
-        totalStudents.includes(query) ||
         status.includes(query)
       );
     });
@@ -69,9 +66,9 @@ export class AssessmentsReviewScoring implements OnInit {
 
   clearSearch(): void {
     this.searchQuery = '';
+
     this.filteredAssessments = [...this.assessments];
   }
-
   // ********** ACTION HANDLERS **********
   onReview(assessment: Assessment): void {
     this.router.navigate(['/assessments', assessment.id, 'submissions']);

@@ -1,13 +1,20 @@
 // ***************** BEM BLOCKS *****************
 // ***************** LIST TOOLBAR *****************
 .list-toolbar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 16px;
+
+  // ***************** SEARCH *****************
   &__search {
     position: relative;
     display: flex;
     align-items: center;
-    width: 260px;
+    width: 100%;
+    max-width: 360px;
     height: 40px;
-    padding: 0 38px 0 38px;
+    padding: 0 40px;
     background-color: var(--color-white);
     border: 1px solid var(--color-border);
     border-radius: 10px;
@@ -19,11 +26,6 @@
     &:focus-within {
       border-color: var(--color-primary);
       box-shadow: 0 0 0 3px rgba(118, 81, 168, 0.1);
-    }
-
-    .mat-toolbar h1 {
-      font-size: larger;
-      font-weight: 900;
     }
 
     input {
@@ -75,7 +77,7 @@
       color 0.2s ease;
 
     &:hover {
-      background-color: var(--color-primary-dark);
+      background-color: var(--color-primary-light);
       color: var(--color-title);
     }
 
@@ -86,32 +88,66 @@
     }
   }
 
+  // ***************** TOOLBAR ACTIONS *****************
+  &__actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-left: auto;
+    min-width: 0;
+  }
+
   // ***************** TOOLBAR BUTTON *****************
   &__btn {
-    &--export {
-      color: var(--color-primary-dark) !important;
-      background-color: var(--color-white) !important;
-      border: 1px solid var(--color-border-dark) !important;
-      box-shadow: 0 1px 3px rgba(72, 31, 110, 0.04);
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0;
 
-      &:hover {
-        background-color: var(--color-primary-light) !important;
-      }
-    }
+    height: 40px !important;
+    padding: 0 18px !important;
 
-    // ***************** CREATE BUTTON *****************
-    &--create {
-      color: var(--color-white) !important;
-      background-color: var(--color-primary-dark) !important;
-      border: 1px solid var(--color-primary-dark) !important;
-      box-shadow: 0 3px 8px rgba(72, 31, 110, 0.18);
+    border-radius: 10px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
 
-      &:hover {
-        filter: brightness(0.95);
-        box-shadow: 0 4px 10px rgba(72, 31, 110, 0.22);
-      }
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      box-shadow 0.2s ease,
+      transform 0.2s ease;
+
+    &:active {
+      transform: translateY(1px);
     }
   }
+
+  // ***************** CREATE BUTTON *****************
+  &__btn--create {
+    gap: 8px !important;
+
+    color: var(--color-white) !important;
+    background-color: var(--color-primary-dark) !important;
+    border: 1px solid var(--color-primary-dark) !important;
+    box-shadow: 0 3px 8px rgba(72, 31, 110, 0.18);
+
+    &:hover {
+      filter: brightness(0.95);
+      box-shadow: 0 4px 10px rgba(72, 31, 110, 0.22);
+    }
+
+    mat-icon {
+      width: 18px !important;
+      height: 18px !important;
+      font-size: 18px !important;
+    }
+  }
+}
+
+.mat-toolbar h1 {
+  font-weight: bold;
+  font-size: 25px;
 }
 
 // ***************** LIST CARD *****************
@@ -139,6 +175,15 @@
     letter-spacing: 0.45px;
     border-bottom: 1px solid var(--color-table-border);
     white-space: nowrap;
+  }
+
+  // ***************** ICON BUTTON TOUCH TARGET *****************
+  .mat-mdc-icon-button {
+    .mat-mdc-button-touch-target {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 
   // ***************** TABLE ROW *****************
@@ -171,6 +216,9 @@
 
   // ***************** TABLE ACTION *****************
   &__action {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     background-color: var(--color-white);
     border: 1px solid var(--color-border);
     transition:
@@ -187,8 +235,8 @@
       color: var(--color-primary-dark);
 
       &:hover {
-        background-color: var(--color-primary-dark);
-        border-color: var(--color-border);
+        background-color: var(--color-primary-light);
+        border-color: var(--color-primary);
       }
     }
 
@@ -201,6 +249,12 @@
         background-color: var(--color-danger-background);
         border-color: var(--color-card-red-light);
       }
+    }
+
+    mat-icon {
+      width: 18px !important;
+      height: 18px !important;
+      font-size: 18px !important;
     }
   }
 }
@@ -256,12 +310,14 @@
     border: 1px solid var(--color-status-draft-border);
   }
 
+  // ***************** PUBLISHED *****************
   &--published {
     background-color: var(--color-card-blue-light);
     color: var(--color-card-blue);
     border: 1px solid var(--color-card-blue-light);
   }
 
+  // ***************** ARCHIVED *****************
   &--archived {
     background-color: var(--color-card-purple-light);
     color: var(--color-card-purple);
@@ -280,26 +336,72 @@
       padding: 0 14px;
     }
   }
-}
 
-@media (max-width: 768px) {
   .list-toolbar {
     &__search {
+      max-width: 320px;
+    }
+  }
+}
+
+// ***************** MEDIA QUERIES *****************
+@media (max-width: 768px) {
+  .list-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+
+    &__actions {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       width: 100%;
-      order: 2;
+      margin-left: 0;
+      gap: 10px;
     }
 
-    &__btn--export {
-      order: 3;
+    &__search {
+      grid-column: 1 / -1;
+      width: 100%;
+      max-width: none;
     }
 
     &__btn--create {
-      order: 4;
+      width: 100%;
     }
   }
 
   .list-card {
     border-radius: 12px !important;
+  }
+
+  .assessment-table {
+    min-width: 780px;
+  }
+}
+
+// ***************** MEDIA QUERIES *****************
+@media (max-width: 480px) {
+  .list-toolbar {
+    gap: 10px;
+
+    &__actions {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      width: 100%;
+      gap: 10px;
+    }
+
+    &__search {
+      width: 100%;
+      max-width: none;
+      height: 42px;
+    }
+
+    &__btn--create {
+      width: 100%;
+      height: 42px !important;
+    }
   }
 
   .assessment-table {

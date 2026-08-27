@@ -1,8 +1,17 @@
 //********** ANGULAR IMPORTS **********
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+
+//********** ANGULAR CDK IMPORTS **********
+import {
+  CdkDrag,
+  CdkDragDrop,
+  CdkDropList,
+  moveItemInArray,
+  CdkDragPlaceholder,
+} from '@angular/cdk/drag-drop';
 
 //********** ANGULAR MATERIAL IMPORTS **********
 import { MatButtonModule } from '@angular/material/button';
@@ -38,23 +47,24 @@ import { Question, QuestionType } from '../../models/question.model';
     MatCheckboxModule,
     MatSelectModule,
     MatExpansionModule,
+    CdkDropList,
+    CdkDrag,
+    CdkDragPlaceholder,
   ],
 })
 export class AssessmentsCreate implements OnInit {
   //********** PRIVATE DEPENDENCIES **********
-  private readonly fb: FormBuilder;
-  private readonly router: Router;
-  private readonly assessmentService: AssessmentService;
+  private readonly fb = inject(FormBuilder);
+  private readonly router = inject(Router);
+  private readonly assessmentService = inject(AssessmentService);
 
   //********** PUBLIC STATE VARIABLES **********
   assessmentForm!: FormGroup;
+  questionForm!: FormGroup;
   selectedType: QuestionType | null = null;
   correctOptionIndex = 0;
   questions: Question[] = [];
 
-  /**
-   * Used to generate a unique ID for each question.
-   */
   private questionIdCounter = 1;
   constructor(fb: FormBuilder, router: Router, assessmentService: AssessmentService) {
     this.fb = fb;
@@ -70,27 +80,26 @@ export class AssessmentsCreate implements OnInit {
       grade: ['', Validators.required],
       description: [''],
       instructions: [''],
-      duration: [60, [Validators.required, Validators.min(1)]],
-      totalPoints: [100, [Validators.required, Validators.min(1)]],
-      status: ['Draft', Validators.required],
-      questionText: [''],
-      maxWord: [300, Validators.min(1)],
-      questionPoints: [10, [Validators.required, Validators.min(1)]],
+      duration: ['', [Validators.required, Validators.min(1)]],
+      totalPoints: ['', [Validators.required, Validators.min(1)]],
+      status: ['', Validators.required],
+    });
+
+    this.questionForm = this.fb.group({
+      questionText: ['', Validators.required],
+      maxWord: ['', Validators.required, Validators.min(1)],
+      questionPoints: ['', [Validators.required, Validators.min(1)]],
       options: this.fb.array([]),
     });
   }
 
-  //********** GETTER **********
+  //********** SETTER & GETTER **********
   get options(): FormArray {
-    return this.assessmentForm.get('options') as FormArray;
+    return this.questionForm.get('options') as FormArray;
   }
 
   //********** ACTION HANDLERS **********
   selectType(type: QuestionType): void {
-    /*
-     * If the same question type is selected, keep the form open.
-     * This allows the user to create another question.
-     */
     if (this.selectedType === type) {
       return;
     }
@@ -103,17 +112,19 @@ export class AssessmentsCreate implements OnInit {
     }
   }
 
+  //********** PRIVATE VARIABLES **********
   private resetQuestionForm(): void {
-    this.assessmentForm.patchValue({
+    this.questionForm.reset({
       questionText: '',
-      maxWord: 300,
-      questionPoints: 10,
+      maxWord: '',
+      questionPoints: '',
     });
 
     this.options.clear();
     this.correctOptionIndex = 0;
   }
 
+  //********** PRIVATE VARIABLES **********
   private createDefaultOptions(): void {
     for (let i = 0; i < 4; i++) {
       this.options.push(this.fb.control('', Validators.required));
@@ -146,18 +157,26 @@ export class AssessmentsCreate implements OnInit {
       return;
     }
 
-    const questionTextControl = this.assessmentForm.get('questionText');
+    const questionTextControl = this.questionForm.get('questionText');
     const questionText = questionTextControl?.value?.trim();
+    const questionPointsControl = this.questionForm.get('questionPoints');
 
-    if (!questionText) {
+    if (!questionText || questionPointsControl?.invalid) {
       questionTextControl?.markAsTouched();
+      questionPointsControl?.markAsTouched();
       return;
     }
 
-    const points = Number(this.assessmentForm.get('questionPoints')?.value);
+    const points = Number(questionPointsControl?.value);
 
     if (this.selectedType === 'essay') {
-      const maxWord = Number(this.assessmentForm.get('maxWord')?.value);
+      const maxWordControl = this.questionForm.get('maxWord');
+      const maxWord = Number(maxWordControl?.value);
+
+      if (maxWordControl?.invalid || !maxWord || maxWord <= 0) {
+        maxWordControl?.markAsTouched();
+        return;
+      }
 
       this.questions.push({
         id: this.questionIdCounter++,
@@ -205,6 +224,37 @@ export class AssessmentsCreate implements OnInit {
     this.questions = this.questions.filter((_, i) => i !== index);
   }
 
+  // ********** ACTION HANDLERS **********
+  dropCreatedQuestion(event: CdkDragDrop<Question[]>): void {
+    if (event.previousIndex === event.currentIndex) {
+      return;
+    }
+
+    const reordered = [...this.questions];
+    moveItemInArray(reordered, event.previousIndex, event.currentIndex);
+    this.questions = reordered;
+  }
+
+  moveCreatedQuestionUp(index: number): void {
+    if (index <= 0) {
+      return;
+    }
+
+    const reordered = [...this.questions];
+    moveItemInArray(reordered, index, index - 1);
+    this.questions = reordered;
+  }
+
+  moveCreatedQuestionDown(index: number): void {
+    if (index >= this.questions.length - 1) {
+      return;
+    }
+
+    const reordered = [...this.questions];
+    moveItemInArray(reordered, index, index + 1);
+    this.questions = reordered;
+  }
+
   questionTypeLabel(type: QuestionType): string {
     return type === 'essay' ? 'Essay' : 'Multiple Choice';
   }
@@ -216,6 +266,7 @@ export class AssessmentsCreate implements OnInit {
 
   noQuestionError = false;
 
+  // ********** ACTION HANDLER **********F
   onSave(): void {
     if (this.assessmentForm.invalid) {
       this.assessmentForm.markAllAsTouched();
@@ -244,6 +295,7 @@ export class AssessmentsCreate implements OnInit {
     this.router.navigate(['/assessments']);
   }
 
+  // ********** ACTION HANDLER **********
   onCancel(): void {
     this.router.navigate(['/assessments']);
   }

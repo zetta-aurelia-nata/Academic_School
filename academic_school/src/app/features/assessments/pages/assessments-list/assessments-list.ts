@@ -1,6 +1,6 @@
 //********** ANGULAR IMPORTS **********
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, HostListener, ViewChild, inject } from '@angular/core';
+import { Component, ElementRef, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -15,8 +15,15 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { AssessmentService } from '../../services/assessment.service';
 import { Assessment, AssessmentStatus } from './assessment.list.model';
 
+//********** SHARED COMPONENT IMPORTS **********
+import {
+  FilterComponent,
+  FilterValue,
+} from '../../../../shared/components/filter-component/filter-component';
+
 @Component({
   selector: 'app-assessment-list',
+  standalone: true,
   imports: [
     CommonModule,
     FormsModule,
@@ -25,6 +32,7 @@ import { Assessment, AssessmentStatus } from './assessment.list.model';
     MatIconModule,
     MatToolbarModule,
     MatTableModule,
+    FilterComponent,
   ],
   templateUrl: './assessments-list.html',
   styleUrls: ['./assessments-list.scss'],
@@ -57,19 +65,28 @@ export class AssessmentList {
 
   assessments: Assessment[] = [];
   filteredAssessments: Assessment[] = [];
+
   searchQuery = '';
+
   showDeleteDialog = false;
   selectedAssessment: Assessment | null = null;
 
-  //********** KEYBOARD HANDLERS **********
-  @HostListener('document:keydown.escape')
-  onEscape(): void {
-    if (!this.showDeleteDialog) {
-      return;
-    }
+  //********** APPLIED FILTERS **********
+  selectedStatus = 'ALL';
+  selectedSubject = 'ALL';
+  selectedGrade = 'ALL';
+  dateFrom = '';
+  dateTo = '';
+  keyword = '';
+  assessmentName = '';
 
-    this.onCancelDelete();
-  }
+  readonly statusOptions: AssessmentStatus[] = [
+    'Completed',
+    'Not Submitted',
+    'Pending',
+    'Failed',
+    'Draft',
+  ];
 
   //********** LIFECYCLE **********
   ngOnInit(): void {
@@ -79,48 +96,118 @@ export class AssessmentList {
   private loadAssessments(): void {
     this.assessments = this.assessmentService.getAssessments();
 
-    this.applySearch();
+    this.applyFilters();
   }
 
-  // ********** ACTION HANDLERS **********
   onSearch(): void {
-    this.applySearch();
+    this.applyFilters();
   }
-
-  private applySearch(): void {
-    const query = this.searchQuery.trim().toLowerCase();
-
-    if (!query) {
-      this.filteredAssessments = [...this.assessments];
-
-      return;
-    }
-
-    this.filteredAssessments = this.assessments.filter((assessment) => {
-      const title = assessment.title?.toString().toLowerCase() ?? '';
-      const subject = assessment.subject?.toString().toLowerCase() ?? '';
-      const grade = assessment.grade?.toString().toLowerCase() ?? '';
-      const totalStudents = assessment.totalStudents?.toString().toLowerCase() ?? '';
-      const status = assessment.status?.toString().toLowerCase() ?? '';
-
-      return (
-        title.includes(query) ||
-        subject.includes(query) ||
-        grade.includes(query) ||
-        totalStudents.includes(query) ||
-        status.includes(query)
-      );
-    });
-  }
-
-  // ********** ACTION HANDLERS **********
 
   clearSearch(): void {
     this.searchQuery = '';
 
-    this.filteredAssessments = [...this.assessments];
+    this.applyFilters();
   }
 
+  onFilterApplied(filters: FilterValue): void {
+    //********** UPDATE APPLIED FILTERS **********
+    this.selectedStatus = filters.status;
+    this.selectedSubject = filters.subject;
+    this.selectedGrade = filters.grade;
+
+    this.dateFrom = filters.dateFrom;
+    this.dateTo = filters.dateTo;
+    this.assessmentName = filters.assessmentName;
+
+    this.applyFilters();
+  }
+
+  private applyFilters(): void {
+    const topQuery = this.searchQuery.trim().toLowerCase();
+    const keywordQuery = this.keyword.trim().toLowerCase();
+    const nameQuery = this.assessmentName.trim().toLowerCase();
+
+    const targetStatus = this.selectedStatus.toString().trim().toLowerCase();
+    const targetSubject = this.selectedSubject.toString().trim().toLowerCase();
+    const targetGrade = this.selectedGrade.toString().trim().toLowerCase();
+
+    const fromDate = this.dateFrom ? new Date(this.dateFrom) : null;
+
+    const toDate = this.dateTo ? new Date(this.dateTo) : null;
+
+    //********** SEARCH MATCHER **********
+    const matchesQuery = (assessment: Assessment, query: string): boolean =>
+      !query ||
+      [
+        assessment.title,
+        assessment.subject,
+        assessment.grade,
+        assessment.totalStudents,
+        assessment.status,
+      ].some((field) => field?.toString().toLowerCase().includes(query));
+
+    this.filteredAssessments = this.assessments.filter((assessment) => {
+      //********** SEARCH (TOP BAR + KEYWORD SECTION) **********
+      const matchesSearch =
+        matchesQuery(assessment, topQuery) && matchesQuery(assessment, keywordQuery);
+
+      //********** ASSESSMENT NAME **********
+      const assessmentTitle = assessment.title?.toString().trim().toLowerCase() ?? '';
+
+      const matchesName = !nameQuery || assessmentTitle.includes(nameQuery);
+
+      //********** STATUS **********
+      const assessmentStatus = assessment.status?.toString().trim().toLowerCase();
+
+      const matchesStatus = targetStatus === 'all' || assessmentStatus === targetStatus;
+
+      //********** SUBJECT **********
+      const assessmentSubject = assessment.subject?.toString().trim().toLowerCase();
+
+      const matchesSubject = targetSubject === 'all' || assessmentSubject === targetSubject;
+
+      //********** GRADE **********
+      const assessmentGrade = assessment.grade?.toString().trim().toLowerCase();
+
+      const matchesGrade = targetGrade === 'all' || assessmentGrade === targetGrade;
+
+      //********** DATE RANGE **********
+      const assessmentDate = new Date(assessment.date);
+
+      const matchesFrom = !fromDate || assessmentDate >= fromDate;
+
+      const matchesTo = !toDate || assessmentDate <= toDate;
+
+      return (
+        matchesSearch &&
+        matchesName &&
+        matchesStatus &&
+        matchesSubject &&
+        matchesGrade &&
+        matchesFrom &&
+        matchesTo
+      );
+    });
+  }
+
+  //********** SETTER & GETTER **********
+  get subjectOptions(): string[] {
+    const subjects = this.assessments
+      .map((assessment) => assessment.subject)
+      .filter((subject): subject is string => !!subject);
+
+    return Array.from(new Set(subjects)).sort();
+  }
+
+  get gradeOptions(): string[] {
+    const grades = this.assessments
+      .map((assessment) => assessment.grade)
+      .filter((grade): grade is string => !!grade);
+
+    return Array.from(new Set(grades)).sort();
+  }
+
+  //********** ACTION HANDLERS **********
   onCreateAssessment(): void {
     this.router.navigate(['/assessments/create']);
   }
@@ -137,10 +224,14 @@ export class AssessmentList {
     this.router.navigate(['/assessments', assessment.id, 'submissions']);
   }
 
+  //********** ACTION HANDLERS **********
   onDelete(assessment: Assessment, event?: Event): void {
     this.selectedAssessment = assessment;
+
     this.deleteTrigger = event?.currentTarget as HTMLElement | null;
+
     this.showDeleteDialog = true;
+
     setTimeout(() => {
       this.deleteDialog?.nativeElement.focus();
     });
@@ -164,8 +255,11 @@ export class AssessmentList {
     }
 
     this.assessmentService.deleteAssessment(this.selectedAssessment.id);
+
     this.loadAssessments();
+
     this.showDeleteDialog = false;
+
     this.selectedAssessment = null;
 
     setTimeout(() => {
@@ -175,8 +269,7 @@ export class AssessmentList {
     });
   }
 
-  //********** STATUS CLASS **********
   statusClass(status: AssessmentStatus): string {
-    return `status-badge status-badge--${status.toLowerCase()}`;
+    return `status-badge status-badge--${status.toString().toLowerCase()}`;
   }
 }

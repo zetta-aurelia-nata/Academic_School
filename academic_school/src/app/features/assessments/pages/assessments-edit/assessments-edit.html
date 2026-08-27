@@ -95,6 +95,7 @@
               <mat-option value="English">English</mat-option>
               <mat-option value="History">History</mat-option>
               <mat-option value="Computer Science"> Computer Science </mat-option>
+              <mat-option value="Biology">Biology</mat-option>
             </mat-select>
 
             <mat-error *ngIf="assessmentForm.get('subject')?.hasError('required')">
@@ -149,6 +150,7 @@
               rows="4"
               placeholder="Enter assessment description"
             ></textarea>
+            <mat-error *ngIf="assessmentForm.get('description')?.hasError('required')">Description text is required</mat-error>
           </mat-form-field>
         </div>
 
@@ -214,9 +216,8 @@
 
             <span matSuffix class="mr-2 text-[13px]"> minutes </span>
 
-            <mat-error *ngIf="assessmentForm.get('duration')?.hasError('required')">
-              Duration is required
-            </mat-error>
+            <mat-error *ngIf="assessmentForm.get('duration')?.hasError('required')">Duration is required</mat-error>
+            <mat-error *ngIf="assessmentForm.get('duration')?.hasError('min')">Duration must be min 10</mat-error>
           </mat-form-field>
         </div>
 
@@ -241,6 +242,7 @@
             <mat-error *ngIf="assessmentForm.get('totalPoints')?.hasError('required')">
               Total points is required
             </mat-error>
+            <mat-error *ngIf="assessmentForm.get('totalPoints')?.hasError('min')">Score must be min 1</mat-error>
           </mat-form-field>
         </div>
 
@@ -262,6 +264,7 @@
               <mat-option value="Archived">Archived</mat-option>
               <mat-option value="Failed">Failed</mat-option>
             </mat-select>
+            <mat-error *ngIf="assessmentForm.get('status')?.hasError('required')">Status is required</mat-error>
           </mat-form-field>
         </div>
       </div>
@@ -285,8 +288,15 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
 
+      <!--**************** REORDER QUESTION ****************-->
       <!--********** QUESTIONS CONTENT **********-->
-      <div class="flex flex-col gap-4 p-1 pt-5" formArrayName="questions">
+      <div
+        class="question-list flex flex-col gap-4 p-1 pt-5"
+        formArrayName="questions"
+        cdkDropList
+        cdkDropListLockAxis="y"
+        (cdkDropListDropped)="dropQuestion($event)"
+      >
         <!--********** EMPTY QUESTIONS **********-->
         @if (questions.length === 0) {
           <div
@@ -308,12 +318,28 @@
             [formGroupName]="qi"
             class="question-accordion !overflow-hidden !rounded-[12px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !shadow-none"
             [expanded]="qi === 0"
+            cdkDrag
+            cdkDragBoundary=".question-list"
+            [cdkDragDisabled]="questions.length <= 1"
           >
+            <!--********** DRAG PREVIEW PLACEHOLDER **********-->
+            <div class="question-accordion__placeholder" *cdkDragPlaceholder></div>
+
             <!--********** QUESTION HEADER **********-->
             <mat-expansion-panel-header
               class="question-accordion__header !h-auto !min-h-[68px] !px-4"
             >
               <mat-panel-title class="!m-0 !flex !items-center !gap-3">
+                <!--********** DRAG HANDLE **********-->
+                <span
+                  class="question-accordion__drag-handle"
+                  cdkDragHandle
+                  aria-label="Drag to reorder question"
+                  (click)="$event.stopPropagation()"
+                >
+                  <mat-icon>drag_indicator</mat-icon>
+                </span>
+
                 <!--********** QUESTION NUMBER **********-->
                 <span class="form-section__number">
                   {{ qi + 1 }}
@@ -336,7 +362,31 @@
                 </span>
               </mat-panel-title>
 
-              <mat-panel-description class="!m-0 !flex !items-center !justify-end">
+              <mat-panel-description class="!m-0 !flex !items-center !justify-end !gap-1">
+                <!--********** MOVE UP **********-->
+                <button
+                  mat-icon-button
+                  type="button"
+                  aria-label="Move question up"
+                  class="question-accordion__reorder"
+                  [disabled]="qi === 0"
+                  (click)="moveQuestionUp(qi); $event.stopPropagation()"
+                >
+                  <mat-icon>arrow_upward</mat-icon>
+                </button>
+
+                <!--********** MOVE DOWN **********-->
+                <button
+                  mat-icon-button
+                  type="button"
+                  aria-label="Move question down"
+                  class="question-accordion__reorder"
+                  [disabled]="qi === questions.length - 1"
+                  (click)="moveQuestionDown(qi); $event.stopPropagation()"
+                >
+                  <mat-icon>arrow_downward</mat-icon>
+                </button>
+
                 <!--********** DELETE QUESTION **********-->
                 <button
                   mat-icon-button
@@ -439,7 +489,12 @@
                   <mat-radio-group formControlName="correctOptionIndex" class="options-editor">
                     <div formArrayName="options">
                       @for (option of questionOptions(qi).controls; track option; let oi = $index) {
-                        <div class="option-row">
+                        <div
+                          class="option-row"
+                          [class.option-row--correct]="
+                            question.get('correctOptionIndex')?.value === oi
+                          "
+                        >
                           <!--********** OPTION NUMBER **********-->
                           <span class="option-row__index">
                             {{ oi + 1 }}
@@ -470,18 +525,24 @@
                           </div>
 
                           <!--********** CORRECT ANSWER **********-->
-                          <mat-radio-button
-                            class="option-row__check"
-                            [value]="oi"
-                            [aria-label]="'Mark option ' + (oi + 1) + ' as correct'"
-                          >
-                          </mat-radio-button>
+                          <div class="option-row__correct">
+                            <mat-radio-button
+                              class="option-row__check"
+                              [value]="oi"
+                              [aria-label]="'Mark option ' + (oi + 1) + ' as correct'"
+                            ></mat-radio-button>
+
+                            @if (question.get('correctOptionIndex')?.value === oi) {
+                              <span class="option-row__correct-label"> Correct Answer </span>
+                            }
+                          </div>
 
                           <!--********** REMOVE OPTION **********-->
                           <button
                             mat-icon-button
                             type="button"
                             aria-label="Remove option"
+                            class="option-row__remove"
                             [disabled]="questionOptions(qi).length <= 2"
                             (click)="removeOption(qi, oi)"
                           >
@@ -533,7 +594,7 @@
         }
 
         <!--********** ADD QUESTION BUTTONS **********-->
-        <div class="flex items-center gap-3 pt-2 max-sm:flex-col max-sm:gap-2">
+        <div class="flex items-center gap-3 pt-2 max-sm:flex-col max-sm:gap-2 justify-center">
           <!--********** ADD ESSAY **********-->
           <button
             mat-stroked-button
@@ -568,15 +629,11 @@
         class="edit-assessment__cancel-button max-md:!w-full"
         (click)="onCancel()"
       >
-        <mat-icon>close</mat-icon>
-
         <span>Cancel</span>
       </button>
 
       <!--********** SAVE BUTTON **********-->
       <button type="submit" mat-flat-button class="edit-assessment__save-button max-md:!w-full">
-        <mat-icon>save</mat-icon>
-
         <span>Save Changes</span>
       </button>
     </div>

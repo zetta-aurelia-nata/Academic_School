@@ -31,7 +31,7 @@
   <form [formGroup]="assessmentForm" (ngSubmit)="onSave()" class="mx-auto w-full max-w-[1100px]">
     <!--********** ASSESSMENT INFORMATION **********-->
     <mat-expansion-panel
-      class="create-assessment__accordion !mb-5 !overflow-hidden !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !shadow-none"
+      class="create-assessment__accordion !mb-3 !overflow-hidden !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !shadow-none"
       [expanded]="true"
     >
       <!--********** HEADER **********-->
@@ -79,6 +79,7 @@
               <mat-option value="English">English</mat-option>
               <mat-option value="History">History</mat-option>
               <mat-option value="Computer Science">Computer Science</mat-option>
+              <mat-option value="Biology">Biology</mat-option>
             </mat-select>
             <mat-error *ngIf="assessmentForm.get('subject')?.hasError('required')">
               Subject is required
@@ -146,7 +147,7 @@
 
     <!--********** ASSESSMENT SETTINGS **********-->
     <mat-expansion-panel
-      class="create-assessment__accordion !mb-5 !overflow-hidden !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !shadow-none"
+      class="create-assessment__accordion !mb-3 !overflow-hidden !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !shadow-none"
       [expanded]="true"
     >
       <!--********** HEADER **********-->
@@ -223,6 +224,9 @@
               <mat-option value="Published">Published</mat-option>
               <mat-option value="Archived">Archived</mat-option>
             </mat-select>
+            <mat-error *ngIf="assessmentForm.get('status')?.hasError('required')">
+              Status is required
+            </mat-error>
           </mat-form-field>
         </div>
       </div>
@@ -230,7 +234,7 @@
 
     <!--********** ASSESSMENT TYPE & QUESTION BUILDER **********-->
     <div
-      class="type-question-layout mb-5 mt-15 grid grid-cols-[280px_1fr] items-start gap-5 max-lg:grid-cols-1"
+      class="type-question-layout mb-5 mt-10 grid grid-cols-[280px_1fr] items-start gap-5 max-lg:grid-cols-1"
     >
       <!--********** ASSESSMENT TYPE (LEFT) **********-->
       <div class="type-panel lg:sticky lg:top-6">
@@ -289,7 +293,7 @@
       </div>
 
       <!--********** QUESTION AREA (RIGHT) **********-->
-      <div class="type-question-layout__content min-w-0">
+      <div class="type-question-layout__content min-w-0" [formGroup]="questionForm">
         @if (!selectedType) {
           <!--********** EMPTY STATE **********-->
           <div
@@ -356,6 +360,9 @@
                       formControlName="questionText"
                       placeholder="Write your essay question here..."
                     ></textarea>
+                    <mat-error *ngIf="questionForm.get('questionText')?.hasError('required')">
+                      Question text is required
+                    </mat-error>
                   </mat-form-field>
                 </div>
               </div>
@@ -387,6 +394,7 @@
                         min="1"
                         placeholder="e.g. 300"
                       />
+                      <mat-error *ngIf="questionForm.get('maxWord')?.hasError('required')">Maximum word is required</mat-error>
                     </mat-form-field>
                   </div>
 
@@ -404,6 +412,12 @@
                         min="1"
                         placeholder="e.g. 10"
                       />
+                      <mat-error *ngIf="questionForm.get('questionPoints')?.hasError('required')">
+                        Total score is required
+                      </mat-error>
+                      <mat-error *ngIf="questionForm.get('questionPoints')?.hasError('min')">
+                        Total score must be at least 1
+                      </mat-error>
                     </mat-form-field>
                   </div>
                 </div>
@@ -485,6 +499,9 @@
                       formControlName="questionText"
                       placeholder="Write your question here..."
                     ></textarea>
+                    <mat-error *ngIf="questionForm.get('questionText')?.hasError('required')">
+                      Question text is required
+                    </mat-error>
                   </mat-form-field>
                 </div>
               </div>
@@ -528,6 +545,9 @@
                             [formControlName]="optionIndex"
                             placeholder="Write answer option..."
                           />
+                          <mat-error *ngIf="option.hasError('required')">
+                            Option text is required
+                          </mat-error>
                         </mat-form-field>
                       </div>
 
@@ -548,7 +568,7 @@
                         </mat-radio-button>
 
                         @if (correctOptionIndex === optionIndex) {
-                          <span class="answer-option-row__correct-label"> Correct </span>
+                          <span class="answer-option-row__correct-label"> Correct Answer </span>
                         }
                       </div>
 
@@ -580,7 +600,7 @@
               </div>
 
               <!--********** SCORING **********-->
-              <div class="form-section">
+              <div class="form-section !mt-10">
                 <div class="form-section__header">
                   <span class="form-section__number">3</span>
                   <div>
@@ -595,7 +615,7 @@
                   <label class="create-assessment__field-label">Maximum Points</label>
                   <mat-form-field
                     appearance="outline"
-                    class="create-assessment__material-field w-full"
+                    class="create-assessment__material-field w-50"
                   >
                     <input
                       matInput
@@ -604,6 +624,12 @@
                       min="1"
                       placeholder="e.g. 10"
                     />
+                    <mat-error *ngIf="questionForm.get('questionPoints')?.hasError('required')">
+                      Maximum points is required
+                    </mat-error>
+                    <mat-error *ngIf="questionForm.get('questionPoints')?.hasError('min')">
+                      Maximum points must be at least 1
+                    </mat-error>
                   </mat-form-field>
                 </div>
               </div>
@@ -638,59 +664,114 @@
 
     <!--********** QUESTIONS CREATED **********-->
     @if (questions.length > 0) {
-      <div class="created-questions mt-5">
-        <div class="created-questions__header mb-4">
-          <div>
-            <h2 class="m-0 text-base font-bold text-[var(--color-title)]">Questions</h2>
-            <p class="mt-1 text-[13px] text-[var(--color-text-secondary)]">
-              Questions added to this assessment.
-            </p>
+      <mat-expansion-panel
+        class="create-assessment__accordion !mb-3 !overflow-hidden !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !shadow-none"
+        [expanded]="true"
+      >
+        <!--********** HEADER **********-->
+        <mat-expansion-panel-header
+          class="create-assessment__accordion-header create-assessment__accordion-header--green !h-auto !min-h-[25px] !px-6 max-md:!px-4 !bg-[var(--color-primary)]"
+        >
+          <mat-panel-title class="!m-0 !flex !flex-col !items-start">
+            <span class="text-base font-bold text-[var(--color-white)]"> List Questions </span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div class="created-questions mt-4 !p-4">
+          <div
+            class="flex flex-col gap-3 created-question-list"
+            cdkDropList
+            cdkDropListLockAxis="y"
+            (cdkDropListDropped)="dropCreatedQuestion($event)"
+          >
+            @for (question of questions; track question.id; let qi = $index) {
+              <div
+                class="created-question"
+                cdkDrag
+                cdkDragBoundary=".created-question-list"
+                [cdkDragDisabled]="questions.length <= 1"
+              >
+                <!--********** DRAG PREVIEW PLACEHOLDER **********-->
+                <div class="created-question__placeholder" *cdkDragPlaceholder></div>
+
+                <!--********** DRAG HANDLE **********-->
+                <span
+                  class="created-question__drag-handle"
+                  cdkDragHandle
+                  aria-label="Drag to reorder question"
+                >
+                  <mat-icon>drag_indicator</mat-icon>
+                </span>
+
+                <div class="created-question__number">
+                  {{ qi + 1 }}
+                </div>
+
+                <div class="created-question__content">
+                  <div class="created-question__top">
+                    <span
+                      class="question-item__badge"
+                      [class.question-item__badge--essay]="question.type === 'essay'"
+                      [class.question-item__badge--mc]="question.type === 'multiple_choice'"
+                    >
+                      {{ questionTypeLabel(question.type) }}
+                    </span>
+                    <span class="created-question__points"> {{ question.points }} pts </span>
+                  </div>
+                  <p class="created-question__text">
+                    {{ question.text }}
+                  </p>
+                </div>
+
+                <!--********** MOVE UP **********-->
+                <button
+                  mat-icon-button
+                  type="button"
+                  class="created-question__reorder"
+                  [disabled]="qi === 0"
+                  (click)="moveCreatedQuestionUp(qi)"
+                  aria-label="Move question up"
+                >
+                  <mat-icon>arrow_upward</mat-icon>
+                </button>
+
+                <!--********** MOVE DOWN **********-->
+                <button
+                  mat-icon-button
+                  type="button"
+                  class="created-question__reorder"
+                  [disabled]="qi === questions.length - 1"
+                  (click)="moveCreatedQuestionDown(qi)"
+                  aria-label="Move question down"
+                >
+                  <mat-icon>arrow_downward</mat-icon>
+                </button>
+
+                <button
+                  mat-icon-button
+                  type="button"
+                  class="created-question__delete"
+                  (click)="removeCreatedQuestion(qi)"
+                  aria-label="Remove question"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            }
           </div>
         </div>
-
-        <div class="flex flex-col gap-3">
-          @for (question of questions; track question.id; let qi = $index) {
-            <div class="created-question">
-              <div class="created-question__number">
-                {{ qi + 1 }}
-              </div>
-
-              <div class="created-question__content">
-                <div class="created-question__top">
-                  <span
-                    class="question-item__badge"
-                    [class.question-item__badge--essay]="question.type === 'essay'"
-                    [class.question-item__badge--mc]="question.type === 'multiple_choice'"
-                  >
-                    {{ questionTypeLabel(question.type) }}
-                  </span>
-                  <span class="created-question__points"> {{ question.points }} pts </span>
-                </div>
-                <p class="created-question__text">
-                  {{ question.text }}
-                </p>
-              </div>
-
-              <button
-                mat-icon-button
-                type="button"
-                class="created-question__delete"
-                (click)="removeCreatedQuestion(qi)"
-                aria-label="Remove question"
-              >
-                <mat-icon>delete</mat-icon>
-              </button>
-            </div>
-          }
-        </div>
-      </div>
+      </mat-expansion-panel>
     }
 
-        <!--********** NO QUESTION ERROR   **********-->
-    <div *ngIf="noQuestionError" role="alert" class="mt-4 rounded-lg bg-red-50 p-3 text-xs font-medium text-red-600 border border-red-200 flex items-center gap-2">
+    <!--********** NO QUESTION ERROR   **********-->
+    <div
+      *ngIf="noQuestionError"
+      role="alert"
+      class="mt-4 rounded-lg bg-red-50 p-3 text-xs font-medium text-red-600 border border-red-200 flex items-center gap-2"
+    >
       <span>Please add at least one question before creating.</span>
     </div>
-    
+
     <!--********** FORM ACTIONS **********-->
     <div
       class="create-assessment__actions mt-6 flex items-center justify-center gap-3 border-t border-[var(--color-border)] pt-5 max-md:flex-col-reverse"

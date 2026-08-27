@@ -1,6 +1,7 @@
 // ********** ANGULAR IMPORTS **********
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit} from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 // ********** ANGULAR MATERIAL IMPORTS **********
@@ -13,9 +14,9 @@ import { Assessment } from '../assessments-list/assessment.list.model';
 import { AssessmentService } from '../../services/assessment.service';
 import { SubmissionService } from '../../services/submission.service';
 import { Submission, SubmissionAnswer } from '../../models/submission.model';
+import { Question } from '../../models/question.model';
 
-// ********** LOCAL VIEW-MODEL INTERFACES **********
-// (kept so the template's field names stay the same as before)
+// ********** INTERFACES **********
 interface StudentReview {
   id: number;
   studentName: string;
@@ -27,6 +28,7 @@ interface StudentReview {
   submittedAt?: string;
   timeTaken?: string;
   score?: number;
+  maxScore?: number;
 }
 
 interface AnswerReview {
@@ -38,17 +40,18 @@ interface AnswerReview {
 
 @Component({
   selector: 'app-assessments-detail',
-  imports: [CommonModule, MatButtonModule, MatCardModule, MatIconModule],
+  imports: [CommonModule, FormsModule, MatButtonModule, MatCardModule, MatIconModule],
   templateUrl: './assessments-detail.html',
   styleUrls: ['./assessments-detail.scss'],
 })
-
 export class AssessmentsDetail implements OnInit {
   // ********** PRIVATE VARIABLES **********
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly assessmentService = inject(AssessmentService);
   private readonly submissionService = inject(SubmissionService);
+  private currentAssessmentId = 0;
+  private currentSubmissionId = 0;
 
   // ********** PUBLIC STATE VARIABLES **********
   assessment?: Assessment;
@@ -58,33 +61,71 @@ export class AssessmentsDetail implements OnInit {
   filteredStudents: StudentReview[] = [];
   student?: StudentReview;
   answers: AnswerReview[] = [];
+  mcAnswers: AnswerReview[] = [];
 
-  // ********** LIFECYCLE **********
+  // ********** LIFECYCLE HOOKS **********
   ngOnInit(): void {
     const assessmentId = Number(this.route.snapshot.paramMap.get('id'));
     const studentIdParam = this.route.snapshot.paramMap.get('studentId');
 
     // ********** LOAD DATA / INIT **********
     this.assessment = this.assessmentService.getAssessmentById(assessmentId);
+    this.currentAssessmentId = assessmentId;
 
     const submissions = this.submissionService.getSubmissions(assessmentId);
     this.students = submissions.map((submission) => this.mapSubmissionToStudentReview(submission));
     this.filteredStudents = [...this.students];
-
     this.isStudentDetail = studentIdParam !== null;
 
     if (studentIdParam !== null) {
       const studentId = Number(studentIdParam);
+      this.currentSubmissionId = studentId;
       const submission = submissions.find((s) => s.id === studentId);
 
       if (submission) {
         this.student = this.mapSubmissionToStudentReview(submission);
-        this.answers = submission.answers.map((answer: SubmissionAnswer) => ({
-          question: answer.question,
-          answer: answer.answer,
-          score: answer.score,
-          maxScore: answer.maxScore,
-        }));
+
+        // ********** ESSAY QUESTIONS **********
+        const essayQuestions = (this.assessment?.questions ?? []).filter(
+          (question: Question) => question.type === 'essay',
+        );
+
+        this.answers = essayQuestions.map((question: Question) => {
+          const submittedAnswer = submission.answers.find(
+            (answer: SubmissionAnswer) => answer.question === question.text,
+          );
+
+          return {
+            question: question.text,
+            answer: submittedAnswer?.answer ?? '-',
+            score: submittedAnswer?.score ?? 0,
+            maxScore: question.points,
+          };
+        });
+
+        // ********** MULTIPLE CHOICE QUESTIONS **********
+        const mcQuestions = (this.assessment?.questions ?? []).filter(
+          (question: Question) => question.type === 'multiple_choice',
+        );
+
+        this.mcAnswers = mcQuestions.map((question: Question) => {
+          const submittedAnswer = submission.answers.find(
+            (answer: SubmissionAnswer) => answer.question === question.text,
+          );
+
+          const answerText = submittedAnswer?.answer ?? '-';
+
+          const correctOption = (question.options ?? []).find((option) => option.isCorrect);
+
+          const isCorrect = correctOption ? answerText === correctOption.text : false;
+
+          return {
+            question: question.text,
+            answer: answerText,
+            score: isCorrect ? question.points : 0,
+            maxScore: question.points,
+          };
+        });
       }
     }
   }
@@ -102,6 +143,7 @@ export class AssessmentsDetail implements OnInit {
       submittedAt: submission.submittedAt,
       timeTaken: submission.timeTaken,
       score: submission.score,
+      maxScore: submission.maxScore,
     };
   }
 
@@ -147,7 +189,7 @@ export class AssessmentsDetail implements OnInit {
       this.router.navigate(['/assessments', assessmentId, 'submissions']);
       return;
     }
-    this.router.navigate(['/assessments/review-scoring']);
+    this.router.navigate(['/assessments/review']);
   }
 
   // ********** UTILITY METHODS **********

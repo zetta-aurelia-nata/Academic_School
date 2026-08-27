@@ -1,6 +1,6 @@
 // *************** BEM BLOCKS ***************
 // *************** REVIEW SCORING ***************
-.review-scoring {
+.assessments-review {
   box-sizing: border-box;
 
   // *************** SEARCH ***************
@@ -312,6 +312,9 @@
     color: var(--color-status-draft);
     border: 1px solid var(--color-status-draft-border);
   }
+  &--not-submitted {
+    background-color: var(--color-card-grey);
+  }
 }
 
 // *************** MEDIA QUERIES ***************
@@ -322,7 +325,7 @@
 }
 
 @media (max-width: 768px) {
-  .review-scoring {
+  .assessments-review {
     &__toolbar {
       align-items: stretch;
     }

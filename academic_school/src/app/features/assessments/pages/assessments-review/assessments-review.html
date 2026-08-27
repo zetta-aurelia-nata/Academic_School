@@ -1,17 +1,17 @@
 <!-- ********** REVIEW SCORING SECTION ********** -->
 <section
-  class="review-scoring w-full min-h-full box-border bg-[var(--color-background-content)] px-8 pt-[30px] pb-10 font-sans max-lg:px-5 max-lg:pt-6 max-lg:pb-7 max-md:px-4 max-md:pt-5"
+  class="assessments-review w-full min-h-full box-border bg-[var(--color-background-content)] px-8 pt-[30px] pb-10 font-sans max-lg:px-5 max-lg:pt-6 max-lg:pb-7 max-md:px-4 max-md:pt-5"
 >
   <!-- ********** PAGE HEADER ********** -->
   <div
-    class="review-scoring__toolbar mb-6 flex items-end justify-between gap-4 max-md:flex-col max-md:items-stretch"
+    class="assessments-review__toolbar mb-6 flex items-end justify-between gap-4 max-md:flex-col max-md:items-stretch"
   >
     <!-- ********** PAGE TITLE ********** -->
     <div class="flex flex-col gap-1">
       <h1
         class="m-0 text-2xl font-bold leading-[1.2] tracking-[-0.3px] text-[var(--color-title)] max-lg:text-[22px]"
       >
-        Review & Scoring
+        Assessments Result
       </h1>
 
       <span class="text-[13px] leading-[1.4] text-[var(--color-text-secondary)]">
@@ -20,9 +20,9 @@
     </div>
 
     <!-- ********** SEARCH ********** -->
-    <div class="review-scoring__search">
+    <div class="assessments-review__search">
       <!-- ********** SEARCH ICON ********** -->
-      <mat-icon class="review-scoring__search-icon"> search </mat-icon>
+      <mat-icon class="assessments-review__search-icon"> search </mat-icon>
 
       <!-- ********** SEARCH INPUT ********** -->
       <input
@@ -37,7 +37,7 @@
       @if (searchQuery) {
         <button
           type="button"
-          class="review-scoring__search-clear"
+          class="assessments-review__search-clear"
           aria-label="Clear search"
           (click)="clearSearch()"
         >
@@ -168,7 +168,7 @@
   <!-- ********** EMPTY SEARCH RESULT ********** -->
   @if (filteredAssessments.length === 0) {
     <div
-      class="review-scoring__empty mt-4 flex min-h-[260px] flex-col items-center justify-center rounded-[14px] border border-[var(--color-border)] bg-[var(--color-white)] px-6 py-10"
+      class="assessments-review__empty mt-4 flex min-h-[260px] flex-col items-center justify-center rounded-[14px] border border-[var(--color-border)] bg-[var(--color-white)] px-6 py-10"
     >
       <!-- ********** EMPTY ICON ********** -->
       <div

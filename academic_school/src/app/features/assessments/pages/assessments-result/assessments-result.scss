@@ -39,16 +39,16 @@
 
   // ********** PUBLISHED **********
   &--published {
-    color: var(--color-primary-dark);
-    border-color: color-mix(in srgb, var(--color-primary) 20%, transparent);
-    background-color: var(--color-primary-light);
+    color: var(--color-card-green);
+    border-color: color-mix(in srgb, var(--color-card-green) 20%, transparent);
+    background-color: var(--color-card-green-light);
   }
 
   // ********** LOCKED **********
   &--locked {
-    color: #b42318;
-    border-color: #fecdca;
-    background-color: #fef3f2;
+    color: var(--color-card-red);
+    border-color: var(--color-card-red-border);
+    background-color: var(--color-card-red-light);
 
     mat-icon {
       width: 14px;
@@ -60,9 +60,9 @@
 
   // ********** DRAFT **********
   &--draft {
-    color: var(--color-text-secondary);
-    border-color: var(--color-border);
-    background-color: var(--color-background-content);
+    background-color: var(--color-status-draft-background);
+    color: var(--color-black);
+    border: 1px solid var(--color-status-draft-border);
   }
 }
 
@@ -111,8 +111,8 @@
   }
 }
 
-.edit-assessment{
-  &__field-label{
+.edit-assessment {
+  &__field-label {
     margin-bottom: 6px;
     font-size: 12px;
   }
@@ -337,16 +337,16 @@
 
   // ********** COMPLETED **********
   &--completed {
-    color: #027a48;
-    border-color: #abefc6;
-    background-color: #ecfdf3;
+    color: var(--color-card-green);
+    border-color: var(--color-card-green-border);
+    background-color: var(--color-card-green-light);
   }
 
   // ********** IN PROGRESS **********
   &--in-progress {
-    color: #b54708;
-    border-color: #fedf89;
-    background-color: #fffaeb;
+    color: var(--color-card-yellow-dark);
+    border-color: var(--color-card-yellow-border);
+    background-color: var(--color-card-yellow-light);
   }
 
   // ********** PENDING **********

@@ -1,8 +1,22 @@
 // ********** ANGULAR IMPORTS **********
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, inject, OnInit } from '@angular/core';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import {
+  CdkDrag,
+  CdkDragDrop,
+  CdkDropList,
+  moveItemInArray,
+  CdkDragPlaceholder,
+} from '@angular/cdk/drag-drop';
 
 // ********** ANGULAR MATERIAL IMPORTS **********
 import { MatButtonModule } from '@angular/material/button';
@@ -15,7 +29,6 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 
 // ********** APPLICATION MODELS AND DATA IMPORTS **********
-import { ASSESSMENT_QUESTIONS } from '../../assessment.data';
 import { AssessmentService } from '../../services/assessment.service';
 import { Question, QuestionType } from '../../models/question.model';
 
@@ -35,16 +48,19 @@ import { Question, QuestionType } from '../../models/question.model';
     MatSelectModule,
     MatIconModule,
     MatRadioModule,
+    CdkDropList,
+    CdkDrag,
+    CdkDragPlaceholder,
   ],
   templateUrl: './assessments-edit.html',
   styleUrl: './assessments-edit.scss',
 })
 export class EditAssessment implements OnInit {
   // ********** PRIVATE VARIABLES **********
-  private readonly fb: FormBuilder;
-  private readonly route: ActivatedRoute;
-  private readonly router: Router;
-  private readonly assessmentService: AssessmentService;
+  private readonly fb = inject(FormBuilder);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly assessmentService = inject(AssessmentService);
 
   // ********** CONSTRUCTOR **********
   constructor(
@@ -72,8 +88,8 @@ export class EditAssessment implements OnInit {
       grade: ['', Validators.required],
       description: [''],
       instructions: [''],
-      duration: [60, [Validators.required, Validators.min(1)]],
-      totalPoints: [100, [Validators.required, Validators.min(1)]],
+      duration: [60, [Validators.required, Validators.min(10)]],
+      totalPoints: [100, [Validators.required, Validators.min(10)]],
       status: ['Draft', Validators.required],
       questions: this.fb.array([]),
     });
@@ -96,7 +112,7 @@ export class EditAssessment implements OnInit {
       status: assessment.status,
     });
 
-    const questions = ASSESSMENT_QUESTIONS[this.assessmentId] ?? [];
+    const questions = assessment.questions ?? [];
 
     questions.forEach((question) => {
       this.questions.push(this.createQuestionGroup(question));
@@ -139,7 +155,7 @@ export class EditAssessment implements OnInit {
     return [this.fb.control('', Validators.required), this.fb.control('', Validators.required)];
   }
 
-  // ********** ACTION HANDLERS : QUESTIONS **********
+  // ********** ACTION HANDLERS **********
   addQuestion(type: QuestionType): void {
     this.questions.push(
       this.createQuestionGroup({
@@ -155,15 +171,46 @@ export class EditAssessment implements OnInit {
     this.questions.removeAt(index);
   }
 
-  // ********** ACTION HANDLERS : OPTIONS **********
+  // ********** ACTION HANDLERS **********
+  dropQuestion(event: CdkDragDrop<FormGroup[]>): void {
+    if (event.previousIndex === event.currentIndex) {
+      return;
+    }
+
+    this.moveQuestion(event.previousIndex, event.currentIndex);
+  }
+
+  moveQuestionUp(index: number): void {
+    if (index <= 0) {
+      return;
+    }
+
+    this.moveQuestion(index, index - 1);
+  }
+
+  moveQuestionDown(index: number): void {
+    if (index >= this.questions.length - 1) {
+      return;
+    }
+
+    this.moveQuestion(index, index + 1);
+  }
+
+  private moveQuestion(previousIndex: number, currentIndex: number): void {
+    const controls = [...this.questions.controls] as FormGroup[];
+    moveItemInArray(controls, previousIndex, currentIndex);
+
+    this.questions.clear();
+    controls.forEach((control) => this.questions.push(control));
+  }
+
+  // ********** ACTION HANDLERS **********
   addOption(questionIndex: number): void {
     this.questionOptions(questionIndex).push(this.fb.control('', Validators.required));
   }
 
   removeOption(questionIndex: number, optionIndex: number): void {
     const options = this.questionOptions(questionIndex);
-
-    // ********** MINIMUM 2 OPTIONS **********
     if (options.length <= 2) {
       return;
     }
@@ -203,24 +250,29 @@ export class EditAssessment implements OnInit {
       subject: formValue.subject,
       grade: formValue.grade,
       status: formValue.status,
-
       description: formValue.description,
-
       instructions: formValue.instructions,
-
       duration: formValue.duration,
-
-      totalPoints: formValue.totalPoints,
+      totalPoints: Number(formValue.totalPoints),
+      questions: formValue.questions.map((question: any) => ({
+        id: Number(question.id),
+        type: question.type,
+        text: question.text,
+        points: Number(question.points),
+        maxWord: question.type === 'essay' ? Number(question.maxWord) : undefined,
+        options:
+          question.type === 'multiple_choice'
+            ? question.options.map((text: string, index: number) => ({
+                text,
+                isCorrect: index === Number(question.correctOptionIndex),
+              }))
+            : undefined,
+      })),
     });
-
-    // ********** NAVIGATE BACK **********
     this.router.navigate(['/assessments']);
   }
 
-  // ********************************************************
-  // ********** CANCEL **********
-  // ********************************************************
-
+  // ********** ACTION HANDLERS **********
   onCancel(): void {
     this.router.navigate(['/assessments']);
   }
