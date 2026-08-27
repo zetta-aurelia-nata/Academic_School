@@ -36,6 +36,7 @@ interface AnswerReview {
   answer: string;
   score: number;
   maxScore: number;
+  teacherComment?: string;
 }
 
 @Component({
@@ -100,6 +101,7 @@ export class AssessmentsDetail implements OnInit {
             answer: submittedAnswer?.answer ?? '-',
             score: submittedAnswer?.score ?? 0,
             maxScore: question.points,
+            teacherComment: submittedAnswer?.teacherComment ?? '-',
           };
         });
 
