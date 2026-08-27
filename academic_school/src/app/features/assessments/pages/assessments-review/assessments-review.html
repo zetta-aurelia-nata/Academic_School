@@ -19,31 +19,42 @@
       </span>
     </div>
 
-    <!-- ********** SEARCH ********** -->
-    <div class="assessments-review__search">
-      <!-- ********** SEARCH ICON ********** -->
-      <mat-icon class="assessments-review__search-icon"> search </mat-icon>
+    <!-- ********** SEARCH + FILTER ********** -->
+    <div class="assessments-review__controls flex items-center gap-2.5 max-md:flex-col max-md:items-stretch">
+      <!-- ********** SEARCH ********** -->
+      <div class="assessments-review__search">
+        <!-- ********** SEARCH ICON ********** -->
+        <mat-icon class="assessments-review__search-icon"> search </mat-icon>
 
-      <!-- ********** SEARCH INPUT ********** -->
-      <input
-        type="text"
-        placeholder="Search assessments..."
-        [(ngModel)]="searchQuery"
-        (input)="onSearch()"
-        aria-label="Search assessments"
-      />
+        <!-- ********** SEARCH INPUT ********** -->
+        <input
+          type="text"
+          placeholder="Search assessments..."
+          [(ngModel)]="searchQuery"
+          (input)="onSearch()"
+          aria-label="Search assessments"
+        />
 
-      <!-- ********** CLEAR SEARCH ********** -->
-      @if (searchQuery) {
-        <button
-          type="button"
-          class="assessments-review__search-clear"
-          aria-label="Clear search"
-          (click)="clearSearch()"
-        >
-          <mat-icon>close</mat-icon>
-        </button>
-      }
+        <!-- ********** CLEAR SEARCH ********** -->
+        @if (searchQuery) {
+          <button
+            type="button"
+            class="assessments-review__search-clear"
+            aria-label="Clear search"
+            (click)="clearSearch()"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        }
+      </div>
+
+      <!-- ********** FILTER ********** -->
+      <app-filter
+        [statusOptions]="statusOptions"
+        [subjectOptions]="subjectOptions"
+        [gradeOptions]="gradeOptions"
+        (filterApplied)="onFilterApplied($event)"
+      ></app-filter>
     </div>
   </div>
 

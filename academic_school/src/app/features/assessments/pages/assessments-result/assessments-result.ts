@@ -1,6 +1,17 @@
 //********** ANGULAR IMPORTS **********
-import { CommonModule } from '@angular/common';
-import { Component, ElementRef, HostListener, ViewChild, inject, OnInit } from '@angular/core';
+import {
+  CommonModule,
+} from '@angular/common';
+
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  ViewChild,
+  inject,
+} from '@angular/core';
+
 import { FormsModule } from '@angular/forms';
 
 //********** ANGULAR MATERIAL IMPORTS **********
@@ -69,17 +80,44 @@ export class AssessmentsResult implements OnInit {
   private readonly assessmentService = inject(AssessmentService);
   private readonly submissionService = inject(SubmissionService);
 
-  private publishTrigger: HTMLElement | null = null;
+  private activeTrigger: HTMLElement | null = null;
 
-  @ViewChild('publishDialog') publishDialog?: ElementRef<HTMLElement>;
+  @ViewChild('publishDialog')
+  publishDialog?: ElementRef<HTMLElement>;
+
+  @ViewChild('unpublishDialog')
+  unpublishDialog?: ElementRef<HTMLElement>;
+
+  @ViewChild('lockDialog')
+  lockDialog?: ElementRef<HTMLElement>;
+
+  @ViewChild('unlockDialog')
+  unlockDialog?: ElementRef<HTMLElement>;
+
+  @ViewChild('saveScoreDialog')
+  saveScoreDialog?: ElementRef<HTMLElement>;
 
   //********** PUBLIC STATE VARIABLES **********
   assessments: Assessment[] = [];
+
   selectedAssessmentId = 1;
+
   selectedStudent?: ResultStudent;
+
   showPublishDialog = false;
+
+  showUnpublishDialog = false;
+
+  showLockDialog = false;
+
+  showUnlockDialog = false;
+
+  showSaveScoreDialog = false;
+
   successMessage = '';
+
   scoreJustSaved = false;
+
   resultStates: AssessmentResult[] = [];
 
   //********** LIFECYCLE HOOKS **********
@@ -96,29 +134,46 @@ export class AssessmentsResult implements OnInit {
       locked: false,
     }));
 
-    if (!this.assessments.some((assessment) => assessment.id === this.selectedAssessmentId)) {
-      this.selectedAssessmentId = this.assessments[0]?.id ?? 0;
+    if (
+      !this.assessments.some(
+        (assessment) => assessment.id === this.selectedAssessmentId,
+      )
+    ) {
+      this.selectedAssessmentId =
+        this.assessments[0]?.id ?? 0;
     }
   }
 
   //********** SETTER & GETTER **********
   get selectedAssessment(): Assessment | undefined {
-    return this.assessments.find((assessment) => assessment.id === this.selectedAssessmentId);
+    return this.assessments.find(
+      (assessment) =>
+        assessment.id === this.selectedAssessmentId,
+    );
   }
 
   get students(): ResultStudent[] {
     return this.submissionService
       .getSubmissions(this.selectedAssessmentId)
-      .map((submission) => this.mapSubmissionToResultStudent(submission));
+      .map((submission) =>
+        this.mapSubmissionToResultStudent(submission),
+      );
   }
 
   get essayAnswers(): ResultAnswer[] {
-    return this.selectedStudent?.answers.filter((answer) => answer.type === 'essay') ?? [];
+    return (
+      this.selectedStudent?.answers.filter(
+        (answer) => answer.type === 'essay',
+      ) ?? []
+    );
   }
 
   get currentResultState(): AssessmentResult {
     return (
-      this.resultStates.find((state) => state.assessmentId === this.selectedAssessmentId) ?? {
+      this.resultStates.find(
+        (state) =>
+          state.assessmentId === this.selectedAssessmentId,
+      ) ?? {
         assessmentId: this.selectedAssessmentId,
         published: false,
         locked: false,
@@ -126,35 +181,72 @@ export class AssessmentsResult implements OnInit {
     );
   }
 
-  private mapSubmissionToResultStudent(submission: Submission): ResultStudent {
-    const questions = this.selectedAssessment?.questions ?? [];
+  private mapSubmissionToResultStudent(
+    submission: Submission,
+  ): ResultStudent {
+    const questions =
+      this.selectedAssessment?.questions ?? [];
 
-    const answers: ResultAnswer[] = questions.map((question: Question) => {
-      const submitted = submission.answers.find((answer) => answer.question === question.text);
+    const answers: ResultAnswer[] = questions.map(
+      (question: Question) => {
+        const submitted = submission.answers.find(
+          (answer) =>
+            answer.question === question.text,
+        );
 
-      const options = question.options ?? [];
-      const answerText = submitted?.answer ?? '-';
-      const isMultipleChoice = question.type === 'multiple_choice';
+        const options = question.options ?? [];
 
-      const isCorrect =
-        isMultipleChoice && options.length > 0
-          ? answerText === options.find((option) => option.isCorrect)?.text
-          : false;
+        const answerText =
+          submitted?.answer ?? '-';
 
-      return {
-        question: question.text,
-        type: question.type,
-        answer: answerText,
-        maxScore: question.points,
-        score: isMultipleChoice ? (isCorrect ? question.points : 0) : Number(submitted?.score ?? 0),
-        teacherComment: submitted?.teacherComment ?? '',
-        options,
-        correctAnswer: options.find((option) => option.isCorrect)?.text,
-      };
-    });
+        const isMultipleChoice =
+          question.type === 'multiple_choice';
 
-    const score = answers.reduce((total, answer) => total + answer.score, 0);
-    const maxScore = questions.reduce((total, question) => total + question.points, 0);
+        const isCorrect =
+          isMultipleChoice &&
+          options.length > 0
+            ? answerText ===
+              options.find(
+                (option) => option.isCorrect,
+              )?.text
+            : false;
+
+        return {
+          question: question.text,
+          type: question.type,
+          answer: answerText,
+          maxScore: question.points,
+
+          score: isMultipleChoice
+            ? isCorrect
+              ? question.points
+              : 0
+            : Number(submitted?.score ?? 0),
+
+          teacherComment:
+            submitted?.teacherComment ?? '',
+
+          options,
+
+          correctAnswer:
+            options.find(
+              (option) => option.isCorrect,
+            )?.text,
+        };
+      },
+    );
+
+    const score = answers.reduce(
+      (total, answer) =>
+        total + answer.score,
+      0,
+    );
+
+    const maxScore = questions.reduce(
+      (total, question) =>
+        total + question.points,
+      0,
+    );
 
     return {
       submissionId: submission.id,
@@ -176,11 +268,17 @@ export class AssessmentsResult implements OnInit {
   //********** ACTION HANDLERS **********
   onAssessmentChange(): void {
     this.selectedStudent = undefined;
+
     this.successMessage = '';
+
+    this.closeAllDialogs();
   }
 
-  onReviewAnswers(student: ResultStudent): void {
+  onReviewAnswers(
+    student: ResultStudent,
+  ): void {
     this.selectedStudent = student;
+
     this.successMessage = '';
   }
 
@@ -188,54 +286,115 @@ export class AssessmentsResult implements OnInit {
     this.selectedStudent = undefined;
   }
 
-  onScoreChange(answer: ResultAnswer, value: number): void {
-    if (this.currentResultState.locked || answer.type !== 'essay' || !this.selectedStudent) return;
+  onScoreChange(
+    answer: ResultAnswer,
+    value: number,
+  ): void {
+    if (
+      this.currentResultState.locked ||
+      answer.type !== 'essay' ||
+      !this.selectedStudent
+    ) {
+      return;
+    }
 
     let score = Number(value);
-    if (Number.isNaN(score)) score = 0;
 
-    score = Math.min(Math.max(score, 0), answer.maxScore);
+    if (Number.isNaN(score)) {
+      score = 0;
+    }
 
-    const updatedAnswers = this.selectedStudent.answers.map((a) =>
-      a === answer ? { ...a, score } : a,
+    score = Math.min(
+      Math.max(score, 0),
+      answer.maxScore,
     );
-    this.selectedStudent = { ...this.selectedStudent, answers: updatedAnswers };
+
+    const updatedAnswers =
+      this.selectedStudent.answers.map(
+        (currentAnswer) =>
+          currentAnswer === answer
+            ? {
+                ...currentAnswer,
+                score,
+              }
+            : currentAnswer,
+      );
+
+    this.selectedStudent = {
+      ...this.selectedStudent,
+      answers: updatedAnswers,
+    };
+
     this.calculateTotalScore();
   }
 
   calculateTotalScore(): void {
-    if (!this.selectedStudent) return;
-    this.selectedStudent.score = this.selectedStudent.answers.reduce(
-      (sum, answer) => sum + Number(answer.score || 0),
-      0,
+    if (!this.selectedStudent) {
+      return;
+    }
+
+    this.selectedStudent.score =
+      this.selectedStudent.answers.reduce(
+        (sum, answer) =>
+          sum + Number(answer.score || 0),
+        0,
+      );
+  }
+
+  //********** SAVE SCORE DIALOG HANDLERS **********
+  onSaveScore(): void {
+    if (
+      !this.selectedStudent ||
+      this.currentResultState.locked
+    ) {
+      return;
+    }
+
+    this.activeTrigger =
+      document.activeElement as HTMLElement;
+
+    this.showSaveScoreDialog = true;
+
+    setTimeout(() =>
+      this.saveScoreDialog?.nativeElement.focus(),
     );
   }
 
-  //********** ACTION HANDLERS **********
-  onSaveScore(): void {
-    if (!this.selectedStudent || this.currentResultState.locked) return;
+  confirmSaveScore(): void {
+    if (
+      !this.selectedStudent ||
+      this.currentResultState.locked
+    ) {
+      this.showSaveScoreDialog = false;
+      return;
+    }
 
     this.calculateTotalScore();
 
-    const submissionID = this.selectedStudent.submissionId;
+    const submissionID =
+      this.selectedStudent.submissionId;
 
-    this.selectedStudent.answers.forEach((answer) => {
-      if (answer.type !== 'essay') return;
+    this.selectedStudent.answers.forEach(
+      (answer) => {
+        if (answer.type !== 'essay') {
+          return;
+        }
 
-      this.submissionService.updateAnswerScoreByQuestion(
-        this.selectedAssessmentId,
-        submissionID,
-        answer.question,
-        answer.score,
-      );
+        this.submissionService.updateAnswerScoreByQuestion(
+          this.selectedAssessmentId,
+          submissionID,
+          answer.question,
+          answer.score,
+        );
 
-      this.submissionService.updateTeacherCommentByQuestion(
-        this.selectedAssessmentId,
-        submissionID,
-        answer.question,
-        answer.teacherComment,
-      );
-    });
+        this.submissionService.updateTeacherCommentByQuestion(
+          this.selectedAssessmentId,
+          submissionID,
+          answer.question,
+          answer.teacherComment,
+        );
+      },
+    );
 
     this.submissionService.updateScore(
       this.selectedAssessmentId,
@@ -243,121 +402,395 @@ export class AssessmentsResult implements OnInit {
       this.selectedStudent.score,
     );
 
-    const updatedSubmission = this.submissionService.getSubmission(
-      this.selectedAssessmentId,
-      submissionID,
-    );
+    const updatedSubmission =
+      this.submissionService.getSubmission(
+        this.selectedAssessmentId,
+        submissionID,
+      );
 
     if (updatedSubmission) {
-      this.selectedStudent = this.mapSubmissionToResultStudent(updatedSubmission);
+      this.selectedStudent =
+        this.mapSubmissionToResultStudent(
+          updatedSubmission,
+        );
     }
 
-    this.successMessage = `Score for ${this.selectedStudent.studentName} has been saved.`;
+    this.showSaveScoreDialog = false;
+
+    this.successMessage =
+      `Score for ${this.selectedStudent.studentName} has been saved.`;
+
     this.scoreJustSaved = true;
 
-    setTimeout(() => (this.successMessage = ''), 3000);
-    setTimeout(() => (this.scoreJustSaved = false), 2000);
+    setTimeout(
+      () => (this.successMessage = ''),
+      3000,
+    );
+
+    setTimeout(
+      () => (this.scoreJustSaved = false),
+      2000,
+    );
+
+    this.restoreActiveTriggerFocus();
   }
 
-  onPublish(event: Event): void {
-    if (this.currentResultState.locked) return;
+  cancelSaveScore(): void {
+    this.showSaveScoreDialog = false;
 
-    if (this.currentResultState.published) {
-      this.unpublishResult();
+    this.restoreActiveTriggerFocus();
+  }
+
+  //********** PUBLISH / UNPUBLISH HANDLERS **********
+  onPublish(event: Event): void {
+    if (this.currentResultState.locked) {
       return;
     }
 
-    this.publishTrigger = event.currentTarget as HTMLElement;
+    this.activeTrigger =
+      event.currentTarget as HTMLElement;
+
+    if (this.currentResultState.published) {
+      this.showUnpublishDialog = true;
+
+      setTimeout(() =>
+        this.unpublishDialog?.nativeElement.focus(),
+      );
+
+      return;
+    }
+
     this.showPublishDialog = true;
 
-    setTimeout(() => this.publishDialog?.nativeElement.focus());
+    setTimeout(() =>
+      this.publishDialog?.nativeElement.focus(),
+    );
   }
 
   confirmPublish(): void {
-    this.resultStates = this.resultStates.map((state) =>
-      state.assessmentId === this.selectedAssessmentId ? { ...state, published: true } : state,
-    );
+    this.resultStates =
+      this.resultStates.map(
+        (state) =>
+          state.assessmentId ===
+          this.selectedAssessmentId
+            ? {
+                ...state,
+                published: true,
+              }
+            : state,
+      );
+
     this.showPublishDialog = false;
-    this.successMessage = 'Assessment results have been published successfully.';
-    setTimeout(() => (this.successMessage = ''), 3000);
-    this.restorePublishTriggerFocus();
+
+    this.successMessage =
+      'Assessment results have been published successfully.';
+
+    setTimeout(
+      () => (this.successMessage = ''),
+      3000,
+    );
+
+    this.restoreActiveTriggerFocus();
   }
 
   cancelPublish(): void {
     this.showPublishDialog = false;
-    this.restorePublishTriggerFocus();
+
+    this.restoreActiveTriggerFocus();
   }
 
-  unpublishResult(): void {
-    this.resultStates = this.resultStates.map((state) =>
-      state.assessmentId === this.selectedAssessmentId ? { ...state, published: false } : state,
+  confirmUnpublish(): void {
+    this.resultStates =
+      this.resultStates.map(
+        (state) =>
+          state.assessmentId ===
+          this.selectedAssessmentId
+            ? {
+                ...state,
+                published: false,
+              }
+            : state,
+      );
+
+    this.showUnpublishDialog = false;
+
+    this.successMessage =
+      'Assessment results have been unpublished.';
+
+    setTimeout(
+      () => (this.successMessage = ''),
+      3000,
     );
-    this.successMessage = 'Assessment results have been unpublished.';
-    setTimeout(() => (this.successMessage = ''), 3000);
+
+    this.restoreActiveTriggerFocus();
   }
 
-  lockResult(): void {
+  cancelUnpublish(): void {
+    this.showUnpublishDialog = false;
+
+    this.restoreActiveTriggerFocus();
+  }
+
+  //********** LOCK / UNLOCK HANDLERS **********
+  onLockResult(event: Event): void {
     if (!this.currentResultState.published) {
-      this.successMessage = 'Publish the result before locking it.';
-      setTimeout(() => (this.successMessage = ''), 3000);
+      this.successMessage =
+        'Publish the result before locking it.';
+
+      setTimeout(
+        () => (this.successMessage = ''),
+        3000,
+      );
+
       return;
     }
 
-    this.resultStates = this.resultStates.map((state) =>
-      state.assessmentId === this.selectedAssessmentId ? { ...state, locked: true } : state,
-    );
+    this.activeTrigger =
+      event.currentTarget as HTMLElement;
 
-    this.successMessage = 'Assessment result is now locked.';
-    setTimeout(() => (this.successMessage = ''), 3000);
+    if (this.currentResultState.locked) {
+      this.showUnlockDialog = true;
+
+      setTimeout(() =>
+        this.unlockDialog?.nativeElement.focus(),
+      );
+
+      return;
+    }
+
+    this.showLockDialog = true;
+
+    setTimeout(() =>
+      this.lockDialog?.nativeElement.focus(),
+    );
   }
 
-  cancelLockResult(): void {}
+  confirmLockResult(): void {
+    if (!this.currentResultState.published) {
+      this.showLockDialog = false;
+      return;
+    }
 
-  @HostListener('document:keydown', ['$event'])
-  onDialogKeydown(event: KeyboardEvent): void {
-    if (!this.showPublishDialog) return;
+    this.resultStates =
+      this.resultStates.map(
+        (state) =>
+          state.assessmentId ===
+          this.selectedAssessmentId
+            ? {
+                ...state,
+                locked: true,
+              }
+            : state,
+      );
+
+    this.showLockDialog = false;
+
+    this.successMessage =
+      'Assessment result is now locked.';
+
+    setTimeout(
+      () => (this.successMessage = ''),
+      3000,
+    );
+
+    this.restoreActiveTriggerFocus();
+  }
+
+  cancelLockResult(): void {
+    this.showLockDialog = false;
+
+    this.restoreActiveTriggerFocus();
+  }
+
+  confirmUnlockResult(): void {
+    this.resultStates =
+      this.resultStates.map(
+        (state) =>
+          state.assessmentId ===
+          this.selectedAssessmentId
+            ? {
+                ...state,
+                locked: false,
+              }
+            : state,
+      );
+
+    this.showUnlockDialog = false;
+
+    this.successMessage =
+      'Assessment result has been unlocked. You can edit scores and teacher comments again.';
+
+    setTimeout(
+      () => (this.successMessage = ''),
+      3000,
+    );
+
+    this.restoreActiveTriggerFocus();
+  }
+
+  cancelUnlockResult(): void {
+    this.showUnlockDialog = false;
+
+    this.restoreActiveTriggerFocus();
+  }
+
+  //********** DIALOG HELPERS **********
+  private closeAllDialogs(): void {
+    this.showPublishDialog = false;
+
+    this.showUnpublishDialog = false;
+
+    this.showLockDialog = false;
+
+    this.showUnlockDialog = false;
+
+    this.showSaveScoreDialog = false;
+
+    this.activeTrigger = null;
+  }
+
+  @HostListener(
+    'document:keydown',
+    ['$event'],
+  )
+  onDialogKeydown(
+    event: KeyboardEvent,
+  ): void {
+    const dialog =
+      this.getActiveDialog();
+
+    if (!dialog) {
+      return;
+    }
 
     if (event.key === 'Escape') {
       event.preventDefault();
-      this.cancelPublish();
+
+      this.cancelActiveDialog();
+
       return;
     }
 
-    if (event.key !== 'Tab') return;
+    if (event.key !== 'Tab') {
+      return;
+    }
 
-    const dialog = this.publishDialog?.nativeElement;
-    if (!dialog) return;
-
-    const focusable = dialog.querySelectorAll<HTMLElement>(
-      'button, input, select, textarea, a[href], [tabindex]:not([tabindex="-1"])',
-    );
+    const focusable =
+      dialog.querySelectorAll<HTMLElement>(
+        'button, input, select, textarea, a[href], [tabindex]:not([tabindex="-1"])',
+      );
 
     if (!focusable.length) {
       event.preventDefault();
+
       return;
     }
 
     const first = focusable[0];
-    const last = focusable[focusable.length - 1];
 
-    if (event.shiftKey && document.activeElement === first) {
+    const last =
+      focusable[focusable.length - 1];
+
+    if (
+      event.shiftKey &&
+      document.activeElement === first
+    ) {
       event.preventDefault();
+
       last.focus();
-    } else if (!event.shiftKey && document.activeElement === last) {
+    } else if (
+      !event.shiftKey &&
+      document.activeElement === last
+    ) {
       event.preventDefault();
+
       first.focus();
     }
   }
 
-  //********** ANGULAR IMPORTS **********
-  private restorePublishTriggerFocus(): void {
+  private getActiveDialog():
+    | HTMLElement
+    | null {
+    if (this.showPublishDialog) {
+      return (
+        this.publishDialog?.nativeElement ??
+        null
+      );
+    }
+
+    if (this.showUnpublishDialog) {
+      return (
+        this.unpublishDialog?.nativeElement ??
+        null
+      );
+    }
+
+    if (this.showLockDialog) {
+      return (
+        this.lockDialog?.nativeElement ??
+        null
+      );
+    }
+
+    if (this.showUnlockDialog) {
+      return (
+        this.unlockDialog?.nativeElement ??
+        null
+      );
+    }
+
+    if (this.showSaveScoreDialog) {
+      return (
+        this.saveScoreDialog?.nativeElement ??
+        null
+      );
+    }
+
+    return null;
+  }
+
+  private cancelActiveDialog(): void {
+    if (this.showPublishDialog) {
+      this.cancelPublish();
+
+      return;
+    }
+
+    if (this.showUnpublishDialog) {
+      this.cancelUnpublish();
+
+      return;
+    }
+
+    if (this.showLockDialog) {
+      this.cancelLockResult();
+
+      return;
+    }
+
+    if (this.showUnlockDialog) {
+      this.cancelUnlockResult();
+
+      return;
+    }
+
+    if (this.showSaveScoreDialog) {
+      this.cancelSaveScore();
+    }
+  }
+
+  //********** FOCUS RESTORATION **********
+  private restoreActiveTriggerFocus(): void {
     setTimeout(() => {
-      this.publishTrigger?.focus();
-      this.publishTrigger = null;
+      this.activeTrigger?.focus();
+
+      this.activeTrigger = null;
     });
   }
 
   statusClass(status: string): string {
-    return `result-status result-status--${status.toLowerCase().replaceAll(' ', '-')}`;
+    return `result-status result-status--${status
+      .toLowerCase()
+      .replaceAll(' ', '-')}`;
   }
 }

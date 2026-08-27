@@ -9,6 +9,7 @@
       <h1 class="m-0 text-2xl font-bold leading-[1.2] tracking-[-0.3px] text-[var(--color-title)]">
         Assessment Review
       </h1>
+
       <p class="m-0 mt-1 text-[13px] text-[var(--color-text-secondary)]">
         Review, score, and publish student results
       </p>
@@ -62,6 +63,7 @@
             Subject
           </label>
         </div>
+
         <mat-form-field appearance="outline" class="result-select">
           <mat-select [(ngModel)]="selectedAssessmentId" (selectionChange)="onAssessmentChange()">
             <!--********** SELECTED ASSESSMENT **********-->
@@ -126,14 +128,15 @@
           {{ currentResultState.published ? 'Unpublish' : 'Publish Result' }}
         </button>
 
-        <!--********** LOCK RESULT ACTION **********-->
+        <!--********** LOCK / UNLOCK RESULT ACTION **********-->
         <button
+          #lockTrigger
           mat-flat-button
           class="!h-9 !rounded-[9px] !bg-[var(--color-primary-dark)] !px-4 !text-[12px] !font-semibold !text-white"
-          [disabled]="currentResultState.locked || !currentResultState.published"
-          (click)="lockResult()"
+          [disabled]="!currentResultState.published"
+          (click)="onLockResult($event)"
         >
-          {{ currentResultState.locked ? 'Result Locked' : 'Lock Result' }}
+          {{ currentResultState.locked ? 'Unlock Result' : 'Lock Result' }}
         </button>
       </div>
     </div>
@@ -144,7 +147,8 @@
     *ngIf="successMessage"
     class="mb-4 flex items-center gap-2 rounded-[10px] border border-[var(--color-status-completed-border)] bg-[var(--color-status-completed-background)] px-4 py-3 text-[12px] font-semibold text-[var(--color-status-completed)]"
   >
-    <mat-icon class="!h-5 !w-5 !text-[20px]">check_circle</mat-icon>
+    <mat-icon class="!h-5 !w-5 !text-[20px]"> check_circle </mat-icon>
+
     {{ successMessage }}
   </div>
 
@@ -204,7 +208,7 @@
 
           <!--********** STUDENT SCORE **********-->
           <div class="result-student__score">
-            <span class="result-student__score-label">Score</span>
+            <span class="result-student__score-label"> Score </span>
 
             <span class="result-student__score-value">
               {{ student.score }}/{{ student.maxScore }}
@@ -224,8 +228,8 @@
             <button
               mat-stroked-button
               class="!h-9 !rounded-[9px] !px-4 !text-[11px] bg-[var(--color-sidebar-hover)] !font-semibold"
-              [disabled]="currentResultState.locked || student.answers.length === 0"
-              (click)="onReviewAnswers(student)"
+              [disabled]="student.answers.length === 0"
+              (click)="onReviewAnswers(student); $event.stopPropagation()"
             >
               {{
                 selectedStudent?.studentId === student.studentId ? 'Reviewing' : 'Review Answers'
@@ -408,7 +412,10 @@
         [disabled]="currentResultState.locked"
         (click)="onSaveScore()"
       >
-        <mat-icon *ngIf="scoreJustSaved" class="!mr-1 !h-4 !w-4 !text-base">check_circle</mat-icon>
+        <mat-icon *ngIf="scoreJustSaved" class="!mr-1 !h-4 !w-4 !text-base">
+          check_circle
+        </mat-icon>
+
         {{ scoreJustSaved ? 'Score Saved' : 'Save Score' }}
       </button>
     </div>
@@ -456,7 +463,6 @@
       <div class="mt-6 flex justify-end gap-2">
         <!--********** CANCEL PUBLISH **********-->
         <button
-          #publishCancelButton
           mat-button
           class="!rounded-[8px] !text-[12px] !font-semibold"
           (click)="cancelPublish()"
@@ -471,6 +477,282 @@
           (click)="confirmPublish()"
         >
           Publish Result
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!--********** UNPUBLISH RESULT DIALOG **********-->
+  <div
+    *ngIf="showUnpublishDialog"
+    class="publish-dialog__overlay fixed inset-0 z-[1000] flex items-center justify-center px-4"
+    role="presentation"
+  >
+    <!--********** UNPUBLISH DIALOG **********-->
+    <div
+      #unpublishDialog
+      class="publish-dialog w-full max-w-[430px] rounded-[14px] border border-[var(--color-border)] bg-[var(--color-white)] p-6 shadow-xl"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="unpublish-dialog-title"
+      aria-describedby="unpublish-dialog-description"
+      tabindex="-1"
+    >
+      <!--********** UNPUBLISH ICON **********-->
+      <div
+        class="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-primary-light)] text-[var(--color-primary-dark)]"
+        aria-hidden="true"
+      >
+        <mat-icon>visibility_off</mat-icon>
+      </div>
+
+      <!--********** DIALOG TITLE **********-->
+      <h2 id="unpublish-dialog-title" class="m-0 text-[16px] font-bold text-[var(--color-title)]">
+        Unpublish Assessment Result?
+      </h2>
+
+      <!--********** DIALOG DESCRIPTION **********-->
+      <p
+        id="unpublish-dialog-description"
+        class="m-0 mt-2 text-[12px] leading-[1.5] text-[var(--color-text-secondary)]"
+      >
+        Unpublishing will hide the assessment result from students. You can publish the result again
+        later after making the necessary changes.
+      </p>
+
+      <!--********** DIALOG ACTIONS **********-->
+      <div class="mt-6 flex justify-end gap-2">
+        <!--********** CANCEL UNPUBLISH **********-->
+        <button
+          mat-button
+          class="!rounded-[8px] !text-[12px] !font-semibold"
+          (click)="cancelUnpublish()"
+        >
+          Cancel
+        </button>
+
+        <!--********** CONFIRM UNPUBLISH **********-->
+        <button
+          mat-flat-button
+          class="!rounded-[8px] !bg-[var(--color-primary-dark)] !px-4 !text-[12px] !font-semibold !text-white"
+          (click)="confirmUnpublish()"
+        >
+          Unpublish Result
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!--********** LOCK RESULT DIALOG **********-->
+  <div
+    *ngIf="showLockDialog"
+    class="publish-dialog__overlay fixed inset-0 z-[1000] flex items-center justify-center px-4"
+    role="presentation"
+  >
+    <!--********** LOCK DIALOG **********-->
+    <div
+      #lockDialog
+      class="publish-dialog w-full max-w-[430px] rounded-[14px] border border-[var(--color-border)] bg-[var(--color-white)] p-6 shadow-xl"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="lock-dialog-title"
+      aria-describedby="lock-dialog-description"
+      tabindex="-1"
+    >
+      <!--********** LOCK ICON **********-->
+      <div
+        class="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-primary-light)] text-[var(--color-primary-dark)]"
+        aria-hidden="true"
+      >
+        <mat-icon>lock</mat-icon>
+      </div>
+
+      <!--********** DIALOG TITLE **********-->
+      <h2 id="lock-dialog-title" class="m-0 text-[16px] font-bold text-[var(--color-title)]">
+        Lock Assessment Result?
+      </h2>
+
+      <!--********** DIALOG DESCRIPTION **********-->
+      <p
+        id="lock-dialog-description"
+        class="m-0 mt-2 text-[12px] leading-[1.5] text-[var(--color-text-secondary)]"
+      >
+        Locking the result will prevent changes to student scores and teacher comments. You will
+        need to unlock the result before editing answers again.
+      </p>
+
+      <!--********** DIALOG ACTIONS **********-->
+      <div class="mt-6 flex justify-end gap-2">
+        <!--********** CANCEL LOCK **********-->
+        <button
+          mat-button
+          class="!rounded-[8px] !text-[12px] !font-semibold"
+          (click)="cancelLockResult()"
+        >
+          Cancel
+        </button>
+
+        <!--********** CONFIRM LOCK **********-->
+        <button
+          mat-flat-button
+          class="!rounded-[8px] !bg-[var(--color-primary-dark)] !px-4 !text-[12px] !font-semibold !text-white"
+          (click)="confirmLockResult()"
+        >
+          Lock Result
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!--********** UNLOCK RESULT DIALOG **********-->
+  <div
+    *ngIf="showUnlockDialog"
+    class="publish-dialog__overlay fixed inset-0 z-[1000] flex items-center justify-center px-4"
+    role="presentation"
+  >
+    <!--********** UNLOCK DIALOG **********-->
+    <div
+      #unlockDialog
+      class="publish-dialog w-full max-w-[430px] rounded-[14px] border border-[var(--color-border)] bg-[var(--color-white)] p-6 shadow-xl"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="unlock-dialog-title"
+      aria-describedby="unlock-dialog-description"
+      tabindex="-1"
+    >
+      <!--********** UNLOCK ICON **********-->
+      <div
+        class="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-primary-light)] text-[var(--color-primary-dark)]"
+        aria-hidden="true"
+      >
+        <mat-icon>lock_open</mat-icon>
+      </div>
+
+      <!--********** DIALOG TITLE **********-->
+      <h2 id="unlock-dialog-title" class="m-0 text-[16px] font-bold text-[var(--color-title)]">
+        Unlock Assessment Result?
+      </h2>
+
+      <!--********** DIALOG DESCRIPTION **********-->
+      <p
+        id="unlock-dialog-description"
+        class="m-0 mt-2 text-[12px] leading-[1.5] text-[var(--color-text-secondary)]"
+      >
+        Unlocking the result will allow you to edit student scores and teacher comments again. Make
+        sure any changes are reviewed before the result remains published.
+      </p>
+
+      <!--********** DIALOG ACTIONS **********-->
+      <div class="mt-6 flex justify-end gap-2">
+        <!--********** CANCEL UNLOCK **********-->
+        <button
+          mat-button
+          class="!rounded-[8px] !text-[12px] !font-semibold"
+          (click)="cancelUnlockResult()"
+        >
+          Cancel
+        </button>
+
+        <!--********** CONFIRM UNLOCK **********-->
+        <button
+          mat-flat-button
+          class="!rounded-[8px] !bg-[var(--color-primary-dark)] !px-4 !text-[12px] !font-semibold !text-white"
+          (click)="confirmUnlockResult()"
+        >
+          Unlock Result
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!--********** SAVE SCORE DIALOG **********-->
+  <div
+    *ngIf="showSaveScoreDialog"
+    class="publish-dialog__overlay fixed inset-0 z-[1000] flex items-center justify-center px-4"
+    role="presentation"
+  >
+    <!--********** SAVE SCORE CONFIRMATION DIALOG **********-->
+    <div
+      #saveScoreDialog
+      class="publish-dialog w-full max-w-[430px] rounded-[14px] border border-[var(--color-border)] bg-[var(--color-white)] p-6 shadow-xl"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="save-score-dialog-title"
+      aria-describedby="save-score-dialog-description"
+      tabindex="-1"
+    >
+      <!--********** SAVE SCORE ICON **********-->
+      <div
+        class="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-primary-light)] text-[var(--color-primary-dark)]"
+        aria-hidden="true"
+      >
+        <mat-icon>save</mat-icon>
+      </div>
+
+      <!--********** DIALOG TITLE **********-->
+      <h2 id="save-score-dialog-title" class="m-0 text-[16px] font-bold text-[var(--color-title)]">
+        Save Score Changes?
+      </h2>
+
+      <!--********** DIALOG DESCRIPTION **********-->
+      <p
+        id="save-score-dialog-description"
+        class="m-0 mt-2 text-[12px] leading-[1.5] text-[var(--color-text-secondary)]"
+      >
+        The updated score and teacher comments will be saved for this student. Make sure the
+        information is correct before continuing.
+      </p>
+
+      <!--********** SCORE SUMMARY **********-->
+      <div
+        *ngIf="selectedStudent"
+        class="mt-4 rounded-[9px] border border-[var(--color-border)] bg-[var(--color-background-content)] px-4 py-3"
+      >
+        <!--********** STUDENT NAME **********-->
+        <div class="flex items-center justify-between gap-3">
+          <span
+            class="text-[10px] font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]"
+          >
+            Student
+          </span>
+
+          <span class="text-[12px] font-semibold text-[var(--color-title)]">
+            {{ selectedStudent.studentName }}
+          </span>
+        </div>
+
+        <!--********** TOTAL SCORE **********-->
+        <div class="mt-2 flex items-center justify-between gap-3">
+          <span
+            class="text-[10px] font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]"
+          >
+            Total Score
+          </span>
+
+          <span class="text-[13px] font-bold text-[var(--color-primary-dark)]">
+            {{ selectedStudent.score }}/{{ selectedStudent.maxScore }}
+          </span>
+        </div>
+      </div>
+
+      <!--********** DIALOG ACTIONS **********-->
+      <div class="mt-6 flex justify-end gap-2">
+        <!--********** CANCEL SAVE SCORE **********-->
+        <button
+          mat-button
+          class="!rounded-[8px] !text-[12px] !font-semibold"
+          (click)="cancelSaveScore()"
+        >
+          Cancel
+        </button>
+
+        <!--********** CONFIRM SAVE SCORE **********-->
+        <button
+          mat-flat-button
+          class="!rounded-[8px] !bg-[var(--color-primary-dark)] !px-4 !text-[12px] !font-semibold !text-white"
+          (click)="confirmSaveScore()"
+        >
+          Save Score
         </button>
       </div>
     </div>
