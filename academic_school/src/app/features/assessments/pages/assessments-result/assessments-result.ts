@@ -65,6 +65,7 @@ interface ResultStudent {
   styleUrl: './assessments-result.scss',
 })
 export class AssessmentsResult implements OnInit {
+  //********** PRIVATE VARIABLES **********
   private readonly assessmentService = inject(AssessmentService);
   private readonly submissionService = inject(SubmissionService);
 
@@ -72,6 +73,7 @@ export class AssessmentsResult implements OnInit {
 
   @ViewChild('publishDialog') publishDialog?: ElementRef<HTMLElement>;
 
+  //********** PUBLIC STATE VARIABLES **********
   assessments: Assessment[] = [];
   selectedAssessmentId = 1;
   selectedStudent?: ResultStudent;
@@ -308,6 +310,8 @@ export class AssessmentsResult implements OnInit {
     this.successMessage = 'Assessment result is now locked.';
     setTimeout(() => (this.successMessage = ''), 3000);
   }
+
+  cancelLockResult(): void {}
 
   @HostListener('document:keydown', ['$event'])
   onDialogKeydown(event: KeyboardEvent): void {
