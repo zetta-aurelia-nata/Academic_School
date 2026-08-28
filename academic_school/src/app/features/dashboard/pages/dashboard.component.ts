@@ -8,7 +8,6 @@ import { MatIconModule } from '@angular/material/icon';
 
 //********** THIRD-PARTY IMPORTS **********
 import { TranslocoModule, TranslocoDirective } from '@jsverse/transloco';
-import { LanguageSwitcherComponent } from '../../../shared/components/language-switcher/language-switcher';
 
 //********** MODELS & SERVICES **********
 import {
@@ -26,7 +25,7 @@ import { DashboardService } from '../services/dashboard.service';
     MatIconModule,
     CommonModule,
     TranslocoModule,
-    LanguageSwitcherComponent],
+    ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })

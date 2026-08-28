@@ -20,7 +20,6 @@ export class HeaderComponent {
 
   //********** CONSTRUCTOR **********
   constructor(private readonly translocoService: TranslocoService) {
-    // *************** Track the language that is actually active, not just the default
     this.currentLang = this.translocoService.getActiveLang();
   }
 
