@@ -1,0 +1,51 @@
+{
+  "header": {
+    "title": "Selamat datang kembali!",
+    "subtitle": "Lihat perkembangan asesmen kamu di sini."
+  },
+  "banner": {
+    "eyebrow": "Manajemen Asesmen",
+    "title": "Pantau terus progres asesmenmu",
+    "description": "Pantau aktivitas asesmen, tinjau pengumpulan, dan lihat hasilnya dari satu tempat."
+  },
+  "stats": {
+    "totalAssessments": "Total Asesmen",
+    "totalAssessmentsDesc": "Semua asesmen yang dibuat",
+    "totalStudents": "Total Siswa",
+    "totalStudentsDesc": "Dari seluruh asesmen",
+    "completed": "Selesai",
+    "completedDesc": "Asesmen yang telah selesai",
+    "pending": "Menunggu",
+    "pendingDesc": "Menunggu peninjauan kamu",
+    "failed": "Gagal / Perlu Perbaikan",
+    "failedDesc": "Perlu perhatian",
+    "draft": "Draf",
+    "draftDesc": "Menunggu dipublikasikan"
+  },
+  "status": {
+    "completed": "Selesai",
+    "pending": "Menunggu",
+    "failed": "Gagal",
+    "draft": "Draf",
+    "notSubmitted": "Belum Dikumpulkan"
+  },
+  "statusChart": {
+    "title": "Status Asesmen",
+    "subtitle": "Distribusi dari seluruh asesmen",
+    "totalLabel": "Total"
+  },
+  "calculation": {
+    "title": "Ringkasan Perhitungan",
+    "subtitle": "Rasio utama yang dihitung dari data asesmen saat ini",
+    "completionRate": "Tingkat Penyelesaian",
+    "completionRateDesc": "{{completed}} dari {{total}} asesmen telah selesai",
+    "pendingRate": "Tingkat Menunggu",
+    "pendingRateDesc": "{{pending}} dari {{total}} menunggu peninjauan",
+    "failureRate": "Tingkat Kegagalan",
+    "failureRateDesc": "{{failed}} dari {{total}} perlu perhatian"
+  },
+  "note": {
+    "title": "Ringkasan Asesmen",
+    "text": "Gunakan statistik di atas untuk memantau aktivitas asesmenmu dengan cepat."
+  }
+}

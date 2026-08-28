@@ -1,0 +1,19 @@
+{
+  "app": {
+    "name": "Academic School"
+  },
+  "actions": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "close": "Close"
+  },
+  "language": {
+    "label": "Language",
+    "en": "English",
+    "fr": "French",
+    "es": "Spanish",
+    "id": "Indonesian"
+  }
+}

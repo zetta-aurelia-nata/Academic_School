@@ -369,7 +369,6 @@
                 [disabled]="currentResultState.locked"
                 class="score-input w-full rounded-[8px] border border-[var(--color-border)] bg-[var(--color-white)] px-3 py-2 text-[13px] font-semibold text-[var(--color-title)] outline-none"
               />
-
               <span class="shrink-0 text-[11px] font-semibold text-[var(--color-text-secondary)]">
                 / {{ answer.maxScore }}
               </span>
@@ -408,7 +407,9 @@
       <button
         mat-flat-button
         class="!h-9 !rounded-[9px] !px-5 !text-[12px] !font-semibold !text-white align-center justify-center transition-colors duration-300"
-        [ngClass]="scoreJustSaved ? '!bg-[#027a48]' : '!bg-[var(--color-primary-dark)]'"
+        [ngClass]="
+          scoreJustSaved ? '!bg-[var(--color-card-green)]' : '!bg-[var(--color-primary-dark)]'
+        "
         [disabled]="currentResultState.locked"
         (click)="onSaveScore()"
       >
@@ -561,7 +562,7 @@
     >
       <!--********** LOCK ICON **********-->
       <div
-        class="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-primary-light)] text-[var(--color-primary-dark)]"
+        class="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-card-red-border)] text-[var(--color-card-red)]"
         aria-hidden="true"
       >
         <mat-icon>lock</mat-icon>
@@ -595,7 +596,7 @@
         <!--********** CONFIRM LOCK **********-->
         <button
           mat-flat-button
-          class="!rounded-[8px] !bg-[var(--color-primary-dark)] !px-4 !text-[12px] !font-semibold !text-white"
+          class="!rounded-[8px] !bg-[var(--color-card-red)] !px-4 !text-[12px] !font-semibold !text-white"
           (click)="confirmLockResult()"
         >
           Lock Result
@@ -622,7 +623,7 @@
     >
       <!--********** UNLOCK ICON **********-->
       <div
-        class="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-primary-light)] text-[var(--color-primary-dark)]"
+        class="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-card-green-light)] text-[var(--color-card-green)]"
         aria-hidden="true"
       >
         <mat-icon>lock_open</mat-icon>
@@ -656,7 +657,7 @@
         <!--********** CONFIRM UNLOCK **********-->
         <button
           mat-flat-button
-          class="!rounded-[8px] !bg-[var(--color-primary-dark)] !px-4 !text-[12px] !font-semibold !text-white"
+          class="!rounded-[8px] !bg-[var(--color-card-green)] !px-4 !text-[12px] !font-semibold !text-white"
           (click)="confirmUnlockResult()"
         >
           Unlock Result

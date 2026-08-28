@@ -82,7 +82,6 @@ export class AssessmentList {
 
   readonly statusOptions: AssessmentStatus[] = [
     'Completed',
-    'Not Submitted',
     'Pending',
     'Failed',
     'Draft',

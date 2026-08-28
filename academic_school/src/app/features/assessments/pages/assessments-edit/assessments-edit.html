@@ -150,7 +150,8 @@
               rows="4"
               placeholder="Enter assessment description"
             ></textarea>
-            <mat-error *ngIf="assessmentForm.get('description')?.hasError('required')">Description text is required</mat-error>
+           
+           <mat-error *ngIf="assessmentForm.get('description')?.hasError('required')">Description text is required</mat-error>
           </mat-form-field>
         </div>
 

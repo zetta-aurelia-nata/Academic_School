@@ -1,20 +1,29 @@
-//********** TYPES **********
-export type AssessmentStatus = 'active' | 'completed' | 'pending_review' | 'failed' | 'draft';
+//********** SHARED TYPES **********
+import { AssessmentStatus } from '../../assessments/pages/assessments-list/assessment.list.model';
 
-// *************** ASSESSMENT ***************
-export interface Assessment {
-  id: string;
-  title: string;
-  status: AssessmentStatus;
-  studentCount: number;
-  createdDate: Date;
-}
-
+export type { AssessmentStatus };
 // *************** ASSESSMENT STAT ***************
 export interface AssessmentStat {
-  label: string;
+  labelKey: string;
   value: number;
   description: string;
   icon: string;
   colorClass: string;
+}
+
+// *************** STATUS SLICE (for status distribution chart) ***************
+export interface StatusSlice {
+  status: AssessmentStatus;
+  labelKey: string;
+  count: number;
+  percentage: number;
+  colorVar: string;
+}
+
+// *************** CALCULATION METRIC (for calculated rate bars) ***************
+export interface CalculationMetric {
+  labelKey: string;
+  value: number;
+  description: string;
+  colorVar: string;
 }

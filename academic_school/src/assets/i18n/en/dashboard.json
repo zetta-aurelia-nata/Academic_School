@@ -1,0 +1,54 @@
+{
+  "header": {
+    "title": "Welcome back!",
+    "subtitle": "Let's see your assessment progress here.",
+    "choose_language": "Choose a language",
+    "en": "English",
+    "es": "Spanish"
+  },
+  "banner": {
+    "eyebrow": "Assessment Management",
+    "title": "Keep your assessments on track",
+    "description": "Monitor assessment activities, review submissions, and keep track of your results from one place."
+  },
+  "stats": {
+    "totalAssessments": "Total Assessments",
+    "totalAssessmentsDesc": "All created assessments",
+    "totalStudents": "Total Students",
+    "totalStudentsDesc": "Across all assessments",
+    "completed": "Completed",
+    "completedDesc": "Assessments completed",
+    "pending": "Pending",
+    "pendingDesc": "Awaiting your review",
+    "failed": "Failed / Needs Work",
+    "failedDesc": "Requires attention",
+    "draft": "Draft",
+    "draftDesc": "Waiting to publish"
+  },
+  "status": {
+    "completed": "Completed",
+    "pending": "Pending",
+    "failed": "Failed",
+    "draft": "Draft",
+    "notSubmitted": "Not Submitted"
+  },
+  "statusChart": {
+    "title": "Assessment Status",
+    "subtitle": "Distribution across all assessments",
+    "totalLabel": "Total"
+  },
+  "calculation": {
+    "title": "Calculation Summary",
+    "subtitle": "Key rates calculated from current assessment data",
+    "completionRate": "Completion Rate",
+    "completionRateDesc": "{{completed}} of {{total}} assessments completed",
+    "pendingRate": "Pending Rate",
+    "pendingRateDesc": "{{pending}} of {{total}} awaiting review",
+    "failureRate": "Failure Rate",
+    "failureRateDesc": "{{failed}} of {{total}} need attention"
+  },
+  "note": {
+    "title": "Assessment Overview",
+    "text": "Use the statistics above to quickly monitor your assessment activities."
+  }
+}

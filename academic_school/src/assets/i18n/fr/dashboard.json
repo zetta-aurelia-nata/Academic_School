@@ -1,0 +1,51 @@
+{
+  "header": {
+    "title": "Content de vous revoir !",
+    "subtitle": "Suivez ici la progression de vos évaluations."
+  },
+  "banner": {
+    "eyebrow": "Gestion des évaluations",
+    "title": "Gardez vos évaluations sur la bonne voie",
+    "description": "Suivez les activités d'évaluation, examinez les soumissions et consultez vos résultats depuis un seul endroit."
+  },
+  "stats": {
+    "totalAssessments": "Total des évaluations",
+    "totalAssessmentsDesc": "Toutes les évaluations créées",
+    "totalStudents": "Total des élèves",
+    "totalStudentsDesc": "Sur toutes les évaluations",
+    "completed": "Terminées",
+    "completedDesc": "Évaluations terminées",
+    "pending": "En attente",
+    "pendingDesc": "En attente de votre examen",
+    "failed": "Échouées / À revoir",
+    "failedDesc": "Nécessite une attention",
+    "draft": "Brouillon",
+    "draftDesc": "En attente de publication"
+  },
+  "status": {
+    "completed": "Terminée",
+    "pending": "En attente",
+    "failed": "Échouée",
+    "draft": "Brouillon",
+    "notSubmitted": "Non soumise"
+  },
+  "statusChart": {
+    "title": "Statut des évaluations",
+    "subtitle": "Répartition sur toutes les évaluations",
+    "totalLabel": "Total"
+  },
+  "calculation": {
+    "title": "Résumé des calculs",
+    "subtitle": "Principaux taux calculés à partir des données actuelles",
+    "completionRate": "Taux de complétion",
+    "completionRateDesc": "{{completed}} évaluations terminées sur {{total}}",
+    "pendingRate": "Taux en attente",
+    "pendingRateDesc": "{{pending}} en attente sur {{total}}",
+    "failureRate": "Taux d'échec",
+    "failureRateDesc": "{{failed}} nécessitent une attention sur {{total}}"
+  },
+  "note": {
+    "title": "Aperçu des évaluations",
+    "text": "Utilisez les statistiques ci-dessus pour surveiller rapidement vos activités d'évaluation."
+  }
+}
