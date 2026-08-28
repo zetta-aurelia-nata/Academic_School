@@ -1,5 +1,5 @@
 <!--********** SIDEBAR SECTION **********-->
-<aside class="sidebar">
+<aside class="sidebar" *transloco="let t; read: 'layout.sidebar'">
   <!--********** SIDEBAR LOGO **********-->
   <div class="sidebar__logo">
     <div class="sidebar__logo-icon">
@@ -9,7 +9,7 @@
     <div class="sidebar__logo-content">
       <div class="sidebar__logo-title">EduAssess</div>
 
-      <div class="sidebar__logo-tagline">Learn. Assess. Grow.</div>
+      <div class="sidebar__logo-tagline">{{ t('logoTagline') }}</div>
     </div>
   </div>
 
@@ -25,7 +25,7 @@
     >
       <mat-icon class="sidebar__item-icon">dashboard</mat-icon>
 
-      <span class="sidebar__item-text">Dashboard</span>
+      <span class="sidebar__item-text">{{ t('menu.dashboard') }}</span>
     </a>
 
     <!--********** ASSESSMENTS MENU **********-->
@@ -40,7 +40,7 @@
         <span class="sidebar__menu-content">
           <mat-icon class="sidebar__menu-icon">assignment</mat-icon>
 
-          <span class="sidebar__menu-text">Assessments</span>
+          <span class="sidebar__menu-text">{{ t('menu.assessments') }}</span>
         </span>
 
         <mat-icon class="sidebar__menu-arrow">
@@ -59,7 +59,7 @@
               class="sidebar__submenu-item"
               (click)="onNavigationSelected()"
             >
-              {{ submenu.label }}
+              {{ t(submenu.label) }}
             </a>
           }
         </div>

@@ -4,17 +4,19 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 
 // *************** Angular Material Imports ***************
 import { MatIcon } from '@angular/material/icon';
+import { TranslocoDirective } from '@jsverse/transloco';
 
 // *************** INTERFACES ***************
 export interface SubmenuItem {
   id: string;
-  label: string;
+  translationKey: string;
   link: string;
+  label:string;
 }
 
 @Component({
   selector: 'app-sidebar',
-  imports: [RouterLink, RouterLinkActive, MatIcon],
+  imports: [RouterLink, RouterLinkActive, MatIcon,TranslocoDirective],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
 })
@@ -28,9 +30,9 @@ export class SidebarComponent {
   // *************** PUBLIC STATE VARIABLES ***************
   isAssessmentOpen = false;
   readonly assessmentSubmenus: SubmenuItem[] = [
-    { id: 'list', label: 'Assessments List', link: '/assessments' },
-    { id: 'result', label: 'Assessment Scoring', link: '/assessments/result' },
-    { id: 'submission', label: 'Assessment Result', link: '/assessments/review' },
+    { id: 'list', label: 'Assessments List', link: '/assessments',translationKey:'sidebar.submenu.list' },
+    { id: 'result', label: 'Assessment Scoring', link: '/assessments/result', translationKey:'sidebar.submenu.result'},
+    { id: 'submission', label: 'Assessment Result', link: '/assessments/review', translationKey:'sidebar.submenu.submission'},
   ];
 
   // *************** ACTION HANDLERS ***************

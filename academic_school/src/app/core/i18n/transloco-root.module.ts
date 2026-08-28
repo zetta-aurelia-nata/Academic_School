@@ -1,9 +1,6 @@
-//********** ANGULAR IMPORTS **********
-import { isDevMode, NgModule } from '@angular/core';
-
-//********** APPLICATION IMPORTS **********
-import { TranslocoHttpLoader } from './transloco-loader';
+import { NgModule, isDevMode } from '@angular/core';
 import { TranslocoModule, provideTransloco } from '@jsverse/transloco';
+import { TranslocoHttpLoader } from './transloco-loader';
 
 @NgModule({
   exports: [TranslocoModule],
