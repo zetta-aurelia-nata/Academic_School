@@ -1,10 +1,10 @@
 <!--********** HEADER SECTION **********-->
-<header class="header">
+<header class="header" *transloco="let t">
   <!--********** SIDEBAR TOGGLE BUTTON **********-->
   <button
     type="button"
     class="header__menu-toggle"
-    aria-label="Toggle sidebar"
+    [attr.aria-label]="t('layout.header.toggleSidebarAria')"
     (click)="toggleSidebar()"
   >
     <mat-icon class="header__menu-toggle-icon">menu</mat-icon>
@@ -12,12 +12,24 @@
 
   <!--********** PAGE TITLE **********-->
   <div class="header__page">
-    <h1 class="header__page-title">Assessment Management</h1>
+    <h1 class="header__page-title">{{ t('layout.header.title') }}</h1>
   </div>
 
   <!--********** HEADER ACTIONS **********-->
   <div class="header__actions">
-    
+
+    <!--********** LANGUAGE TOGGLE BUTTON **********-->
+    <button
+      type="button"
+      class="header__lang-toggle"
+      [attr.aria-label]="t('language.label')"
+      [attr.title]="t('language.label')"
+      (click)="toggleLanguage()"
+    >
+      <mat-icon class="header__lang-toggle-icon">translate</mat-icon>
+      <span class="header__lang-toggle-code">{{ currentLang.toUpperCase() }}</span>
+    </button>
+
     <!--********** HEADER DIVIDER **********-->
     <div class="header__divider"></div>
 
@@ -28,14 +40,14 @@
         <img
           class="header__user-avatar-img"
           src="assets/images/placeholder/user-avatar.jpg"
-          alt="user-avatar"
+          [attr.alt]="t('layout.header.userAvatarAlt')"
         />
       </div>
 
       <!--********** USER INFORMATION **********-->
       <div class="header__user-info">
-        <span class="header__user-name">Ms. Aurelia</span>
-        <span class="header__user-role">Teacher</span>
+        <span class="header__user-name">{{ t('layout.header.userName') }}</span>
+        <span class="header__user-role">{{ t('layout.header.userRole') }}</span>
       </div>
 
       <span class="header__user-profile-chevron">&#8964;</span>
