@@ -30,9 +30,9 @@ export class SidebarComponent {
   // *************** PUBLIC STATE VARIABLES ***************
   isAssessmentOpen = false;
   readonly assessmentSubmenus: SubmenuItem[] = [
-    { id: 'list', label: 'Assessments List', link: '/assessments',translationKey:'sidebar.submenu.list' },
-    { id: 'result', label: 'Assessment Scoring', link: '/assessments/result', translationKey:'sidebar.submenu.result'},
-    { id: 'submission', label: 'Assessment Result', link: '/assessments/review', translationKey:'sidebar.submenu.submission'},
+    { id: 'list', label: 'Assessments List', link: '/assessments',translationKey:'layout.sidebar.submenu.list' },
+    { id: 'result', label: 'Assessment Scoring', link: '/assessments/result', translationKey:'layout.sidebar.submenu.result'},
+    { id: 'submission', label: 'Assessment Result', link: '/assessments/review', translationKey:'layout.sidebar.submenu.submission'},
   ];
 
   // *************** ACTION HANDLERS ***************
