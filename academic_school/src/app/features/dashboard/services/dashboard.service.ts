@@ -66,13 +66,6 @@ export class DashboardService {
         colorClass: 'progress-icon--purple',
       },
       {
-        labelKey: 'Total Students',
-        value: totalStudents,
-        description: 'Across all assessments',
-        icon: 'groups',
-        colorClass: 'progress-icon--green',
-      },
-      {
         labelKey: 'Completed Assessments',
         value: this.countByStatus('Completed'),
         description: 'Assessments completed',

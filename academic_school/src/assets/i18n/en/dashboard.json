@@ -1,0 +1,19 @@
+{
+  "dashboard": {
+    "header": {
+      "title": "Welcome Back!",
+      "subtitle": "Let's see your assessment progress here."
+    },
+    "banner": {
+      "eyebrow": "Assessment Management",
+      "title": "Keep your assessments on track",
+      "description": "Monitor assessment activities, review submissions, and keep track of your results from one place."
+    },
+    "insights": {
+      "statusTitle": "Assessment Status",
+      "totalLabel": "Assessments",
+      "calculationTitle": "Calculation Summary",
+      "calculationSubtitle": "Key rates calculated from current assessment data"
+    }
+  }
+}

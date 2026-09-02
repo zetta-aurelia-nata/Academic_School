@@ -560,25 +560,18 @@
     text-align: left;
   }
 
-  // ********** STUDENT STATUS **********
-  .result-student__status,
-  .result-student__action {
-    grid-column: auto;
-    grid-row: auto;
-  }
-
   // ********** STUDENT ACTION **********
   .result-student__action {
-    justify-content: flex-start;
+    justify-content: flex-end;
   }
 
-  // ********** RESULT STATUS **********
-  .result-status {
-    display: inline-flex !important;
-  }
+    // ********** RESULT STATUS **********
+    .result-status {
+      display: inline-flex !important;
+    }
 
-  // ********** MANUAL SCORING HEADER **********
-  .manual-scoring__header {
-    align-items: flex-start;
+    // ********** MANUAL SCORING HEADER **********
+    .manual-scoring__header {
+      align-items: flex-start;
+    }
   }
-}

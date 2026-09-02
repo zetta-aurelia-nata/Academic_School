@@ -12,8 +12,7 @@
   "language": {
     "label": "Language",
     "en": "English",
-    "fr": "French",
-    "id": "Indonesian"
+    "fr": "French"
   },
   "layout": {
     "footer": {
@@ -32,9 +31,9 @@
         "dashboard": "Dashboard",
         "assessments": "Assessments",
         "submenu": {
-          "list": "All Assessments",
-          "result": "Create Assessment",
-          "submission": "View Results"
+          "list": "Assessments List",
+          "result": "Assessments Review",
+          "submission": "Assessments Result"
         }
       }
     }

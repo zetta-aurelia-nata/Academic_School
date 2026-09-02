@@ -42,7 +42,7 @@
         class="welcome-banner__description m-0 max-w-[550px] text-[13px] leading-[1.6] max-[768px]:text-xs max-[480px]:mt-0.5"
       >
         Monitor assessment activities, review submissions, and keep track of your results from one
-        place.
+        place.ß
       </p>
     </div>
 
@@ -118,19 +118,12 @@
     <!-- *************** STATUS DISTRIBUTION CARD *************** -->
     <mat-card class="insight-card !rounded-2xl !p-6 max-[768px]:!p-5">
       <div class="insight-card__header flex items-center gap-2 mb-1">
-        <mat-icon class="insight-card__icon !h-5 !w-5 !text-[20px] !leading-5"
-          >donut_large</mat-icon
-        >
         <strong class="insight-card__title text-[15px] font-bold leading-[1.3]">
           Assessment Status
         </strong>
       </div>
 
-      <p class="insight-card__subtitle m-0 mb-4 text-xs leading-[1.5]">
-        Distribution across all assessments
-      </p>
-
-      <div class="status-chart flex items-center gap-6 flex-wrap max-[480px]:gap-4">
+      <div class="status-chart flex items-center gap-6 flex-wrap max-[480px]:gap-4 mt-[12px]">
         <div
           class="status-chart__donut relative h-[140px] w-[140px] shrink-0 rounded-full"
           [style.background]="donutGradient"
@@ -141,7 +134,7 @@
             <strong class="status-chart__total text-[24px] font-bold leading-[1.1]">
               {{ stats[0]?.value || 0 }}
             </strong>
-            <span class="status-chart__total-label text-[10px] font-semibold uppercase">
+            <span class="status-chart__total-label text-[12px] font-[300px]">
               Assessments
             </span>
           </div>
@@ -157,7 +150,7 @@
               [style.background]="'var(' + slice.colorVar + ')'"
             ></span>
 
-            <span class="status-chart__legend-label flex-1 truncate font-medium">
+            <span class="status-chart__legend-label flex-1 truncate font-bold">
               {{ slice.labelKey }}
             </span>
 
@@ -172,7 +165,6 @@
     <!-- *************** CALCULATION SUMMARY CARD *************** -->
     <mat-card class="insight-card !rounded-2xl !p-6 max-[768px]:!p-5">
       <div class="insight-card__header flex items-center gap-2 mb-1">
-        <mat-icon class="insight-card__icon !h-5 !w-5 !text-[20px] !leading-5">calculate</mat-icon>
         <strong class="insight-card__title text-[15px] font-bold leading-[1.3]">
           Calculation Summary
         </strong>

@@ -24,7 +24,7 @@ import { DashboardService } from '../services/dashboard.service';
     MatCardModule,
     MatIconModule,
     CommonModule,
-    TranslocoModule,
+    TranslocoModule
     ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',

@@ -1,0 +1,19 @@
+{
+  "dashboard": {
+    "header": {
+      "title": "Bon retour !",
+      "subtitle": "Voyons l'avancement de vos évaluations ici."
+    },
+    "banner": {
+      "ayebrow": "Gestion des évaluations",
+      "title": "Gardez vos évaluations sur la bonne voie",
+      "description": "Suivez les activités d'évaluation, examinez les soumissions et gardez une trace de vos résultats en un seul endroit."
+    },
+    "insights": {
+      "statusTitle": "Statut des évaluations",
+      "totalLabel": "Évaluations",
+      "calculationTitle": "Résumé des calculs",
+      "calculationSubtitle": "Taux clés calculés à partir des données d'évaluation actuelles"
+    }
+  }
+}

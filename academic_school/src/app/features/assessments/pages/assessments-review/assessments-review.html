@@ -2,25 +2,26 @@
 <section
   class="assessments-review w-full min-h-full box-border bg-[var(--color-background-content)] px-8 pt-[30px] pb-10 font-sans max-lg:px-5 max-lg:pt-6 max-lg:pb-7 max-md:px-4 max-md:pt-5"
 >
-  <!-- ********** PAGE HEADER ********** -->
+  <!-- ********** PAGE TITLE ********** -->
   <div
-    class="assessments-review__toolbar mb-6 flex items-end justify-between gap-4 max-md:flex-col max-md:items-stretch"
+    class="assessments-review__toolbar mb-6 flex items-center justify-between gap-4 max-md:flex-col max-md:items-stretch"
   >
-    <!-- ********** PAGE TITLE ********** -->
     <div class="flex flex-col gap-1">
       <h1
         class="m-0 text-2xl font-bold leading-[1.2] tracking-[-0.3px] text-[var(--color-title)] max-lg:text-[22px]"
       >
         Assessments Result
       </h1>
-
-      <span class="text-[13px] leading-[1.4] text-[var(--color-text-secondary)]">
-        Select an assessment to review student submissions
-      </span>
+      <div class="text-[12px] text-[var(--color-text-secondary)]">
+        {{ filteredAssessments.length }} assessment{{ filteredAssessments.length !== 1 ? 's' : '' }}
+        available for review
+      </div>
     </div>
 
-    <!-- ********** SEARCH + FILTER ********** -->
-    <div class="assessments-review__controls flex items-center gap-2.5 max-md:flex-col max-md:items-stretch">
+    <!-- ********** SEARCH & FILTER CONTROLS ********** -->
+    <div
+      class="assessments-review__controls flex items-center gap-1 max-md:flex-col max-md:items-stretch"
+    >
       <!-- ********** SEARCH ********** -->
       <div class="assessments-review__search">
         <!-- ********** SEARCH ICON ********** -->
@@ -56,12 +57,6 @@
         (filterApplied)="onFilterApplied($event)"
       ></app-filter>
     </div>
-  </div>
-
-  <!-- ********** RESULT COUNT ********** -->
-  <div class="mb-4 text-[12px] text-[var(--color-text-secondary)]">
-    {{ filteredAssessments.length }} assessment{{ filteredAssessments.length !== 1 ? 's' : '' }}
-    available for review
   </div>
 
   <!-- ********** ASSESSMENT CARDS ********** -->
