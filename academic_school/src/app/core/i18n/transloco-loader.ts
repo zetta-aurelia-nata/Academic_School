@@ -11,6 +11,7 @@ export class TranslocoHttpLoader implements TranslocoLoader {
   getTranslation(lang: string): Observable<Record<string, any>> {
     // *************** Define Translation Files
     const files = ['common', 'auth'];
+    
 
     // *************** Create Requests for Each File
     const requests: Observable<Record<string, any>>[] = files.map((file) =>

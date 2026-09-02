@@ -1,6 +1,6 @@
 //********** ANGULAR IMPORTS **********
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, ViewChild, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -10,6 +10,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
+
+//********** SWEETALERT IMPORT **********
+import Swal from 'sweetalert2';
 
 //********** APPLICATION IMPORTS **********
 import { AssessmentService } from '../../services/assessment.service';
@@ -38,19 +41,9 @@ import {
   styleUrls: ['./assessments-list.scss'],
 })
 export class AssessmentList {
-  //********** VIEW CHILDREN **********
-  @ViewChild('deleteDialog')
-  deleteDialog?: ElementRef<HTMLElement>;
-
-  @ViewChild('deleteCancelButton')
-  deleteCancelButton?: ElementRef<HTMLButtonElement>;
-
   //********** SERVICES **********
   private readonly router = inject(Router);
   private readonly assessmentService = inject(AssessmentService);
-
-  //********** PRIVATE VARIABLES **********
-  private deleteTrigger: HTMLElement | null = null;
 
   //********** PUBLIC STATE VARIABLES **********
   displayedColumns: string[] = [
@@ -68,9 +61,6 @@ export class AssessmentList {
 
   searchQuery = '';
 
-  showDeleteDialog = false;
-  selectedAssessment: Assessment | null = null;
-
   //********** APPLIED FILTERS **********
   selectedStatus = 'ALL';
   selectedSubject = 'ALL';
@@ -80,24 +70,21 @@ export class AssessmentList {
   keyword = '';
   assessmentName = '';
 
-  readonly statusOptions: AssessmentStatus[] = [
-    'Completed',
-    'Pending',
-    'Failed',
-    'Draft',
-  ];
+  readonly statusOptions: AssessmentStatus[] = ['Completed', 'Pending', 'Failed', 'Draft'];
 
   //********** LIFECYCLE **********
   ngOnInit(): void {
     this.loadAssessments();
   }
 
+  //********** LOAD ASSESSMENTS **********
   private loadAssessments(): void {
     this.assessments = this.assessmentService.getAssessments();
 
     this.applyFilters();
   }
 
+  //********** SEARCH **********
   onSearch(): void {
     this.applyFilters();
   }
@@ -108,8 +95,8 @@ export class AssessmentList {
     this.applyFilters();
   }
 
+  //********** FILTER **********
   onFilterApplied(filters: FilterValue): void {
-    //********** UPDATE APPLIED FILTERS **********
     this.selectedStatus = filters.status;
     this.selectedSubject = filters.subject;
     this.selectedGrade = filters.grade;
@@ -127,11 +114,12 @@ export class AssessmentList {
     const nameQuery = this.assessmentName.trim().toLowerCase();
 
     const targetStatus = this.selectedStatus.toString().trim().toLowerCase();
+
     const targetSubject = this.selectedSubject.toString().trim().toLowerCase();
+
     const targetGrade = this.selectedGrade.toString().trim().toLowerCase();
 
     const fromDate = this.dateFrom ? new Date(this.dateFrom) : null;
-
     const toDate = this.dateTo ? new Date(this.dateTo) : null;
 
     //********** SEARCH MATCHER **********
@@ -146,35 +134,18 @@ export class AssessmentList {
       ].some((field) => field?.toString().toLowerCase().includes(query));
 
     this.filteredAssessments = this.assessments.filter((assessment) => {
-      //********** SEARCH (TOP BAR + KEYWORD SECTION) **********
       const matchesSearch =
         matchesQuery(assessment, topQuery) && matchesQuery(assessment, keywordQuery);
-
-      //********** ASSESSMENT NAME **********
       const assessmentTitle = assessment.title?.toString().trim().toLowerCase() ?? '';
-
       const matchesName = !nameQuery || assessmentTitle.includes(nameQuery);
-
-      //********** STATUS **********
       const assessmentStatus = assessment.status?.toString().trim().toLowerCase();
-
       const matchesStatus = targetStatus === 'all' || assessmentStatus === targetStatus;
-
-      //********** SUBJECT **********
       const assessmentSubject = assessment.subject?.toString().trim().toLowerCase();
-
       const matchesSubject = targetSubject === 'all' || assessmentSubject === targetSubject;
-
-      //********** GRADE **********
       const assessmentGrade = assessment.grade?.toString().trim().toLowerCase();
-
       const matchesGrade = targetGrade === 'all' || assessmentGrade === targetGrade;
-
-      //********** DATE RANGE **********
       const assessmentDate = new Date(assessment.date);
-
       const matchesFrom = !fromDate || assessmentDate >= fromDate;
-
       const matchesTo = !toDate || assessmentDate <= toDate;
 
       return (
@@ -223,48 +194,32 @@ export class AssessmentList {
     this.router.navigate(['/assessments', assessment.id, 'submissions']);
   }
 
-  //********** ACTION HANDLERS **********
-  onDelete(assessment: Assessment, event?: Event): void {
-    this.selectedAssessment = assessment;
+  onDelete(assessment: Assessment): void {
+    Swal.fire({
+      title: 'Delete Assessment?',
+      html: `Are you sure you want to delete <strong>${assessment.title}</strong>?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel',
+      confirmButtonColor: 'var(--color-card-red)',
+      reverseButtons: true,
+      focusCancel: true,
+      buttonsStyling: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.assessmentService.deleteAssessment(assessment.id);
 
-    this.deleteTrigger = event?.currentTarget as HTMLElement | null;
+        this.loadAssessments();
 
-    this.showDeleteDialog = true;
-
-    setTimeout(() => {
-      this.deleteDialog?.nativeElement.focus();
-    });
-  }
-
-  onCancelDelete(): void {
-    this.showDeleteDialog = false;
-
-    this.selectedAssessment = null;
-
-    setTimeout(() => {
-      this.deleteTrigger?.focus();
-
-      this.deleteTrigger = null;
-    });
-  }
-
-  onConfirmDelete(): void {
-    if (!this.selectedAssessment) {
-      return;
-    }
-
-    this.assessmentService.deleteAssessment(this.selectedAssessment.id);
-
-    this.loadAssessments();
-
-    this.showDeleteDialog = false;
-
-    this.selectedAssessment = null;
-
-    setTimeout(() => {
-      this.deleteTrigger?.focus();
-
-      this.deleteTrigger = null;
+        Swal.fire({
+          title: 'Deleted!',
+          text: 'The assessment has been deleted successfully.',
+          icon: 'success',
+          timer: 1500,
+          showConfirmButton: false,
+        });
+      }
     });
   }
 

@@ -31,7 +31,7 @@
 
         <!--********** DRAFT STATUS **********-->
         <span *ngIf="!currentResultState.published" class="result-badge result-badge--draft">
-          <span class="result-badge__dot"></span>
+          <span class="result-badge__dot flex"></span>
           Draft
         </span>
       </div>
@@ -273,7 +273,7 @@
 
         <!--********** MANUAL SCORING TITLE **********-->
         <div class="min-w-0">
-          <h2 class="m-0 text-[14px] font-bold text-[var(--color-white)]">Manual Scoring</h2>
+          <h2 class="m-0 text-[14px] font-bold text-[var(--color-white)]">Essay Manual Scoring</h2>
 
           <p class="m-0 mt-1 text-[11px] text-[var(--color-white)]">
             {{ selectedStudent.studentName }}

@@ -280,7 +280,7 @@
     </mat-card>
 
     <!--********** SUBMITTED ANSWERS MULTIPLE CHOICES **********-->
-    <mat-card class="detail-card !mb-4 !rounded-[14px] !border !border-[var(--color-border)] !p-0">
+    <mat-card class="detail-card !mb-4 !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-0">
       <div class="border-b border-[var(--color-border)] px-5 py-4">
         <h2 class="m-0 text-[14px] font-bold text-[var(--color-title)]">Multiple Choices</h2>
       </div>
@@ -344,52 +344,44 @@
           *ngFor="let item of answers; let i = index"
           class="answer-item border-b border-[var(--color-border)] p-5 last:border-b-0"
         >
-          <div class="flex items-start justify-between gap-5 max-md:flex-col">
-            <!--********** QUESTION AND ANSWER **********-->
-            <div class="min-w-0 flex-1">
-              <span
-                class="text-[11px] font-bold uppercase tracking-wide text-[var(--color-text-secondary)]"
-              >
-                Question {{ i + 1 }}
+          <!-- Main Row Header: Question Label + Score -->
+          <div class="flex items-center justify-between gap-4">
+            <span
+              class="text-[11px] font-bold uppercase tracking-wide text-[var(--color-text-secondary)]"
+            >
+              Question {{ i + 1 }}
+            </span>
+
+            <!--********** ANSWER SCORE (Rata Kanan) **********-->
+            <span class="shrink-0 text-[12px] font-bold text-[var(--color-primary-dark)]">
+              {{ item.score }}/{{ item.maxScore }}
+            </span>
+          </div>
+
+          <!--********** QUESTION AND ANSWER CONTENT **********-->
+          <div class="mt-2 min-w-0">
+            <h3 class="m-0 text-[13px] font-semibold text-[var(--color-title)]">
+              {{ item.question }}
+            </h3>
+
+            <p
+              class="m-0 mt-2 p-5 text-[12px] bg-[var(--color-card-blue-light)] text-[var(--color-black)]"
+            >
+              Answer :
+              <span class="font-semibold text-[var(--color-title)]">
+                {{ item.answer }}
               </span>
+            </p>
 
-              <h3 class="m-0 mt-2 text-[13px] font-semibold text-[var(--color-title)]">
-                {{ item.question }}
-              </h3>
-
-              <p
-                class="m-0 mt-2 text-[12px] p-5 bg-(--color-card-blue-light) text-[var(--color-black)]"
-              >
-                Answer :
-
-                <span class="font-semibold text-[var(--color-title)]">
-                  {{ item.answer }}
-                </span>
-              </p>
-
-              <!--********** TEACHER REVIEW/COMMENT **********-->
-              <p
-                class="text-[11px] font-semibold uppercase tracking-wide mt-5 text-[var(--color-text-secondary)] !bg[var(color--card-blue-border)]"
-              >
-                Teacher Review :
-              </p>
-              <span class="font-semibold text-[var(--color-title)] text-[12px] !bg-[--color-card-blue-border]">
-                {{ item.teacherComment }}
-              </span>
-            </div>
-
-            <!--********** ANSWER SCORE READ ONLY **********-->
-            <div class="flex shrink-0 items-center gap-2 max-md:w-full max-md:justify-between">
-              <span
-                class="text-[10px] font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]"
-              >
-                Score
-              </span>
-
-              <span class="text-[13px] font-bold text-[var(--color-primary-dark)]">
-                {{ item.score }}/{{ item.maxScore }}
-              </span>
-            </div>
+            <!--********** TEACHER REVIEW/COMMENT **********-->
+            <p
+              class="mt-5 text-[11px] font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]"
+            >
+              Teacher Review :
+            </p>
+            <span class="text-[12px] font-semibold text-[var(--color-title)]">
+              {{ item.teacherComment }}
+            </span>
           </div>
         </div>
 
