@@ -1,3 +1,5 @@
+import { ASSESSMENTS } from '../../features/assessments/assessment.data';
+
 export const CommonTranslationKeys = {
   APP: {
     NAME: 'app.name',
@@ -13,7 +15,29 @@ export const CommonTranslationKeys = {
     LABEL: 'language.label',
     EN: 'language.en',
     FR: 'language.fr',
-    ES: 'language.es',
-    ID: 'language.id',
+  },
+  LAYOUT: {
+    FOOTER: {
+      TITLE: 'footer.title',
+    },
+    HEADER: {
+      TOGGLE_SIDEBAR_ARIA: 'header.toggleSidebarAria',
+      TITLE: 'header.title',
+      USER_AVATAR_ALT: 'header.userAvatarAlt',
+      USER_NAME: 'header.userName',
+      USER_ROLE: 'header.userRole',
+    },
+    SIDEBAR: {
+      LOGO_TAGLINE: 'sidebar.logoTagline',
+      MENU: {
+        DASHBOARD: 'sidebar.dashboard',
+        ASSESSMENTS: 'sidebar.assessments',
+        SUBMENU: {
+          LIST: 'submenu.list',
+          SCORING: 'submenu.scoring',
+          REVIEW: 'submenu.review',
+        },
+      },
+    },
   },
 } as const;

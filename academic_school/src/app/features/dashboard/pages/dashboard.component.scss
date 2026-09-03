@@ -136,7 +136,7 @@
 
   &:hover {
     transform: translateY(-3px);
-    border-color: color-mix(in srgb, var(--card-color) 35%, white) !important;
+    border-color: color-mix(in srgb, var(--card-color) 35%, var(--color-white)) !important;
     box-shadow: 0 8px 24px color-mix(in srgb, var(--card-color) 12%, transparent) !important;
 
     .progress-item__accent {
