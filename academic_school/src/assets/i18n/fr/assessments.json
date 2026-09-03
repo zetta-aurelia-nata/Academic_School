@@ -1,49 +1,4 @@
 {
-  "pageTitle": "Bon retour !",
-  "pageSubtitle": "Découvrez ici l'avancement de vos évaluations.",
-
-  "welcome": {
-    "eyebrow": "Gestion des évaluations",
-    "title": "Gardez vos évaluations sur la bonne voie",
-    "description": "Suivez les activités d'évaluation, examinez les soumissions et consultez vos résultats depuis un seul endroit."
-  },
-
-  "stats": {
-    "totalAssessments": "Total des évaluations",
-    "totalAssessmentsDescription": "Toutes les évaluations créées",
-    "draft": "Brouillon",
-    "draftDescription": "Évaluations en brouillon",
-    "published": "Publiées",
-    "publishedDescription": "Évaluations publiées",
-    "completed": "Terminées",
-    "completedDescription": "Évaluations terminées",
-    "pending": "En attente",
-    "pendingDescription": "Évaluations en attente",
-    "failed": "Échouées",
-    "failedDescription": "Évaluations échouées"
-  },
-
-  "status": {
-    "title": "Statut des évaluations",
-    "subtitle": "Répartition de l'ensemble des évaluations",
-    "assessments": "Évaluations",
-    "draft": "Brouillon",
-    "published": "Publiées",
-    "completed": "Terminées",
-    "pending": "En attente",
-    "failed": "Échouées"
-  },
-
-  "calculation": {
-    "title": "Résumé des calculs",
-    "subtitle": "Principaux taux calculés à partir des données actuelles",
-    "completed": "Évaluation terminée",
-    "completedDescription": "Évaluations terminées",
-    "pending": "Évaluation en attente",
-    "pendingDescription": "Évaluations en attente",
-    "failed": "Évaluations échouées",
-    "failedDescription": "Évaluations échouées"
-  },
   "assessment": {
     "list": {
       "title": "Évaluations",
