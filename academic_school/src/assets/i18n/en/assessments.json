@@ -386,7 +386,14 @@
       "cancel": "Cancel",
       "confirm": "Unlock Result"
     },
-
+    "messages": {
+      "scoreSaved": "Score for {{name}} has been saved.",
+      "published": "Assessment results have been published successfully.",
+      "unpublished": "Assessment results have been unpublished.",
+      "publishBeforeLock": "Publish the result before locking it.",
+      "locked": "Assessment result is now locked.",
+      "unlocked": "Assessment result has been unlocked. You can edit scores and teacher comments again."
+    },
     "saveScoreDialog": {
       "title": "Save Score?",
       "description": "This will save the score and teacher comments for this student.",

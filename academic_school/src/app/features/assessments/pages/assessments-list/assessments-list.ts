@@ -217,6 +217,7 @@ export class AssessmentList {
         title: assessment.title,
       }),
       icon: 'warning',
+      iconColor:'var(--color-card-red',
       showCancelButton: true,
       confirmButtonText: this.transloco.translate('assessment.list.delete.confirmButton'),
       cancelButtonText: this.transloco.translate('assessment.list.delete.cancelButton'),

@@ -431,6 +431,14 @@
       "cancel": "Annuler",
       "confirm": "Déverrouiller le résultat"
     },
+    "messages": {
+      "scoreSaved": "Le score pour {{name}} a été enregistré.",
+      "published": "Les résultats de l'évaluation ont été publiés avec succès.",
+      "unpublished": "Les résultats de l'évaluation ne sont plus publiés.",
+      "publishBeforeLock": "Publiez le résultat avant de le verrouiller.",
+      "locked": "Le résultat de l'évaluation est maintenant verrouillé.",
+      "unlocked": "Le résultat de l'évaluation a été déverrouillé. Vous pouvez de nouveau modifier les scores et les commentaires de l'enseignant."
+    },
 
     "saveScoreDialog": {
       "title": "Enregistrer la note ?",

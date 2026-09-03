@@ -9,15 +9,15 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 
+//********** TRANSLOCO IMPORTS **********
+import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
+
 //********** APPLICATION IMPORTS **********
 import { AssessmentService } from '../../services/assessment.service';
 import { SubmissionService } from '../../services/submission.service';
 import { Submission } from '../../models/submission.model';
 import { Question } from '../../models/question.model';
 import { Assessment } from '../assessments-list/assessment.list.model';
-
-import { TranslocoDirective } from '@jsverse/transloco';
-
 
 //********** INTERFACES **********
 interface AssessmentResult {
@@ -62,7 +62,8 @@ interface ResultStudent {
     MatButtonModule,
     MatCardModule,
     MatIconModule,
-    MatSelectModule,TranslocoDirective
+    MatSelectModule,
+    TranslocoDirective,
   ],
   templateUrl: './assessments-result.html',
   styleUrl: './assessments-result.scss',
@@ -71,6 +72,7 @@ export class AssessmentsResult implements OnInit {
   //********** PRIVATE VARIABLES **********
   private readonly assessmentService = inject(AssessmentService);
   private readonly submissionService = inject(SubmissionService);
+  private readonly transloco = inject(TranslocoService);
   private activeTrigger: HTMLElement | null = null;
 
   @ViewChild('publishDialog')
@@ -314,7 +316,9 @@ export class AssessmentsResult implements OnInit {
     }
 
     this.showSaveScoreDialog = false;
-    this.successMessage = `Score for ${this.selectedStudent.studentName} has been saved.`;
+    this.successMessage = this.transloco.translate('assessmentResult.messages.scoreSaved', {
+      name: this.selectedStudent.studentName,
+    });
     this.scoreJustSaved = true;
     setTimeout(() => (this.successMessage = ''), 3000);
     setTimeout(() => (this.scoreJustSaved = false), 2000);
@@ -346,13 +350,16 @@ export class AssessmentsResult implements OnInit {
 
   confirmPublish(): void {
     this.resultStates = this.resultStates.map((state) =>
-      state.assessmentId === this.selectedAssessmentId ? {
-            ...state, published: true,
-          } : state,
+      state.assessmentId === this.selectedAssessmentId
+        ? {
+            ...state,
+            published: true,
+          }
+        : state,
     );
 
     this.showPublishDialog = false;
-    this.successMessage = 'Assessment results have been published successfully.';
+    this.successMessage = this.transloco.translate('assessmentResult.messages.published');
     setTimeout(() => (this.successMessage = ''), 3000);
     this.restoreActiveTriggerFocus();
   }
@@ -364,13 +371,16 @@ export class AssessmentsResult implements OnInit {
 
   confirmUnpublish(): void {
     this.resultStates = this.resultStates.map((state) =>
-      state.assessmentId === this.selectedAssessmentId ? {
-            ...state, published: false,
-          } : state,
+      state.assessmentId === this.selectedAssessmentId
+        ? {
+            ...state,
+            published: false,
+          }
+        : state,
     );
 
     this.showUnpublishDialog = false;
-    this.successMessage = 'Assessment results have been unpublished.';
+    this.successMessage = this.transloco.translate('assessmentResult.messages.unpublished');
     setTimeout(() => (this.successMessage = ''), 3000);
     this.restoreActiveTriggerFocus();
   }
@@ -383,7 +393,7 @@ export class AssessmentsResult implements OnInit {
   //********** ACTION HANDLERS **********
   onLockResult(event: Event): void {
     if (!this.currentResultState.published) {
-      this.successMessage = 'Publish the result before locking it.';
+      this.successMessage = this.transloco.translate('assessmentResult.messages.publishBeforeLock');
       setTimeout(() => (this.successMessage = ''), 3000);
       return;
     }
@@ -417,7 +427,7 @@ export class AssessmentsResult implements OnInit {
 
     this.showLockDialog = false;
 
-    this.successMessage = 'Assessment result is now locked.';
+    this.successMessage = this.transloco.translate('assessmentResult.messages.locked');
 
     setTimeout(() => (this.successMessage = ''), 3000);
 
@@ -442,8 +452,7 @@ export class AssessmentsResult implements OnInit {
 
     this.showUnlockDialog = false;
 
-    this.successMessage =
-      'Assessment result has been unlocked. You can edit scores and teacher comments again.';
+    this.successMessage = this.transloco.translate('assessmentResult.messages.unlocked');
 
     setTimeout(() => (this.successMessage = ''), 3000);
 
