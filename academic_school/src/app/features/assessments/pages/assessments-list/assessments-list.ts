@@ -209,15 +209,13 @@ export class AssessmentList {
   onReviewAssessment(assessment: Assessment): void {
     this.router.navigate(['/assessments', assessment.id, 'submissions']);
   }
-
   onDelete(assessment: Assessment): void {
     Swal.fire({
       title: this.transloco.translate('assessment.list.delete.confirmTitle'),
-      html: this.transloco.translate('assessment.list.delete.confirmText', {
+      text: this.transloco.translate('assessment.list.delete.confirmText', {
         title: assessment.title,
       }),
       icon: 'warning',
-      iconColor:'var(--color-card-red',
       showCancelButton: true,
       confirmButtonText: this.transloco.translate('assessment.list.delete.confirmButton'),
       cancelButtonText: this.transloco.translate('assessment.list.delete.cancelButton'),
