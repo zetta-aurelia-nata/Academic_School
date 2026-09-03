@@ -27,13 +27,14 @@ export class SidebarComponent {
     this.navigationSelected.emit();
   }
 
+
   // *************** PUBLIC STATE VARIABLES ***************
   isAssessmentOpen = false;
-  readonly assessmentSubmenus: SubmenuItem[] = [
-    { id: 'list', label: 'Assessments List', link: '/assessments', translationKey: 'menu.submenu.list' },
-    { id: 'scoring', label: 'Assessment Scoring', link: '/assessments/result', translationKey: 'menu.submenu.scoring' },
-    { id: 'review', label: 'Assessment Result', link: '/assessments/review', translationKey: 'menu.submenu.review' },
-  ];
+readonly assessmentSubmenus: SubmenuItem[] = [
+  { id: 'list', label: 'Assessments List', link: '/assessments', translationKey: 'layout.sidebar.menu.submenu.list' },
+  { id: 'scoring', label: 'Assessment Scoring', link: '/assessments/result', translationKey: 'layout.sidebar.menu.submenu.scoring' },
+  { id: 'review', label: 'Assessment Result', link: '/assessments/review', translationKey: 'layout.sidebar.menu.submenu.review' },
+];
 
   // *************** ACTION HANDLERS ***************
   toggleAssessment(): void {

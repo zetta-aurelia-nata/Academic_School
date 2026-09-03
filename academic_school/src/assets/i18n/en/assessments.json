@@ -386,6 +386,7 @@
       "cancel": "Cancel",
       "confirm": "Unlock Result"
     },
+    
     "messages": {
       "scoreSaved": "Score for {{name}} has been saved.",
       "published": "Assessment results have been published successfully.",
