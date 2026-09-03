@@ -33,8 +33,8 @@
         "assessments": "Évaluations",
         "submenu": {
           "list": "Toutes les Évaluations",
-          "result": "Créer une Évaluation",
-          "submission": "Voir les Résultats"
+          "scoring": "Créer une Évaluation",
+          "review": "Voir les Résultats"
         }
       }
     }

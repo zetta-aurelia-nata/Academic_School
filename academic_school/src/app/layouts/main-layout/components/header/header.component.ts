@@ -28,7 +28,6 @@ export class HeaderComponent {
     this.sidebarToggle.emit();
   }
 
-  // *************** Cycle to the next available language and re-render translations
   toggleLanguage(): void {
     const availableLangs = this.translocoService
       .getAvailableLangs()

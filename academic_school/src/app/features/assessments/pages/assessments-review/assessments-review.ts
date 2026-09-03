@@ -9,6 +9,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 
+// ********** THIRD-PARTY IMPORTS **********
+import { TranslocoDirective } from '@jsverse/transloco';
+
 // ********** APPLICATION MODELS AND SERVICES **********
 import { AssessmentService } from '../../services/assessment.service';
 import { Assessment, AssessmentStatus } from '../assessments-list/assessment.list.model';
@@ -28,6 +31,7 @@ import {
     MatCardModule,
     MatIconModule,
     FilterComponent,
+    TranslocoDirective,
   ],
   templateUrl: './assessments-review.html',
   styleUrls: ['./assessments-review.scss'],
@@ -43,6 +47,15 @@ export class AssessmentsReview implements OnInit {
   searchQuery = '';
 
   private activeFilter: FilterValue | null = null;
+
+  // ********** STATUS -> TRANSLATION KEY MAP **********
+  private readonly statusLabelMap: Record<AssessmentStatus, string> = {
+    Completed: 'status.completed',
+    Pending: 'status.pending',
+    Failed: 'status.failed',
+    Draft: 'status.draft',
+    'Not Submitted': 'status.notSubmitted',
+  };
 
   // ********** LIFECYCLE **********
   ngOnInit(): void {
@@ -101,6 +114,11 @@ export class AssessmentsReview implements OnInit {
     return `status-badge status-badge--${status.toLowerCase()}`;
   }
 
+  // ********** STATUS TRANSLATION KEY **********
+  statusLabelKey(status: AssessmentStatus): string {
+    return this.statusLabelMap[status] ?? 'status.draft';
+  }
+
   // ********** COMBINED SEARCH + FILTER LOGIC **********
   private applyFilters(): void {
     const query = this.searchQuery.trim().toLowerCase();
@@ -136,21 +154,13 @@ export class AssessmentsReview implements OnInit {
       const matchesGrade =
         filter.grade === 'ALL' || grade === filter.grade.toString().toLowerCase();
 
-      const matchesDate = this.isWithinDateRange(
-        assessment.date,
-        filter.dateFrom,
-        filter.dateTo
-      );
+      const matchesDate = this.isWithinDateRange(assessment.date, filter.dateFrom, filter.dateTo);
 
       return matchesStatus && matchesSubject && matchesGrade && matchesDate;
     });
   }
 
-  private isWithinDateRange(
-    date: unknown,
-    dateFrom: string,
-    dateTo: string
-  ): boolean {
+  private isWithinDateRange(date: unknown, dateFrom: string, dateTo: string): boolean {
     if (!dateFrom && !dateTo) {
       return true;
     }

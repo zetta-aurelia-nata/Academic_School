@@ -1,34 +1,40 @@
 {
-  "header": { "title": "Welcome Back!", "subtitle": "Let's see your assessment progress here." },
-  "banner": {
+  "pageTitle": "Welcome Back!",
+  "pageSubtitle": "Let's see your assessment progress here.",
+  "welcome": {
     "eyebrow": "Assessment Management",
     "title": "Keep your assessments on track",
     "description": "Monitor assessment activities, review submissions, and keep track of your results from one place."
   },
   "stats": {
-    "all": "Total Assessments",
+    "totalAssessments": "Total Assessments",
+    "totalAssessmentsDescription": "All created assessments",
+    "draft": "Draft",
+    "draftDescription": "Assessments in draft",
+    "published": "Published",
+    "publishedDescription": "Published assessments",
+    "completed": "Completed",
+    "completedDescription": "Completed assessments",
+    "pending": "Pending",
+    "pendingDescription": "Pending assessments",
+    "failed":"Failed",
+    "failedDescription":"Failed Assessments"
+  },
+  "status": {
+    "title": "Assessment Status",
+    "subtitle": "Distribution across all assessments",
+    "assessments": "Assessments",
+    "draft": "Draft",
+    "published": "Published",
     "completed": "Completed",
     "pending": "Pending",
-    "failed": "Failed",
-    "draft": "Draft",
-    "notSubmitted": "Not Submitted"
+    "failed":"Failed"
   },
-  "descriptions": {
-    "all": "All assessments recorded",
-    "completed": "Successfully completed",
-    "pending": "Awaiting completion",
-    "failed": "Did not pass",
-    "draft": "Saved as draft"
-  },
-  "insights": {
-    "statusTitle": "Assessment Status",
-    "totalLabel": "Assessments",
-    "calculationTitle": "Calculation Summary",
-    "calculationSubtitle": "Key rates calculated from current assessment data"
-  },
-  "metrics": {
-    "completed": "Completion rate",
-    "pending": "Pending rate",
-    "failed": "Failure rate"
+  "calculation": {
+    "title": "Calculation Summary",
+    "subtitle": "Key rates calculated from current assessment data",
+    "completed":"Completed Assessment",
+    "pending":"Pending Assessment",    
+    "failed":"Failed Assessments"
   }
 }

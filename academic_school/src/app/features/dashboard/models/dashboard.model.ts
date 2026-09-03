@@ -6,7 +6,7 @@ export type { AssessmentStatus };
 export interface AssessmentStat {
   labelKey: string;
   value: number;
-  description: string;
+  descriptionKey: string;
   icon: string;
   colorClass: string;
 }
@@ -24,6 +24,6 @@ export interface StatusSlice {
 export interface CalculationMetric {
   labelKey: string;
   value: number;
-  description: string;
+  descriptionKey: string;
   colorVar: string;
 }

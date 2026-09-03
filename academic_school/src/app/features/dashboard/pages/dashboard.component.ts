@@ -7,25 +7,15 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 
 //********** THIRD-PARTY IMPORTS **********
-import { TranslocoModule, TranslocoDirective } from '@jsverse/transloco';
+import { TranslocoDirective } from '@jsverse/transloco';
 
 //********** MODELS & SERVICES **********
-import {
-  AssessmentStat,
-  CalculationMetric,
-  StatusSlice,
-} from '../models/dashboard.model';
+import { AssessmentStat, CalculationMetric, StatusSlice } from '../models/dashboard.model';
 import { DashboardService } from '../services/dashboard.service';
-
 
 @Component({
   selector: 'app-dashboard',
-  imports: [
-    MatCardModule,
-    MatIconModule,
-    CommonModule,
-    TranslocoModule
-    ],
+  imports: [CommonModule, MatCardModule, MatIconModule, TranslocoDirective],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
@@ -57,6 +47,7 @@ export class DashboardComponent implements OnInit {
 
     const stops = slices.map((slice) => {
       const start = cumulative;
+
       cumulative += slice.percentage;
 
       return `var(${slice.colorVar}) ${start}% ${cumulative}%`;

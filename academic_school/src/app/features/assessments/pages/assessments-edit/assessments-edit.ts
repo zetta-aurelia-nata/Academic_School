@@ -28,6 +28,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 
+// ********** THIRD-PARTY IMPORTS **********
+import { TranslocoDirective } from '@jsverse/transloco';
+
 // ********** APPLICATION MODELS AND DATA IMPORTS **********
 import { AssessmentService } from '../../services/assessment.service';
 import { Question, QuestionType } from '../../models/question.model';
@@ -51,6 +54,7 @@ import { Question, QuestionType } from '../../models/question.model';
     CdkDropList,
     CdkDrag,
     CdkDragPlaceholder,
+    TranslocoDirective,
   ],
   templateUrl: './assessments-edit.html',
   styleUrl: './assessments-edit.scss',
@@ -229,19 +233,21 @@ export class EditAssessment implements OnInit {
   }
 
   // ********** UTILITY METHODS **********
+  // Returns a Transloco translation key instead of a literal label,
+  // so the template can resolve it via `t(questionTypeLabel(...))`.
   questionTypeLabel(type: QuestionType): string {
-    return type === 'essay' ? 'Essay' : 'Multiple Choice';
+    return type === 'essay'
+      ? 'assessment.edit.questions.essayLabel'
+      : 'assessment.edit.questions.multipleChoiceLabel';
   }
 
   // ********** ACTION HANDLERS  **********
   onSave(): void {
-    // ********** VALIDATE FORM **********
     if (this.assessmentForm.invalid) {
       this.assessmentForm.markAllAsTouched();
       return;
     }
 
-    // ********** GET FORM VALUE **********
     const formValue = this.assessmentForm.getRawValue();
 
     // ********** UPDATE ASSESSMENT **********

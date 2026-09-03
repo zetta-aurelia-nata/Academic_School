@@ -1,0 +1,40 @@
+{
+  "pageTitle": "Bon retour !",
+  "pageSubtitle": "Consultez ici la progression de vos évaluations.",
+  "welcome": {
+    "eyebrow": "Gestion des évaluations",
+    "title": "Gardez vos évaluations sur la bonne voie",
+    "description": "Surveillez les activités d'évaluation, examinez les soumissions et suivez vos résultats depuis un seul endroit."
+  },
+  "stats": {
+    "totalAssessments": "Total des évaluations",
+    "totalAssessmentsDescription": "Toutes les évaluations créées",
+    "draft": "Brouillon",
+    "draftDescription": "Évaluations en brouillon",
+    "published": "Publiées",
+    "publishedDescription": "Évaluations publiées",
+    "completed": "Terminées",
+    "completedDescription": "Évaluations terminées",
+    "pending": "En attente",
+    "pendingDescription": "Évaluations en attente",
+    "failed": "échouées",
+    "failedDescription": "Évaluations échouées"
+  },
+  "status": {
+    "title": "Statut des évaluations",
+    "subtitle": "Répartition de toutes les évaluations",
+    "assessments": "Évaluations",
+    "draft": "Brouillon",
+    "published": "Publiées",
+    "completed": "Terminées",
+    "pending": "En attente",
+    "failed": "échouées"
+  },
+  "calculation": {
+    "title": "Résumé des calculs",
+    "subtitle": "Principaux taux calculés à partir des données actuelles des évaluations",
+    "completed": "Évaluations Terminées",
+    "pending": "Évaluations En attente",
+    "failed": "Évaluations échouées"
+  }
+}

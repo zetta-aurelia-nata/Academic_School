@@ -1,5 +1,7 @@
+<!--********** DASHBOARD SECTION **********-->
 <section
-  class="dashboard transw-full min-w-0 overflow-x-hidden box-border bg-[var(--color-background-content)] px-8 pt-[30px] pb-10 max-[1100px]:px-6 max-[1100px]:pt-[26px] max-[1100px]:pb-9 max-[768px]:px-4 max-[768px]:pt-5 max-[768px]:pb-7"
+  class="dashboard w-full min-w-0 overflow-x-hidden box-border bg-[var(--color-background-content)] px-8 pt-[30px] pb-10 max-[1100px]:px-6 max-[1100px]:pt-[26px] max-[1100px]:pb-9 max-[768px]:px-4 max-[768px]:pt-5 max-[768px]:pb-7"
+  *transloco="let t"
 >
   <!-- *************** PAGE HEADER *************** -->
   <div class="page-header mb-6 max-[768px]:mb-5">
@@ -7,12 +9,14 @@
       <h1
         class="page-header__title m-0 mb-[7px] text-[27px] font-bold leading-[1.2] tracking-[-0.5px] max-[768px]:text-[23px]"
       >
-        Welcome Back!
+        {{ t('pageTitle') }}
         <span class="page-header__wave">👋</span>
       </h1>
 
-      <p class="page-header__subtitle m-0 text-sm leading-[1.5] max-[768px]:text-[13px]">
-        Let's see your assessment progress here.
+      <p
+        class="page-header__subtitle m-0 text-sm leading-[1.5] max-[768px]:text-[13px]"
+      >
+        {{ t('pageSubtitle') }}
       </p>
     </div>
   </div>
@@ -21,17 +25,19 @@
   <div
     class="welcome-banner relative mb-[22px] flex min-h-[155px] items-center justify-between overflow-hidden box-border rounded-[18px] px-8 py-7 max-[768px]:min-h-[145px] max-[768px]:p-[22px] max-[480px]:min-h-0"
   >
-    <div class="welcome-banner__content relative z-[2] flex max-w-[620px] flex-col">
+    <div
+      class="welcome-banner__content relative z-[2] flex max-w-[620px] flex-col"
+    >
       <span
         class="welcome-banner__eyebrow mb-1.5 text-[11px] font-semibold uppercase leading-[1.4] tracking-[0.5px]"
       >
-        Assessment Management
+        {{ t('welcome.eyebrow') }}
       </span>
 
       <h2
         class="welcome-banner__title m-0 mb-[7px] text-[22px] font-bold leading-[1.25] tracking-[-0.3px] max-[768px]:text-[19px] max-[480px]:text-[18px]"
       >
-        Keep your assessments on track
+        {{ t('welcome.title') }}
       </h2>
 
       <div
@@ -41,8 +47,7 @@
       <p
         class="welcome-banner__description m-0 max-w-[550px] text-[13px] leading-[1.6] max-[768px]:text-xs max-[480px]:mt-0.5"
       >
-        Monitor assessment activities, review submissions, and keep track of your results from one
-        place.ß
+        {{ t('welcome.description') }}
       </p>
     </div>
 
@@ -52,9 +57,11 @@
       <div
         class="welcome-banner__circle welcome-banner__circle--large absolute right-[5px] top-0 h-[120px] w-[120px] rounded-full max-[768px]:h-[90px] max-[768px]:w-[90px]"
       ></div>
+
       <div
         class="welcome-banner__circle welcome-banner__circle--small absolute !h-[70px] !w-[70px] rounded-full right-[70px] top-[50px]"
       ></div>
+
       <mat-icon
         class="welcome-banner__icon absolute right-[25px] top-[10px] z-[2] !h-[100px] !w-[100px] !text-[80px] !leading-[80px]"
       >
@@ -85,11 +92,13 @@
           </mat-icon>
         </div>
 
-        <div class="progress-item__information relative z-[1] min-w-0">
+        <div
+          class="progress-item__information relative z-[1] min-w-0"
+        >
           <span
             class="progress-label__text block truncate text-[11px] font-semibold leading-[1.35] max-[768px]:text-[10px]"
           >
-            {{ stat.labelKey }}
+            {{ t(stat.labelKey) }}
           </span>
 
           <strong
@@ -99,15 +108,17 @@
           </strong>
 
           <span
-            *ngIf="stat.description"
+            *ngIf="stat.descriptionKey"
             class="progress-item__description mt-1 block truncate text-[11px] leading-[1.35] max-[768px]:text-[10px]"
           >
-            {{ stat.description }}
+            {{ t(stat.descriptionKey) }}
           </span>
         </div>
       </div>
 
-      <div class="progress-item__accent absolute bottom-0 left-0 top-0 w-[3px]"></div>
+      <div
+        class="progress-item__accent absolute bottom-0 left-0 top-0 w-[3px]"
+      ></div>
     </mat-card>
   </div>
 
@@ -116,31 +127,58 @@
     class="insights-grid mb-[22px] grid grid-cols-2 gap-4 max-[1024px]:grid-cols-1 max-[768px]:mb-[18px] max-[768px]:gap-3.5"
   >
     <!-- *************** STATUS DISTRIBUTION CARD *************** -->
-    <mat-card class="insight-card !rounded-2xl !p-6 max-[768px]:!p-5">
-      <div class="insight-card__header flex items-center gap-2 mb-1">
-        <strong class="insight-card__title text-[15px] font-bold leading-[1.3]">
-          Assessment Status
+    <mat-card
+      class="insight-card !rounded-2xl !p-6 max-[768px]:!p-5"
+    >
+      <div
+        class="insight-card__header flex items-center gap-2 mb-1"
+      >
+        <mat-icon
+          class="insight-card__icon !h-5 !w-5 !text-[20px] !leading-5"
+        >
+          donut_large
+        </mat-icon>
+
+        <strong
+          class="insight-card__title text-[15px] font-bold leading-[1.3]"
+        >
+          {{ t('status.title') }}
         </strong>
       </div>
 
-      <div class="status-chart flex items-center gap-6 flex-wrap max-[480px]:gap-4 mt-[12px]">
+      <p
+        class="insight-card__subtitle m-0 mb-4 text-xs leading-[1.5]"
+      >
+        {{ t('status.subtitle') }}
+      </p>
+
+      <div
+        class="status-chart flex items-center gap-6 flex-wrap max-[480px]:gap-4"
+      >
         <div
           class="status-chart__donut relative h-[140px] w-[140px] shrink-0 rounded-full"
           [style.background]="donutGradient"
         >
           <div
-            class="status-chart__hole absolute inset-[20px] flex flex-col items-center justify-center rounded-full"
+            class="status-chart__hole absolute inset-[26px] flex flex-col items-center justify-center rounded-full"
           >
-            <strong class="status-chart__total text-[24px] font-bold leading-[1.1]">
+            <strong
+              class="status-chart__total text-[24px] font-bold leading-[1.1]"
+            >
               {{ stats[0]?.value || 0 }}
             </strong>
-            <span class="status-chart__total-label text-[12px] font-[300px]">
-              Assessments
+
+            <span
+              class="status-chart__total-label text-[10px] font-semibold uppercase"
+            >
+              {{ t('status.assessments') }}
             </span>
           </div>
         </div>
 
-        <ul class="status-chart__legend flex min-w-[140px] flex-1 flex-col gap-2.5">
+        <ul
+          class="status-chart__legend flex min-w-[140px] flex-1 flex-col gap-2.5"
+        >
           <li
             *ngFor="let slice of statusDistribution"
             class="status-chart__legend-item flex items-center gap-2 text-[12px]"
@@ -150,48 +188,84 @@
               [style.background]="'var(' + slice.colorVar + ')'"
             ></span>
 
-            <span class="status-chart__legend-label flex-1 truncate font-bold">
-              {{ slice.labelKey }}
+            <span
+              class="status-chart__legend-label flex-1 truncate font-medium"
+            >
+              {{ t(slice.labelKey) }}
             </span>
 
-            <strong class="status-chart__legend-count">{{ slice.count }}</strong>
+            <strong
+              class="status-chart__legend-count"
+            >
+              {{ slice.count }}
+            </strong>
 
-            <span class="status-chart__legend-pct text-[11px]">({{ slice.percentage }}%)</span>
+            <span
+              class="status-chart__legend-pct text-[11px]"
+            >
+              ({{ slice.percentage }}%)
+            </span>
           </li>
         </ul>
       </div>
     </mat-card>
 
     <!-- *************** CALCULATION SUMMARY CARD *************** -->
-    <mat-card class="insight-card !rounded-2xl !p-6 max-[768px]:!p-5">
-      <div class="insight-card__header flex items-center gap-2 mb-1">
-        <strong class="insight-card__title text-[15px] font-bold leading-[1.3]">
-          Calculation Summary
+    <mat-card
+      class="insight-card !rounded-2xl !p-6 max-[768px]:!p-5"
+    >
+      <div
+        class="insight-card__header flex items-center gap-2 mb-1"
+      >
+        <mat-icon
+          class="insight-card__icon !h-5 !w-5 !text-[20px] !leading-5"
+        >
+          calculate
+        </mat-icon>
+
+        <strong
+          class="insight-card__title text-[15px] font-bold leading-[1.3]"
+        >
+          {{ t('calculation.title') }}
         </strong>
       </div>
 
-      <p class="insight-card__subtitle m-0 mb-4 text-xs leading-[1.5]">
-        Key rates calculated from current assessment data
+      <p
+        class="insight-card__subtitle m-0 mb-4 text-xs leading-[1.5]"
+      >
+        {{ t('calculation.subtitle') }}
       </p>
 
       <div class="calc-list flex flex-col gap-4">
-        <div *ngFor="let metric of calculationSummary" class="calc-item">
-          <div class="calc-item__header mb-1 flex items-center justify-between text-[12px]">
-            <span class="calc-item__label font-semibold">{{ metric.labelKey }}</span>
-            <span class="calc-item__value font-bold">{{ metric.value }}%</span>
+        <div
+          *ngFor="let metric of calculationSummary"
+          class="calc-item"
+        >
+          <div
+            class="calc-item__header mb-1 flex items-center justify-between text-[12px]"
+          >
+            <span
+              class="calc-item__label font-semibold"
+            >
+              {{ t(metric.labelKey) }}
+            </span>
+
+            <span
+              class="calc-item__value font-bold"
+            >
+              {{ metric.value }}%
+            </span>
           </div>
 
-          <div class="calc-item__track h-2 w-full overflow-hidden rounded-full">
+          <div
+            class="calc-item__track h-2 w-full overflow-hidden rounded-full"
+          >
             <div
               class="calc-item__bar h-full rounded-full"
               [style.width.%]="metric.value"
               [style.background]="'var(' + metric.colorVar + ')'"
             ></div>
           </div>
-
-          <span class="calc-item__description mt-1 block text-[11px] leading-[1.4]">
-            {{ metric.description }}
-          </span>
         </div>
       </div>
     </mat-card>

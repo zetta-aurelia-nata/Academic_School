@@ -17,25 +17,28 @@ export class DashboardService {
   //********** PRIVATE VARIABLES **********
   private readonly assessmentService = inject(AssessmentService);
 
-  private readonly statusMeta: Record<AssessmentStatus, { labelKey: string; colorVar: string }> = {
+  private readonly statusMeta: Record<
+    AssessmentStatus,
+    { labelKey: string; colorVar: string }
+  > = {
     Completed: {
-      labelKey: 'Completed Assessments',
+      labelKey: 'status.completed',
       colorVar: '--color-card-green',
     },
     Pending: {
-      labelKey: 'Pending Assessments',
+      labelKey: 'status.pending',
       colorVar: '--color-card-orange',
     },
     Failed: {
-      labelKey: 'Failed Assessments',
+      labelKey: 'status.failed',
       colorVar: '--color-card-red',
     },
     Draft: {
-      labelKey: 'Draft Assessments',
+      labelKey: 'status.draft',
       colorVar: '--color-card-grey',
     },
     'Not Submitted': {
-      labelKey: 'Assessments Not Submitted',
+      labelKey: 'status.notSubmitted',
       colorVar: '--color-card-blue',
     },
   };
@@ -49,53 +52,50 @@ export class DashboardService {
     return this.assessments;
   }
 
+  //********** GET STATS **********
   getStats(): AssessmentStat[] {
     const assessments = this.assessments;
 
-    const totalStudents = assessments.reduce(
-      (sum, assessment) => sum + (assessment.totalStudents ?? 0),
-      0,
-    );
-
     return [
       {
-        labelKey: 'All Assessments',
+        labelKey: 'stats.totalAssessments',
         value: assessments.length,
-        description: 'All created assessments',
+        descriptionKey: 'stats.totalAssessmentsDescription',
         icon: 'assignment',
         colorClass: 'progress-icon--purple',
       },
       {
-        labelKey: 'Completed Assessments',
+        labelKey: 'stats.completed',
         value: this.countByStatus('Completed'),
-        description: 'Assessments completed',
+        descriptionKey: 'stats.completedDescription',
         icon: 'check_circle',
         colorClass: 'progress-icon--blue',
       },
       {
-        labelKey: 'Pending Assessments',
+        labelKey: 'stats.pending',
         value: this.countByStatus('Pending'),
-        description: 'Awaiting your review',
+        descriptionKey: 'stats.pendingDescription',
         icon: 'schedule',
         colorClass: 'progress-icon--amber',
       },
       {
-        labelKey: 'Failed Assessments',
+        labelKey: 'stats.failed',
         value: this.countByStatus('Failed'),
-        description: 'Requires attention',
+        descriptionKey: 'stats.failedDescription',
         icon: 'cancel',
         colorClass: 'progress-icon--red',
       },
       {
-        labelKey: 'Draft Assessments',
+        labelKey: 'stats.draft',
         value: this.countByStatus('Draft'),
-        description: 'Waiting to publish',
+        descriptionKey: 'stats.draftDescription',
         icon: 'edit_note',
         colorClass: 'progress-icon--grey',
       },
     ];
   }
 
+  //********** GET STATUS DISTRIBUTION **********
   getStatusDistribution(): StatusSlice[] {
     const total = this.assessments.length;
 
@@ -107,44 +107,51 @@ export class DashboardService {
           status,
           labelKey: this.statusMeta[status].labelKey,
           count,
-          percentage: total ? Math.round((count / total) * 1000) / 10 : 0,
+          percentage: total
+            ? Math.round((count / total) * 1000) / 10
+            : 0,
           colorVar: this.statusMeta[status].colorVar,
         };
       })
       .filter((slice) => slice.count > 0);
   }
 
+  //********** GET CALCULATION SUMMARY **********
   getCalculationSummary(): CalculationMetric[] {
     const total = this.assessments.length;
     const completed = this.countByStatus('Completed');
     const pending = this.countByStatus('Pending');
     const failed = this.countByStatus('Failed');
 
-    const toRate = (value: number): number => (total ? Math.round((value / total) * 100) : 0);
+    const toRate = (value: number): number =>
+      total ? Math.round((value / total) * 100) : 0;
 
     return [
       {
-        labelKey: 'Completed Assessments',
+        labelKey: 'calculation.completed',
         value: toRate(completed),
-        description: `${completed} of ${total} assessments completed`,
+        descriptionKey: 'calculation.completedDescription',
         colorVar: '--color-card-green',
       },
       {
-        labelKey: 'Pending Assessments',
+        labelKey: 'calculation.pending',
         value: toRate(pending),
-        description: `${pending} of ${total} awaiting review`,
+        descriptionKey: 'calculation.pendingDescription',
         colorVar: '--color-card-orange',
       },
       {
-        labelKey: 'Failed Assessments',
+        labelKey: 'calculation.failed',
         value: toRate(failed),
-        description: `${failed} of ${total} need attention`,
+        descriptionKey: 'calculation.failedDescription',
         colorVar: '--color-card-red',
       },
     ];
   }
 
+  //********** PRIVATE METHODS **********
   private countByStatus(status: AssessmentStatus): number {
-    return this.assessments.filter((assessment) => assessment.status === status).length;
+    return this.assessments.filter(
+      (assessment) => assessment.status === status,
+    ).length;
   }
 }

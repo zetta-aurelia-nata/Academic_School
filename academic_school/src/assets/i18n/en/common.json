@@ -32,12 +32,10 @@
         "assessments": "Assessments",
         "submenu": {
           "list": "Assessments List",
-          "result": "Assessments Review",
-          "submission": "Assessments Result"
+          "scoring": "Assessments Review",
+          "review": "Assessments Result"
         }
       }
     }
-    
   }
 }
-

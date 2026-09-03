@@ -10,9 +10,13 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 //********** SWEETALERT IMPORT **********
 import Swal from 'sweetalert2';
+
+//********** THIRD-PARTY IMPORTS **********
+import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 
 //********** APPLICATION IMPORTS **********
 import { AssessmentService } from '../../services/assessment.service';
@@ -27,6 +31,7 @@ import {
 @Component({
   selector: 'app-assessment-list',
   standalone: true,
+
   imports: [
     CommonModule,
     FormsModule,
@@ -35,8 +40,11 @@ import {
     MatIconModule,
     MatToolbarModule,
     MatTableModule,
+    MatTooltipModule,
     FilterComponent,
+    TranslocoDirective,
   ],
+
   templateUrl: './assessments-list.html',
   styleUrls: ['./assessments-list.scss'],
 })
@@ -44,6 +52,7 @@ export class AssessmentList {
   //********** SERVICES **********
   private readonly router = inject(Router);
   private readonly assessmentService = inject(AssessmentService);
+  private readonly transloco = inject(TranslocoService);
 
   //********** PUBLIC STATE VARIABLES **********
   displayedColumns: string[] = [
@@ -84,7 +93,7 @@ export class AssessmentList {
     this.applyFilters();
   }
 
-  //********** SEARCH **********
+  //********** ACTION HANDLERS **********
   onSearch(): void {
     this.applyFilters();
   }
@@ -95,7 +104,6 @@ export class AssessmentList {
     this.applyFilters();
   }
 
-  //********** FILTER **********
   onFilterApplied(filters: FilterValue): void {
     this.selectedStatus = filters.status;
     this.selectedSubject = filters.subject;
@@ -112,17 +120,12 @@ export class AssessmentList {
     const topQuery = this.searchQuery.trim().toLowerCase();
     const keywordQuery = this.keyword.trim().toLowerCase();
     const nameQuery = this.assessmentName.trim().toLowerCase();
-
     const targetStatus = this.selectedStatus.toString().trim().toLowerCase();
-
     const targetSubject = this.selectedSubject.toString().trim().toLowerCase();
-
     const targetGrade = this.selectedGrade.toString().trim().toLowerCase();
-
     const fromDate = this.dateFrom ? new Date(this.dateFrom) : null;
     const toDate = this.dateTo ? new Date(this.dateTo) : null;
 
-    //********** SEARCH MATCHER **********
     const matchesQuery = (assessment: Assessment, query: string): boolean =>
       !query ||
       [
@@ -177,6 +180,19 @@ export class AssessmentList {
     return Array.from(new Set(grades)).sort();
   }
 
+  //********** STATUS TRANSLATION **********
+  getStatusTranslationKey(status: AssessmentStatus): string {
+    const statusKeys: Record<AssessmentStatus, string> = {
+      Completed: 'assessment.list.status.completed',
+      Pending: 'assessment.list.status.pending',
+      Failed: 'assessment.list.status.failed',
+      Draft: 'assessment.list.status.draft',
+      'Not Submitted': 'assessment.list.status.notSubmitted',
+    };
+
+    return statusKeys[status];
+  }
+
   //********** ACTION HANDLERS **********
   onCreateAssessment(): void {
     this.router.navigate(['/assessments/create']);
@@ -196,12 +212,14 @@ export class AssessmentList {
 
   onDelete(assessment: Assessment): void {
     Swal.fire({
-      title: 'Delete Assessment?',
-      html: `Are you sure you want to delete <strong>${assessment.title}</strong>?`,
+      title: this.transloco.translate('assessment.list.delete.confirmTitle'),
+      html: this.transloco.translate('assessment.list.delete.confirmText', {
+        title: assessment.title,
+      }),
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Delete',
-      cancelButtonText: 'Cancel',
+      confirmButtonText: this.transloco.translate('assessment.list.delete.confirmButton'),
+      cancelButtonText: this.transloco.translate('assessment.list.delete.cancelButton'),
       confirmButtonColor: 'var(--color-card-red)',
       reverseButtons: true,
       focusCancel: true,
@@ -213,8 +231,8 @@ export class AssessmentList {
         this.loadAssessments();
 
         Swal.fire({
-          title: 'Deleted!',
-          text: 'The assessment has been deleted successfully.',
+          title: this.transloco.translate('assessment.list.delete.successTitle'),
+          text: this.transloco.translate('assessment.list.delete.successText'),
           icon: 'success',
           timer: 1500,
           showConfirmButton: false,

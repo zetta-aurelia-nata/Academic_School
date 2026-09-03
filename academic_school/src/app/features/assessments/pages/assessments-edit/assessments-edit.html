@@ -1,6 +1,7 @@
 <!--********** EDIT ASSESSMENT SECTION **********-->
 <section
   class="edit-assessment w-full min-h-full bg-[var(--color-background-content)] px-8 py-8 max-lg:px-5 max-md:px-4 max-md:py-5"
+  *transloco="let t"
 >
   <!--********** PAGE HEADER **********-->
   <div class="mb-6 flex items-start justify-between gap-4 max-md:flex-col">
@@ -11,7 +12,7 @@
           mat-icon-button
           type="button"
           class="!h-9 !w-9 !shrink-0"
-          aria-label="Back to assessments"
+          [attr.aria-label]="t('assessment.edit.header.backAria')"
           (click)="onCancel()"
         >
           <mat-icon>arrow_back</mat-icon>
@@ -20,13 +21,13 @@
         <h1
           class="m-0 text-2xl font-bold leading-[1.2] text-[var(--color-title)] max-md:text-[22px]"
         >
-          Edit Assessment
+          {{ t('assessment.edit.header.title') }}
         </h1>
       </div>
 
       <!--********** PAGE DESCRIPTION **********-->
       <p class="mt-2 ml-12 text-[13px] leading-5 text-[var(--color-text-secondary)] max-md:ml-12">
-        Update the assessment information and settings below.
+        {{ t('assessment.edit.header.subtitle') }}
       </p>
     </div>
   </div>
@@ -44,11 +45,11 @@
       >
         <mat-panel-title class="!m-0 !flex !flex-col !items-start">
           <span class="text-base font-bold text-[var(--color-white)]">
-            Assessment Information
+            {{ t('assessment.edit.information.title') }}
           </span>
 
           <span class="mt-1 text-[13px] font-normal text-[var(--color-white)]">
-            Update the basic information of this assessment.
+            {{ t('assessment.edit.information.subtitle') }}
           </span>
         </mat-panel-title>
       </mat-expansion-panel-header>
@@ -59,7 +60,7 @@
         <div class="edit-assessment__field col-span-2 w-full max-md:col-span-1">
           <!--********** FIELD LABEL **********-->
           <label for="assessment-title" class="edit-assessment__field-label">
-            Assessment Name
+            {{ t('assessment.edit.fields.assessmentName') }}
           </label>
 
           <!--********** INPUT **********-->
@@ -68,11 +69,11 @@
               id="assessment-title"
               matInput
               formControlName="title"
-              placeholder="Enter assessment name"
+              [attr.placeholder]="t('assessment.edit.placeholders.assessmentName')"
             />
 
             <mat-error *ngIf="assessmentForm.get('title')?.hasError('required')">
-              Assessment name is required
+              {{ t('assessment.edit.validation.assessmentNameRequired') }}
             </mat-error>
           </mat-form-field>
         </div>
@@ -80,7 +81,9 @@
         <!--********** SUBJECT FIELD **********-->
         <div class="edit-assessment__field w-full">
           <!--********** FIELD LABEL **********-->
-          <label for="assessment-subject" class="edit-assessment__field-label"> Subject </label>
+          <label for="assessment-subject" class="edit-assessment__field-label">
+            {{ t('assessment.edit.fields.subject') }}
+          </label>
 
           <!--********** SELECT **********-->
           <mat-form-field appearance="outline" class="edit-assessment__material-field w-full">
@@ -88,18 +91,22 @@
               id="assessment-subject"
               formControlName="subject"
               panelClass="assessment-select-panel"
-              placeholder="Select subject"
+              [placeholder]="t('assessment.edit.placeholders.subject')"
             >
-              <mat-option value="Mathematics">Mathematics</mat-option>
-              <mat-option value="Science">Science</mat-option>
-              <mat-option value="English">English</mat-option>
-              <mat-option value="History">History</mat-option>
-              <mat-option value="Computer Science"> Computer Science </mat-option>
-              <mat-option value="Biology">Biology</mat-option>
+              <mat-option value="Mathematics">{{
+                t('assessment.edit.subjects.mathematics')
+              }}</mat-option>
+              <mat-option value="Science">{{ t('assessment.edit.subjects.science') }}</mat-option>
+              <mat-option value="English">{{ t('assessment.edit.subjects.english') }}</mat-option>
+              <mat-option value="History">{{ t('assessment.edit.subjects.history') }}</mat-option>
+              <mat-option value="Computer Science">
+                {{ t('assessment.edit.subjects.computerScience') }}
+              </mat-option>
+              <mat-option value="Biology">{{ t('assessment.edit.subjects.biology') }}</mat-option>
             </mat-select>
 
             <mat-error *ngIf="assessmentForm.get('subject')?.hasError('required')">
-              Subject is required
+              {{ t('assessment.edit.validation.subjectRequired') }}
             </mat-error>
           </mat-form-field>
         </div>
@@ -107,7 +114,9 @@
         <!--********** GRADE FIELD **********-->
         <div class="edit-assessment__field w-full">
           <!--********** FIELD LABEL **********-->
-          <label for="assessment-grade" class="edit-assessment__field-label"> Grade </label>
+          <label for="assessment-grade" class="edit-assessment__field-label">
+            {{ t('assessment.edit.fields.grade') }}
+          </label>
 
           <!--********** SELECT **********-->
           <mat-form-field appearance="outline" class="edit-assessment__material-field w-full">
@@ -115,18 +124,18 @@
               id="assessment-grade"
               formControlName="grade"
               panelClass="assessment-select-panel"
-              placeholder="Select grade"
+              [placeholder]="t('assessment.edit.placeholders.grade')"
             >
-              <mat-option value="Grade 7">Grade 7</mat-option>
-              <mat-option value="Grade 8">Grade 8</mat-option>
-              <mat-option value="Grade 9">Grade 9</mat-option>
-              <mat-option value="Grade 10">Grade 10</mat-option>
-              <mat-option value="Grade 11">Grade 11</mat-option>
-              <mat-option value="Grade 12">Grade 12</mat-option>
+              <mat-option value="Grade 7">{{ t('assessment.edit.grades.grade7') }}</mat-option>
+              <mat-option value="Grade 8">{{ t('assessment.edit.grades.grade8') }}</mat-option>
+              <mat-option value="Grade 9">{{ t('assessment.edit.grades.grade9') }}</mat-option>
+              <mat-option value="Grade 10">{{ t('assessment.edit.grades.grade10') }}</mat-option>
+              <mat-option value="Grade 11">{{ t('assessment.edit.grades.grade11') }}</mat-option>
+              <mat-option value="Grade 12">{{ t('assessment.edit.grades.grade12') }}</mat-option>
             </mat-select>
 
             <mat-error *ngIf="assessmentForm.get('grade')?.hasError('required')">
-              Grade is required
+              {{ t('assessment.edit.validation.gradeRequired') }}
             </mat-error>
           </mat-form-field>
         </div>
@@ -135,7 +144,7 @@
         <div class="edit-assessment__field col-span-2 w-full max-md:col-span-1">
           <!--********** FIELD LABEL **********-->
           <label for="assessment-description" class="edit-assessment__field-label">
-            Description
+            {{ t('assessment.edit.fields.description') }}
           </label>
 
           <!--********** TEXTAREA **********-->
@@ -148,10 +157,12 @@
               matInput
               formControlName="description"
               rows="4"
-              placeholder="Enter assessment description"
+              [attr.placeholder]="t('assessment.edit.placeholders.description')"
             ></textarea>
-           
-           <mat-error *ngIf="assessmentForm.get('description')?.hasError('required')">Description text is required</mat-error>
+
+            <mat-error *ngIf="assessmentForm.get('description')?.hasError('required')">
+              {{ t('assessment.edit.validation.descriptionRequired') }}
+            </mat-error>
           </mat-form-field>
         </div>
 
@@ -159,7 +170,7 @@
         <div class="edit-assessment__field col-span-2 w-full max-md:col-span-1">
           <!--********** FIELD LABEL **********-->
           <label for="assessment-instructions" class="edit-assessment__field-label">
-            Instructions
+            {{ t('assessment.edit.fields.instructions') }}
           </label>
 
           <!--********** TEXTAREA **********-->
@@ -172,7 +183,7 @@
               matInput
               formControlName="instructions"
               rows="4"
-              placeholder="Enter instructions for students"
+              [attr.placeholder]="t('assessment.edit.placeholders.instructions')"
             ></textarea>
           </mat-form-field>
         </div>
@@ -189,10 +200,12 @@
         class="edit-assessment__accordion-header edit-assessment__accordion-header--green !h-auto !min-h-[84px] !px-6 max-md:!px-4"
       >
         <mat-panel-title class="!m-0 !flex !flex-col !items-start">
-          <span class="text-base font-bold text-[var(--color-white)]"> Assessment Settings </span>
+          <span class="text-base font-bold text-[var(--color-white)]">
+            {{ t('assessment.edit.settings.title') }}
+          </span>
 
           <span class="mt-1 text-[13px] font-normal text-[var(--color-white)]">
-            Configure the assessment duration, points, and status.
+            {{ t('assessment.edit.settings.subtitle') }}
           </span>
         </mat-panel-title>
       </mat-expansion-panel-header>
@@ -202,7 +215,9 @@
         <!--********** DURATION FIELD **********-->
         <div class="edit-assessment__field w-full">
           <!--********** FIELD LABEL **********-->
-          <label for="assessment-duration" class="edit-assessment__field-label"> Duration </label>
+          <label for="assessment-duration" class="edit-assessment__field-label">
+            {{ t('assessment.edit.fields.duration') }}
+          </label>
 
           <!--********** INPUT **********-->
           <mat-form-field appearance="outline" class="edit-assessment__material-field w-full">
@@ -212,13 +227,19 @@
               type="number"
               formControlName="duration"
               min="1"
-              placeholder="Enter duration"
+              [attr.placeholder]="t('assessment.edit.placeholders.duration')"
             />
 
-            <span matSuffix class="mr-2 text-[13px]"> minutes </span>
+            <span matSuffix class="mr-2 text-[13px]">
+              {{ t('assessment.edit.units.minutes') }}
+            </span>
 
-            <mat-error *ngIf="assessmentForm.get('duration')?.hasError('required')">Duration is required</mat-error>
-            <mat-error *ngIf="assessmentForm.get('duration')?.hasError('min')">Duration must be min 10</mat-error>
+            <mat-error *ngIf="assessmentForm.get('duration')?.hasError('required')">
+              {{ t('assessment.edit.validation.durationRequired') }}
+            </mat-error>
+            <mat-error *ngIf="assessmentForm.get('duration')?.hasError('min')">
+              {{ t('assessment.edit.validation.durationMin') }}
+            </mat-error>
           </mat-form-field>
         </div>
 
@@ -226,7 +247,7 @@
         <div class="edit-assessment__field w-full">
           <!--********** FIELD LABEL **********-->
           <label for="assessment-total-points" class="edit-assessment__field-label">
-            Total Points
+            {{ t('assessment.edit.fields.totalPoints') }}
           </label>
 
           <!--********** INPUT **********-->
@@ -237,20 +258,24 @@
               type="number"
               formControlName="totalPoints"
               min="1"
-              placeholder="Enter total points"
+              [attr.placeholder]="t('assessment.edit.placeholders.totalPoints')"
             />
 
             <mat-error *ngIf="assessmentForm.get('totalPoints')?.hasError('required')">
-              Total points is required
+              {{ t('assessment.edit.validation.totalPointsRequired') }}
             </mat-error>
-            <mat-error *ngIf="assessmentForm.get('totalPoints')?.hasError('min')">Score must be min 1</mat-error>
+            <mat-error *ngIf="assessmentForm.get('totalPoints')?.hasError('min')">
+              {{ t('assessment.edit.validation.totalPointsMin') }}
+            </mat-error>
           </mat-form-field>
         </div>
 
         <!--********** STATUS FIELD **********-->
         <div class="edit-assessment__field w-full">
           <!--********** FIELD LABEL **********-->
-          <label for="assessment-status" class="edit-assessment__field-label"> Status </label>
+          <label for="assessment-status" class="edit-assessment__field-label">
+            {{ t('assessment.edit.fields.status') }}
+          </label>
 
           <!--********** SELECT **********-->
           <mat-form-field appearance="outline" class="edit-assessment__material-field w-full">
@@ -258,14 +283,22 @@
               id="assessment-status"
               formControlName="status"
               panelClass="assessment-select-panel"
-              placeholder="Select status"
+              [placeholder]="t('assessment.edit.placeholders.status')"
             >
-              <mat-option value="Draft">Draft</mat-option>
-              <mat-option value="Published">Published</mat-option>
-              <mat-option value="Archived">Archived</mat-option>
-              <mat-option value="Failed">Failed</mat-option>
+              <mat-option value="Draft">{{ t('assessment.edit.statusOptions.draft') }}</mat-option>
+              <mat-option value="Published">{{
+                t('assessment.edit.statusOptions.published')
+              }}</mat-option>
+              <mat-option value="Archived">{{
+                t('assessment.edit.statusOptions.archived')
+              }}</mat-option>
+              <mat-option value="Failed">{{
+                t('assessment.edit.statusOptions.failed')
+              }}</mat-option>
             </mat-select>
-            <mat-error *ngIf="assessmentForm.get('status')?.hasError('required')">Status is required</mat-error>
+            <mat-error *ngIf="assessmentForm.get('status')?.hasError('required')">
+              {{ t('assessment.edit.validation.statusRequired') }}
+            </mat-error>
           </mat-form-field>
         </div>
       </div>
@@ -281,10 +314,12 @@
         class="edit-assessment__accordion-header edit-assessment__accordion-header--blue !h-auto !min-h-[84px] !px-6 max-md:!px-4"
       >
         <mat-panel-title class="!m-0 !flex !flex-col !items-start">
-          <span class="text-base font-bold text-[var(--color-white)]"> Questions & Answers </span>
+          <span class="text-base font-bold text-[var(--color-white)]">
+            {{ t('assessment.edit.questions.title') }}
+          </span>
 
           <span class="mt-1 text-[13px] font-normal text-[var(--color-white)]">
-            Update the questions, answer options, and correct answers.
+            {{ t('assessment.edit.questions.subtitle') }}
           </span>
         </mat-panel-title>
       </mat-expansion-panel-header>
@@ -308,7 +343,7 @@
             </mat-icon>
 
             <p class="m-0 text-[13px] text-[var(--color-text-secondary)]">
-              No questions yet. Add an essay or multiple choice question below.
+              {{ t('assessment.edit.questions.empty') }}
             </p>
           </div>
         }
@@ -335,7 +370,7 @@
                 <span
                   class="question-accordion__drag-handle"
                   cdkDragHandle
-                  aria-label="Drag to reorder question"
+                  [attr.aria-label]="t('assessment.edit.questions.dragAria')"
                   (click)="$event.stopPropagation()"
                 >
                   <mat-icon>drag_indicator</mat-icon>
@@ -354,12 +389,12 @@
                     question.get('type')?.value === 'multiple_choice'
                   "
                 >
-                  {{ questionTypeLabel(question.get('type')?.value) }}
+                  {{ t(questionTypeLabel(question.get('type')?.value)) }}
                 </span>
 
                 <!--********** QUESTION PREVIEW **********-->
                 <span class="question-accordion__preview">
-                  {{ question.get('text')?.value || 'Untitled question' }}
+                  {{ question.get('text')?.value || t('assessment.edit.questions.untitled') }}
                 </span>
               </mat-panel-title>
 
@@ -368,7 +403,7 @@
                 <button
                   mat-icon-button
                   type="button"
-                  aria-label="Move question up"
+                  [attr.aria-label]="t('assessment.edit.questions.moveUpAria')"
                   class="question-accordion__reorder"
                   [disabled]="qi === 0"
                   (click)="moveQuestionUp(qi); $event.stopPropagation()"
@@ -380,7 +415,7 @@
                 <button
                   mat-icon-button
                   type="button"
-                  aria-label="Move question down"
+                  [attr.aria-label]="t('assessment.edit.questions.moveDownAria')"
                   class="question-accordion__reorder"
                   [disabled]="qi === questions.length - 1"
                   (click)="moveQuestionDown(qi); $event.stopPropagation()"
@@ -392,7 +427,7 @@
                 <button
                   mat-icon-button
                   type="button"
-                  aria-label="Remove question"
+                  [attr.aria-label]="t('assessment.edit.questions.removeAria')"
                   class="question-accordion__delete"
                   (click)="removeQuestion(qi); $event.stopPropagation()"
                 >
@@ -407,7 +442,7 @@
               <div class="edit-assessment__field w-full">
                 <!--********** FIELD LABEL **********-->
                 <label [for]="'question-text-' + qi" class="edit-assessment__field-label">
-                  Question Text
+                  {{ t('assessment.edit.fields.questionText') }}
                 </label>
 
                 <!--********** TEXTAREA **********-->
@@ -420,11 +455,11 @@
                     matInput
                     formControlName="text"
                     rows="3"
-                    placeholder="Write the question here..."
+                    [attr.placeholder]="t('assessment.edit.placeholders.questionText')"
                   ></textarea>
 
                   <mat-error *ngIf="question.get('text')?.hasError('required')">
-                    Question text is required
+                    {{ t('assessment.edit.validation.questionRequired') }}
                   </mat-error>
                 </mat-form-field>
               </div>
@@ -436,7 +471,7 @@
                   <div class="edit-assessment__field w-full">
                     <!--********** FIELD LABEL **********-->
                     <label [for]="'max-word-' + qi" class="edit-assessment__field-label">
-                      Max Word
+                      {{ t('assessment.edit.fields.maxWord') }}
                     </label>
 
                     <!--********** INPUT **********-->
@@ -450,7 +485,7 @@
                         type="number"
                         formControlName="maxWord"
                         min="1"
-                        placeholder="Enter maximum words"
+                        [attr.placeholder]="t('assessment.edit.placeholders.maxWord')"
                       />
                     </mat-form-field>
                   </div>
@@ -459,7 +494,7 @@
                   <div class="edit-assessment__field w-full">
                     <!--********** FIELD LABEL **********-->
                     <label [for]="'total-score-' + qi" class="edit-assessment__field-label">
-                      Total Score
+                      {{ t('assessment.edit.fields.totalScore') }}
                     </label>
 
                     <!--********** INPUT **********-->
@@ -473,7 +508,7 @@
                         type="number"
                         formControlName="points"
                         min="1"
-                        placeholder="Enter total score"
+                        [attr.placeholder]="t('assessment.edit.placeholders.totalScore')"
                       />
                     </mat-form-field>
                   </div>
@@ -484,7 +519,9 @@
               @if (question.get('type')?.value === 'multiple_choice') {
                 <div class="mt-4">
                   <!--********** ANSWER OPTIONS TITLE **********-->
-                  <span class="form-section__title mb-3 block"> Answer Options </span>
+                  <span class="form-section__title mb-3 block">
+                    {{ t('assessment.edit.answerOptions.title') }}
+                  </span>
 
                   <!--********** ANSWER OPTIONS **********-->
                   <mat-radio-group formControlName="correctOptionIndex" class="options-editor">
@@ -508,7 +545,7 @@
                               [for]="'option-' + qi + '-' + oi"
                               class="edit-assessment__field-label"
                             >
-                              Option {{ oi + 1 }}
+                              {{ t('assessment.edit.answerOptions.option', { number: oi + 1 }) }}
                             </label>
 
                             <!--********** OPTION INPUT **********-->
@@ -520,7 +557,7 @@
                                 [id]="'option-' + qi + '-' + oi"
                                 matInput
                                 [formControlName]="oi"
-                                placeholder="Write answer option..."
+                                [attr.placeholder]="t('assessment.edit.placeholders.option')"
                               />
                             </mat-form-field>
                           </div>
@@ -530,11 +567,17 @@
                             <mat-radio-button
                               class="option-row__check"
                               [value]="oi"
-                              [aria-label]="'Mark option ' + (oi + 1) + ' as correct'"
+                              [attr.aria-label]="
+                                t('assessment.edit.answerOptions.markCorrectAria', {
+                                  number: oi + 1,
+                                })
+                              "
                             ></mat-radio-button>
 
                             @if (question.get('correctOptionIndex')?.value === oi) {
-                              <span class="option-row__correct-label"> Correct Answer </span>
+                              <span class="option-row__correct-label">
+                                {{ t('assessment.edit.answerOptions.correct') }}
+                              </span>
                             }
                           </div>
 
@@ -542,7 +585,7 @@
                           <button
                             mat-icon-button
                             type="button"
-                            aria-label="Remove option"
+                            [attr.aria-label]="t('assessment.edit.answerOptions.removeOptionAria')"
                             class="option-row__remove"
                             [disabled]="questionOptions(qi).length <= 2"
                             (click)="removeOption(qi, oi)"
@@ -563,14 +606,14 @@
                   >
                     <mat-icon>add</mat-icon>
 
-                    <span>Add Option</span>
+                    <span>{{ t('assessment.edit.answerOptions.addOption') }}</span>
                   </button>
 
                   <!--********** MAXIMUM POINTS **********-->
                   <div class="edit-assessment__field mt-4 w-full max-w-[220px] max-md:max-w-full">
                     <!--********** FIELD LABEL **********-->
                     <label [for]="'maximum-points-' + qi" class="edit-assessment__field-label">
-                      Maximum Points
+                      {{ t('assessment.edit.fields.maximumPoints') }}
                     </label>
 
                     <!--********** INPUT **********-->
@@ -584,7 +627,7 @@
                         type="number"
                         formControlName="points"
                         min="1"
-                        placeholder="Enter maximum points"
+                        [attr.placeholder]="t('assessment.edit.placeholders.maximumPoints')"
                       />
                     </mat-form-field>
                   </div>
@@ -603,7 +646,7 @@
             (click)="addQuestion('essay')"
             class="add-question-button add-assessment-essay !m-0 !flex !h-11 !items-center !justify-center !gap-2 !rounded-[10px] !border-[var(--color-border)] !bg-[var(--color-primary)] !px-5 !text-[13px] !font-semibold !text-[var(--color-white)] !shadow-none transition-all duration-200 hover:!border-[var(--color-primary)] hover:!bg-[var(--color-primary-light)] hover:!text-[var(--color-primary)] hover:!shadow-sm active:!scale-[0.98] max-sm:!w-full"
           >
-            <span>Add Essay Question</span>
+            <span>{{ t('assessment.edit.actions.addEssay') }}</span>
           </button>
 
           <!--********** ADD MULTIPLE CHOICE **********-->
@@ -613,7 +656,7 @@
             (click)="addQuestion('multiple_choice')"
             class="add-question-button add-multiple-choices !m-0 !flex !h-11 !items-center !justify-center !gap-2 !rounded-[10px] !border-[var(--color-sidebar-muted)] !bg-[var(--color-white)] !px-5 !text-[13px] !font-semibold !text-[var(--color-title)] !shadow-none transition-all duration-200 hover:!border-[var(--color-primary)] hover:!bg-[var(--color-primary-light)] hover:!text-[var(--color-primary)] hover:!shadow-sm active:!scale-[0.98] max-sm:!w-full"
           >
-            <span>Add Multiple Choice Question</span>
+            <span>{{ t('assessment.edit.actions.addMultipleChoice') }}</span>
           </button>
         </div>
       </div>
@@ -630,12 +673,12 @@
         class="edit-assessment__cancel-button max-md:!w-full"
         (click)="onCancel()"
       >
-        <span>Cancel</span>
+        <span>{{ t('assessment.edit.actions.cancel') }}</span>
       </button>
 
       <!--********** SAVE BUTTON **********-->
       <button type="submit" mat-flat-button class="edit-assessment__save-button max-md:!w-full">
-        <span>Save Changes</span>
+        <span>{{ t('assessment.edit.actions.save') }}</span>
       </button>
     </div>
   </form>

@@ -30,23 +30,17 @@ export class SidebarComponent {
   // *************** PUBLIC STATE VARIABLES ***************
   isAssessmentOpen = false;
   readonly assessmentSubmenus: SubmenuItem[] = [
-    { id: 'list', label: 'Assessments List', link: '/assessments',translationKey:'layout.sidebar.submenu.list' },
-    { id: 'result', label: 'Assessment Scoring', link: '/assessments/result', translationKey:'layout.sidebar.submenu.result'},
-    { id: 'submission', label: 'Assessment Result', link: '/assessments/review', translationKey:'layout.sidebar.submenu.submission'},
+    { id: 'list', label: 'Assessments List', link: '/assessments', translationKey: 'menu.submenu.list' },
+    { id: 'scoring', label: 'Assessment Scoring', link: '/assessments/result', translationKey: 'menu.submenu.scoring' },
+    { id: 'review', label: 'Assessment Result', link: '/assessments/review', translationKey: 'menu.submenu.review' },
   ];
 
   // *************** ACTION HANDLERS ***************
-  /**
-   * Toggles the expanded/collapsed state of the assessment menu
-   */
   toggleAssessment(): void {
     this.isAssessmentOpen = !this.isAssessmentOpen;
   }
 
   // *************** SETTER & GETTER ***************
-  /**
-   * Returns the arrow indicator character based on menu expanded state
-   */
   get assessmentArrowIcon(): string {
     return this.isAssessmentOpen ? '⌃' : '⌄';
   }

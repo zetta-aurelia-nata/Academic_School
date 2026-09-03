@@ -1,6 +1,6 @@
-<!--********** CREATE ASSESSMENT SECTION **********-->
 <section
   class="create-assessment w-full min-h-full bg-[var(--color-background-content)] px-8 py-8 max-lg:px-5 max-md:px-4 max-md:py-5"
+  *transloco="let t"
 >
   <!--********** PAGE HEADER **********-->
   <div class="mb-6">
@@ -9,19 +9,21 @@
         mat-icon-button
         type="button"
         class="!h-9 !w-9 !shrink-0"
-        aria-label="Back to assessments"
+        [attr.aria-label]="t('assessment.create.actions.back')"
         (click)="onCancel()"
       >
         <mat-icon>arrow_back</mat-icon>
       </button>
+
       <div>
         <h1
           class="m-0 text-2xl font-bold leading-[1.2] text-[var(--color-title)] max-md:text-[22px]"
         >
-          Create Assessment
+          {{ t('assessment.create.title') }}
         </h1>
+
         <p class="mt-1 text-[13px] leading-5 text-[var(--color-text-secondary)]">
-          Create a new assessment by entering the information and questions below.
+          {{ t('assessment.create.subtitle') }}
         </p>
       </div>
     </div>
@@ -34,16 +36,16 @@
       class="create-assessment__accordion !mb-3 !overflow-hidden !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !shadow-none"
       [expanded]="true"
     >
-      <!--********** HEADER **********-->
       <mat-expansion-panel-header
         class="create-assessment__accordion-header create-assessment__accordion-header--orange !h-auto !min-h-[84px] !px-6 max-md:!px-4"
       >
         <mat-panel-title class="!m-0 !flex !flex-col !items-start">
           <span class="text-base font-bold text-[var(--color-white)]">
-            Assessment Information
+            {{ t('assessment.create.information.title') }}
           </span>
+
           <span class="mt-1 text-[13px] font-normal text-[var(--color-white)]">
-            Enter the basic information of this assessment.
+            {{ t('assessment.create.information.subtitle') }}
           </span>
         </mat-panel-title>
       </mat-expansion-panel-header>
@@ -52,44 +54,76 @@
       <div class="grid grid-cols-2 gap-5 p-1 pt-5 max-md:grid-cols-1">
         <!--********** ASSESSMENT NAME **********-->
         <div class="create-assessment__field col-span-2 max-md:col-span-1">
-          <label class="create-assessment__field-label">Assessment Name</label>
+          <label class="create-assessment__field-label">
+            {{ t('assessment.create.fields.assessmentName') }}
+          </label>
+
           <mat-form-field
             appearance="outline"
             hideRequiredMarker
             class="create-assessment__material-field w-full"
           >
-            <input matInput formControlName="title" placeholder="Enter assessment name" />
+            <input
+              matInput
+              formControlName="title"
+              [placeholder]="t('assessment.create.placeholders.assessmentName')"
+            />
+
             <mat-error *ngIf="assessmentForm.get('title')?.hasError('required')">
-              Assessment name is required
+              {{ t('assessment.create.validation.assessmentNameRequired') }}
             </mat-error>
           </mat-form-field>
         </div>
 
         <!--********** SUBJECT **********-->
         <div class="create-assessment__field">
-          <label class="create-assessment__field-label">Subject</label>
+          <label class="create-assessment__field-label">
+            {{ t('assessment.create.fields.subject') }}
+          </label>
+
           <mat-form-field
             appearance="outline"
             hideRequiredMarker
             class="create-assessment__material-field w-full"
           >
             <mat-select formControlName="subject" panelClass="assessment-select-panel">
-              <mat-option value="Mathematics">Mathematics</mat-option>
-              <mat-option value="Science">Science</mat-option>
-              <mat-option value="English">English</mat-option>
-              <mat-option value="History">History</mat-option>
-              <mat-option value="Computer Science">Computer Science</mat-option>
-              <mat-option value="Biology">Biology</mat-option>
+              <mat-option value="Mathematics">
+                {{ t('assessment.create.subjects.mathematics') }}
+              </mat-option>
+
+              <mat-option value="Science">
+                {{ t('assessment.create.subjects.science') }}
+              </mat-option>
+
+              <mat-option value="English">
+                {{ t('assessment.create.subjects.english') }}
+              </mat-option>
+
+              <mat-option value="History">
+                {{ t('assessment.create.subjects.history') }}
+              </mat-option>
+
+              <mat-option value="Computer Science">
+                {{ t('assessment.create.subjects.computerScience') }}
+              </mat-option>
+
+              <mat-option value="Biology">
+                {{ t('assessment.create.subjects.biology') }}
+              </mat-option>
             </mat-select>
+
             <mat-error *ngIf="assessmentForm.get('subject')?.hasError('required')">
-              Subject is required
+              {{ t('assessment.create.validation.subjectRequired') }}
             </mat-error>
           </mat-form-field>
         </div>
 
         <!--********** GRADE **********-->
         <div class="create-assessment__field">
-          <label class="create-assessment__field-label">Grade</label>
+          <label class="create-assessment__field-label">
+            {{ t('assessment.create.fields.grade') }}
+          </label>
+
           <mat-form-field
             appearance="outline"
             hideRequiredMarker
@@ -103,15 +137,19 @@
               <mat-option value="Grade 11">Grade 11</mat-option>
               <mat-option value="Grade 12">Grade 12</mat-option>
             </mat-select>
+
             <mat-error *ngIf="assessmentForm.get('grade')?.hasError('required')">
-              Grade is required
+              {{ t('assessment.create.validation.gradeRequired') }}
             </mat-error>
           </mat-form-field>
         </div>
 
         <!--********** DESCRIPTION **********-->
         <div class="create-assessment__field col-span-2 max-md:col-span-1">
-          <label class="create-assessment__field-label">Description</label>
+          <label class="create-assessment__field-label">
+            {{ t('assessment.create.fields.description') }}
+          </label>
+
           <mat-form-field
             appearance="outline"
             hideRequiredMarker
@@ -121,14 +159,17 @@
               matInput
               formControlName="description"
               rows="4"
-              placeholder="Enter assessment description"
+              [placeholder]="t('assessment.create.placeholders.description')"
             ></textarea>
           </mat-form-field>
         </div>
 
         <!--********** INSTRUCTIONS **********-->
         <div class="create-assessment__field col-span-2 max-md:col-span-1">
-          <label class="create-assessment__field-label">Instructions</label>
+          <label class="create-assessment__field-label">
+            {{ t('assessment.create.fields.instructions') }}
+          </label>
+
           <mat-form-field
             appearance="outline"
             hideRequiredMarker
@@ -138,7 +179,7 @@
               matInput
               formControlName="instructions"
               rows="4"
-              placeholder="Enter instructions for students"
+              [placeholder]="t('assessment.create.placeholders.instructions')"
             ></textarea>
           </mat-form-field>
         </div>
@@ -150,14 +191,16 @@
       class="create-assessment__accordion !mb-3 !overflow-hidden !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !shadow-none"
       [expanded]="true"
     >
-      <!--********** HEADER **********-->
       <mat-expansion-panel-header
         class="create-assessment__accordion-header create-assessment__accordion-header--green !h-auto !min-h-[84px] !px-6 max-md:!px-4"
       >
         <mat-panel-title class="!m-0 !flex !flex-col !items-start">
-          <span class="text-base font-bold text-[var(--color-white)]"> Assessment Settings </span>
+          <span class="text-base font-bold text-[var(--color-white)]">
+            {{ t('assessment.create.settings.title') }}
+          </span>
+
           <span class="mt-1 text-[13px] font-normal text-[var(--color-white)]">
-            Configure the duration, points, and status of this assessment.
+            {{ t('assessment.create.settings.subtitle') }}
           </span>
         </mat-panel-title>
       </mat-expansion-panel-header>
@@ -166,7 +209,10 @@
       <div class="grid grid-cols-3 gap-5 p-1 pt-5 max-md:grid-cols-1">
         <!--********** DURATION **********-->
         <div class="create-assessment__field">
-          <label class="create-assessment__field-label">Duration</label>
+          <label class="create-assessment__field-label">
+            {{ t('assessment.create.fields.duration') }}
+          </label>
+
           <mat-form-field
             appearance="outline"
             hideRequiredMarker
@@ -177,18 +223,25 @@
               type="number"
               formControlName="duration"
               min="1"
-              placeholder="e.g. 60"
+              [placeholder]="t('assessment.create.placeholders.duration')"
             />
-            <span matSuffix class="mr-2 text-[13px]">minutes</span>
+
+            <span matSuffix class="mr-2 text-[13px]">
+              {{ t('assessment.create.units.minutes') }}
+            </span>
+
             <mat-error *ngIf="assessmentForm.get('duration')?.hasError('required')">
-              Duration is required
+              {{ t('assessment.create.validation.durationRequired') }}
             </mat-error>
           </mat-form-field>
         </div>
 
         <!--********** TOTAL POINTS **********-->
         <div class="create-assessment__field">
-          <label class="create-assessment__field-label">Total Points</label>
+          <label class="create-assessment__field-label">
+            {{ t('assessment.create.fields.totalPoints') }}
+          </label>
+
           <mat-form-field
             appearance="outline"
             hideRequiredMarker
@@ -199,17 +252,21 @@
               type="number"
               formControlName="totalPoints"
               min="1"
-              placeholder="e.g. 100"
+              [placeholder]="t('assessment.create.placeholders.totalPoints')"
             />
+
             <mat-error *ngIf="assessmentForm.get('totalPoints')?.hasError('required')">
-              Total points is required
+              {{ t('assessment.create.validation.totalPointsRequired') }}
             </mat-error>
           </mat-form-field>
         </div>
 
         <!--********** STATUS **********-->
         <div class="create-assessment__field">
-          <label class="create-assessment__field-label">Status</label>
+          <label class="create-assessment__field-label">
+            {{ t('assessment.create.fields.status') }}
+          </label>
+
           <mat-form-field
             appearance="outline"
             hideRequiredMarker
@@ -218,14 +275,23 @@
             <mat-select
               formControlName="status"
               panelClass="assessment-select-panel"
-              placeholder="Select status"
+              [placeholder]="t('assessment.create.placeholders.status')"
             >
-              <mat-option value="Draft">Draft</mat-option>
-              <mat-option value="Published">Published</mat-option>
-              <mat-option value="Archived">Archived</mat-option>
+              <mat-option value="Draft">
+                {{ t('assessment.create.status.draft') }}
+              </mat-option>
+
+              <mat-option value="Published">
+                {{ t('assessment.create.status.published') }}
+              </mat-option>
+
+              <mat-option value="Archived">
+                {{ t('assessment.create.status.archived') }}
+              </mat-option>
             </mat-select>
+
             <mat-error *ngIf="assessmentForm.get('status')?.hasError('required')">
-              Status is required
+              {{ t('assessment.create.validation.statusRequired') }}
             </mat-error>
           </mat-form-field>
         </div>
@@ -236,17 +302,18 @@
     <div
       class="type-question-layout mb-5 mt-10 grid grid-cols-[280px_1fr] items-start gap-5 max-lg:grid-cols-1"
     >
-      <!--********** ASSESSMENT TYPE (LEFT) **********-->
+      <!--********** ASSESSMENT TYPE **********-->
       <div class="type-panel lg:sticky lg:top-6">
-        <!--********** TITLE **********-->
         <div class="mb-4">
-          <h2 class="m-0 text-base font-bold text-[var(--color-title)]">Assessment Type</h2>
+          <h2 class="m-0 text-base font-bold text-[var(--color-title)]">
+            {{ t('assessment.create.type.title') }}
+          </h2>
+
           <p class="mt-1 text-[13px] text-[var(--color-text-secondary)]">
-            Choose the type of question you want to create.
+            {{ t('assessment.create.type.subtitle') }}
           </p>
         </div>
 
-        <!--********** TYPE LIST **********-->
         <div class="flex flex-col gap-4">
           <!--********** ESSAY TYPE **********-->
           <button
@@ -258,14 +325,21 @@
             <div
               class="type-card__icon type-card__icon--amber flex h-11 w-11 shrink-0 items-center justify-center rounded-[10px]"
             >
-              <mat-icon class="!h-5 !w-5 !text-xl">edit_note</mat-icon>
+              <mat-icon class="!h-5 !w-5 !text-xl"> edit_note </mat-icon>
             </div>
+
             <div class="type-card__text flex min-w-0 flex-1 flex-col gap-px">
-              <span class="type-card__label text-sm font-semibold">Essay</span>
-              <span class="type-card__desc text-[11.5px]"> Open-ended written answer </span>
+              <span class="type-card__label text-sm font-semibold">
+                {{ t('assessment.create.type.essay') }}
+              </span>
+
+              <span class="type-card__desc text-[11.5px]">
+                {{ t('assessment.create.type.essayDescription') }}
+              </span>
             </div>
+
             @if (selectedType === 'essay') {
-              <mat-icon class="type-card__check shrink-0">check_circle</mat-icon>
+              <mat-icon class="type-card__check shrink-0"> check_circle </mat-icon>
             }
           </button>
 
@@ -279,20 +353,27 @@
             <div
               class="type-card__icon type-card__icon--blue flex h-11 w-11 shrink-0 items-center justify-center rounded-[10px]"
             >
-              <mat-icon class="!h-5 !w-5 !text-xl">checklist</mat-icon>
+              <mat-icon class="!h-5 !w-5 !text-xl"> checklist </mat-icon>
             </div>
+
             <div class="type-card__text flex min-w-0 flex-1 flex-col gap-px">
-              <span class="type-card__label text-sm font-semibold"> Multiple Choice </span>
-              <span class="type-card__desc text-[11.5px]"> Select one correct answer </span>
+              <span class="type-card__label text-sm font-semibold">
+                {{ t('assessment.create.type.multipleChoice') }}
+              </span>
+
+              <span class="type-card__desc text-[11.5px]">
+                {{ t('assessment.create.type.multipleChoiceDescription') }}
+              </span>
             </div>
+
             @if (selectedType === 'multiple_choice') {
-              <mat-icon class="type-card__check shrink-0">check_circle</mat-icon>
+              <mat-icon class="type-card__check shrink-0"> check_circle </mat-icon>
             }
           </button>
         </div>
       </div>
 
-      <!--********** QUESTION AREA (RIGHT) **********-->
+      <!--********** QUESTION AREA **********-->
       <div class="type-question-layout__content min-w-0" [formGroup]="questionForm">
         @if (!selectedType) {
           <!--********** EMPTY STATE **********-->
@@ -302,12 +383,13 @@
             <div
               class="empty-state__icon flex h-16 w-16 items-center justify-center rounded-full bg-[var(--color-primary-light)] text-[var(--color-primary)]"
             >
-              <mat-icon class="!h-[28px] !w-[28px] !text-[28px]">quiz</mat-icon>
+              <mat-icon class="!h-[28px] !w-[28px] !text-[28px]"> quiz </mat-icon>
             </div>
+
             <p
               class="empty-state__text m-0 max-w-[360px] text-[14px] leading-[1.5] text-[var(--color-text-secondary)]"
             >
-              Choose an assessment type on the left to start adding questions.
+              {{ t('assessment.create.question.empty') }}
             </p>
           </div>
         }
@@ -317,7 +399,6 @@
           <mat-card
             class="form-card !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-7 max-md:!p-4"
           >
-            <!--********** HEADER **********-->
             <div
               class="form-card__header mb-6 flex items-center gap-[14px] border-b border-[var(--color-border)] pb-5"
             >
@@ -326,30 +407,40 @@
               >
                 <mat-icon>edit_note</mat-icon>
               </div>
+
               <div class="min-w-0 flex-1">
-                <h2 class="m-0 text-[17px] font-bold text-[var(--color-title)]">Essay Question</h2>
+                <h2 class="m-0 text-[17px] font-bold text-[var(--color-title)]">
+                  {{ t('assessment.create.essay.title') }}
+                </h2>
+
                 <p class="mt-0.5 mb-0 text-[12.5px] text-[var(--color-text-secondary)]">
-                  Create an open-ended written question.
+                  {{ t('assessment.create.essay.subtitle') }}
                 </p>
               </div>
             </div>
 
-            <!--********** QUESTION FORM **********-->
             <div class="assessment-form flex flex-col gap-5">
               <!--********** QUESTION **********-->
               <div class="form-section">
                 <div class="form-section__header">
                   <span class="form-section__number">1</span>
+
                   <div>
-                    <span class="form-section__title">Question</span>
+                    <span class="form-section__title">
+                      {{ t('assessment.create.question.question') }}
+                    </span>
+
                     <span class="form-section__description">
-                      Write the question students need to answer.
+                      {{ t('assessment.create.question.description') }}
                     </span>
                   </div>
                 </div>
 
                 <div class="create-assessment__field">
-                  <label class="create-assessment__field-label">Question Text</label>
+                  <label class="create-assessment__field-label">
+                    {{ t('assessment.create.fields.questionText') }}
+                  </label>
+
                   <mat-form-field
                     appearance="outline"
                     class="create-assessment__material-field create-assessment__textarea w-full"
@@ -358,10 +449,11 @@
                       matInput
                       rows="5"
                       formControlName="questionText"
-                      placeholder="Write your essay question here..."
+                      [placeholder]="t('assessment.create.placeholders.essayQuestion')"
                     ></textarea>
+
                     <mat-error *ngIf="questionForm.get('questionText')?.hasError('required')">
-                      Question text is required
+                      {{ t('assessment.create.validation.questionRequired') }}
                     </mat-error>
                   </mat-form-field>
                 </div>
@@ -371,10 +463,14 @@
               <div class="form-section">
                 <div class="form-section__header">
                   <span class="form-section__number">2</span>
+
                   <div>
-                    <span class="form-section__title">Question Settings</span>
+                    <span class="form-section__title">
+                      {{ t('assessment.create.questionSettings.title') }}
+                    </span>
+
                     <span class="form-section__description">
-                      Configure the answer requirements and score.
+                      {{ t('assessment.create.questionSettings.essayDescription') }}
                     </span>
                   </div>
                 </div>
@@ -382,7 +478,10 @@
                 <div class="grid grid-cols-2 gap-4 max-[560px]:grid-cols-1">
                   <!--********** MAX WORD **********-->
                   <div class="create-assessment__field">
-                    <label class="create-assessment__field-label">Max Word</label>
+                    <label class="create-assessment__field-label">
+                      {{ t('assessment.create.fields.maxWord') }}
+                    </label>
+
                     <mat-form-field
                       appearance="outline"
                       class="create-assessment__material-field w-full"
@@ -392,15 +491,21 @@
                         type="number"
                         formControlName="maxWord"
                         min="1"
-                        placeholder="e.g. 300"
+                        [placeholder]="t('assessment.create.placeholders.maxWord')"
                       />
-                      <mat-error *ngIf="questionForm.get('maxWord')?.hasError('required')">Maximum word is required</mat-error>
+
+                      <mat-error *ngIf="questionForm.get('maxWord')?.hasError('required')">
+                        {{ t('assessment.create.validation.maxWordRequired') }}
+                      </mat-error>
                     </mat-form-field>
                   </div>
 
                   <!--********** TOTAL SCORE **********-->
                   <div class="create-assessment__field">
-                    <label class="create-assessment__field-label">Total Score</label>
+                    <label class="create-assessment__field-label">
+                      {{ t('assessment.create.fields.totalScore') }}
+                    </label>
+
                     <mat-form-field
                       appearance="outline"
                       class="create-assessment__material-field w-full"
@@ -410,13 +515,15 @@
                         type="number"
                         formControlName="questionPoints"
                         min="1"
-                        placeholder="e.g. 10"
+                        [placeholder]="t('assessment.create.placeholders.totalScore')"
                       />
+
                       <mat-error *ngIf="questionForm.get('questionPoints')?.hasError('required')">
-                        Total score is required
+                        {{ t('assessment.create.validation.totalScoreRequired') }}
                       </mat-error>
+
                       <mat-error *ngIf="questionForm.get('questionPoints')?.hasError('min')">
-                        Total score must be at least 1
+                        {{ t('assessment.create.validation.totalScoreMin') }}
                       </mat-error>
                     </mat-form-field>
                   </div>
@@ -434,8 +541,9 @@
                 class="create-assessment__cancel-button max-[560px]:w-full"
                 (click)="cancelQuestion()"
               >
-                Cancel
+                {{ t('assessment.create.actions.cancel') }}
               </button>
+
               <button
                 mat-flat-button
                 type="button"
@@ -443,7 +551,9 @@
                 (click)="addQuestion()"
               >
                 <mat-icon>add</mat-icon>
-                <span>Add Question</span>
+                <span>
+                  {{ t('assessment.create.actions.addQuestion') }}
+                </span>
               </button>
             </div>
           </mat-card>
@@ -454,7 +564,6 @@
           <mat-card
             class="form-card !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-7 max-md:!p-4"
           >
-            <!--********** HEADER **********-->
             <div
               class="form-card__header mb-6 flex items-center gap-[14px] border-b border-[var(--color-border)] pb-5"
             >
@@ -463,32 +572,40 @@
               >
                 <mat-icon>checklist</mat-icon>
               </div>
+
               <div class="min-w-0 flex-1">
                 <h2 class="m-0 text-[17px] font-bold text-[var(--color-title)]">
-                  Multiple Choice Question
+                  {{ t('assessment.create.multipleChoice.title') }}
                 </h2>
+
                 <p class="mt-0.5 mb-0 text-[12.5px] text-[var(--color-text-secondary)]">
-                  Select one correct answer from the available options.
+                  {{ t('assessment.create.multipleChoice.subtitle') }}
                 </p>
               </div>
             </div>
 
-            <!--********** QUESTION FORM **********-->
             <div class="assessment-form flex flex-col gap-5">
               <!--********** QUESTION **********-->
               <div class="form-section">
                 <div class="form-section__header">
                   <span class="form-section__number">1</span>
+
                   <div>
-                    <span class="form-section__title">Question</span>
+                    <span class="form-section__title">
+                      {{ t('assessment.create.question.question') }}
+                    </span>
+
                     <span class="form-section__description">
-                      Write the question students need to answer.
+                      {{ t('assessment.create.question.description') }}
                     </span>
                   </div>
                 </div>
 
                 <div class="create-assessment__field">
-                  <label class="create-assessment__field-label">Question Text</label>
+                  <label class="create-assessment__field-label">
+                    {{ t('assessment.create.fields.questionText') }}
+                  </label>
+
                   <mat-form-field
                     appearance="outline"
                     class="create-assessment__material-field create-assessment__textarea w-full"
@@ -497,10 +614,11 @@
                       matInput
                       rows="4"
                       formControlName="questionText"
-                      placeholder="Write your question here..."
+                      [placeholder]="t('assessment.create.placeholders.multipleChoiceQuestion')"
                     ></textarea>
+
                     <mat-error *ngIf="questionForm.get('questionText')?.hasError('required')">
-                      Question text is required
+                      {{ t('assessment.create.validation.questionRequired') }}
                     </mat-error>
                   </mat-form-field>
                 </div>
@@ -512,9 +630,12 @@
                   <span class="form-section__number">2</span>
 
                   <div>
-                    <span class="form-section__title">Answer Options</span>
+                    <span class="form-section__title">
+                      {{ t('assessment.create.answerOptions.title') }}
+                    </span>
+
                     <span class="form-section__description">
-                      Add possible answers and mark one as correct.
+                      {{ t('assessment.create.answerOptions.description') }}
                     </span>
                   </div>
                 </div>
@@ -525,15 +646,15 @@
                       class="answer-option-row"
                       [class.answer-option-row--correct]="correctOptionIndex === optionIndex"
                     >
-                      <!--********** OPTION NUMBER **********-->
                       <span class="answer-option-row__index">
                         {{ optionIndex + 1 }}
                       </span>
 
-                      <!--********** OPTION FIELD **********-->
                       <div class="create-assessment__field answer-option-row__field">
                         <label class="create-assessment__field-label">
-                          Option {{ optionIndex + 1 }}
+                          {{
+                            t('assessment.create.answerOptions.option', { number: optionIndex + 1 })
+                          }}
                         </label>
 
                         <mat-form-field
@@ -543,10 +664,11 @@
                           <input
                             matInput
                             [formControlName]="optionIndex"
-                            placeholder="Write answer option..."
+                            [placeholder]="t('assessment.create.placeholders.answerOption')"
                           />
+
                           <mat-error *ngIf="option.hasError('required')">
-                            Option text is required
+                            {{ t('assessment.create.validation.optionRequired') }}
                           </mat-error>
                         </mat-form-field>
                       </div>
@@ -563,12 +685,18 @@
                           [checked]="correctOptionIndex === optionIndex"
                           (change)="setCorrectOption(optionIndex)"
                           [value]="optionIndex"
-                          [attr.aria-label]="'Mark option ' + (optionIndex + 1) + ' as correct'"
+                          [attr.aria-label]="
+                            t('assessment.create.answerOptions.markCorrect', {
+                              number: optionIndex + 1,
+                            })
+                          "
                         >
                         </mat-radio-button>
 
                         @if (correctOptionIndex === optionIndex) {
-                          <span class="answer-option-row__correct-label"> Correct Answer </span>
+                          <span class="answer-option-row__correct-label">
+                            {{ t('assessment.create.answerOptions.correct') }}
+                          </span>
                         }
                       </div>
 
@@ -579,7 +707,7 @@
                         class="answer-option-row__delete"
                         [disabled]="options.length <= 2"
                         (click)="removeOption(optionIndex)"
-                        aria-label="Remove option"
+                        [attr.aria-label]="t('assessment.create.answerOptions.removeOption')"
                       >
                         <mat-icon>close</mat-icon>
                       </button>
@@ -594,7 +722,10 @@
                     (click)="addOption()"
                   >
                     <mat-icon>add</mat-icon>
-                    <span>Add Option</span>
+
+                    <span>
+                      {{ t('assessment.create.answerOptions.addOption') }}
+                    </span>
                   </button>
                 </div>
               </div>
@@ -603,16 +734,23 @@
               <div class="form-section !mt-10">
                 <div class="form-section__header">
                   <span class="form-section__number">3</span>
+
                   <div>
-                    <span class="form-section__title">Scoring</span>
+                    <span class="form-section__title">
+                      {{ t('assessment.create.scoring.title') }}
+                    </span>
+
                     <span class="form-section__description">
-                      Set the score for this question.
+                      {{ t('assessment.create.scoring.description') }}
                     </span>
                   </div>
                 </div>
 
                 <div class="create-assessment__field w-full max-w-[220px] max-[560px]:max-w-full">
-                  <label class="create-assessment__field-label">Maximum Points</label>
+                  <label class="create-assessment__field-label">
+                    {{ t('assessment.create.fields.maximumPoints') }}
+                  </label>
+
                   <mat-form-field
                     appearance="outline"
                     class="create-assessment__material-field w-50"
@@ -622,13 +760,15 @@
                       type="number"
                       formControlName="questionPoints"
                       min="1"
-                      placeholder="e.g. 10"
+                      [placeholder]="t('assessment.create.placeholders.maximumPoints')"
                     />
+
                     <mat-error *ngIf="questionForm.get('questionPoints')?.hasError('required')">
-                      Maximum points is required
+                      {{ t('assessment.create.validation.maximumPointsRequired') }}
                     </mat-error>
+
                     <mat-error *ngIf="questionForm.get('questionPoints')?.hasError('min')">
-                      Maximum points must be at least 1
+                      {{ t('assessment.create.validation.maximumPointsMin') }}
                     </mat-error>
                   </mat-form-field>
                 </div>
@@ -645,8 +785,9 @@
                 class="create-assessment__cancel-button max-[560px]:w-full"
                 (click)="cancelQuestion()"
               >
-                Cancel
+                {{ t('assessment.create.actions.cancel') }}
               </button>
+
               <button
                 mat-flat-button
                 type="button"
@@ -654,7 +795,10 @@
                 (click)="addQuestion()"
               >
                 <mat-icon>add</mat-icon>
-                <span>Add Question</span>
+
+                <span>
+                  {{ t('assessment.create.actions.addQuestion') }}
+                </span>
               </button>
             </div>
           </mat-card>
@@ -668,12 +812,13 @@
         class="create-assessment__accordion !mb-3 !overflow-hidden !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !shadow-none"
         [expanded]="true"
       >
-        <!--********** HEADER **********-->
         <mat-expansion-panel-header
           class="create-assessment__accordion-header create-assessment__accordion-header--green !h-auto !min-h-[25px] !px-6 max-md:!px-4 !bg-[var(--color-primary)]"
         >
           <mat-panel-title class="!m-0 !flex !flex-col !items-start">
-            <span class="text-base font-bold text-[var(--color-white)]"> List Questions </span>
+            <span class="text-base font-bold text-[var(--color-white)]">
+              {{ t('assessment.create.questionList.title') }}
+            </span>
           </mat-panel-title>
         </mat-expansion-panel-header>
 
@@ -691,14 +836,12 @@
                 cdkDragBoundary=".created-question-list"
                 [cdkDragDisabled]="questions.length <= 1"
               >
-                <!--********** DRAG PREVIEW PLACEHOLDER **********-->
                 <div class="created-question__placeholder" *cdkDragPlaceholder></div>
 
-                <!--********** DRAG HANDLE **********-->
                 <span
                   class="created-question__drag-handle"
                   cdkDragHandle
-                  aria-label="Drag to reorder question"
+                  [attr.aria-label]="t('assessment.create.questionList.dragToReorder')"
                 >
                   <mat-icon>drag_indicator</mat-icon>
                 </span>
@@ -716,8 +859,16 @@
                     >
                       {{ questionTypeLabel(question.type) }}
                     </span>
-                    <span class="created-question__points"> {{ question.points }} pts </span>
+
+                    <span class="created-question__points">
+                      {{
+                        t('assessment.create.questionList.points', {
+                          points: question.points,
+                        })
+                      }}
+                    </span>
                   </div>
+
                   <p class="created-question__text">
                     {{ question.text }}
                   </p>
@@ -730,7 +881,7 @@
                   class="created-question__reorder"
                   [disabled]="qi === 0"
                   (click)="moveCreatedQuestionUp(qi)"
-                  aria-label="Move question up"
+                  [attr.aria-label]="t('assessment.create.questionList.moveUp')"
                 >
                   <mat-icon>arrow_upward</mat-icon>
                 </button>
@@ -742,17 +893,18 @@
                   class="created-question__reorder"
                   [disabled]="qi === questions.length - 1"
                   (click)="moveCreatedQuestionDown(qi)"
-                  aria-label="Move question down"
+                  [attr.aria-label]="t('assessment.create.questionList.moveDown')"
                 >
                   <mat-icon>arrow_downward</mat-icon>
                 </button>
 
+                <!--********** DELETE QUESTION **********-->
                 <button
                   mat-icon-button
                   type="button"
                   class="created-question__delete"
                   (click)="removeCreatedQuestion(qi)"
-                  aria-label="Remove question"
+                  [attr.aria-label]="t('assessment.create.questionList.removeQuestion')"
                 >
                   <mat-icon>delete</mat-icon>
                 </button>
@@ -763,13 +915,15 @@
       </mat-expansion-panel>
     }
 
-    <!--********** NO QUESTION ERROR   **********-->
+    <!--********** NO QUESTION ERROR **********-->
     <div
       *ngIf="noQuestionError"
       role="alert"
-      class="mt-4 rounded-lg bg-red-50 p-3 text-xs font-medium text-red-600 border border-red-200 flex items-center gap-2"
+      class="mt-4 flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-xs font-medium text-red-600"
     >
-      <span>Please add at least one question before creating.</span>
+      <span>
+        {{ t('assessment.create.validation.noQuestion') }}
+      </span>
     </div>
 
     <!--********** FORM ACTIONS **********-->
@@ -782,14 +936,17 @@
         class="create-assessment__cancel-button !h-11 !px-6 max-md:!w-full"
         (click)="onCancel()"
       >
-        Cancel
+        {{ t('assessment.create.actions.cancel') }}
       </button>
+
       <button
         type="submit"
         mat-flat-button
         class="create-assessment__save-button !h-11 !px-7 max-md:!w-full"
       >
-        <span>Create Assessment</span>
+        <span>
+          {{ t('assessment.create.actions.createAssessment') }}
+        </span>
       </button>
     </div>
   </form>
