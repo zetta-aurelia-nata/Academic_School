@@ -1,0 +1,493 @@
+{
+  "assessment": {
+    "list": {
+      "title": "Évaluations",
+      "totalAssessments": "évaluations au total",
+
+      "search": {
+        "placeholder": "Rechercher des évaluations...",
+        "ariaLabel": "Rechercher des évaluations",
+        "clear": "Effacer la recherche"
+      },
+      "delete": {
+        "confirmTitle": "Supprimer l'évaluation ?",
+        "confirmText": "Êtes-vous sûr de vouloir supprimer cette évaluation?",
+        "confirmButton": "Supprimer",
+        "cancelButton": "Annuler",
+        "successTitle": "Supprimé !",
+        "successText": "L'évaluation a été supprimée avec succès."
+      },
+      "table": {
+        "assessmentName": "Nom de l'évaluation",
+        "subject": "Matière",
+        "grade": "Classe",
+        "students": "Élèves",
+        "status": "Statut",
+        "date": "Date",
+        "actions": "Actions"
+      },
+
+      "status": {
+        "completed": "Terminée",
+        "pending": "En attente",
+        "failed": "Échouée",
+        "draft": "Brouillon",
+        "notSubmitted": "Non soumise"
+      },
+
+      "actions": {
+        "create": "Créer une évaluation",
+        "edit": "Modifier l'évaluation",
+        "delete": "Supprimer l'évaluation"
+      },
+
+      "empty": {
+        "title": "Aucune évaluation trouvée",
+        "description": "Essayez de modifier votre recherche ou vos filtres."
+      }
+    },
+
+    "create": {
+      "title": "Créer une évaluation",
+      "subtitle": "Créez une nouvelle évaluation en saisissant les informations et les questions ci-dessous.",
+
+      "information": {
+        "title": "Informations sur l'évaluation",
+        "subtitle": "Saisissez les informations de base de cette évaluation."
+      },
+
+      "settings": {
+        "title": "Paramètres de l'évaluation",
+        "subtitle": "Configurez la durée, les points et le statut de cette évaluation."
+      },
+
+      "fields": {
+        "assessmentName": "Nom de l'évaluation",
+        "subject": "Matière",
+        "grade": "Classe",
+        "description": "Description",
+        "instructions": "Instructions",
+        "duration": "Durée",
+        "totalPoints": "Nombre total de points",
+        "status": "Statut",
+        "questionText": "Texte de la question",
+        "maxWord": "Nombre maximal de mots",
+        "totalScore": "Score total",
+        "maximumPoints": "Points maximum"
+      },
+
+      "placeholders": {
+        "assessmentName": "Saisissez le nom de l'évaluation",
+        "description": "Saisissez la description de l'évaluation",
+        "instructions": "Saisissez les instructions pour les élèves",
+        "duration": "ex. 60",
+        "totalPoints": "ex. 100",
+        "status": "Sélectionnez le statut",
+        "essayQuestion": "Écrivez votre question de dissertation ici...",
+        "multipleChoiceQuestion": "Écrivez votre question ici...",
+        "maxWord": "ex. 300",
+        "totalScore": "ex. 10",
+        "answerOption": "Écrivez une option de réponse...",
+        "maximumPoints": "ex. 10"
+      },
+
+      "subjects": {
+        "mathematics": "Mathématiques",
+        "science": "Sciences",
+        "english": "Anglais",
+        "history": "Histoire",
+        "computerScience": "Informatique",
+        "biology": "Biologie"
+      },
+
+      "status": {
+        "draft": "Brouillon",
+        "published": "Publiée",
+        "archived": "Archivée"
+      },
+
+      "units": {
+        "minutes": "minutes"
+      },
+
+      "type": {
+        "title": "Type d'évaluation",
+        "subtitle": "Choisissez le type de question que vous souhaitez créer.",
+        "essay": "Dissertation",
+        "essayDescription": "Réponse écrite ouverte",
+        "multipleChoice": "Choix multiple",
+        "multipleChoiceDescription": "Sélectionnez une réponse correcte"
+      },
+
+      "question": {
+        "empty": "Choisissez un type d'évaluation à gauche pour commencer à ajouter des questions.",
+        "question": "Question",
+        "description": "Rédigez la question à laquelle les élèves doivent répondre."
+      },
+
+      "essay": {
+        "title": "Question de dissertation",
+        "subtitle": "Créez une question nécessitant une réponse écrite ouverte."
+      },
+
+      "multipleChoice": {
+        "title": "Question à choix multiple",
+        "subtitle": "Sélectionnez une réponse correcte parmi les options disponibles."
+      },
+
+      "questionSettings": {
+        "title": "Paramètres de la question",
+        "essayDescription": "Configurez les exigences de réponse et le score."
+      },
+
+      "answerOptions": {
+        "title": "Options de réponse",
+        "description": "Ajoutez des réponses possibles et indiquez la bonne réponse.",
+        "option": "Option {{ number }}",
+        "correct": "Bonne réponse",
+        "addOption": "Ajouter une option",
+        "removeOption": "Supprimer l'option",
+        "markCorrect": "Marquer l'option {{ number }} comme correcte"
+      },
+
+      "scoring": {
+        "title": "Notation",
+        "description": "Définissez le score de cette question."
+      },
+
+      "questionList": {
+        "title": "Liste des questions",
+        "points": "{{ points }} pts",
+        "dragToReorder": "Faire glisser pour réorganiser la question",
+        "moveUp": "Déplacer la question vers le haut",
+        "moveDown": "Déplacer la question vers le bas",
+        "removeQuestion": "Supprimer la question"
+      },
+
+      "validation": {
+        "assessmentNameRequired": "Le nom de l'évaluation est obligatoire",
+        "subjectRequired": "La matière est obligatoire",
+        "gradeRequired": "La classe est obligatoire",
+        "durationRequired": "La durée est obligatoire",
+        "totalPointsRequired": "Le nombre total de points est obligatoire",
+        "statusRequired": "Le statut est obligatoire",
+        "questionRequired": "Le texte de la question est obligatoire",
+        "maxWordRequired": "Le nombre maximal de mots est obligatoire",
+        "totalScoreRequired": "Le score total est obligatoire",
+        "totalScoreMin": "Le score total doit être d'au moins 1",
+        "optionRequired": "Le texte de l'option est obligatoire",
+        "maximumPointsRequired": "Le nombre maximal de points est obligatoire",
+        "maximumPointsMin": "Le nombre maximal de points doit être d'au moins 1",
+        "noQuestion": "Veuillez ajouter au moins une question avant de créer l'évaluation."
+      },
+
+      "actions": {
+        "back": "Retour aux évaluations",
+        "cancel": "Annuler",
+        "addQuestion": "Ajouter une question",
+        "createAssessment": "Créer l'évaluation"
+      }
+    },
+
+    "edit": {
+      "header": {
+        "backAria": "Retour aux évaluations",
+        "title": "Modifier l'évaluation",
+        "subtitle": "Mettez à jour les informations et les paramètres de l'évaluation ci-dessous."
+      },
+
+      "information": {
+        "title": "Informations sur l'évaluation",
+        "subtitle": "Mettez à jour les informations de base de cette évaluation."
+      },
+
+      "settings": {
+        "title": "Paramètres de l'évaluation",
+        "subtitle": "Configurez la durée, les points et le statut de cette évaluation."
+      },
+
+      "questions": {
+        "title": "Questions et réponses",
+        "subtitle": "Mettez à jour les questions, les options de réponse et les bonnes réponses.",
+        "empty": "Aucune question pour le moment. Ajoutez une question de dissertation ou à choix multiple ci-dessous.",
+        "untitled": "Question sans titre",
+        "dragAria": "Faire glisser pour réorganiser la question",
+        "moveUpAria": "Déplacer la question vers le haut",
+        "moveDownAria": "Déplacer la question vers le bas",
+        "removeAria": "Supprimer la question",
+        "essayLabel": "Dissertation",
+        "multipleChoiceLabel": "Choix multiple"
+      },
+
+      "fields": {
+        "assessmentName": "Nom de l'évaluation",
+        "subject": "Matière",
+        "grade": "Classe",
+        "description": "Description",
+        "instructions": "Instructions",
+        "duration": "Durée",
+        "totalPoints": "Nombre total de points",
+        "status": "Statut",
+        "questionText": "Texte de la question",
+        "maxWord": "Nombre maximal de mots",
+        "totalScore": "Score total",
+        "maximumPoints": "Points maximum"
+      },
+
+      "placeholders": {
+        "assessmentName": "Saisissez le nom de l'évaluation",
+        "subject": "Sélectionnez la matière",
+        "grade": "Sélectionnez la classe",
+        "description": "Saisissez la description de l'évaluation",
+        "instructions": "Saisissez les instructions pour les élèves",
+        "duration": "Saisissez la durée",
+        "totalPoints": "Saisissez le nombre total de points",
+        "status": "Sélectionnez le statut",
+        "questionText": "Écrivez la question ici...",
+        "maxWord": "Saisissez le nombre maximal de mots",
+        "totalScore": "Saisissez le score total",
+        "option": "Écrivez une option de réponse...",
+        "maximumPoints": "Saisissez les points maximum"
+      },
+
+      "subjects": {
+        "mathematics": "Mathématiques",
+        "science": "Sciences",
+        "english": "Anglais",
+        "history": "Histoire",
+        "computerScience": "Informatique",
+        "biology": "Biologie"
+      },
+
+      "grades": {
+        "grade7": "Classe 7",
+        "grade8": "Classe 8",
+        "grade9": "Classe 9",
+        "grade10": "Classe 10",
+        "grade11": "Classe 11",
+        "grade12": "Classe 12"
+      },
+
+      "statusOptions": {
+        "draft": "Brouillon",
+        "published": "Publiée",
+        "archived": "Archivée",
+        "failed": "Échouée"
+      },
+
+      "units": {
+        "minutes": "minutes"
+      },
+
+      "validation": {
+        "assessmentNameRequired": "Le nom de l'évaluation est obligatoire",
+        "subjectRequired": "La matière est obligatoire",
+        "gradeRequired": "La classe est obligatoire",
+        "descriptionRequired": "Le texte de la description est obligatoire",
+        "durationRequired": "La durée est obligatoire",
+        "durationMin": "La durée doit être d'au moins 10",
+        "totalPointsRequired": "Le nombre total de points est obligatoire",
+        "totalPointsMin": "Le score doit être d'au moins 1",
+        "statusRequired": "Le statut est obligatoire",
+        "questionRequired": "Le texte de la question est obligatoire"
+      },
+
+      "answerOptions": {
+        "title": "Options de réponse",
+        "option": "Option {{ number }}",
+        "correct": "Bonne réponse",
+        "addOption": "Ajouter une option",
+        "removeOptionAria": "Supprimer l'option",
+        "markCorrectAria": "Marquer l'option {{ number }} comme correcte"
+      },
+
+      "actions": {
+        "addEssay": "Ajouter une question de dissertation",
+        "addMultipleChoice": "Ajouter une question à choix multiple",
+        "cancel": "Annuler",
+        "save": "Enregistrer les modifications"
+      }
+    }
+  },
+
+  "assessmentResult": {
+    "pageTitle": "Révision des évaluations",
+    "pageSubtitle": "Examinez, notez et publiez les résultats des élèves",
+
+    "badge": {
+      "published": "Publié",
+      "locked": "Verrouillé",
+      "draft": "Brouillon"
+    },
+
+    "selection": {
+      "label": "Évaluation",
+      "description": "Sélectionnez une évaluation à gérer",
+      "subjectLabel": "Matière"
+    },
+
+    "actions": {
+      "publish": "Publier le résultat",
+      "unpublish": "Dépublier le résultat",
+      "lock": "Verrouiller le résultat",
+      "unlock": "Déverrouiller le résultat"
+    },
+
+    "studentResults": {
+      "title": "Résultats des élèves",
+      "subtitle": "Examinez les réponses aux dissertations et gérez les notes",
+      "count": "{{count}} élèves",
+      "scoreLabel": "Note",
+      "reviewAnswers": "Examiner les réponses",
+      "reviewing": "Examen en cours",
+      "empty": "Aucun résultat d'élève disponible"
+    },
+
+    "manualScoring": {
+      "title": "Notation manuelle des dissertations",
+      "subtitle": "Examinez les réponses aux dissertations et saisissez les notes",
+      "closeAria": "Fermer la révision de l'élève",
+      "question": "Question {{number}}",
+      "essayBadge": "Dissertation",
+      "studentAnswer": "Réponse de l'élève",
+      "teacherComment": "Commentaire de l'enseignant",
+      "teacherCommentPlaceholder": "Rédigez un commentaire pour cette réponse...",
+      "scoreLabel": "Note",
+      "manualScoringCaption": "Notation manuelle",
+      "totalScore": "Note totale",
+      "saveScore": "Enregistrer la note",
+      "scoreSaved": "Note enregistrée"
+    },
+
+    "publishDialog": {
+      "title": "Publier le résultat de l'évaluation ?",
+      "description": "Une fois publiés, les résultats seront visibles par les élèves. Assurez-vous que toutes les notes ont été vérifiées avant de publier le résultat.",
+      "cancel": "Annuler",
+      "confirm": "Publier le résultat"
+    },
+
+    "unpublishDialog": {
+      "title": "Dépublier le résultat de l'évaluation ?",
+      "description": "La dépublication masquera le résultat de l'évaluation aux élèves. Vous pourrez publier à nouveau le résultat plus tard après avoir effectué les modifications nécessaires.",
+      "cancel": "Annuler",
+      "confirm": "Dépublier le résultat"
+    },
+
+    "lockDialog": {
+      "title": "Verrouiller le résultat de l'évaluation ?",
+      "description": "Le verrouillage du résultat empêchera toute modification des notes et des commentaires des enseignants. Vous devrez déverrouiller le résultat avant de pouvoir modifier les réponses à nouveau.",
+      "cancel": "Annuler",
+      "confirm": "Verrouiller le résultat"
+    },
+
+    "unlockDialog": {
+      "title": "Déverrouiller le résultat de l'évaluation ?",
+      "description": "Le déverrouillage du résultat vous permettra de modifier à nouveau les notes et les commentaires des enseignants.",
+      "cancel": "Annuler",
+      "confirm": "Déverrouiller le résultat"
+    },
+    "messages": {
+      "scoreSaved": "Le score pour {{name}} a été enregistré.",
+      "published": "Les résultats de l'évaluation ont été publiés avec succès.",
+      "unpublished": "Les résultats de l'évaluation ne sont plus publiés.",
+      "publishBeforeLock": "Publiez le résultat avant de le verrouiller.",
+      "locked": "Le résultat de l'évaluation est maintenant verrouillé.",
+      "unlocked": "Le résultat de l'évaluation a été déverrouillé. Vous pouvez de nouveau modifier les scores et les commentaires de l'enseignant."
+    },
+
+    "saveScoreDialog": {
+      "title": "Enregistrer la note ?",
+      "description": "Ceci enregistrera la note et les commentaires de l'enseignant pour cet étudiant.",
+      "studentLabel": "Étudiant",
+      "totalScoreLabel": "Note totale",
+      "cancel": "Annuler",
+      "confirm": "Enregistrer la note",
+      "successMessage": "La note de {{ name }} a été enregistrée."
+    }
+  },
+
+  "assessmentDetail": {
+    "header": {
+      "title": "Soumissions des étudiants",
+      "backAria": "Retour"
+    },
+    "search": {
+      "placeholder": "Rechercher des étudiants...",
+      "inputAria": "Rechercher des étudiants",
+      "clearAria": "Effacer la recherche",
+      "clearButton": "Effacer la recherche",
+      "noResultsTitle": "Aucun étudiant trouvé",
+      "noResultsMessage": "Aucun étudiant ne correspond à \"{{query}}\"."
+    },
+    "studentList": {
+      "noSubmissionsTitle": "Aucune soumission pour l'instant",
+      "noSubmissionsMessage": "Il n'y a aucune soumission d'étudiant pour cette évaluation."
+    },
+    "studentDetail": {
+      "backAria": "Retour à la liste des évaluations",
+      "studentInfoTitle": "Informations de l'étudiant",
+      "submissionInfoTitle": "Informations sur la soumission",
+      "submitted": "Soumis le",
+      "status": "Statut",
+      "timeTaken": "Temps utilisé",
+      "resultTitle": "Détail du résultat de l'évaluation",
+      "mcTitle": "Choix multiples",
+      "mcEmpty": "Aucune question à choix multiples pour cette évaluation.",
+      "essayTitle": "Résultat de la dissertation",
+      "essayEmpty": "Aucune question de dissertation pour cette évaluation.",
+      "question": "Question {{number}}",
+      "answerLabel": "Réponse :",
+      "teacherReview": "Commentaire de l'enseignant :",
+      "finalScoreTitle": "Score final",
+      "finalScoreSubtitle": "Score total de l'évaluation"
+    },
+    "notFound": {
+      "title": "Étudiant introuvable",
+      "message": "La soumission de l'étudiant sélectionné est introuvable.",
+      "backButton": "Retour aux soumissions"
+    }
+  },
+  "review": {
+    "title": "Résultats des évaluations",
+    "assessmentSingular": "évaluation",
+    "assessmentsPlural": "évaluations",
+    "availableForReview": "disponible(s) pour révision",
+    "searchPlaceholder": "Rechercher des évaluations...",
+    "searchAriaLabel": "Rechercher des évaluations",
+    "clearSearchAriaLabel": "Effacer la recherche",
+    "students": "Étudiants",
+    "date": "Date",
+    "reviewSubmissions": "Examiner les soumissions",
+    "reviewButton": "Examiner",
+    "emptyTitle": "Aucune évaluation trouvée",
+    "emptyDescription": "Essayez avec un mot-clé différent."
+  },
+  "filter": {
+    "button": "Filtrer",
+    "openAriaLabel": "Ouvrir les filtres d'évaluation",
+    "panelAriaLabel": "Filtres d'évaluation",
+    "panelTitle": "Filtrer les évaluations",
+    "reset": "Réinitialiser",
+    "resetAll": "Tout réinitialiser",
+    "apply": "Appliquer les filtres",
+    "status": {
+      "label": "Statut",
+      "all": "Tous les statuts"
+    },
+    "subject": {
+      "label": "Matière",
+      "all": "Toutes les matières"
+    },
+    "grade": {
+      "label": "Niveau",
+      "all": "Tous les niveaux"
+    },
+    "dateRange": {
+      "label": "Plage de dates",
+      "from": "Du",
+      "to": "Au",
+      "fromAriaLabel": "Filtrer à partir de la date",
+      "toAriaLabel": "Filtrer jusqu'à la date"
+    }
+  }
+}

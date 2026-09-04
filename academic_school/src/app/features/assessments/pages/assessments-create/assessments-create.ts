@@ -30,6 +30,9 @@ import { AssessmentService } from '../../services/assessment.service';
 //********** MODEL IMPORTS **********
 import { Question, QuestionType } from '../../models/question.model';
 
+import { TranslocoDirective } from '@jsverse/transloco';
+
+
 @Component({
   selector: 'app-assessments-create',
   standalone: true,
@@ -49,7 +52,7 @@ import { Question, QuestionType } from '../../models/question.model';
     MatExpansionModule,
     CdkDropList,
     CdkDrag,
-    CdkDragPlaceholder,
+    CdkDragPlaceholder,TranslocoDirective
   ],
 })
 export class AssessmentsCreate implements OnInit {
@@ -66,11 +69,6 @@ export class AssessmentsCreate implements OnInit {
   questions: Question[] = [];
 
   private questionIdCounter = 1;
-  constructor(fb: FormBuilder, router: Router, assessmentService: AssessmentService) {
-    this.fb = fb;
-    this.router = router;
-    this.assessmentService = assessmentService;
-  }
 
   //********** INIT **********
   ngOnInit(): void {
@@ -295,7 +293,6 @@ export class AssessmentsCreate implements OnInit {
     this.router.navigate(['/assessments']);
   }
 
-  // ********** ACTION HANDLER **********
   onCancel(): void {
     this.router.navigate(['/assessments']);
   }

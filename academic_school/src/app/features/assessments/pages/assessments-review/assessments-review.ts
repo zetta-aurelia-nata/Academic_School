@@ -9,14 +9,30 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 
+// ********** THIRD-PARTY IMPORTS **********
+import { TranslocoDirective } from '@jsverse/transloco';
+
 // ********** APPLICATION MODELS AND SERVICES **********
 import { AssessmentService } from '../../services/assessment.service';
 import { Assessment, AssessmentStatus } from '../assessments-list/assessment.list.model';
+//********** SHARED COMPONENT IMPORTS **********
+import {
+  FilterComponent,
+  FilterValue,
+} from '../../../../shared/components/filter-component/filter-component';
 
 @Component({
   selector: 'app-assessments-review',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatButtonModule, MatCardModule, MatIconModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule,
+    FilterComponent,
+    TranslocoDirective,
+  ],
   templateUrl: './assessments-review.html',
   styleUrls: ['./assessments-review.scss'],
 })
@@ -30,6 +46,16 @@ export class AssessmentsReview implements OnInit {
   filteredAssessments: Assessment[] = [];
   searchQuery = '';
 
+  private activeFilter: FilterValue | null = null;
+
+  private readonly statusLabelMap: Record<AssessmentStatus, string> = {
+    Completed: 'assessment.list.status.completed',
+    Pending: 'assessment.list.status.pending',
+    Failed: 'assessment.list.status.failed',
+    Draft: 'assessment.list.status.draft',
+    'Not Submitted': 'assessment.list.status.notSubmitted',
+  };
+
   // ********** LIFECYCLE **********
   ngOnInit(): void {
     this.loadAssessments();
@@ -41,13 +67,61 @@ export class AssessmentsReview implements OnInit {
     this.filteredAssessments = [...this.assessments];
   }
 
+  // ********** FILTER OPTIONS (derived from data) **********
+  get statusOptions(): string[] {
+    return this.uniqueValues((assessment) => assessment.status);
+  }
+
+  get subjectOptions(): string[] {
+    return this.uniqueValues((assessment) => assessment.subject);
+  }
+
+  get gradeOptions(): string[] {
+    return this.uniqueValues((assessment) => assessment.grade);
+  }
+
+  private uniqueValues(pick: (assessment: Assessment) => unknown): string[] {
+    const values = this.assessments
+      .map((assessment) => pick(assessment)?.toString().trim())
+      .filter((value): value is string => !!value);
+
+    return Array.from(new Set(values)).sort((a, b) => a.localeCompare(b));
+  }
+
   // ********** ACTION HANDLERS **********
   onSearch(): void {
+    this.applyFilters();
+  }
+
+  clearSearch(): void {
+    this.searchQuery = '';
+
+    this.applyFilters();
+  }
+
+  onFilterApplied(filter: FilterValue): void {
+    this.activeFilter = filter;
+
+    this.applyFilters();
+  }
+
+  onReview(assessment: Assessment): void {
+    this.router.navigate(['/assessments', assessment.id, 'submissions']);
+  }
+
+  statusClass(status: AssessmentStatus): string {
+    return `status-badge status-badge--${status.toLowerCase()}`;
+  }
+
+  // ********** STATUS TRANSLATION KEY **********
+  statusLabelKey(status: AssessmentStatus): string {
+    return this.statusLabelMap[status] ?? 'status.draft';
+  }
+
+  // ********** COMBINED SEARCH + FILTER LOGIC **********
+  private applyFilters(): void {
     const query = this.searchQuery.trim().toLowerCase();
-    if (!query) {
-      this.filteredAssessments = [...this.assessments];
-      return;
-    }
+    const filter = this.activeFilter;
 
     this.filteredAssessments = this.assessments.filter((assessment) => {
       const title = assessment.title?.toString().toLowerCase() ?? '';
@@ -55,26 +129,59 @@ export class AssessmentsReview implements OnInit {
       const grade = assessment.grade?.toString().toLowerCase() ?? '';
       const status = assessment.status?.toString().toLowerCase() ?? '';
 
-      return (
+      const matchesSearch =
+        !query ||
         title.includes(query) ||
         subject.includes(query) ||
         grade.includes(query) ||
-        status.includes(query)
-      );
+        status.includes(query);
+
+      if (!matchesSearch) {
+        return false;
+      }
+
+      if (!filter) {
+        return true;
+      }
+
+      const matchesStatus =
+        filter.status === 'ALL' || status === filter.status.toString().toLowerCase();
+
+      const matchesSubject =
+        filter.subject === 'ALL' || subject === filter.subject.toString().toLowerCase();
+
+      const matchesGrade =
+        filter.grade === 'ALL' || grade === filter.grade.toString().toLowerCase();
+
+      const matchesDate = this.isWithinDateRange(assessment.date, filter.dateFrom, filter.dateTo);
+
+      return matchesStatus && matchesSubject && matchesGrade && matchesDate;
     });
   }
 
-  clearSearch(): void {
-    this.searchQuery = '';
+  private isWithinDateRange(date: unknown, dateFrom: string, dateTo: string): boolean {
+    if (!dateFrom && !dateTo) {
+      return true;
+    }
 
-    this.filteredAssessments = [...this.assessments];
-  }
-  // ********** ACTION HANDLERS **********
-  onReview(assessment: Assessment): void {
-    this.router.navigate(['/assessments', assessment.id, 'submissions']);
-  }
+    if (!date) {
+      return false;
+    }
 
-  statusClass(status: AssessmentStatus): string {
-    return `status-badge status-badge--${status.toLowerCase()}`;
+    const assessmentDate = new Date(date as string | number | Date).getTime();
+
+    if (Number.isNaN(assessmentDate)) {
+      return true;
+    }
+
+    if (dateFrom && assessmentDate < new Date(dateFrom).getTime()) {
+      return false;
+    }
+
+    if (dateTo && assessmentDate > new Date(dateTo).getTime()) {
+      return false;
+    }
+
+    return true;
   }
 }

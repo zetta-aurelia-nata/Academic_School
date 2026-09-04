@@ -1,0 +1,41 @@
+{
+  "app": {
+    "name": "École Académique"
+  },
+  "actions": {
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "confirm": "Confirmer",
+    "close": "Fermer"
+  },
+  "language": {
+    "label": "Langue",
+    "en": "Anglais",
+    "fr": "Français"
+  },
+  "layout": {
+    "footer": {
+      "title": "© 2026 Système de Gestion des Évaluations. Tous droits réservés."
+    },
+    "header": {
+      "toggleSidebarAria": "Basculer la barre latérale",
+      "title": "Gestion des Évaluations",
+      "userAvatarAlt": "avatar-utilisateur",
+      "userName": "Mme Aurelia",
+      "userRole": "Enseignante"
+    },
+    "sidebar": {
+      "logoTagline": "Apprendre. Évaluer. Grandir.",
+      "menu": {
+        "dashboard": "Tableau de bord",
+        "assessments": "Évaluations",
+        "submenu": {
+          "list": "Toutes les Évaluations",
+          "scoring": "Créer une Évaluation",
+          "review": "Voir les Résultats"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "pageTitle": "Welcome Back!",
+  "pageSubtitle": "Let's see your assessment progress here.",
+  "welcome": {
+    "eyebrow": "Assessment Management",
+    "title": "Keep your assessments on track",
+    "description": "Monitor assessment activities, review submissions, and keep track of your results from one place."
+  },
+  "stats": {
+    "totalAssessments": "Total Assessments",
+    "totalAssessmentsDescription": "All created assessments",
+    "draft": "Draft",
+    "draftDescription": "Assessments in draft",
+    "published": "Published",
+    "publishedDescription": "Published assessments",
+    "completed": "Completed",
+    "completedDescription": "Completed assessments",
+    "pending": "Pending",
+    "pendingDescription": "Pending assessments",
+    "failed":"Failed",
+    "failedDescription":"Failed Assessments"
+  },
+  "status": {
+    "title": "Assessment Status",
+    "subtitle": "Distribution across all assessments",
+    "assessments": "Assessments",
+    "draft": "Draft",
+    "published": "Published",
+    "completed": "Completed",
+    "pending": "Pending",
+    "failed":"Failed"
+  },
+  "calculation": {
+    "title": "Calculation Summary",
+    "subtitle": "Key rates calculated from current assessment data",
+    "completed":"Completed Assessment",
+    "pending":"Pending Assessment",    
+    "failed":"Failed Assessments"
+  }
+}

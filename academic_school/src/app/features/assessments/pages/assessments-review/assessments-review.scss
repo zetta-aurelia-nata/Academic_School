@@ -3,6 +3,12 @@
 .assessments-review {
   box-sizing: border-box;
 
+  &__toolbar {
+    display: flex;
+    align-items: center; 
+    justify-content: space-between;
+  }
+
   // *************** SEARCH ***************
   &__search {
     position: relative;
@@ -328,6 +334,10 @@
   .assessments-review {
     &__toolbar {
       align-items: stretch;
+    }
+
+    &__controls {
+      width: 100%;
     }
 
     &__search {

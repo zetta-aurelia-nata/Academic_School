@@ -50,6 +50,34 @@
     @apply w-px h-7 shrink-0 bg-[var(--color-border-dark)] max-md:hidden;
   }
 
+  // *************** LANGUAGE TOGGLE ***************
+  &__lang-toggle {
+    @apply flex items-center gap-1.5 h-[38px] px-3 shrink-0 border-0 rounded-lg bg-transparent
+      text-[var(--color-title)] cursor-pointer max-[480px]:px-2;
+
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      transform 0.15s ease;
+
+    &:hover {
+      background-color: var(--color-main-background);
+      color: var(--color-hover);
+    }
+
+    &:active {
+      transform: scale(0.94);
+    }
+  }
+
+  &__lang-toggle-icon {
+    @apply w-5 h-5 text-[20px] leading-5 shrink-0;
+  }
+
+  &__lang-toggle-code {
+    @apply text-xs font-semibold tracking-wide max-[480px]:hidden;
+  }
+
   // *************** USER PROFILE ***************
   &__user-profile {
     @apply flex items-center gap-2.5 px-2.5 py-1.5 pl-1.5 rounded-full cursor-pointer max-md:p-1 max-[480px]:p-1;

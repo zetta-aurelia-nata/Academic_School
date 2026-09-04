@@ -1,6 +1,6 @@
 //********** ANGULAR IMPORTS **********
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, ViewChild, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -10,6 +10,14 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
+//********** SWEETALERT IMPORT **********
+import Swal from 'sweetalert2';
+
+//********** THIRD-PARTY IMPORTS **********
+import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
+import { take } from 'rxjs';
 
 //********** APPLICATION IMPORTS **********
 import { AssessmentService } from '../../services/assessment.service';
@@ -24,6 +32,7 @@ import {
 @Component({
   selector: 'app-assessment-list',
   standalone: true,
+
   imports: [
     CommonModule,
     FormsModule,
@@ -32,25 +41,19 @@ import {
     MatIconModule,
     MatToolbarModule,
     MatTableModule,
+    MatTooltipModule,
     FilterComponent,
+    TranslocoDirective,
   ],
+
   templateUrl: './assessments-list.html',
   styleUrls: ['./assessments-list.scss'],
 })
 export class AssessmentList {
-  //********** VIEW CHILDREN **********
-  @ViewChild('deleteDialog')
-  deleteDialog?: ElementRef<HTMLElement>;
-
-  @ViewChild('deleteCancelButton')
-  deleteCancelButton?: ElementRef<HTMLButtonElement>;
-
   //********** SERVICES **********
   private readonly router = inject(Router);
   private readonly assessmentService = inject(AssessmentService);
-
-  //********** PRIVATE VARIABLES **********
-  private deleteTrigger: HTMLElement | null = null;
+  private readonly transloco = inject(TranslocoService);
 
   //********** PUBLIC STATE VARIABLES **********
   displayedColumns: string[] = [
@@ -68,9 +71,6 @@ export class AssessmentList {
 
   searchQuery = '';
 
-  showDeleteDialog = false;
-  selectedAssessment: Assessment | null = null;
-
   //********** APPLIED FILTERS **********
   selectedStatus = 'ALL';
   selectedSubject = 'ALL';
@@ -80,25 +80,21 @@ export class AssessmentList {
   keyword = '';
   assessmentName = '';
 
-  readonly statusOptions: AssessmentStatus[] = [
-    'Completed',
-    'Not Submitted',
-    'Pending',
-    'Failed',
-    'Draft',
-  ];
+  readonly statusOptions: AssessmentStatus[] = ['Completed', 'Pending', 'Failed', 'Draft'];
 
   //********** LIFECYCLE **********
   ngOnInit(): void {
     this.loadAssessments();
   }
 
+  //********** LOAD ASSESSMENTS **********
   private loadAssessments(): void {
     this.assessments = this.assessmentService.getAssessments();
 
     this.applyFilters();
   }
 
+  //********** ACTION HANDLERS **********
   onSearch(): void {
     this.applyFilters();
   }
@@ -110,7 +106,6 @@ export class AssessmentList {
   }
 
   onFilterApplied(filters: FilterValue): void {
-    //********** UPDATE APPLIED FILTERS **********
     this.selectedStatus = filters.status;
     this.selectedSubject = filters.subject;
     this.selectedGrade = filters.grade;
@@ -126,16 +121,12 @@ export class AssessmentList {
     const topQuery = this.searchQuery.trim().toLowerCase();
     const keywordQuery = this.keyword.trim().toLowerCase();
     const nameQuery = this.assessmentName.trim().toLowerCase();
-
     const targetStatus = this.selectedStatus.toString().trim().toLowerCase();
     const targetSubject = this.selectedSubject.toString().trim().toLowerCase();
     const targetGrade = this.selectedGrade.toString().trim().toLowerCase();
-
     const fromDate = this.dateFrom ? new Date(this.dateFrom) : null;
-
     const toDate = this.dateTo ? new Date(this.dateTo) : null;
 
-    //********** SEARCH MATCHER **********
     const matchesQuery = (assessment: Assessment, query: string): boolean =>
       !query ||
       [
@@ -147,35 +138,18 @@ export class AssessmentList {
       ].some((field) => field?.toString().toLowerCase().includes(query));
 
     this.filteredAssessments = this.assessments.filter((assessment) => {
-      //********** SEARCH (TOP BAR + KEYWORD SECTION) **********
       const matchesSearch =
         matchesQuery(assessment, topQuery) && matchesQuery(assessment, keywordQuery);
-
-      //********** ASSESSMENT NAME **********
       const assessmentTitle = assessment.title?.toString().trim().toLowerCase() ?? '';
-
       const matchesName = !nameQuery || assessmentTitle.includes(nameQuery);
-
-      //********** STATUS **********
       const assessmentStatus = assessment.status?.toString().trim().toLowerCase();
-
       const matchesStatus = targetStatus === 'all' || assessmentStatus === targetStatus;
-
-      //********** SUBJECT **********
       const assessmentSubject = assessment.subject?.toString().trim().toLowerCase();
-
       const matchesSubject = targetSubject === 'all' || assessmentSubject === targetSubject;
-
-      //********** GRADE **********
       const assessmentGrade = assessment.grade?.toString().trim().toLowerCase();
-
       const matchesGrade = targetGrade === 'all' || assessmentGrade === targetGrade;
-
-      //********** DATE RANGE **********
       const assessmentDate = new Date(assessment.date);
-
       const matchesFrom = !fromDate || assessmentDate >= fromDate;
-
       const matchesTo = !toDate || assessmentDate <= toDate;
 
       return (
@@ -207,6 +181,19 @@ export class AssessmentList {
     return Array.from(new Set(grades)).sort();
   }
 
+  //********** STATUS TRANSLATION **********
+  getStatusTranslationKey(status: AssessmentStatus): string {
+    const statusKeys: Record<AssessmentStatus, string> = {
+      Completed: 'assessment.list.status.completed',
+      Pending: 'assessment.list.status.pending',
+      Failed: 'assessment.list.status.failed',
+      Draft: 'assessment.list.status.draft',
+      'Not Submitted': 'assessment.list.status.notSubmitted',
+    };
+
+    return statusKeys[status];
+  }
+
   //********** ACTION HANDLERS **********
   onCreateAssessment(): void {
     this.router.navigate(['/assessments/create']);
@@ -224,49 +211,37 @@ export class AssessmentList {
     this.router.navigate(['/assessments', assessment.id, 'submissions']);
   }
 
-  //********** ACTION HANDLERS **********
-  onDelete(assessment: Assessment, event?: Event): void {
-    this.selectedAssessment = assessment;
+  onDelete(assessment: Assessment): void {
+    this.transloco
+      .selectTranslateObject('assessments.assessment.list.delete', { title: assessment.title })
+      .pipe(take(1))
+      .subscribe((t) => {
+        Swal.fire({
+          title: t.confirmTitle,
+          text: t.confirmText,
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: t.confirmButton,
+          cancelButtonText: t.cancelButton,
+          confirmButtonColor: 'var(--color-card-red)',
+          reverseButtons: true,
+          focusCancel: true,
+          buttonsStyling: true,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.assessmentService.deleteAssessment(assessment.id);
+            this.loadAssessments();
 
-    this.deleteTrigger = event?.currentTarget as HTMLElement | null;
-
-    this.showDeleteDialog = true;
-
-    setTimeout(() => {
-      this.deleteDialog?.nativeElement.focus();
-    });
-  }
-
-  onCancelDelete(): void {
-    this.showDeleteDialog = false;
-
-    this.selectedAssessment = null;
-
-    setTimeout(() => {
-      this.deleteTrigger?.focus();
-
-      this.deleteTrigger = null;
-    });
-  }
-
-  onConfirmDelete(): void {
-    if (!this.selectedAssessment) {
-      return;
-    }
-
-    this.assessmentService.deleteAssessment(this.selectedAssessment.id);
-
-    this.loadAssessments();
-
-    this.showDeleteDialog = false;
-
-    this.selectedAssessment = null;
-
-    setTimeout(() => {
-      this.deleteTrigger?.focus();
-
-      this.deleteTrigger = null;
-    });
+            Swal.fire({
+              title: t.successTitle,
+              text: t.successText,
+              icon: 'success',
+              timer: 1500,
+              showConfirmButton: false,
+            });
+          }
+        });
+      });
   }
 
   statusClass(status: AssessmentStatus): string {

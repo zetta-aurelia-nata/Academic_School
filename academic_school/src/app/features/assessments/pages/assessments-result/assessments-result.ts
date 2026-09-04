@@ -1,6 +1,6 @@
 //********** ANGULAR IMPORTS **********
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, HostListener, ViewChild, inject, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 //********** ANGULAR MATERIAL IMPORTS **********
@@ -8,6 +8,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
+
+//********** TRANSLOCO IMPORTS **********
+import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 
 //********** APPLICATION IMPORTS **********
 import { AssessmentService } from '../../services/assessment.service';
@@ -60,6 +63,7 @@ interface ResultStudent {
     MatCardModule,
     MatIconModule,
     MatSelectModule,
+    TranslocoDirective,
   ],
   templateUrl: './assessments-result.html',
   styleUrl: './assessments-result.scss',
@@ -68,16 +72,33 @@ export class AssessmentsResult implements OnInit {
   //********** PRIVATE VARIABLES **********
   private readonly assessmentService = inject(AssessmentService);
   private readonly submissionService = inject(SubmissionService);
+  private readonly transloco = inject(TranslocoService);
+  private activeTrigger: HTMLElement | null = null;
 
-  private publishTrigger: HTMLElement | null = null;
+  @ViewChild('publishDialog')
+  publishDialog?: ElementRef<HTMLElement>;
 
-  @ViewChild('publishDialog') publishDialog?: ElementRef<HTMLElement>;
+  @ViewChild('unpublishDialog')
+  unpublishDialog?: ElementRef<HTMLElement>;
+
+  @ViewChild('lockDialog')
+  lockDialog?: ElementRef<HTMLElement>;
+
+  @ViewChild('unlockDialog')
+  unlockDialog?: ElementRef<HTMLElement>;
+
+  @ViewChild('saveScoreDialog')
+  saveScoreDialog?: ElementRef<HTMLElement>;
 
   //********** PUBLIC STATE VARIABLES **********
   assessments: Assessment[] = [];
   selectedAssessmentId = 1;
   selectedStudent?: ResultStudent;
   showPublishDialog = false;
+  showUnpublishDialog = false;
+  showLockDialog = false;
+  showUnlockDialog = false;
+  showSaveScoreDialog = false;
   successMessage = '';
   scoreJustSaved = false;
   resultStates: AssessmentResult[] = [];
@@ -133,7 +154,9 @@ export class AssessmentsResult implements OnInit {
       const submitted = submission.answers.find((answer) => answer.question === question.text);
 
       const options = question.options ?? [];
+
       const answerText = submitted?.answer ?? '-';
+
       const isMultipleChoice = question.type === 'multiple_choice';
 
       const isCorrect =
@@ -146,9 +169,13 @@ export class AssessmentsResult implements OnInit {
         type: question.type,
         answer: answerText,
         maxScore: question.points,
+
         score: isMultipleChoice ? (isCorrect ? question.points : 0) : Number(submitted?.score ?? 0),
+
         teacherComment: submitted?.teacherComment ?? '',
+
         options,
+
         correctAnswer: options.find((option) => option.isCorrect)?.text,
       };
     });
@@ -177,6 +204,7 @@ export class AssessmentsResult implements OnInit {
   onAssessmentChange(): void {
     this.selectedStudent = undefined;
     this.successMessage = '';
+    this.closeAllDialogs();
   }
 
   onReviewAnswers(student: ResultStudent): void {
@@ -189,22 +217,40 @@ export class AssessmentsResult implements OnInit {
   }
 
   onScoreChange(answer: ResultAnswer, value: number): void {
-    if (this.currentResultState.locked || answer.type !== 'essay' || !this.selectedStudent) return;
+    if (this.currentResultState.locked || answer.type !== 'essay' || !this.selectedStudent) {
+      return;
+    }
 
     let score = Number(value);
-    if (Number.isNaN(score)) score = 0;
+
+    if (Number.isNaN(score)) {
+      score = 0;
+    }
 
     score = Math.min(Math.max(score, 0), answer.maxScore);
 
-    const updatedAnswers = this.selectedStudent.answers.map((a) =>
-      a === answer ? { ...a, score } : a,
+    const updatedAnswers = this.selectedStudent.answers.map((currentAnswer) =>
+      currentAnswer === answer
+        ? {
+            ...currentAnswer,
+            score,
+          }
+        : currentAnswer,
     );
-    this.selectedStudent = { ...this.selectedStudent, answers: updatedAnswers };
+
+    this.selectedStudent = {
+      ...this.selectedStudent,
+      answers: updatedAnswers,
+    };
+
     this.calculateTotalScore();
   }
 
   calculateTotalScore(): void {
-    if (!this.selectedStudent) return;
+    if (!this.selectedStudent) {
+      return;
+    }
+
     this.selectedStudent.score = this.selectedStudent.answers.reduce(
       (sum, answer) => sum + Number(answer.score || 0),
       0,
@@ -213,14 +259,37 @@ export class AssessmentsResult implements OnInit {
 
   //********** ACTION HANDLERS **********
   onSaveScore(): void {
-    if (!this.selectedStudent || this.currentResultState.locked) return;
+    if (!this.selectedStudent || this.currentResultState.locked) {
+      return;
+    }
+
+    this.activeTrigger = document.activeElement as HTMLElement;
+
+    this.showSaveScoreDialog = true;
+
+    setTimeout(() => this.saveScoreDialog?.nativeElement.focus());
+  }
+
+  confirmSaveScore(): void {
+    if (!this.selectedStudent || this.currentResultState.locked) {
+      this.showSaveScoreDialog = false;
+      return;
+    }
+    this.successMessage = this.transloco.translate(
+      'assessments.assessmentResult.messages.scoreSaved',
+      {
+        name: this.selectedStudent.studentName,
+      },
+    );
 
     this.calculateTotalScore();
 
     const submissionID = this.selectedStudent.submissionId;
 
     this.selectedStudent.answers.forEach((answer) => {
-      if (answer.type !== 'essay') return;
+      if (answer.type !== 'essay') {
+        return;
+      }
 
       this.submissionService.updateAnswerScoreByQuestion(
         this.selectedAssessmentId,
@@ -252,81 +321,189 @@ export class AssessmentsResult implements OnInit {
       this.selectedStudent = this.mapSubmissionToResultStudent(updatedSubmission);
     }
 
-    this.successMessage = `Score for ${this.selectedStudent.studentName} has been saved.`;
+    this.showSaveScoreDialog = false;
     this.scoreJustSaved = true;
-
     setTimeout(() => (this.successMessage = ''), 3000);
     setTimeout(() => (this.scoreJustSaved = false), 2000);
+    this.restoreActiveTriggerFocus();
   }
 
-  onPublish(event: Event): void {
-    if (this.currentResultState.locked) return;
+  cancelSaveScore(): void {
+    this.showSaveScoreDialog = false;
 
-    if (this.currentResultState.published) {
-      this.unpublishResult();
+    this.restoreActiveTriggerFocus();
+  }
+
+  //********** PUBLISH / UNPUBLISH HANDLERS **********
+  onPublish(event: Event): void {
+    if (this.currentResultState.locked) {
       return;
     }
 
-    this.publishTrigger = event.currentTarget as HTMLElement;
-    this.showPublishDialog = true;
+    this.activeTrigger = event.currentTarget as HTMLElement;
 
+    if (this.currentResultState.published) {
+      this.showUnpublishDialog = true;
+      setTimeout(() => this.unpublishDialog?.nativeElement.focus());
+      return;
+    }
+    this.showPublishDialog = true;
     setTimeout(() => this.publishDialog?.nativeElement.focus());
   }
 
   confirmPublish(): void {
     this.resultStates = this.resultStates.map((state) =>
-      state.assessmentId === this.selectedAssessmentId ? { ...state, published: true } : state,
+      state.assessmentId === this.selectedAssessmentId
+        ? {
+            ...state,
+            published: true,
+          }
+        : state,
     );
+
     this.showPublishDialog = false;
-    this.successMessage = 'Assessment results have been published successfully.';
+    this.successMessage = this.transloco.translate(
+      'assessments.assessmentResult.messages.published',
+    );
     setTimeout(() => (this.successMessage = ''), 3000);
-    this.restorePublishTriggerFocus();
+    this.restoreActiveTriggerFocus();
   }
 
   cancelPublish(): void {
     this.showPublishDialog = false;
-    this.restorePublishTriggerFocus();
+    this.restoreActiveTriggerFocus();
   }
 
-  unpublishResult(): void {
+  confirmUnpublish(): void {
     this.resultStates = this.resultStates.map((state) =>
-      state.assessmentId === this.selectedAssessmentId ? { ...state, published: false } : state,
+      state.assessmentId === this.selectedAssessmentId
+        ? {
+            ...state,
+            published: false,
+          }
+        : state,
     );
-    this.successMessage = 'Assessment results have been unpublished.';
+
+    this.showUnpublishDialog = false;
+    this.successMessage = this.transloco.translate(
+      'assessments.assessmentResult.messages.unpublished',
+    );
     setTimeout(() => (this.successMessage = ''), 3000);
+    this.restoreActiveTriggerFocus();
   }
 
-  lockResult(): void {
+  cancelUnpublish(): void {
+    this.showUnpublishDialog = false;
+    this.restoreActiveTriggerFocus();
+  }
+
+  //********** ACTION HANDLERS **********
+  onLockResult(event: Event): void {
     if (!this.currentResultState.published) {
-      this.successMessage = 'Publish the result before locking it.';
+      this.successMessage = this.transloco.translate(
+        'assessments.assessmentResult.messages.publishBeforeLock',
+      );
       setTimeout(() => (this.successMessage = ''), 3000);
       return;
     }
 
-    this.resultStates = this.resultStates.map((state) =>
-      state.assessmentId === this.selectedAssessmentId ? { ...state, locked: true } : state,
-    );
+    this.activeTrigger = event.currentTarget as HTMLElement;
 
-    this.successMessage = 'Assessment result is now locked.';
-    setTimeout(() => (this.successMessage = ''), 3000);
-  }
-
-  cancelLockResult(): void {}
-
-  @HostListener('document:keydown', ['$event'])
-  onDialogKeydown(event: KeyboardEvent): void {
-    if (!this.showPublishDialog) return;
-
-    if (event.key === 'Escape') {
-      event.preventDefault();
-      this.cancelPublish();
+    if (this.currentResultState.locked) {
+      this.showUnlockDialog = true;
+      setTimeout(() => this.unlockDialog?.nativeElement.focus());
       return;
     }
 
-    if (event.key !== 'Tab') return;
+    this.showLockDialog = true;
+    setTimeout(() => this.lockDialog?.nativeElement.focus());
+  }
 
-    const dialog = this.publishDialog?.nativeElement;
-    if (!dialog) return;
+  confirmLockResult(): void {
+    if (!this.currentResultState.published) {
+      this.showLockDialog = false;
+      return;
+    }
+
+    this.resultStates = this.resultStates.map((state) =>
+      state.assessmentId === this.selectedAssessmentId
+        ? {
+            ...state,
+            locked: true,
+          }
+        : state,
+    );
+
+    this.showLockDialog = false;
+
+    this.successMessage = this.transloco.translate('assessments.assessmentResult.messages.locked');
+
+    setTimeout(() => (this.successMessage = ''), 3000);
+
+    this.restoreActiveTriggerFocus();
+  }
+
+  cancelLockResult(): void {
+    this.showLockDialog = false;
+
+    this.restoreActiveTriggerFocus();
+  }
+
+  confirmUnlockResult(): void {
+    this.resultStates = this.resultStates.map((state) =>
+      state.assessmentId === this.selectedAssessmentId
+        ? {
+            ...state,
+            locked: false,
+          }
+        : state,
+    );
+
+    this.showUnlockDialog = false;
+    this.successMessage = this.transloco.translate(
+      'assessments.assessmentResult.messages.unlocked',
+    );
+
+    setTimeout(() => (this.successMessage = ''), 3000);
+
+    this.restoreActiveTriggerFocus();
+  }
+
+  cancelUnlockResult(): void {
+    this.showUnlockDialog = false;
+
+    this.restoreActiveTriggerFocus();
+  }
+
+  //********** DIALOG HELPERS **********
+  private closeAllDialogs(): void {
+    this.showPublishDialog = false;
+    this.showUnpublishDialog = false;
+    this.showLockDialog = false;
+    this.showUnlockDialog = false;
+    this.showSaveScoreDialog = false;
+    this.activeTrigger = null;
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  onDialogKeydown(event: KeyboardEvent): void {
+    const dialog = this.getActiveDialog();
+
+    if (!dialog) {
+      return;
+    }
+
+    if (event.key === 'Escape') {
+      event.preventDefault();
+
+      this.cancelActiveDialog();
+
+      return;
+    }
+
+    if (event.key !== 'Tab') {
+      return;
+    }
 
     const focusable = dialog.querySelectorAll<HTMLElement>(
       'button, input, select, textarea, a[href], [tabindex]:not([tabindex="-1"])',
@@ -334,30 +511,100 @@ export class AssessmentsResult implements OnInit {
 
     if (!focusable.length) {
       event.preventDefault();
+
       return;
     }
 
     const first = focusable[0];
+
     const last = focusable[focusable.length - 1];
 
     if (event.shiftKey && document.activeElement === first) {
       event.preventDefault();
+
       last.focus();
     } else if (!event.shiftKey && document.activeElement === last) {
       event.preventDefault();
+
       first.focus();
     }
   }
 
-  //********** ANGULAR IMPORTS **********
-  private restorePublishTriggerFocus(): void {
+  private getActiveDialog(): HTMLElement | null {
+    if (this.showPublishDialog) {
+      return this.publishDialog?.nativeElement ?? null;
+    }
+
+    if (this.showUnpublishDialog) {
+      return this.unpublishDialog?.nativeElement ?? null;
+    }
+
+    if (this.showLockDialog) {
+      return this.lockDialog?.nativeElement ?? null;
+    }
+
+    if (this.showUnlockDialog) {
+      return this.unlockDialog?.nativeElement ?? null;
+    }
+
+    if (this.showSaveScoreDialog) {
+      return this.saveScoreDialog?.nativeElement ?? null;
+    }
+
+    return null;
+  }
+
+  private cancelActiveDialog(): void {
+    if (this.showPublishDialog) {
+      this.cancelPublish();
+
+      return;
+    }
+
+    if (this.showUnpublishDialog) {
+      this.cancelUnpublish();
+
+      return;
+    }
+
+    if (this.showLockDialog) {
+      this.cancelLockResult();
+
+      return;
+    }
+
+    if (this.showUnlockDialog) {
+      this.cancelUnlockResult();
+
+      return;
+    }
+
+    if (this.showSaveScoreDialog) {
+      this.cancelSaveScore();
+    }
+  }
+
+  //********** FOCUS RESTORATION **********
+  private restoreActiveTriggerFocus(): void {
     setTimeout(() => {
-      this.publishTrigger?.focus();
-      this.publishTrigger = null;
+      this.activeTrigger?.focus();
+
+      this.activeTrigger = null;
     });
   }
 
   statusClass(status: string): string {
     return `result-status result-status--${status.toLowerCase().replaceAll(' ', '-')}`;
+  }
+  private readonly statusLabelMap: Record<string, string> = {
+    Completed: 'status.completed',
+    Pending: 'status.pending',
+    Failed: 'status.failed',
+    Draft: 'status.draft',
+    'Not Submitted': 'status.notSubmitted',
+  };
+
+  statusLabelKey(status: string): string {
+    return this.statusLabelMap[status] ?? 'status.draft';
   }
 }

@@ -1,0 +1,41 @@
+{
+  "app": {
+    "name": "Academic School"
+  },
+  "actions": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "close": "Close"
+  },
+  "language": {
+    "label": "Language",
+    "en": "English",
+    "fr": "French"
+  },
+  "layout": {
+    "footer": {
+      "title": "© 2026 Assessment Management System. All rights reserved."
+    },
+    "header": {
+      "toggleSidebarAria": "Toggle sidebar",
+      "title": "Assessment Management",
+      "userAvatarAlt": "user-avatar",
+      "userName": "Ms. Aurelia",
+      "userRole": "Teacher"
+    },
+    "sidebar": {
+      "logoTagline": "Learn. Assess. Grow.",
+      "menu": {
+        "dashboard": "Dashboard",
+        "assessments": "Assessments",
+        "submenu": {
+          "list": "Assessments List",
+          "scoring": "Assessments Review",
+          "review": "Assessments Result"
+        }
+      }
+    }
+  }
+}
