@@ -11,7 +11,7 @@
       },
       "delete": {
         "confirmTitle": "Supprimer l'évaluation ?",
-        "confirmText": "Êtes-vous sûr de vouloir supprimer {{ title }}?",
+        "confirmText": "Êtes-vous sûr de vouloir supprimer cette évaluation?",
         "confirmButton": "Supprimer",
         "cancelButton": "Annuler",
         "successTitle": "Supprimé !",

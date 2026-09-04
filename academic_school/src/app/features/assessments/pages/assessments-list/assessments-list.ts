@@ -17,6 +17,7 @@ import Swal from 'sweetalert2';
 
 //********** THIRD-PARTY IMPORTS **********
 import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
+import { take } from 'rxjs';
 
 //********** APPLICATION IMPORTS **********
 import { AssessmentService } from '../../services/assessment.service';
@@ -209,35 +210,38 @@ export class AssessmentList {
   onReviewAssessment(assessment: Assessment): void {
     this.router.navigate(['/assessments', assessment.id, 'submissions']);
   }
+
   onDelete(assessment: Assessment): void {
-    Swal.fire({
-      title: this.transloco.translate('assessment.list.delete.confirmTitle'),
-      text: this.transloco.translate('assessment.list.delete.confirmText', {
-        title: assessment.title,
-      }),
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: this.transloco.translate('assessment.list.delete.confirmButton'),
-      cancelButtonText: this.transloco.translate('assessment.list.delete.cancelButton'),
-      confirmButtonColor: 'var(--color-card-red)',
-      reverseButtons: true,
-      focusCancel: true,
-      buttonsStyling: true,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.assessmentService.deleteAssessment(assessment.id);
-
-        this.loadAssessments();
-
+    this.transloco
+      .selectTranslateObject('assessments.assessment.list.delete', { title: assessment.title })
+      .pipe(take(1))
+      .subscribe((t) => {
         Swal.fire({
-          title: this.transloco.translate('assessment.list.delete.successTitle'),
-          text: this.transloco.translate('assessment.list.delete.successText'),
-          icon: 'success',
-          timer: 1500,
-          showConfirmButton: false,
+          title: t.confirmTitle,
+          text: t.confirmText,
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: t.confirmButton,
+          cancelButtonText: t.cancelButton,
+          confirmButtonColor: 'var(--color-card-red)',
+          reverseButtons: true,
+          focusCancel: true,
+          buttonsStyling: true,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.assessmentService.deleteAssessment(assessment.id);
+            this.loadAssessments();
+
+            Swal.fire({
+              title: t.successTitle,
+              text: t.successText,
+              icon: 'success',
+              timer: 1500,
+              showConfirmButton: false,
+            });
+          }
         });
-      }
-    });
+      });
   }
 
   statusClass(status: AssessmentStatus): string {

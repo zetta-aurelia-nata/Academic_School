@@ -11,7 +11,7 @@
       },
       "delete": {
         "confirmTitle": "Delete Assessment?",
-        "confirmText": "Are you sure you want to delete {{ title }}?",
+        "confirmText": "Are you sure you want to delete this assessment?",
         "confirmButton": "Delete",
         "cancelButton": "Cancel",
         "successTitle": "Deleted!",
