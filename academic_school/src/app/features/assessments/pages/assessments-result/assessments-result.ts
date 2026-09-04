@@ -322,12 +322,6 @@ export class AssessmentsResult implements OnInit {
     }
 
     this.showSaveScoreDialog = false;
-    ((this.successMessage = this.transloco.translate(
-      'assessments.assessmentResult.messages.locked',
-    )),
-      {
-        name: this.selectedStudent.studentName,
-      });
     this.scoreJustSaved = true;
     setTimeout(() => (this.successMessage = ''), 3000);
     setTimeout(() => (this.scoreJustSaved = false), 2000);
@@ -407,7 +401,7 @@ export class AssessmentsResult implements OnInit {
   onLockResult(event: Event): void {
     if (!this.currentResultState.published) {
       this.successMessage = this.transloco.translate(
-        'assessments.assessmentResult.messages.publishedBeforeLock',
+        'assessments.assessmentResult.messages.publishBeforeLock',
       );
       setTimeout(() => (this.successMessage = ''), 3000);
       return;
@@ -442,7 +436,7 @@ export class AssessmentsResult implements OnInit {
 
     this.showLockDialog = false;
 
-    this.successMessage = this.transloco.translate('assessmentResult.messages.locked');
+    this.successMessage = this.transloco.translate('assessments.assessmentResult.messages.locked');
 
     setTimeout(() => (this.successMessage = ''), 3000);
 
