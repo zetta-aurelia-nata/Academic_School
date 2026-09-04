@@ -386,7 +386,7 @@
       "cancel": "Cancel",
       "confirm": "Unlock Result"
     },
-    
+
     "messages": {
       "scoreSaved": "Score for {{name}} has been saved.",
       "published": "Assessment results have been published successfully.",
@@ -463,32 +463,32 @@
     "emptyTitle": "No assessments found",
     "emptyDescription": "Try searching with a different keyword."
   },
-  "filter": {
-    "button": "Filter",
-    "openAriaLabel": "Open assessment filters",
-    "panelAriaLabel": "Assessment filters",
-    "panelTitle": "Filter Assessments",
-    "reset": "Reset",
-    "resetAll": "Reset All",
-    "apply": "Apply Filters",
-    "status": {
-      "label": "Status",
-      "all": "All Status"
-    },
-    "subject": {
-      "label": "Subject",
-      "all": "All Subjects"
-    },
-    "grade": {
-      "label": "Grade",
-      "all": "All Grades"
-    },
-    "dateRange": {
-      "label": "Date Range",
-      "from": "From",
-      "to": "To",
-      "fromAriaLabel": "Filter date from",
-      "toAriaLabel": "Filter date to"
+    "filter": {
+      "button": "Filter",
+      "openAriaLabel": "Open assessment filters",
+      "panelAriaLabel": "Assessment filters",
+      "panelTitle": "Filter Assessments",
+      "reset": "Reset",
+      "resetAll": "Reset All",
+      "apply": "Apply Filters",
+      "status": {
+        "label": "Status",
+        "all": "All Status"
+      },
+      "subject": {
+        "label": "Subject",
+        "all": "All Subjects"
+      },
+      "grade": {
+        "label": "Grade",
+        "all": "All Grades"
+      },
+      "dateRange": {
+        "label": "Date Range",
+        "from": "From",
+        "to": "To",
+        "fromAriaLabel": "Filter date from",
+        "toAriaLabel": "Filter date to"
+      }
     }
   }
-}

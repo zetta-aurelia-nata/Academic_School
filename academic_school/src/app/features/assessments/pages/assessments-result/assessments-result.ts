@@ -275,6 +275,12 @@ export class AssessmentsResult implements OnInit {
       this.showSaveScoreDialog = false;
       return;
     }
+    this.successMessage = this.transloco.translate(
+      'assessments.assessmentResult.messages.scoreSaved',
+      {
+        name: this.selectedStudent.studentName,
+      },
+    );
 
     this.calculateTotalScore();
 
@@ -316,9 +322,12 @@ export class AssessmentsResult implements OnInit {
     }
 
     this.showSaveScoreDialog = false;
-    this.successMessage =     this.transloco.translate('assessments.assessmentResult.messages.scoreSaved'), {
-      name: this.selectedStudent.studentName,
-    };
+    ((this.successMessage = this.transloco.translate(
+      'assessments.assessmentResult.messages.locked',
+    )),
+      {
+        name: this.selectedStudent.studentName,
+      });
     this.scoreJustSaved = true;
     setTimeout(() => (this.successMessage = ''), 3000);
     setTimeout(() => (this.scoreJustSaved = false), 2000);
@@ -359,7 +368,9 @@ export class AssessmentsResult implements OnInit {
     );
 
     this.showPublishDialog = false;
-    this.successMessage = this.transloco.translate('assessments.assessmentResult.messages.published');
+    this.successMessage = this.transloco.translate(
+      'assessments.assessmentResult.messages.published',
+    );
     setTimeout(() => (this.successMessage = ''), 3000);
     this.restoreActiveTriggerFocus();
   }
@@ -380,7 +391,9 @@ export class AssessmentsResult implements OnInit {
     );
 
     this.showUnpublishDialog = false;
-    this.successMessage =     this.transloco.translate('assessments.assessmentResult.messages.unpublished');
+    this.successMessage = this.transloco.translate(
+      'assessments.assessmentResult.messages.unpublished',
+    );
     setTimeout(() => (this.successMessage = ''), 3000);
     this.restoreActiveTriggerFocus();
   }
@@ -393,7 +406,9 @@ export class AssessmentsResult implements OnInit {
   //********** ACTION HANDLERS **********
   onLockResult(event: Event): void {
     if (!this.currentResultState.published) {
-      this.successMessage =     this.transloco.translate('assessments.assessmentResult.messages.publishedBeforeLock');
+      this.successMessage = this.transloco.translate(
+        'assessments.assessmentResult.messages.publishedBeforeLock',
+      );
       setTimeout(() => (this.successMessage = ''), 3000);
       return;
     }
@@ -451,8 +466,9 @@ export class AssessmentsResult implements OnInit {
     );
 
     this.showUnlockDialog = false;
-    this.successMessage =     this.transloco.translate('assessments.assessmentResult.messages.unlocked')
-;
+    this.successMessage = this.transloco.translate(
+      'assessments.assessmentResult.messages.unlocked',
+    );
 
     setTimeout(() => (this.successMessage = ''), 3000);
 
@@ -585,5 +601,16 @@ export class AssessmentsResult implements OnInit {
 
   statusClass(status: string): string {
     return `result-status result-status--${status.toLowerCase().replaceAll(' ', '-')}`;
+  }
+  private readonly statusLabelMap: Record<string, string> = {
+    Completed: 'status.completed',
+    Pending: 'status.pending',
+    Failed: 'status.failed',
+    Draft: 'status.draft',
+    'Not Submitted': 'status.notSubmitted',
+  };
+
+  statusLabelKey(status: string): string {
+    return this.statusLabelMap[status] ?? 'status.draft';
   }
 }

@@ -48,13 +48,12 @@ export class AssessmentsReview implements OnInit {
 
   private activeFilter: FilterValue | null = null;
 
-  // ********** STATUS -> TRANSLATION KEY MAP **********
   private readonly statusLabelMap: Record<AssessmentStatus, string> = {
-    Completed: 'status.completed',
-    Pending: 'status.pending',
-    Failed: 'status.failed',
-    Draft: 'status.draft',
-    'Not Submitted': 'status.notSubmitted',
+    Completed: 'assessment.list.status.completed',
+    Pending: 'assessment.list.status.pending',
+    Failed: 'assessment.list.status.failed',
+    Draft: 'assessment.list.status.draft',
+    'Not Submitted': 'assessment.list.status.notSubmitted',
   };
 
   // ********** LIFECYCLE **********
