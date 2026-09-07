@@ -9,6 +9,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 
+// ********** THIRD-PARTY IMPORTS **********
+import { TranslocoDirective } from '@jsverse/transloco';
+
 // ********** APPLICATION MODELS AND SETTINGS IMPORTS **********
 import { Assessment } from '../assessments-list/assessment.list.model';
 import { AssessmentService } from '../../services/assessment.service';
@@ -36,11 +39,19 @@ interface AnswerReview {
   answer: string;
   score: number;
   maxScore: number;
+  teacherComment?: string;
 }
 
 @Component({
   selector: 'app-assessments-detail',
-  imports: [CommonModule, FormsModule, MatButtonModule, MatCardModule, MatIconModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule,
+    TranslocoDirective,
+  ],
   templateUrl: './assessments-detail.html',
   styleUrls: ['./assessments-detail.scss'],
 })
@@ -100,6 +111,7 @@ export class AssessmentsDetail implements OnInit {
             answer: submittedAnswer?.answer ?? '-',
             score: submittedAnswer?.score ?? 0,
             maxScore: question.points,
+            teacherComment: submittedAnswer?.teacherComment ?? '-',
           };
         });
 

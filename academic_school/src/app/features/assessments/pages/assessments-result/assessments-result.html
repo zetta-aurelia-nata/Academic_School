@@ -1,37 +1,35 @@
 <!--********** ASSESSMENT REVIEW & SCORING SECTION **********-->
 <section
   class="assessment-result w-full min-h-full box-border bg-[var(--color-background-content)] px-8 pt-[30px] pb-10 font-sans max-lg:px-5 max-lg:pt-6 max-md:px-4 max-md:pt-5"
+  *transloco="let t; read: 'assessments'"
 >
   <!--********** PAGE HEADER **********-->
   <div class="mb-6 flex items-start justify-between gap-4 max-md:flex-col">
-    <!--********** PAGE TITLE AND DESCRIPTION **********-->
     <div>
       <h1 class="m-0 text-2xl font-bold leading-[1.2] tracking-[-0.3px] text-[var(--color-title)]">
-        Assessment Review
+        {{ t('assessmentResult.pageTitle') }}
       </h1>
+
       <p class="m-0 mt-1 text-[13px] text-[var(--color-text-secondary)]">
-        Review, score, and publish student results
+        {{ t('assessmentResult.pageSubtitle') }}
       </p>
     </div>
 
     <!--********** RESULT STATUS BADGES **********-->
     <div class="flex items-center gap-2">
-      <!--********** PUBLISHED STATUS **********-->
       <span *ngIf="currentResultState.published" class="result-badge result-badge--published">
         <span class="result-badge__dot"></span>
-        Published
+        {{ t('assessmentResult.badge.published') }}
       </span>
 
-      <!--********** LOCKED STATUS **********-->
       <span *ngIf="currentResultState.locked" class="result-badge result-badge--locked">
         <mat-icon>lock</mat-icon>
-        Locked
+        {{ t('assessmentResult.badge.locked') }}
       </span>
 
-      <!--********** DRAFT STATUS **********-->
       <span *ngIf="!currentResultState.published" class="result-badge result-badge--draft">
-        <span class="result-badge__dot"></span>
-        Draft
+        <span class="result-badge__dot flex"></span>
+        {{ t('assessmentResult.badge.draft') }}
       </span>
     </div>
   </div>
@@ -40,38 +38,34 @@
   <mat-card
     class="result-card !mb-4 !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-5"
   >
-    <!--********** ASSESSMENT SELECTION **********-->
     <div class="flex items-center justify-between gap-4 max-md:flex-col max-md:items-stretch">
-      <!--********** SELECTION DESCRIPTION **********-->
       <div>
         <span
           class="block text-[11px] font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]"
         >
-          Assessment
+          {{ t('assessmentResult.selection.label') }}
         </span>
 
         <span class="mt-1 block text-[16px] font-medium text-[var(--color-title)]">
-          Select assessment to manage results
+          {{ t('assessmentResult.selection.description') }}
         </span>
       </div>
 
-      <!--********** ASSESSMENT SELECT **********-->
       <div class="result-assessment__field">
         <div class="result-option-title">
           <label for="assessment-subject" class="edit-assessment__field-label mb-40">
-            Subject
+            {{ t('assessmentResult.selection.subjectLabel') }}
           </label>
         </div>
+
         <mat-form-field appearance="outline" class="result-select">
           <mat-select [(ngModel)]="selectedAssessmentId" (selectionChange)="onAssessmentChange()">
-            <!--********** SELECTED ASSESSMENT **********-->
             <mat-select-trigger>
               <span class="assessment-select__value">
                 {{ selectedAssessment?.title }}
               </span>
             </mat-select-trigger>
 
-            <!--********** ASSESSMENT OPTIONS **********-->
             <mat-option *ngFor="let assessment of assessments" [value]="assessment.id">
               <div class="assessment-option">
                 <span class="assessment-option__title">
@@ -90,16 +84,13 @@
     class="result-card !mb-4 !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-4"
   >
     <div class="flex items-center justify-between gap-4 max-md:flex-col max-md:items-stretch">
-      <!--********** SELECTED ASSESSMENT INFORMATION **********-->
       <div class="flex items-center gap-3">
-        <!--********** ASSESSMENT ICON **********-->
         <div
           class="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] bg-[var(--color-primary-light)] text-[var(--color-primary-dark)]"
         >
           <mat-icon>grading</mat-icon>
         </div>
 
-        <!--********** ASSESSMENT DETAILS **********-->
         <div class="min-w-0">
           <h2 class="m-0 overflow-hidden text-[14px] font-bold text-[var(--color-title)]">
             {{ selectedAssessment?.title }}
@@ -113,9 +104,7 @@
         </div>
       </div>
 
-      <!--********** RESULT ACTIONS **********-->
       <div class="flex items-center gap-2 max-sm:flex-col max-sm:items-stretch">
-        <!--********** PUBLISH / UNPUBLISH ACTION **********-->
         <button
           #publishTrigger
           mat-stroked-button
@@ -123,17 +112,25 @@
           [disabled]="currentResultState.locked"
           (click)="onPublish($event)"
         >
-          {{ currentResultState.published ? 'Unpublish' : 'Publish Result' }}
+          {{
+            currentResultState.published
+              ? t('assessmentResult.actions.unpublish')
+              : t('assessmentResult.actions.publish')
+          }}
         </button>
 
-        <!--********** LOCK RESULT ACTION **********-->
         <button
+          #lockTrigger
           mat-flat-button
-          class="!h-9 !rounded-[9px] !bg-[var(--color-primary-dark)] !px-4 !text-[12px] !font-semibold !text-white"
-          [disabled]="currentResultState.locked || !currentResultState.published"
-          (click)="lockResult()"
+          class="!h-9 !rounded-[9px] !bg-[var(--color-card-red)] !px-4 !text-[12px] !font-semibold !text-white"
+          [disabled]="!currentResultState.published"
+          (click)="onLockResult($event)"
         >
-          {{ currentResultState.locked ? 'Result Locked' : 'Lock Result' }}
+          {{
+            currentResultState.locked
+              ? t('assessmentResult.actions.unlock')
+              : t('assessmentResult.actions.lock')
+          }}
         </button>
       </div>
     </div>
@@ -144,7 +141,8 @@
     *ngIf="successMessage"
     class="mb-4 flex items-center gap-2 rounded-[10px] border border-[var(--color-status-completed-border)] bg-[var(--color-status-completed-background)] px-4 py-3 text-[12px] font-semibold text-[var(--color-status-completed)]"
   >
-    <mat-icon class="!h-5 !w-5 !text-[20px]">check_circle</mat-icon>
+    <mat-icon class="!h-5 !w-5 !text-[20px]"> check_circle </mat-icon>
+
     {{ successMessage }}
   </div>
 
@@ -152,28 +150,25 @@
   <mat-card
     class="result-card !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-0"
   >
-    <!--********** STUDENT RESULTS HEADER **********-->
     <div class="border-b border-[var(--color-border)] px-5 py-4">
       <div class="flex items-center justify-between gap-4">
-        <!--********** RESULTS TITLE **********-->
         <div>
-          <h2 class="m-0 text-[14px] font-bold text-[var(--color-title)]">Student Results</h2>
+          <h2 class="m-0 text-[14px] font-bold text-[var(--color-title)]">
+            {{ t('assessmentResult.studentResults.title') }}
+          </h2>
 
           <p class="m-0 mt-1 text-[11px] text-[var(--color-text-secondary)]">
-            Review essay answers and manage student scores
+            {{ t('assessmentResult.studentResults.subtitle') }}
           </p>
         </div>
 
-        <!--********** STUDENT COUNT **********-->
         <span class="shrink-0 text-[12px] font-semibold text-[var(--color-text-secondary)]">
-          {{ students.length }} Students
+          {{ t('assessmentResult.studentResults.count', { count: students.length }) }}
         </span>
       </div>
     </div>
 
-    <!--********** STUDENT RESULTS LIST **********-->
     <div>
-      <!--********** STUDENT RESULT ITEM **********-->
       <div
         *ngFor="let student of students"
         class="result-student cursor-pointer border-b border-[var(--color-border)] px-5 py-4"
@@ -181,14 +176,11 @@
         (click)="onReviewAnswers(student)"
       >
         <div class="result-student__content">
-          <!--********** STUDENT INFORMATION **********-->
           <div class="result-student__information">
-            <!--********** STUDENT AVATAR **********-->
             <div class="result-student__avatar">
               {{ student.initials }}
             </div>
 
-            <!--********** STUDENT DETAILS **********-->
             <div class="result-student__details">
               <h3 class="result-student__name">
                 {{ student.studentName }}
@@ -202,16 +194,16 @@
             </div>
           </div>
 
-          <!--********** STUDENT SCORE **********-->
           <div class="result-student__score">
-            <span class="result-student__score-label">Score</span>
+            <span class="result-student__score-label">
+              {{ t('assessmentResult.studentResults.scoreLabel') }}
+            </span>
 
             <span class="result-student__score-value">
               {{ student.score }}/{{ student.maxScore }}
             </span>
           </div>
 
-          <!--********** STUDENT STATUS **********-->
           <div class="result-student__status">
             <span [ngClass]="statusClass(student.status)" class="result-status">
               <span class="result-status__dot"></span>
@@ -219,23 +211,23 @@
             </span>
           </div>
 
-          <!--********** REVIEW ANSWERS ACTION **********-->
           <div class="result-student__action">
             <button
               mat-stroked-button
               class="!h-9 !rounded-[9px] !px-4 !text-[11px] bg-[var(--color-sidebar-hover)] !font-semibold"
-              [disabled]="currentResultState.locked || student.answers.length === 0"
-              (click)="onReviewAnswers(student)"
+              [disabled]="student.answers.length === 0"
+              (click)="onReviewAnswers(student); $event.stopPropagation()"
             >
               {{
-                selectedStudent?.studentId === student.studentId ? 'Reviewing' : 'Review Answers'
+                selectedStudent?.studentId === student.studentId
+                  ? t('assessmentResult.studentResults.reviewing')
+                  : t('assessmentResult.studentResults.reviewAnswers')
               }}
             </button>
           </div>
         </div>
       </div>
 
-      <!--********** EMPTY STUDENT RESULTS **********-->
       <div
         *ngIf="students.length === 0"
         class="flex flex-col items-center justify-center px-5 py-12 text-center"
@@ -244,7 +236,9 @@
           assignment_late
         </mat-icon>
 
-        <h3 class="m-0 text-[14px] font-bold text-[var(--color-title)]">No student results</h3>
+        <h3 class="m-0 text-[14px] font-bold text-[var(--color-title)]">
+          {{ t('assessmentResult.studentResults.empty') }}
+        </h3>
       </div>
     </div>
   </mat-card>
@@ -254,34 +248,31 @@
     *ngIf="selectedStudent"
     class="result-card !mt-4 !rounded-[14px] !border !border-[var(--color-border)] !bg-[var(--color-white)] !p-0"
   >
-    <!--********** MANUAL SCORING HEADER **********-->
     <div
       class="manual-scoring__header !rounded-t-[14px] border-b border-[var(--color-border)] bg-[var(--color-primary-dark)] px-5 py-4"
     >
-      <!--********** SELECTED STUDENT INFORMATION **********-->
       <div class="flex items-center gap-3">
-        <!--********** STUDENT AVATAR **********-->
         <div
           class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--color-white)] text-[12px] font-bold text-[var(--color-primary-dark)]"
         >
           {{ selectedStudent.initials }}
         </div>
 
-        <!--********** MANUAL SCORING TITLE **********-->
         <div class="min-w-0">
-          <h2 class="m-0 text-[14px] font-bold text-[var(--color-white)]">Manual Scoring</h2>
+          <h2 class="m-0 text-[14px] font-bold text-[var(--color-white)]">
+            {{ t('assessmentResult.manualScoring.title') }}
+          </h2>
 
           <p class="m-0 mt-1 text-[11px] text-[var(--color-white)]">
             {{ selectedStudent.studentName }}
-            · Review essay answers and input score
+            · {{ t('assessmentResult.manualScoring.subtitle') }}
           </p>
         </div>
       </div>
 
-      <!--********** CLOSE REVIEW ACTION **********-->
       <button
         mat-icon-button
-        aria-label="Close student review"
+        [attr.aria-label]="t('assessmentResult.manualScoring.closeAria')"
         (click)="onCloseReview()"
         class="!text-[var(--color-white)]"
       >
@@ -289,7 +280,6 @@
       </button>
     </div>
 
-    <!--********** ALL QUESTIONS FROM ASSESSMENT LIST/EDIT **********-->
     <div>
       <div
         *ngFor="let answer of essayAnswers; let i = index"
@@ -301,13 +291,13 @@
               <span
                 class="text-[10px] font-bold uppercase tracking-wide text-[var(--color-text-secondary)]"
               >
-                Question {{ i + 1 }}
+                {{ t('assessmentResult.manualScoring.question', { number: i + 1 }) }}
               </span>
 
               <span
                 class="rounded-full bg-[var(--color-primary-light)] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-[var(--color-primary-dark)]"
               >
-                Essay
+                {{ t('assessmentResult.manualScoring.essayBadge') }}
               </span>
             </div>
 
@@ -315,13 +305,12 @@
               {{ answer.question }}
             </h3>
 
-            <!--********** ESSAY ANSWER **********-->
             <div>
               <div class="mt-3 rounded-[9px] bg-[var(--color-card-blue-light)] px-4 py-3">
                 <span
                   class="block text-[10px] font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]"
                 >
-                  Student Answer
+                  {{ t('assessmentResult.manualScoring.studentAnswer') }}
                 </span>
 
                 <p class="m-0 mt-1 text-[12px] leading-[1.5] text-[var(--color-title)]">
@@ -333,26 +322,25 @@
                 <label
                   class="mb-1.5 block text-[10px] font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]"
                 >
-                  Teacher Comment
+                  {{ t('assessmentResult.manualScoring.teacherComment') }}
                 </label>
 
                 <textarea
                   [(ngModel)]="answer.teacherComment"
                   [disabled]="currentResultState.locked"
                   rows="3"
-                  placeholder="Write feedback for this answer..."
+                  [placeholder]="t('assessmentResult.manualScoring.teacherCommentPlaceholder')"
                   class="teacher-comment__input w-full rounded-[9px] border border-[var(--color-border)] bg-[var(--color-white)] px-3 py-2.5 text-[12px] leading-[1.5] text-[var(--color-title)] outline-none"
                 ></textarea>
               </div>
             </div>
           </div>
 
-          <!--********** SCORE **********-->
           <div class="w-[130px] shrink-0 max-md:w-full">
             <label
               class="mb-1.5 block text-[10px] font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]"
             >
-              Score
+              {{ t('assessmentResult.manualScoring.scoreLabel') }}
             </label>
 
             <div class="flex items-center gap-2">
@@ -365,30 +353,27 @@
                 [disabled]="currentResultState.locked"
                 class="score-input w-full rounded-[8px] border border-[var(--color-border)] bg-[var(--color-white)] px-3 py-2 text-[13px] font-semibold text-[var(--color-title)] outline-none"
               />
-
               <span class="shrink-0 text-[11px] font-semibold text-[var(--color-text-secondary)]">
                 / {{ answer.maxScore }}
               </span>
             </div>
 
             <span class="mt-1 block text-[10px] text-[var(--color-text-secondary)]">
-              Manual scoring
+              {{ t('assessmentResult.manualScoring.manualScoringCaption') }}
             </span>
           </div>
         </div>
       </div>
     </div>
 
-    <!--********** MANUAL SCORING FOOTER **********-->
     <div
       class="flex items-center justify-between gap-4 border-t border-[var(--color-border)] bg-[var(--color-background-content)] px-5 py-4 max-sm:flex-col max-sm:items-stretch"
     >
-      <!--********** TOTAL SCORE **********-->
       <div>
         <span
           class="block text-[10px] font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]"
         >
-          Total Score
+          {{ t('assessmentResult.manualScoring.totalScore') }}
         </span>
 
         <span class="text-[24px] font-bold text-[var(--color-primary-dark)]">
@@ -400,16 +385,24 @@
         </span>
       </div>
 
-      <!--********** SAVE SCORE ACTION **********-->
       <button
         mat-flat-button
         class="!h-9 !rounded-[9px] !px-5 !text-[12px] !font-semibold !text-white align-center justify-center transition-colors duration-300"
-        [ngClass]="scoreJustSaved ? '!bg-[#027a48]' : '!bg-[var(--color-primary-dark)]'"
+        [ngClass]="
+          scoreJustSaved ? '!bg-[var(--color-card-green)]' : '!bg-[var(--color-primary-dark)]'
+        "
         [disabled]="currentResultState.locked"
         (click)="onSaveScore()"
       >
-        <mat-icon *ngIf="scoreJustSaved" class="!mr-1 !h-4 !w-4 !text-base">check_circle</mat-icon>
-        {{ scoreJustSaved ? 'Score Saved' : 'Save Score' }}
+        <mat-icon *ngIf="scoreJustSaved" class="!mr-1 !h-4 !w-4 !text-base">
+          check_circle
+        </mat-icon>
+
+        {{
+          scoreJustSaved
+            ? t('assessmentResult.manualScoring.scoreSaved')
+            : t('assessmentResult.manualScoring.saveScore')
+        }}
       </button>
     </div>
   </mat-card>
@@ -420,7 +413,6 @@
     class="publish-dialog__overlay fixed inset-0 z-[1000] flex items-center justify-center px-4"
     role="presentation"
   >
-    <!--********** PUBLISH DIALOG **********-->
     <div
       #publishDialog
       class="publish-dialog w-full max-w-[430px] rounded-[14px] border border-[var(--color-border)] bg-[var(--color-white)] p-6 shadow-xl"
@@ -430,7 +422,6 @@
       aria-describedby="publish-dialog-description"
       tabindex="-1"
     >
-      <!--********** PUBLISH ICON **********-->
       <div
         class="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-primary-light)] text-[var(--color-primary-dark)]"
         aria-hidden="true"
@@ -438,39 +429,273 @@
         <mat-icon>publish</mat-icon>
       </div>
 
-      <!--********** DIALOG TITLE **********-->
       <h2 id="publish-dialog-title" class="m-0 text-[16px] font-bold text-[var(--color-title)]">
-        Publish Assessment Result?
+        {{ t('assessmentResult.publishDialog.title') }}
       </h2>
 
-      <!--********** DIALOG DESCRIPTION **********-->
       <p
         id="publish-dialog-description"
         class="m-0 mt-2 text-[12px] leading-[1.5] text-[var(--color-text-secondary)]"
       >
-        Once published, the results will become visible to students. Make sure all scores have been
-        reviewed before publishing.
+        {{ t('assessmentResult.publishDialog.description') }}
       </p>
 
-      <!--********** DIALOG ACTIONS **********-->
       <div class="mt-6 flex justify-end gap-2">
-        <!--********** CANCEL PUBLISH **********-->
         <button
-          #publishCancelButton
           mat-button
           class="!rounded-[8px] !text-[12px] !font-semibold"
           (click)="cancelPublish()"
         >
-          Cancel
+          {{ t('assessmentResult.publishDialog.cancel') }}
         </button>
 
-        <!--********** CONFIRM PUBLISH **********-->
         <button
           mat-flat-button
           class="!rounded-[8px] !bg-[var(--color-primary-dark)] !px-4 !text-[12px] !font-semibold !text-white"
           (click)="confirmPublish()"
         >
-          Publish Result
+          {{ t('assessmentResult.publishDialog.confirm') }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!--********** UNPUBLISH RESULT DIALOG **********-->
+  <div
+    *ngIf="showUnpublishDialog"
+    class="publish-dialog__overlay fixed inset-0 z-[1000] flex items-center justify-center px-4"
+    role="presentation"
+  >
+    <div
+      #unpublishDialog
+      class="publish-dialog w-full max-w-[430px] rounded-[14px] border border-[var(--color-border)] bg-[var(--color-white)] p-6 shadow-xl"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="unpublish-dialog-title"
+      aria-describedby="unpublish-dialog-description"
+      tabindex="-1"
+    >
+      <div
+        class="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-primary-light)] text-[var(--color-primary-dark)]"
+        aria-hidden="true"
+      >
+        <mat-icon>visibility_off</mat-icon>
+      </div>
+
+      <h2 id="unpublish-dialog-title" class="m-0 text-[16px] font-bold text-[var(--color-title)]">
+        {{ t('assessmentResult.unpublishDialog.title') }}
+      </h2>
+
+      <p
+        id="unpublish-dialog-description"
+        class="m-0 mt-2 text-[12px] leading-[1.5] text-[var(--color-text-secondary)]"
+      >
+        {{ t('assessmentResult.unpublishDialog.description') }}
+      </p>
+
+      <div class="mt-6 flex justify-end gap-2">
+        <button
+          mat-button
+          class="!rounded-[8px] !text-[12px] !font-semibold"
+          (click)="cancelUnpublish()"
+        >
+          {{ t('assessmentResult.unpublishDialog.cancel') }}
+        </button>
+
+        <button
+          mat-flat-button
+          class="!rounded-[8px] !bg-[var(--color-primary-dark)] !px-4 !text-[12px] !font-semibold !text-white"
+          (click)="confirmUnpublish()"
+        >
+          {{ t('assessmentResult.unpublishDialog.confirm') }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!--********** LOCK RESULT DIALOG **********-->
+  <div
+    *ngIf="showLockDialog"
+    class="publish-dialog__overlay fixed inset-0 z-[1000] flex items-center justify-center px-4"
+    role="presentation"
+  >
+    <div
+      #lockDialog
+      class="publish-dialog w-full max-w-[430px] rounded-[14px] border border-[var(--color-border)] bg-[var(--color-white)] p-6 shadow-xl"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="lock-dialog-title"
+      aria-describedby="lock-dialog-description"
+      tabindex="-1"
+    >
+      <div
+        class="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-card-red-border)] text-[var(--color-card-red)]"
+        aria-hidden="true"
+      >
+        <mat-icon>lock</mat-icon>
+      </div>
+
+      <h2 id="lock-dialog-title" class="m-0 text-[16px] font-bold text-[var(--color-title)]">
+        {{ t('assessmentResult.lockDialog.title') }}
+      </h2>
+
+      <p
+        id="lock-dialog-description"
+        class="m-0 mt-2 text-[12px] leading-[1.5] text-[var(--color-text-secondary)]"
+      >
+        {{ t('assessmentResult.lockDialog.description') }}
+      </p>
+
+      <div class="mt-6 flex justify-end gap-2">
+        <button
+          mat-button
+          class="!rounded-[8px] !text-[12px] !font-semibold"
+          (click)="cancelLockResult()"
+        >
+          {{ t('assessmentResult.lockDialog.cancel') }}
+        </button>
+
+        <button
+          mat-flat-button
+          class="!rounded-[8px] !bg-[var(--color-card-red)] !px-4 !text-[12px] !font-semibold !text-white"
+          (click)="confirmLockResult()"
+        >
+          {{ t('assessmentResult.lockDialog.confirm') }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!--********** UNLOCK RESULT DIALOG **********-->
+  <div
+    *ngIf="showUnlockDialog"
+    class="publish-dialog__overlay fixed inset-0 z-[1000] flex items-center justify-center px-4"
+    role="presentation"
+  >
+    <div
+      #unlockDialog
+      class="publish-dialog w-full max-w-[430px] rounded-[14px] border border-[var(--color-border)] bg-[var(--color-white)] p-6 shadow-xl"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="unlock-dialog-title"
+      aria-describedby="unlock-dialog-description"
+      tabindex="-1"
+    >
+      <div
+        class="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-card-green-light)] text-[var(--color-card-green)]"
+        aria-hidden="true"
+      >
+        <mat-icon>lock_open</mat-icon>
+      </div>
+
+      <h2 id="unlock-dialog-title" class="m-0 text-[16px] font-bold text-[var(--color-title)]">
+        {{ t('assessmentResult.unlockDialog.title') }}
+      </h2>
+
+      <p
+        id="unlock-dialog-description"
+        class="m-0 mt-2 text-[12px] leading-[1.5] text-[var(--color-text-secondary)]"
+      >
+        {{ t('assessmentResult.unlockDialog.description') }}
+      </p>
+
+      <div class="mt-6 flex justify-end gap-2">
+        <button
+          mat-button
+          class="!rounded-[8px] !text-[12px] !font-semibold"
+          (click)="cancelUnlockResult()"
+        >
+          {{ t('assessmentResult.unlockDialog.cancel') }}
+        </button>
+
+        <button
+          mat-flat-button
+          class="!rounded-[8px] !bg-[var(--color-card-green)] !px-4 !text-[12px] !font-semibold !text-white"
+          (click)="confirmUnlockResult()"
+        >
+          {{ t('assessmentResult.unlockDialog.confirm') }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!--********** SAVE SCORE DIALOG **********-->
+  <div
+    *ngIf="showSaveScoreDialog"
+    class="publish-dialog__overlay fixed inset-0 z-[1000] flex items-center justify-center px-4"
+    role="presentation"
+  >
+    <div
+      #saveScoreDialog
+      class="publish-dialog w-full max-w-[430px] rounded-[14px] border border-[var(--color-border)] bg-[var(--color-white)] p-6 shadow-xl"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="save-score-dialog-title"
+      aria-describedby="save-score-dialog-description"
+      tabindex="-1"
+    >
+      <div
+        class="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-primary-light)] text-[var(--color-primary-dark)]"
+        aria-hidden="true"
+      >
+        <mat-icon>save</mat-icon>
+      </div>
+
+      <h2 id="save-score-dialog-title" class="m-0 text-[16px] font-bold text-[var(--color-title)]">
+        {{ t('assessmentResult.saveScoreDialog.title') }}
+      </h2>
+
+      <p
+        id="save-score-dialog-description"
+        class="m-0 mt-2 text-[12px] leading-[1.5] text-[var(--color-text-secondary)]"
+      >
+        {{ t('assessmentResult.saveScoreDialog.description') }}
+      </p>
+
+      <div
+        *ngIf="selectedStudent"
+        class="mt-4 rounded-[9px] border border-[var(--color-border)] bg-[var(--color-background-content)] px-4 py-3"
+      >
+        <div class="flex items-center justify-between gap-3">
+          <span
+            class="text-[10px] font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]"
+          >
+            {{ t('assessmentResult.saveScoreDialog.studentLabel') }}
+          </span>
+
+          <span class="text-[12px] font-semibold text-[var(--color-title)]">
+            {{ selectedStudent.studentName }}
+          </span>
+        </div>
+
+        <div class="mt-2 flex items-center justify-between gap-3">
+          <span
+            class="text-[10px] font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]"
+          >
+            {{ t('assessmentResult.saveScoreDialog.totalScoreLabel') }}
+          </span>
+
+          <span class="text-[13px] font-bold text-[var(--color-primary-dark)]">
+            {{ selectedStudent.score }}/{{ selectedStudent.maxScore }}
+          </span>
+        </div>
+      </div>
+
+      <div class="mt-6 flex justify-end gap-2">
+        <button
+          mat-button
+          class="!rounded-[8px] !text-[12px] !font-semibold"
+          (click)="cancelSaveScore()"
+        >
+          {{ t('assessmentResult.saveScoreDialog.cancel') }}
+        </button>
+
+        <button
+          mat-flat-button
+          class="!rounded-[8px] !bg-[var(--color-primary-dark)] !px-4 !text-[12px] !font-semibold !text-white"
+          (click)="confirmSaveScore()"
+        >
+          {{ t('assessmentResult.saveScoreDialog.confirm') }}
         </button>
       </div>
     </div>

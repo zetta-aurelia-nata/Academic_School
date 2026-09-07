@@ -1,6 +1,7 @@
 // ********** ANGULAR IMPORTS **********
 import { CommonModule } from '@angular/common';
-import { Component,
+import {
+  Component,
   ElementRef,
   EventEmitter,
   HostListener,
@@ -15,6 +16,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 
+// ********** THIRD-PARTY IMPORTS **********
+import { TranslocoDirective } from '@jsverse/transloco';
+
 // ********** INTERFACES **********
 export interface FilterValue {
   status: string;
@@ -28,7 +32,14 @@ export interface FilterValue {
 @Component({
   selector: 'app-filter',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatButtonModule, MatIconModule, MatDividerModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDividerModule,
+    TranslocoDirective,
+  ],
   templateUrl: './filter-component.html',
   styleUrls: ['./filter-component.scss'],
 })
@@ -58,6 +69,15 @@ export class FilterComponent {
   draftDateFrom = '';
   draftDateTo = '';
   draftAssessmentName = '';
+
+  // ********** STATUS -> TRANSLATION KEY MAP **********
+  private readonly statusKeyMap: Record<string, string> = {
+    Completed: 'status.completed',
+    Pending: 'status.pending',
+    Failed: 'status.failed',
+    Draft: 'status.draft',
+    'Not Submitted': 'status.notSubmitted',
+  };
 
   @HostListener('document:keydown.escape')
   onEscape(): void {
@@ -221,5 +241,10 @@ export class FilterComponent {
     return `toolbar-filter__status-dot toolbar-filter__status-dot--${status
       .toString()
       .toLowerCase()}`;
+  }
+
+  // ********** STATUS TRANSLATION KEY **********
+  statusLabelKey(status: string): string {
+    return this.statusKeyMap[status] ?? 'status.draft';
   }
 }

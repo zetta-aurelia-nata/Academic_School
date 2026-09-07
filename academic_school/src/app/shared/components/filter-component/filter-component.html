@@ -1,5 +1,5 @@
 <!--********** FILTER TOOLBAR **********-->
-<div class="toolbar-filter__wrapper" #filterWrapper>
+<div class="toolbar-filter__wrapper" #filterWrapper *transloco="let t; read: 'assessments'">
   <div class="toolbar-filter">
     <!--********** FILTER BUTTON **********-->
     <button
@@ -8,12 +8,12 @@
       class="toolbar-filter__btn"
       [class.toolbar-filter__btn--active]="hasActiveFilters"
       [attr.aria-expanded]="showFilterPanel"
-      aria-label="Open assessment filters"
+      [attr.aria-label]="t('filter.openAriaLabel')"
       (click)="toggleFilterPanel()"
     >
       <mat-icon>filter_list</mat-icon>
 
-      <span>Filter</span>
+      <span>{{ t('filter.button') }}</span>
 
       @if (activeFilterCount > 0) {
         <span class="toolbar-filter__count">
@@ -27,19 +27,20 @@
       <div
         class="filter-panel"
         role="dialog"
-        aria-label="Assessment filters"
+        [attr.aria-label]="t('filter.panelAriaLabel')"
         (click)="$event.stopPropagation()"
       >
         <!--********** FILTER PANEL HEADER **********-->
-        <div class="filter-panel__header">Filter Assessments</div>
+        <div class="filter-panel__header">{{ t('filter.panelTitle') }}</div>
+
         <!--********** STATUS FILTER **********-->
         <div class="filter-panel__section">
           <div class="filter-panel__section-head">
-            <span class="filter-panel__section-title"> Status </span>
+            <span class="filter-panel__section-title">{{ t('filter.status.label') }}</span>
 
             @if (draftStatus !== 'ALL') {
               <button type="button" class="filter-panel__reset" (click)="resetStatusDraft()">
-                Reset
+                {{ t('filter.reset') }}
               </button>
             }
           </div>
@@ -53,7 +54,7 @@
             >
               <span class="filter-panel__dropdown-value">
                 @if (draftStatus === 'ALL') {
-                  <span>All Status</span>
+                  <span>{{ t('filter.status.all') }}</span>
                 } @else {
                   <span
                     class="toolbar-filter__status-dot"
@@ -61,7 +62,7 @@
                   ></span>
 
                   <span>
-                    {{ draftStatus }}
+                    {{ t(statusLabelKey(draftStatus)) }}
                   </span>
                 }
               </span>
@@ -74,7 +75,7 @@
             @if (openDropdown === 'status') {
               <div class="filter-panel__dropdown-menu">
                 <button type="button" (click)="selectDraftStatus('ALL')">
-                  <span>All Status</span>
+                  <span>{{ t('filter.status.all') }}</span>
                 </button>
 
                 @for (status of statusOptions; track status) {
@@ -84,7 +85,7 @@
                       [ngClass]="statusDotClass(status)"
                     ></span>
 
-                    <span>{{ status }}</span>
+                    <span>{{ t(statusLabelKey(status)) }}</span>
                   </button>
                 }
               </div>
@@ -97,11 +98,11 @@
         <!--********** SUBJECT FILTER **********-->
         <div class="filter-panel__section">
           <div class="filter-panel__section-head">
-            <span class="filter-panel__section-title"> Subject </span>
+            <span class="filter-panel__section-title">{{ t('filter.subject.label') }}</span>
 
             @if (draftSubject !== 'ALL') {
               <button type="button" class="filter-panel__reset" (click)="resetSubjectDraft()">
-                Reset
+                {{ t('filter.reset') }}
               </button>
             }
           </div>
@@ -115,7 +116,7 @@
             >
               <span class="filter-panel__dropdown-value">
                 @if (draftSubject === 'ALL') {
-                  <span>All Subjects</span>
+                  <span>{{ t('filter.subject.all') }}</span>
                 } @else {
                   <span>{{ draftSubject }}</span>
                 }
@@ -128,7 +129,9 @@
 
             @if (openDropdown === 'subject') {
               <div class="filter-panel__dropdown-menu">
-                <button type="button" (click)="selectDraftSubject('ALL')">All Subjects</button>
+                <button type="button" (click)="selectDraftSubject('ALL')">
+                  {{ t('filter.subject.all') }}
+                </button>
 
                 @for (subject of subjectOptions; track subject) {
                   <button type="button" (click)="selectDraftSubject(subject)">
@@ -145,11 +148,11 @@
         <!--********** GRADE FILTER **********-->
         <div class="filter-panel__section">
           <div class="filter-panel__section-head">
-            <span class="filter-panel__section-title"> Grade </span>
+            <span class="filter-panel__section-title">{{ t('filter.grade.label') }}</span>
 
             @if (draftGrade !== 'ALL') {
               <button type="button" class="filter-panel__reset" (click)="resetGradeDraft()">
-                Reset
+                {{ t('filter.reset') }}
               </button>
             }
           </div>
@@ -163,7 +166,7 @@
             >
               <span class="filter-panel__dropdown-value">
                 @if (draftGrade === 'ALL') {
-                  <span>All Grades</span>
+                  <span>{{ t('filter.grade.all') }}</span>
                 } @else {
                   <span>{{ draftGrade }}</span>
                 }
@@ -176,7 +179,9 @@
 
             @if (openDropdown === 'grade') {
               <div class="filter-panel__dropdown-menu">
-                <button type="button" (click)="selectDraftGrade('ALL')">All Grades</button>
+                <button type="button" (click)="selectDraftGrade('ALL')">
+                  {{ t('filter.grade.all') }}
+                </button>
 
                 @for (grade of gradeOptions; track grade) {
                   <button type="button" (click)="selectDraftGrade(grade)">
@@ -193,11 +198,11 @@
         <!--********** DATE RANGE FILTER **********-->
         <div class="filter-panel__section">
           <div class="filter-panel__section-head">
-            <span class="filter-panel__section-title"> Date Range </span>
+            <span class="filter-panel__section-title">{{ t('filter.dateRange.label') }}</span>
 
             @if (draftDateFrom || draftDateTo) {
               <button type="button" class="filter-panel__reset" (click)="resetDateRangeDraft()">
-                Reset
+                {{ t('filter.reset') }}
               </button>
             }
           </div>
@@ -205,14 +210,14 @@
           <div class="filter-panel__date-row">
             <!--********** DATE FROM **********-->
             <div class="filter-panel__date-field">
-              <label for="filter-date-from"> From </label>
+              <label for="filter-date-from">{{ t('filter.dateRange.from') }}</label>
 
               <div class="filter-panel__date-input">
                 <input
                   id="filter-date-from"
                   type="date"
                   [(ngModel)]="draftDateFrom"
-                  aria-label="Filter date from"
+                  [attr.aria-label]="t('filter.dateRange.fromAriaLabel')"
                 />
 
                 <mat-icon> calendar_today </mat-icon>
@@ -221,14 +226,14 @@
 
             <!--********** DATE TO **********-->
             <div class="filter-panel__date-field">
-              <label for="filter-date-to"> To </label>
+              <label for="filter-date-to">{{ t('filter.dateRange.to') }}</label>
 
               <div class="filter-panel__date-input">
                 <input
                   id="filter-date-to"
                   type="date"
                   [(ngModel)]="draftDateTo"
-                  aria-label="Filter date to"
+                  [attr.aria-label]="t('filter.dateRange.toAriaLabel')"
                 />
 
                 <mat-icon> calendar_today </mat-icon>
@@ -242,11 +247,11 @@
         <!--********** FILTER PANEL FOOTER **********-->
         <div class="filter-panel__footer">
           <button type="button" class="filter-panel__reset-all" (click)="resetAllDraft()">
-            Reset All
+            {{ t('filter.resetAll') }}
           </button>
 
           <button type="button" class="filter-panel__apply" (click)="applyFilterPanel()">
-            Apply Filters
+            {{ t('filter.apply') }}
           </button>
         </div>
       </div>

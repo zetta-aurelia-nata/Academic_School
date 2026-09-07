@@ -136,8 +136,8 @@
   .filter-panel {
     position: absolute;
     top: calc(100% + 6px);
-    left: 0;
-    right: auto;
+    left: auto;
+    right: 0;
 
     width: 310px;
     max-width: calc(100vw - 32px);

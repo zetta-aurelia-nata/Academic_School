@@ -1,0 +1,494 @@
+{
+  "assessment": {
+    "list": {
+      "title": "Assessments",
+      "totalAssessments": "total assessments",
+
+      "search": {
+        "placeholder": "Search assessments...",
+        "ariaLabel": "Search assessments",
+        "clear": "Clear search"
+      },
+      "delete": {
+        "confirmTitle": "Delete Assessment?",
+        "confirmText": "Are you sure you want to delete this assessment?",
+        "confirmButton": "Delete",
+        "cancelButton": "Cancel",
+        "successTitle": "Deleted!",
+        "successText": "The assessment has been deleted successfully."
+      },
+      "table": {
+        "assessmentName": "Assessment Name",
+        "subject": "Subject",
+        "grade": "Grade",
+        "students": "Students",
+        "status": "Status",
+        "date": "Date",
+        "actions": "Actions"
+      },
+
+      "status": {
+        "completed": "Completed",
+        "pending": "Pending",
+        "failed": "Failed",
+        "draft": "Draft",
+        "notSubmitted": "Not Submitted"
+      },
+
+      "actions": {
+        "create": "Create Assessment",
+        "edit": "Edit Assessment",
+        "delete": "Delete Assessment"
+      },
+
+      "empty": {
+        "title": "No Assessments Found",
+        "description": "Try adjusting your search or filters."
+      }
+    },
+
+    "create": {
+      "title": "Create Assessment",
+      "subtitle": "Create a new assessment by entering the information and questions below.",
+
+      "information": {
+        "title": "Assessment Information",
+        "subtitle": "Enter the basic information for this assessment."
+      },
+
+      "settings": {
+        "title": "Assessment Settings",
+        "subtitle": "Configure the duration, points, and status of this assessment."
+      },
+
+      "fields": {
+        "assessmentName": "Assessment Name",
+        "subject": "Subject",
+        "grade": "Grade",
+        "description": "Description",
+        "instructions": "Instructions",
+        "duration": "Duration",
+        "totalPoints": "Total Points",
+        "status": "Status",
+        "questionText": "Question Text",
+        "maxWord": "Maximum Words",
+        "totalScore": "Total Score",
+        "maximumPoints": "Maximum Points"
+      },
+
+      "placeholders": {
+        "assessmentName": "Enter assessment name",
+        "description": "Enter assessment description",
+        "instructions": "Enter instructions for students",
+        "duration": "e.g. 60",
+        "totalPoints": "e.g. 100",
+        "status": "Select status",
+        "essayQuestion": "Write your essay question here...",
+        "multipleChoiceQuestion": "Write your question here...",
+        "maxWord": "e.g. 300",
+        "totalScore": "e.g. 10",
+        "answerOption": "Write an answer option...",
+        "maximumPoints": "e.g. 10"
+      },
+
+      "subjects": {
+        "mathematics": "Mathematics",
+        "science": "Science",
+        "english": "English",
+        "history": "History",
+        "computerScience": "Computer Science",
+        "biology": "Biology"
+      },
+
+      "status": {
+        "draft": "Draft",
+        "published": "Published",
+        "archived": "Archived"
+      },
+
+      "units": {
+        "minutes": "minutes"
+      },
+
+      "type": {
+        "title": "Assessment Type",
+        "subtitle": "Choose the type of question you want to create.",
+        "essay": "Essay",
+        "essayDescription": "Open-ended written response",
+        "multipleChoice": "Multiple Choice",
+        "multipleChoiceDescription": "Select one correct answer"
+      },
+
+      "question": {
+        "empty": "Choose an assessment type on the left to start adding questions.",
+        "question": "Question",
+        "description": "Write the question that students need to answer."
+      },
+
+      "essay": {
+        "title": "Essay Question",
+        "subtitle": "Create a question that requires an open-ended written response."
+      },
+
+      "multipleChoice": {
+        "title": "Multiple Choice Question",
+        "subtitle": "Select one correct answer from the available options."
+      },
+
+      "questionSettings": {
+        "title": "Question Settings",
+        "essayDescription": "Configure response requirements and scoring."
+      },
+
+      "answerOptions": {
+        "title": "Answer Options",
+        "description": "Add possible answers and indicate the correct answer.",
+        "option": "Option {{ number }}",
+        "correct": "Correct Answer",
+        "addOption": "Add Option",
+        "removeOption": "Remove Option",
+        "markCorrect": "Mark option {{ number }} as correct"
+      },
+
+      "scoring": {
+        "title": "Scoring",
+        "description": "Set the score for this question."
+      },
+
+      "questionList": {
+        "title": "Question List",
+        "points": "{{ points }} pts",
+        "dragToReorder": "Drag to reorder question",
+        "moveUp": "Move question up",
+        "moveDown": "Move question down",
+        "removeQuestion": "Remove question"
+      },
+
+      "validation": {
+        "assessmentNameRequired": "Assessment name is required",
+        "subjectRequired": "Subject is required",
+        "gradeRequired": "Grade is required",
+        "durationRequired": "Duration is required",
+        "totalPointsRequired": "Total points are required",
+        "statusRequired": "Status is required",
+        "questionRequired": "Question text is required",
+        "maxWordRequired": "Maximum words are required",
+        "totalScoreRequired": "Total score is required",
+        "totalScoreMin": "Total score must be at least 1",
+        "optionRequired": "Option text is required",
+        "maximumPointsRequired": "Maximum points are required",
+        "maximumPointsMin": "Maximum points must be at least 1",
+        "noQuestion": "Please add at least one question before creating the assessment."
+      },
+
+      "actions": {
+        "back": "Back to Assessments",
+        "cancel": "Cancel",
+        "addQuestion": "Add Question",
+        "createAssessment": "Create Assessment"
+      }
+    },
+
+    "edit": {
+      "header": {
+        "backAria": "Back to assessments",
+        "title": "Edit Assessment",
+        "subtitle": "Update the assessment information and settings below."
+      },
+
+      "information": {
+        "title": "Assessment Information",
+        "subtitle": "Update the basic information of this assessment."
+      },
+
+      "settings": {
+        "title": "Assessment Settings",
+        "subtitle": "Configure the assessment duration, points, and status."
+      },
+
+      "questions": {
+        "title": "Questions & Answers",
+        "subtitle": "Update the questions, answer options, and correct answers.",
+        "empty": "No questions yet. Add an essay or multiple choice question below.",
+        "untitled": "Untitled question",
+        "dragAria": "Drag to reorder question",
+        "moveUpAria": "Move question up",
+        "moveDownAria": "Move question down",
+        "removeAria": "Remove question",
+        "essayLabel": "Essay",
+        "multipleChoiceLabel": "Multiple Choice"
+      },
+
+      "fields": {
+        "assessmentName": "Assessment Name",
+        "subject": "Subject",
+        "grade": "Grade",
+        "description": "Description",
+        "instructions": "Instructions",
+        "duration": "Duration",
+        "totalPoints": "Total Points",
+        "status": "Status",
+        "questionText": "Question Text",
+        "maxWord": "Max Word",
+        "totalScore": "Total Score",
+        "maximumPoints": "Maximum Points"
+      },
+
+      "placeholders": {
+        "assessmentName": "Enter assessment name",
+        "subject": "Select subject",
+        "grade": "Select grade",
+        "description": "Enter assessment description",
+        "instructions": "Enter instructions for students",
+        "duration": "Enter duration",
+        "totalPoints": "Enter total points",
+        "status": "Select status",
+        "questionText": "Write the question here...",
+        "maxWord": "Enter maximum words",
+        "totalScore": "Enter total score",
+        "option": "Write answer option...",
+        "maximumPoints": "Enter maximum points"
+      },
+
+      "subjects": {
+        "mathematics": "Mathematics",
+        "science": "Science",
+        "english": "English",
+        "history": "History",
+        "computerScience": "Computer Science",
+        "biology": "Biology"
+      },
+
+      "grades": {
+        "grade7": "Grade 7",
+        "grade8": "Grade 8",
+        "grade9": "Grade 9",
+        "grade10": "Grade 10",
+        "grade11": "Grade 11",
+        "grade12": "Grade 12"
+      },
+
+      "statusOptions": {
+        "draft": "Draft",
+        "published": "Published",
+        "archived": "Archived",
+        "failed": "Failed"
+      },
+
+      "units": {
+        "minutes": "minutes"
+      },
+
+      "validation": {
+        "assessmentNameRequired": "Assessment name is required",
+        "subjectRequired": "Subject is required",
+        "gradeRequired": "Grade is required",
+        "descriptionRequired": "Description text is required",
+        "durationRequired": "Duration is required",
+        "durationMin": "Duration must be min 10",
+        "totalPointsRequired": "Total points is required",
+        "totalPointsMin": "Score must be min 1",
+        "statusRequired": "Status is required",
+        "questionRequired": "Question text is required"
+      },
+
+      "answerOptions": {
+        "title": "Answer Options",
+        "option": "Option {{ number }}",
+        "correct": "Correct Answer",
+        "addOption": "Add Option",
+        "removeOptionAria": "Remove option",
+        "markCorrectAria": "Mark option {{ number }} as correct"
+      },
+
+      "actions": {
+        "addEssay": "Add Essay Question",
+        "addMultipleChoice": "Add Multiple Choice Question",
+        "cancel": "Cancel",
+        "save": "Save Changes"
+      }
+    }
+  },
+
+  "assessmentResult": {
+    "pageTitle": "Assessment Review",
+    "pageSubtitle": "Review, score, and publish student results",
+
+    "badge": {
+      "published": "Published",
+      "locked": "Locked",
+      "draft": "Draft"
+    },
+
+    "selection": {
+      "label": "Assessment",
+      "description": "Select an assessment to manage",
+      "subjectLabel": "Subject"
+    },
+
+    "actions": {
+      "publish": "Publish Result",
+      "unpublish": "Unpublish Result",
+      "lock": "Lock Result",
+      "unlock": "Unlock Result"
+    },
+
+    "studentResults": {
+      "title": "Student Results",
+      "subtitle": "Review essay answers and manage scores",
+      "count": "{{count}} students",
+      "scoreLabel": "Score",
+      "reviewAnswers": "Review Answers",
+      "reviewing": "Reviewing",
+      "empty": "No student results available"
+    },
+
+    "manualScoring": {
+      "title": "Manual Essay Scoring",
+      "subtitle": "Review essay answers and enter scores",
+      "closeAria": "Close student review",
+      "question": "Question {{number}}",
+      "essayBadge": "Essay",
+      "studentAnswer": "Student Answer",
+      "teacherComment": "Teacher Comment",
+      "teacherCommentPlaceholder": "Write a comment for this answer...",
+      "scoreLabel": "Score",
+      "manualScoringCaption": "Manual Scoring",
+      "totalScore": "Total Score",
+      "saveScore": "Save Score",
+      "scoreSaved": "Score Saved"
+    },
+
+    "publishDialog": {
+      "title": "Publish Assessment Result?",
+      "description": "Once published, the results will be visible to students. Make sure all scores have been reviewed before publishing the result.",
+      "cancel": "Cancel",
+      "confirm": "Publish Result"
+    },
+
+    "unpublishDialog": {
+      "title": "Unpublish Assessment Result?",
+      "description": "Unpublishing will hide the assessment result from students. You can publish the result again later after making the necessary changes.",
+      "cancel": "Cancel",
+      "confirm": "Unpublish Result"
+    },
+
+    "lockDialog": {
+      "title": "Lock Assessment Result?",
+      "description": "Locking the result will prevent any changes to scores and teacher comments. You will need to unlock the result before you can edit the answers again.",
+      "cancel": "Cancel",
+      "confirm": "Lock Result"
+    },
+
+    "unlockDialog": {
+      "title": "Unlock Assessment Result?",
+      "description": "Unlocking the result will allow you to edit scores and teacher comments again. Make sure all changes are reviewed before keeping the result published.",
+      "cancel": "Cancel",
+      "confirm": "Unlock Result"
+    },
+
+    "messages": {
+      "scoreSaved": "Score for {{name}} has been saved.",
+      "published": "Assessment results have been published successfully.",
+      "unpublished": "Assessment results have been unpublished.",
+      "publishBeforeLock": "Publish the result before locking it.",
+      "locked": "Assessment result is now locked.",
+      "unlocked": "Assessment result has been unlocked. You can edit scores and teacher comments again."
+    },
+    "saveScoreDialog": {
+      "title": "Save Score?",
+      "description": "This will save the score and teacher comments for this student.",
+      "studentLabel": "Student",
+      "totalScoreLabel": "Total Score",
+      "cancel": "Cancel",
+      "confirm": "Save Score",
+      "successMessage": "Score for {{ name }} has been saved."
+    }
+  },
+
+  "assessmentDetail": {
+    "header": {
+      "title": "Student Submissions",
+      "backAria": "Go back"
+    },
+    "search": {
+      "placeholder": "Search students...",
+      "inputAria": "Search students",
+      "clearAria": "Clear search",
+      "clearButton": "Clear Search",
+      "noResultsTitle": "No students found",
+      "noResultsMessage": "No student matches \"{{query}}\"."
+    },
+    "studentList": {
+      "noSubmissionsTitle": "No submissions yet",
+      "noSubmissionsMessage": "There are no student submissions for this assessment."
+    },
+    "studentDetail": {
+      "backAria": "Back to assessment list card",
+      "studentInfoTitle": "Student Information",
+      "submissionInfoTitle": "Submission Information",
+      "submitted": "Submitted",
+      "status": "Status",
+      "timeTaken": "Time Taken",
+      "resultTitle": "Assessment Result Detail",
+      "mcTitle": "Multiple Choices",
+      "mcEmpty": "No multiple choice questions for this assessment.",
+      "essayTitle": "Essay Result",
+      "essayEmpty": "No essay questions for this assessment.",
+      "question": "Question {{number}}",
+      "answerLabel": "Answer:",
+      "teacherReview": "Teacher Review :",
+      "finalScoreTitle": "Final Score",
+      "finalScoreSubtitle": "Total assessment score"
+    },
+    "notFound": {
+      "title": "Student not found",
+      "message": "The selected student submission could not be found.",
+      "backButton": "Back to submissions"
+    }
+  },
+
+  "review": {
+    "title": "Assessments Result",
+    "assessmentSingular": "assessment",
+    "assessmentsPlural": "assessments",
+    "availableForReview": "available for review",
+    "searchPlaceholder": "Search assessments...",
+    "searchAriaLabel": "Search assessments",
+    "clearSearchAriaLabel": "Clear search",
+    "students": "Students",
+    "date": "Date",
+    "reviewSubmissions": "Review submissions",
+    "reviewButton": "Review",
+    "emptyTitle": "No assessments found",
+    "emptyDescription": "Try searching with a different keyword."
+  },
+    "filter": {
+      "button": "Filter",
+      "openAriaLabel": "Open assessment filters",
+      "panelAriaLabel": "Assessment filters",
+      "panelTitle": "Filter Assessments",
+      "reset": "Reset",
+      "resetAll": "Reset All",
+      "apply": "Apply Filters",
+      "status": {
+        "label": "Status",
+        "all": "All Status"
+      },
+      "subject": {
+        "label": "Subject",
+        "all": "All Subjects"
+      },
+      "grade": {
+        "label": "Grade",
+        "all": "All Grades"
+      },
+      "dateRange": {
+        "label": "Date Range",
+        "from": "From",
+        "to": "To",
+        "fromAriaLabel": "Filter date from",
+        "toAriaLabel": "Filter date to"
+      }
+    }
+  }
